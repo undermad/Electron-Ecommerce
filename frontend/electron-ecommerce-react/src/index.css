@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+    .px-responsive-electron {
+        @apply px-[30px] sm:px-[40px] lg:px-[100px];
+    }
+}

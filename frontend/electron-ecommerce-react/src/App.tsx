@@ -1,9 +1,25 @@
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {AppLayout} from "./ui/AppLayout.tsx";
 
 function App() {
 
-  return (
-      <div></div>
-  )
+    const router = createBrowserRouter([
+
+        {
+            element: <AppLayout/>,
+            children: [
+                {
+                    path: "/",
+                    element: <div>Hello</div>
+                },
+            ]
+        }
+
+    ])
+
+    return (
+        <RouterProvider router={router}/>
+    )
 }
 
 export default App
