@@ -1,7 +1,6 @@
 import searchSVG from "../../assets/icons/search.svg";
 import {useRef, useState} from "react";
 import {useViewport} from "../custom_hooks/CustomHooks.ts";
-import { motion } from "framer-motion"
 
 export const SearchBar = () => {
 

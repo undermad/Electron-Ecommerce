@@ -12,14 +12,7 @@ export const NavigationBar = () => {
 
 
 
-    if(width>1024){
-        return (
-            <>
 
-
-            </>
-        )
-    }
 
     return (
         <nav
