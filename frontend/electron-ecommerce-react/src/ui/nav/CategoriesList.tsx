@@ -1,6 +1,7 @@
 import arrowDownSVG from "../../assets/icons/arrow-down.svg";
 import listSVG from '../../assets/icons/list.svg';
 import {useViewport} from "../custom_hooks/CustomHooks.ts";
+import {Breakpoints} from "../custom_hooks/Breakpoints.ts";
 
 
 export const CategoriesList = () => {
@@ -9,7 +10,7 @@ export const CategoriesList = () => {
 
     return (
         <div className={"flex gap-[24px] items-center"}>
-            {width >= 1024 ?
+            {width >= Breakpoints.LARGE ?
                 <div className={'flex gap-[6px] items-center'}>
                     <span className={"h-10px"}>Product Category</span>
                     <img src={arrowDownSVG} className={"w-[20px] h-[20px]"} alt={'arrow down'}/>

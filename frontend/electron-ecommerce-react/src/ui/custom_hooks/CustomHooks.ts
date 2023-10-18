@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {Breakpoints} from "./Breakpoints.ts";
 
 export const useViewport = () => {
 
@@ -7,10 +8,10 @@ export const useViewport = () => {
     useEffect(() => {
 
         const handleResize = () => {
-            if (window.innerWidth > 1024 ) {
-                setWidth(1024);
-            } else if (window.innerWidth <= 1024 && window.innerWidth > 640){
-                setWidth(640);
+            if (window.innerWidth > Breakpoints.LARGE ) {
+                setWidth(Breakpoints.LARGE);
+            } else if (window.innerWidth <= Breakpoints.LARGE && window.innerWidth > Breakpoints.SMALL){
+                setWidth(Breakpoints.SMALL);
             } else {
                 setWidth(0);
             }

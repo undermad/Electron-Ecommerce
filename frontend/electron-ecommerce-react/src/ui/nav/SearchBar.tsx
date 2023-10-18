@@ -1,6 +1,7 @@
 import searchSVG from "../../assets/icons/search.svg";
 import {useRef, useState} from "react";
 import {useViewport} from "../custom_hooks/CustomHooks.ts";
+import {Breakpoints} from "../custom_hooks/Breakpoints.ts";
 
 export const SearchBar = () => {
 
@@ -26,7 +27,7 @@ export const SearchBar = () => {
     return (
 
         <>
-            {width >= 640 ?
+            {width >= Breakpoints.SMALL ?
                 <div
                     onClick={handleFocus}
                     className={"focus-within:ring-1 cursor-text grow flex items-center gap-[6px] px-[14px] py-[10px] bg-electron-input-bg border border-electron-input-border rounded-xl"}>
