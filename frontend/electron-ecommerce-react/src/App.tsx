@@ -1,5 +1,8 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {AppLayout} from "./ui/AppLayout.tsx";
+import {Search} from "./ui/search/Search.tsx";
+import {Basket} from "./ui/basket/Basket.tsx";
+import {Home} from "./ui/home/Home.tsx";
 
 function App() {
 
@@ -10,8 +13,16 @@ function App() {
             children: [
                 {
                     path: "/",
-                    element: <div>Hello</div>
+                    element: <Home/>
                 },
+                {
+                    path: "/search",
+                    element: <Search/>
+                },
+                {
+                    path: "/basket",
+                    element: <Basket/>
+                }
             ]
         }
 

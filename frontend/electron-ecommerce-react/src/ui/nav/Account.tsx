@@ -12,7 +12,7 @@ export const Account = () => {
                 <img src={userSVG} className={"w-[20px] h-[20px]"} alt={'user svg icon'}/>
 
                 {width >= Breakpoints.LARGE ?
-                <span>Account</span>
+                <span>Login</span>
                 : ''}
 
             </div>
