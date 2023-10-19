@@ -7,8 +7,8 @@ interface CategoryLinkProps {
 export const CategoryLink = (props: CategoryLinkProps) => {
 
     return (
-        <li className={"mb-2 hover:scale-105"}>
+        <div className={"mb-2 hover:scale-105"}>
             <Link to={'/search'}>{props.children}</Link>
-        </li>
+        </div>
     )
 }

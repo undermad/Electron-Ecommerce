@@ -54,13 +54,11 @@ export const CategoriesList = () => {
                             y: isExpanded ? 0 : -100,
                             opacity: isExpanded ? 1 : 0,
                         }}
-                        className={`${isExpanded ? '' : 'hidden'} absolute top-[50px] w-full bg-electron-primary-dark-blue p-5 `}>
+                        className={`${isExpanded ? '' : 'hidden'} absolute top-[50px]  bg-electron-primary-dark-blue p-5 `}>
 
-                        <ul>
                             {categoriesList.map((category) => (
                                 <CategoryLink>{category}</CategoryLink>
                             ))}
-                        </ul>
 
                     </motion.div>
 
