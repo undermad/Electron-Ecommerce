@@ -2,7 +2,7 @@
 
 Author: Dominik Tworek
 
-Tech Stack: Typescript, React, Java, Spring Boot, MySql
+Tech Stack: Typescript, React, Tailwindcss, Java, Spring Boot, MySql
 
 Description: Fake Ecommerce full-stack application created in educational purposes.
 This project is also part of my portfolio.
