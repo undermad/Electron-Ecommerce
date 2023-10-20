@@ -34,13 +34,14 @@ export const CategoriesList = () => {
 
     return (
         <div
-            ref={dropdownMenuRef}
+
             onClick={expand}
-            onBlur={expand}
             className={"flex gap-[24px] items-center"}
         >
             {width >= Breakpoints.LARGE &&
-                <div className={'flex gap-[6px] items-center relative'}>
+                <div
+                    ref={dropdownMenuRef}
+                    className={'flex gap-[6px] items-center relative'}>
                     <span className={"h-10px hover:scale-105 cursor-pointer"}>Categories</span>
 
                     <motion.img
