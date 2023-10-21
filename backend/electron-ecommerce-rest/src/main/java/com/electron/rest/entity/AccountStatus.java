@@ -1,4 +1,4 @@
-package com.electron.electronecommercespring.entity;
+package com.electron.rest.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

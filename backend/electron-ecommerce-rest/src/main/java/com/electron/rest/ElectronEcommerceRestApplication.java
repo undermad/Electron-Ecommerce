@@ -1,13 +1,13 @@
-package com.electron.electronecommercespring;
+package com.electron.rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ElectronEcommerceSpringApplication {
+public class ElectronEcommerceRestApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ElectronEcommerceSpringApplication.class, args);
+		SpringApplication.run(ElectronEcommerceRestApplication.class, args);
 	}
 
 }

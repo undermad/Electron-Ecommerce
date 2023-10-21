@@ -1,4 +1,4 @@
-package com.electron.electronecommercespring.entity;
+package com.electron.rest.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,11 +21,15 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "newsletter", nullable = false)
+    private boolean newsletterSubscription;
+
     @CreationTimestamp
     private Date createdOn;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_status_id", nullable = false)
     private AccountStatus accountStatus;
+
 
 }
