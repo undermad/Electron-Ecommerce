@@ -13,7 +13,7 @@ public class AccountStatus {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int id;
+    private Long id;
 
     @Column(name = "status_type")
     private String statusType;
