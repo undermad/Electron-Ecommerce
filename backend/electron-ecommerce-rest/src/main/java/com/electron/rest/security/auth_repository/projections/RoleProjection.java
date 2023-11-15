@@ -1,4 +1,4 @@
-package com.electron.rest.repository.projections;
+package com.electron.rest.security.auth_repository.projections;
 
 public interface RoleProjection {
 

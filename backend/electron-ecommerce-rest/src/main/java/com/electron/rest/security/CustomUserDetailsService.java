@@ -1,10 +1,9 @@
 package com.electron.rest.security;
 
-import com.electron.rest.entity.User;
-import com.electron.rest.repository.RoleRepository;
-import com.electron.rest.repository.UserRepository;
-import com.electron.rest.repository.projections.RoleProjection;
-import com.electron.rest.repository.projections.UserProjection;
+import com.electron.rest.security.auth_repository.RoleRepository;
+import com.electron.rest.security.auth_repository.UserRepository;
+import com.electron.rest.security.auth_repository.projections.RoleProjection;
+import com.electron.rest.security.auth_repository.projections.UserProjection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,22 +31,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         List<UserProjection> users = userRepository.getUserEmailAndPassword(email);
         if(users.isEmpty()){
-            throw new UsernameNotFoundException("Email or password is wrong");
+            throw new UsernameNotFoundException("Email or password is incorrect.");
         }
         UserProjection user = users.get(0);
 
-        List<RoleProjection> roles = roleRepository.getRolesByUserId(user.getId());
-        roles.forEach((role) -> {
-            System.out.println(role.getRoleName());
-        });
 
-        Set<GrantedAuthority> authorities2 = roleRepository.getRolesByUserId(user.getId())
+        Set<GrantedAuthority> authorities = roleRepository.getRolesByUserId(user.getId())
                 .stream()
                 .map((roleProjection -> new SimpleGrantedAuthority(roleProjection.getRoleName())))
                 .collect(Collectors.toSet());
 
 
         return new org.springframework.security.core.userdetails
-                .User(user.getEmail(), user.getPassword(), authorities2);
+                .User(user.getEmail(), user.getPassword(), authorities);
     }
 }

@@ -1,0 +1,32 @@
+1. Basic connection with database.                                                         COMPLETED
+2. Basic project configuration:                                                            COMPLETED
+    - hibernate ddl set to update                                                          COMPLETED
+    - show sql query in console                                                            COMPLETED
+    - create GlobalExceptionHandler                                                        COMPLETED
+    - create basic packages: controlled, dto, entity, exception, repository, service, auth COMPLETED
+
+3. Auth
+    LOGIN:
+    - create basic User and Role schema in database.                                        COMPLETED
+    - add Account Status schema.                                                            COMPLETED
+    - create Entity classes for user login.                                                 COMPLETED
+    - create CustomUserDetailsService and SecurityConfiguration classes                     COMPLETED
+    - set up configuration filter chain, password encoded and authentication manager        COMPLETED
+    - create basic login implementation with custom mysql queries                           COMPLETED
+    - create LoginDto, service and Login endpoint                                           COMPLETED
+    - implement JWT                                                                         COMPLETED
+        - added dependency jjwt-impl 0.12.3
+        - added dependency jjwt-api 0.12.3
+        - added dependency jjwt-jackson 0.12.3
+    - add JwtAuthenticationEntryPoint                 COMPLETED
+    - add Jwt properties                              COMPLETED
+    - create JwtTokenProvider                         COMPLETED
+    - create JwtAuthenticationFilter                  COMPLETED
+    - create JwtAuthResponseDto                       COMPLETED
+    - configure jwt in spring security                COMPLETED
+    - change login endpoint to return jwt token       COMPLETED
+
+
+    - implement registration
+    - implement email verification
+    - implement password recovery

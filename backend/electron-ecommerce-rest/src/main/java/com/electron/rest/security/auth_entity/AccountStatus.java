@@ -1,4 +1,4 @@
-package com.electron.rest.entity;
+package com.electron.rest.security.auth_entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -26,6 +26,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<ErrorDto> handleApiException(Exception exception, WebRequest webRequest) {
+
+        ErrorDto errorDto = new ErrorDto(
+                exception.getMessage(),
+                new Date(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorDto> handleAccessDeniedException(AccessDeniedException exception, WebRequest webRequest) {
 
@@ -34,7 +45,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 new Date(),
                 webRequest.getDescription(false));
 
-        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorDto, HttpStatus.UNAUTHORIZED);
 
     }
 

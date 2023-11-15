@@ -1,7 +1,7 @@
-package com.electron.rest.repository;
+package com.electron.rest.security.auth_repository;
 
-import com.electron.rest.entity.Role;
-import com.electron.rest.repository.projections.RoleProjection;
+import com.electron.rest.security.auth_entity.Role;
+import com.electron.rest.security.auth_repository.projections.RoleProjection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
