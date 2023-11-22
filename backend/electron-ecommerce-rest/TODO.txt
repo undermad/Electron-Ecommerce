@@ -27,6 +27,11 @@
     - change login endpoint to return jwt token       COMPLETED
 
 
+    REFRESH TOKEN:
+
+
+
+
     - implement registration
     - implement email verification
     - implement password recovery
