@@ -25,10 +25,7 @@
     - create JwtAuthResponseDto                       COMPLETED
     - configure jwt in spring security                COMPLETED
     - change login endpoint to return jwt token       COMPLETED
-
-
-    REFRESH TOKEN:
-
+    - implement refresh token                         COMPLETED
 
 
 

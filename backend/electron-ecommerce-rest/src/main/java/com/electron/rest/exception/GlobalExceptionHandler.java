@@ -49,5 +49,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
+    @ExceptionHandler(RefreshTokenException.class)
+    public ResponseEntity<ErrorDto> handleRefreshTokenException(RefreshTokenException exception, WebRequest webRequest) {
+
+        ErrorDto errorDto = new ErrorDto(
+                exception.getMessage(),
+                new Date(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDto, HttpStatus.FORBIDDEN);
+
+    }
+
 
 }

@@ -12,8 +12,8 @@ import java.util.Set;
 @Table(name = "users", schema = "electron_ecommerce")
 public class User {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "email", unique = true, nullable = false)
@@ -37,6 +37,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
+
+    @OneToOne(mappedBy = "user")
+    private RefreshToken refreshToken;
 
 
 }

@@ -5,11 +5,16 @@ import com.electron.rest.utility.UnitConverter;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
 import java.util.Date;
 
 @Component
@@ -21,30 +26,33 @@ public class JwtProvider {
     @Value("${app-jwt-expiration-millisecond}")
     private String jwtExpirationTime;
 
+    @Value("${app-refresh-token-expiration-millisecond}")
+    private String refreshTokenExpirationTime;
+
+    @Value("${app-refresh-token-name}")
+    private String refreshTokenName;
+
 
     private SecretKey key() {
         // decode secret key and return as SecretKey class
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    public String generateToken(Authentication authentication) {
+    public String generateTokenFromAuthentication(Authentication authentication) {
+        String email = authentication.getName();
+        return generateToken(email);
+    }
 
-        String username = authentication.getName();
-        Date currentDate = new Date();
 
-        // generate date 7 day old
-        long expirationDateAsLong = currentDate.getTime() + (UnitConverter.stringToLong(jwtExpirationTime));
-        Date expirationDate = new Date(expirationDateAsLong);
-
-        // return token
+    public String generateToken(String email){
+        Date expirationDate = Date.from(Instant.now().plusMillis(Long.parseLong(jwtExpirationTime)));
         return Jwts.builder()
-                .subject(username)
+                .subject(email)
                 .issuedAt(new Date())
                 .expiration(expirationDate)
                 .signWith(key())
                 .compact();
     }
-
 
 
     public String getEmail(String token) {
@@ -68,13 +76,25 @@ public class JwtProvider {
             throw new ApiException("Invalid token");
         } catch (ExpiredJwtException e) {
             throw new ApiException("Expired token");
-        } catch (UnsupportedJwtException e){
+        } catch (UnsupportedJwtException e) {
             throw new ApiException("Unsupported JWT token");
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new ApiException("JWT claims string is empty.");
         }
 
         return true;
     }
 
+    public ResponseCookie generateRefreshJwtCookie(String refreshToken) {
+        return ResponseCookie
+                .from(refreshTokenName, refreshToken)
+                .maxAge(UnitConverter.millisecondsToSeconds(Long.parseLong(refreshTokenExpirationTime)))
+                .httpOnly(true)
+                .build();
+    }
+
+    public String getJwtRefreshTokenFromCookies(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, refreshTokenName);
+        return cookie != null ? cookie.getValue() : null;
+    }
 }
