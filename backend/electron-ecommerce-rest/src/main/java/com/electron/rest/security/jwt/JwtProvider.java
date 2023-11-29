@@ -85,15 +85,16 @@ public class JwtProvider {
         return true;
     }
 
-    public ResponseCookie generateRefreshJwtCookie(String refreshToken) {
+    public ResponseCookie generateRefreshTokenCookie(String refreshToken) {
         return ResponseCookie
                 .from(refreshTokenName, refreshToken)
                 .maxAge(UnitConverter.millisecondsToSeconds(Long.parseLong(refreshTokenExpirationTime)))
+                .path("/api/v1/auth/refreshtoken")
                 .httpOnly(true)
                 .build();
     }
 
-    public String getJwtRefreshTokenFromCookies(HttpServletRequest request) {
+    public String getRefreshTokenFromCookie(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, refreshTokenName);
         return cookie != null ? cookie.getValue() : null;
     }

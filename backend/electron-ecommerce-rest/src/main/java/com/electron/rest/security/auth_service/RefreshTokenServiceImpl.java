@@ -5,12 +5,14 @@ import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
+import com.electron.rest.security.auth_repository.projections.RefreshTokenProjection;
+import com.electron.rest.security.jwt.JwtProvider;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,21 +23,20 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private RefreshTokenRepository refreshTokenRepository;
     private UserRepository userRepository;
+    private JwtProvider jwtProvider;
 
-    public RefreshTokenServiceImpl(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository) {
+    public RefreshTokenServiceImpl(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository, JwtProvider jwtProvider) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userRepository = userRepository;
+        this.jwtProvider = jwtProvider;
     }
 
     @Override
     public RefreshToken generateToken(Long userId) {
         RefreshToken token = new RefreshToken();
-
-        Optional<User> userAsOptional = userRepository.findById(userId);
-        if (userAsOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        token.setUser(userAsOptional.get());
+        User user = new User();
+        user.setId(userId);
+        token.setUser(user);
         token.setExpiryDate(Instant.now().plusMillis(Long.parseLong(refreshTokenExpirationTime)));
         token.setToken(UUID.randomUUID().toString());
 
@@ -43,14 +44,26 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public boolean isTokenUpToDate(Instant expirationDate, Long tokenId) {
+    public String isTokenUpToDate(HttpServletRequest request) {
 
-        if(expirationDate.compareTo(Instant.now()) < 0) {
-            refreshTokenRepository.deleteById(tokenId);
-            throw new RefreshTokenException("Refresh token expired. Please login.");
+        String refreshToken = jwtProvider.getRefreshTokenFromCookie(request);
+        if (refreshToken != null) {
+
+            RefreshTokenProjection refreshTokenProjection = refreshTokenRepository.findRefreshTokenByToken(refreshToken).get(0);
+
+            if (refreshTokenProjection.getExpirationDate().compareTo(Instant.now()) < 0) {
+                refreshTokenRepository.deleteById(refreshTokenProjection.getId());
+                throw new RefreshTokenException("Refresh token expired. Please login.");
+            }
+            return refreshToken;
         }
+        throw new RefreshTokenException("Please, login!");
+    }
 
-        return true;
+    @Transactional
+    @Override
+    public void deleteRefreshToken(Long userId){
+        refreshTokenRepository.deleteTokenByUserId(userId);
     }
 
 

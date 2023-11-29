@@ -44,19 +44,11 @@ public class AuthController {
 
     }
 
-    @PostMapping("refreshtoken")
+    @PostMapping("/refreshtoken")
     public ResponseEntity<JwtResponse> refreshToken(HttpServletRequest request) {
-        String refreshToken = jwtProvider.getJwtRefreshTokenFromCookies(request);
-        if (refreshToken != null) {
-
-            RefreshTokenProjection refreshTokenProjection = refreshTokenRepository.findRefreshTokenByToken(refreshToken).get(0);
-            refreshTokenService.isTokenUpToDate(refreshTokenProjection.getExpirationDate(), refreshTokenProjection.getId());
-            JwtResponse jwtResponse = new JwtResponse(authService.generateJwtFromRefreshToken(refreshTokenProjection.getToken()));
-
-            return ResponseEntity.ok(jwtResponse);
-
-        }
-        throw new RefreshTokenException("Token expired");
+        String refreshToken = refreshTokenService.isTokenUpToDate(request);
+        JwtResponse jwtResponse = new JwtResponse(authService.generateJwtFromRefreshToken(refreshToken));
+        return ResponseEntity.ok(jwtResponse);
     }
 
 

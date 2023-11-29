@@ -39,8 +39,10 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public ResponseCookie generateRefreshTokenCookieFromLoginDto(LoginDto loginDto) {
-        RefreshToken refreshToken = refreshTokenService.generateToken(userRepository.getUserIdFromEmail(loginDto.email()).get(0).getId());
-        return jwtProvider.generateRefreshJwtCookie(refreshToken.getToken());
+        Long userId = userRepository.getUserIdFromEmail(loginDto.email()).get(0).getId();
+        refreshTokenService.deleteRefreshToken(userId);
+        RefreshToken refreshToken = refreshTokenService.generateToken(userId);
+        return jwtProvider.generateRefreshTokenCookie(refreshToken.getToken());
     }
 
     @Override
