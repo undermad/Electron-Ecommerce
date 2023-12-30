@@ -1,17 +1,15 @@
 package com.electron.rest.security.jwt;
 
 import com.electron.rest.exception.ApiException;
-import com.electron.rest.utility.UnitConverter;
+import com.electron.rest.security.auth_repository.UserRepository;
+import com.electron.rest.security.auth_repository.projections.UserProjection;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
 import javax.crypto.SecretKey;
 import java.time.Instant;
@@ -31,7 +29,6 @@ public class JwtProvider {
 
     @Value("${app-refresh-token-name}")
     private String refreshTokenName;
-
 
     private SecretKey key() {
         // decode secret key and return as SecretKey class
@@ -85,17 +82,5 @@ public class JwtProvider {
         return true;
     }
 
-    public ResponseCookie generateRefreshTokenCookie(String refreshToken) {
-        return ResponseCookie
-                .from(refreshTokenName, refreshToken)
-                .maxAge(UnitConverter.millisecondsToSeconds(Long.parseLong(refreshTokenExpirationTime)))
-                .path("/api/v1/auth/refreshtoken")
-                .httpOnly(true)
-                .build();
-    }
 
-    public String getRefreshTokenFromCookie(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, refreshTokenName);
-        return cookie != null ? cookie.getValue() : null;
-    }
 }

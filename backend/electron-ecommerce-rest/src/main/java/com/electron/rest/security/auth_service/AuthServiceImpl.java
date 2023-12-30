@@ -1,29 +1,28 @@
 package com.electron.rest.security.auth_service;
 
 import com.electron.rest.security.auth_dto.LoginDto;
-import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_repository.UserRepository;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
 import com.electron.rest.security.jwt.JwtProvider;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
 
-    private AuthenticationManager authenticationManager;
-    private JwtProvider jwtProvider;
-    private RefreshTokenService refreshTokenService;
-    private UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
+    private final UserRepository userRepository;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, RefreshTokenService refreshTokenService, UserRepository userRepository) {
+    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
-        this.refreshTokenService = refreshTokenService;
         this.userRepository = userRepository;
     }
 
@@ -38,16 +37,11 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public ResponseCookie generateRefreshTokenCookieFromLoginDto(LoginDto loginDto) {
-        Long userId = userRepository.getUserIdFromEmail(loginDto.email()).get(0).getId();
-        refreshTokenService.deleteRefreshToken(userId);
-        RefreshToken refreshToken = refreshTokenService.generateToken(userId);
-        return jwtProvider.generateRefreshTokenCookie(refreshToken.getToken());
-    }
-
-    @Override
-    public String generateJwtFromRefreshToken(String refreshToken) {
-        UserProjection user = userRepository.getUserByRefreshToken(refreshToken).get(0);
+    public String refreshJwt(String refreshToken) {
+        List<UserProjection> userList = userRepository.getUserByRefreshToken(refreshToken);
+        if(userList.isEmpty())
+            throw new UsernameNotFoundException("User not found.");
+        UserProjection user = userList.get(0);
         return jwtProvider.generateToken(user.getEmail());
     }
 

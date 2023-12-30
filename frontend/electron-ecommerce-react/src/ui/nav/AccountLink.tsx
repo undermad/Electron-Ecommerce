@@ -3,7 +3,7 @@ import {useViewport} from "../custom_hooks/CustomHooks.ts";
 import {Breakpoints} from "../custom_hooks/Breakpoints.ts";
 import {Link} from "react-router-dom";
 
-export const Account = () => {
+export const AccountLink = () => {
     const width = useViewport();
 
 

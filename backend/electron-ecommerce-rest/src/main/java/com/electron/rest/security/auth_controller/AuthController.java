@@ -1,14 +1,11 @@
 package com.electron.rest.security.auth_controller;
 
-import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.security.auth_dto.JwtResponse;
 import com.electron.rest.security.auth_dto.LoginDto;
-import com.electron.rest.security.auth_repository.RefreshTokenRepository;
-import com.electron.rest.security.auth_repository.projections.RefreshTokenProjection;
 import com.electron.rest.security.auth_service.AuthService;
 import com.electron.rest.security.auth_service.RefreshTokenService;
-import com.electron.rest.security.jwt.JwtProvider;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,15 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private AuthService authService;
-    private JwtProvider jwtProvider;
-    private RefreshTokenRepository refreshTokenRepository;
-    private RefreshTokenService refreshTokenService;
+    private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
 
-    public AuthController(AuthService authService, JwtProvider jwtProvider, RefreshTokenRepository refreshTokenRepository, RefreshTokenService refreshTokenService) {
+    @Autowired
+    public AuthController(AuthService authService, RefreshTokenService refreshTokenService) {
         this.authService = authService;
-        this.jwtProvider = jwtProvider;
-        this.refreshTokenRepository = refreshTokenRepository;
         this.refreshTokenService = refreshTokenService;
     }
 
@@ -39,15 +33,15 @@ public class AuthController {
         JwtResponse jwtResponse = new JwtResponse(authService.login(loginDto));
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, authService.generateRefreshTokenCookieFromLoginDto(loginDto).toString())
+                .header(HttpHeaders.SET_COOKIE,
+                        refreshTokenService.generateRefreshTokenCookie(loginDto).toString())
                 .body(jwtResponse);
-
     }
 
     @PostMapping("/refreshtoken")
     public ResponseEntity<JwtResponse> refreshToken(HttpServletRequest request) {
         String refreshToken = refreshTokenService.isTokenUpToDate(request);
-        JwtResponse jwtResponse = new JwtResponse(authService.generateJwtFromRefreshToken(refreshToken));
+        JwtResponse jwtResponse = new JwtResponse(authService.refreshJwt(refreshToken));
         return ResponseEntity.ok(jwtResponse);
     }
 

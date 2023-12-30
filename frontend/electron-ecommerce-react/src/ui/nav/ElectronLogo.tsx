@@ -1,14 +1,23 @@
 import logoSVG from "../../assets/images/logo-electron.svg";
+import logSVGdark from "../../assets/images/logo-electron-black.svg";
 import {Link} from "react-router-dom";
 
-export const ElectronLogo = () => {
+interface ElectronLogoProps {
+    dark: boolean;
+}
+
+export const ElectronLogo = (props: ElectronLogoProps) => {
 
 
     return (
 
-        <div className={'flex'}>
+        <div className={'flex justify-center'}>
             <Link to={"/"}>
-                <img src={logoSVG} alt={'electron logoSVG'}/>
+                {props.dark ?
+                    <img src={logSVGdark} alt={'electron logoSVG'}/>
+                    :
+                    <img src={logoSVG} alt={'electron logoSVG'}/>
+                }
             </Link>
         </div>
     )

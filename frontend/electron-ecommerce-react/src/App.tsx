@@ -3,6 +3,7 @@ import {AppLayout} from "./ui/AppLayout.tsx";
 import {Search} from "./ui/search/Search.tsx";
 import {Basket} from "./ui/basket/Basket.tsx";
 import {Home} from "./ui/home/Home.tsx";
+import {Account} from "./ui/account/Account.tsx";
 
 function App() {
 
@@ -22,6 +23,10 @@ function App() {
                 {
                     path: "/basket",
                     element: <Basket/>
+                },
+                {
+                    path: "/account",
+                    element: <Account/>
                 }
             ]
         }
