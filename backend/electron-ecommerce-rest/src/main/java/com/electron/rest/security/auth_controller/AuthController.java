@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.electron.rest.constants.EndpointsPaths.*;
+
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(API_V1_AUTH)
 public class AuthController {
 
     private final AuthService authService;
@@ -28,7 +30,7 @@ public class AuthController {
     }
 
     //basic auth header is required and body is required
-    @PostMapping("/login")
+    @PostMapping(LOGIN)
     public ResponseEntity<JwtResponse> login(@RequestBody LoginDto loginDto) {
         JwtResponse jwtResponse = new JwtResponse(authService.login(loginDto));
 
@@ -38,7 +40,7 @@ public class AuthController {
                 .body(jwtResponse);
     }
 
-    @PostMapping("/refreshtoken")
+    @PostMapping(REFRESH_TOKEN)
     public ResponseEntity<JwtResponse> refreshToken(HttpServletRequest request) {
         String refreshToken = refreshTokenService.isTokenUpToDate(request);
         JwtResponse jwtResponse = new JwtResponse(authService.refreshJwt(refreshToken));
