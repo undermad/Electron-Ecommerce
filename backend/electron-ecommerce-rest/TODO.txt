@@ -27,8 +27,33 @@
     - change login endpoint to return jwt token       COMPLETED
     - implement refresh token                         COMPLETED
 
-
-
+    REGISTER:
     - implement registration
-    - implement email verification
+    - create endpoint
+    - create authService method
+    - create exception
+    - create query
+    - add validation
+    - send verification email
+    - write tests
+
+    PASSWORD RECOVERY:
     - implement password recovery
+
+
+
+4. Tests
+    - implement integration tests
+        - AuthController
+            - login                                 COMPLETED
+            - refreshtoken                          COMPLETED
+            - registration
+            - forgot password
+            - validation
+
+5. Validation
+    - implement validation
+
+6. Email service:
+    - account email veryfication
+    - password recovery
