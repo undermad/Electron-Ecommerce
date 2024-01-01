@@ -2,21 +2,29 @@ package com.electron.rest;
 
 public class TestConstants {
 
-    //test123
-    public static final String TEST_USER_ENCRYPTED_PASSWORD = "$2a$10$GyNmk3NsMPz7LzWUzquuY./vjwJSj9f6wMQlU4X46ZPkrFlgZqgfC";
-    public static final Long TEST_USER_ID = 999L;
-    public static final String TEST_USER_EMAIL = "test@test.com";
-    public static final String TEST_USER_PASSWORD = "test123";
+    public static final Long USER_ADMIN_ID = 999L;
+    public static final String USER_ADMIN_EMAIL = "useradmin@test.com";
+    public static final String USER_ADMIN_PASSWORD = "admin123";
+    public static final String USER_ADMIN_ENCRYPTED_PASSWORD = "$2a$10$VW6dkIKT3MS9LqEVOkf7O.kljBHSvwuCfFQmQLBy0bSbwJW/mqDLG";
+
+    public static final Long USER_USER_ID = 998L;
+    public static final String USER_USER_EMAIL = "useruser@test.com";
+    public static final String USER_USER_PASSWORD = "user123";
+    public static final String USER_USER_ENCRYPTED_PASSWORD = "$2a$10$qUVKrUweziRyYe.RBhg.Cus8ClYlClHVjkR36x30XAX8G9iqmfpG2";
 
 
     public static final Long ADMIN_ROLE_ID = 1L;
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
+    public static final Long USER_ROLE_ID = 2L;
+    public static final String ROLE_USER = "ROLE_USER";
+
     public static final Long ACTIVE_ACCOUNT_ID = 1L;
     public static final String ACTIVE_ACCOUNT = "ACTIVE";
 
     public static final String TOKEN_TYPE = "Bearer";
-    public static final String REFRESH_TOKEN = "62771b43-db01-43f6-9d38-f7f04e56c3c6";
+    public static final String REFRESH_TOKEN_ADMIN = "62771b43-db01-43f6-9d38-f7f04e56c3c6";
+    public static final String REFRESH_TOKEN_USER = "0c3f8351-2d38-4b59-8de7-113b8e89c0fe";
 
 
     public static final String BAD_CREDENTIALS_MESSAGE = "Bad credentials";

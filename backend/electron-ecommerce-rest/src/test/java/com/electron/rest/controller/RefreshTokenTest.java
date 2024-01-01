@@ -39,33 +39,35 @@ public class RefreshTokenTest {
     @Value("${app-refresh-token-name}")
     private String tokenName;
 
-    private Cookie cookie;
 
     @BeforeEach
     public void init() {
-        cookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN);
         jdbc.execute(SqlQueryBefore.ADD_ROLES);
         jdbc.execute(SqlQueryBefore.ADD_ACCOUNT_STATUSES);
-        jdbc.execute(SqlQueryBefore.ADD_USER);
-        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_USER);
+        jdbc.execute(SqlQueryBefore.ADD_USER_ADMIN);
+        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_ADMIN);
         jdbc.execute(SqlQueryBefore.ADD_REFRESH_TOKEN);
+        jdbc.execute(SqlQueryBefore.ADD_USER_USER);
+        jdbc.execute(SqlQueryBefore.ADD_OUTDATED_REFRESH_TOKEN);
+        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_USER);
     }
 
     @AfterEach
     public void clean() {
-
-        jdbc.execute(SqlQueryAfter.REMOVE_USER_REFRESH_TOKEN);
-        jdbc.execute(SqlQueryAfter.REMOVE_USERS_ROLES_FOR_TEST_USER);
-        jdbc.execute(SqlQueryAfter.REMOVE_USER);
-        jdbc.execute(SqlQueryAfter.REMOVE_ROLES);
-        jdbc.execute(SqlQueryAfter.REMOVE_ACCOUNT_STATUSES);
+        jdbc.execute(SqlQueryAfter.DROP_USER_REFRESH_TOKEN);
+        jdbc.execute(SqlQueryAfter.DROP_USERS_ROLES);
+        jdbc.execute(SqlQueryAfter.DROP_USERS);
+        jdbc.execute(SqlQueryAfter.DROP_ACCOUNT_STATUSES);
+        jdbc.execute(SqlQueryAfter.DROP_ROLES);
     }
 
     @Test
     @DisplayName("[200] POST " + API_V1_AUTH + REFRESH_TOKEN)
     public void successfulRefreshToken() throws Exception {
+        Cookie cookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_ADMIN);
+
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
-                        .cookie(this.cookie))
+                        .cookie(cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tokenType", is(TestConstants.TOKEN_TYPE)));
     }
@@ -77,8 +79,19 @@ public class RefreshTokenTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
                         .cookie(badCookie))
-                .andExpect(status().is4xxClientError())
+                .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message", is(TestConstants.INVALID_TOKEN)));
+    }
+
+    @Test
+    @DisplayName("[?] POST " + API_V1_AUTH + REFRESH_TOKEN)
+    public void outdatedToken() throws Exception {
+        Cookie outdatedCookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_USER);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
+                        .cookie(outdatedCookie))
+                .andExpect(status().isForbidden());
+
     }
 
 

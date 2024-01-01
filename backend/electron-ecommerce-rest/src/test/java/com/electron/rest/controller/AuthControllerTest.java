@@ -17,8 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
-import static com.electron.rest.TestConstants.TEST_USER_EMAIL;
-import static com.electron.rest.TestConstants.TEST_USER_PASSWORD;
+import static com.electron.rest.TestConstants.USER_ADMIN_EMAIL;
+import static com.electron.rest.TestConstants.USER_ADMIN_PASSWORD;
 import static com.electron.rest.constants.EndpointsPaths.*;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -43,21 +43,21 @@ public class AuthControllerTest {
 
     @BeforeEach
     public void init() {
-        loginDto = new LoginDto(TEST_USER_EMAIL, TEST_USER_PASSWORD);
+        loginDto = new LoginDto(USER_ADMIN_EMAIL, USER_ADMIN_PASSWORD);
         jdbc.execute(SqlQueryBefore.ADD_ROLES);
         jdbc.execute(SqlQueryBefore.ADD_ACCOUNT_STATUSES);
-        jdbc.execute(SqlQueryBefore.ADD_USER);
-        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_USER);
+        jdbc.execute(SqlQueryBefore.ADD_USER_ADMIN);
+        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_ADMIN);
     }
 
     @AfterEach
     public void clean() {
 
-        jdbc.execute(SqlQueryAfter.REMOVE_USER_REFRESH_TOKEN);
-        jdbc.execute(SqlQueryAfter.REMOVE_USERS_ROLES_FOR_TEST_USER);
-        jdbc.execute(SqlQueryAfter.REMOVE_USER);
-        jdbc.execute(SqlQueryAfter.REMOVE_ROLES);
-        jdbc.execute(SqlQueryAfter.REMOVE_ACCOUNT_STATUSES);
+        jdbc.execute(SqlQueryAfter.DROP_USER_REFRESH_TOKEN);
+        jdbc.execute(SqlQueryAfter.DROP_USERS_ROLES);
+        jdbc.execute(SqlQueryAfter.DROP_USERS);
+        jdbc.execute(SqlQueryAfter.DROP_ROLES);
+        jdbc.execute(SqlQueryAfter.DROP_ACCOUNT_STATUSES);
     }
 
     @Test
