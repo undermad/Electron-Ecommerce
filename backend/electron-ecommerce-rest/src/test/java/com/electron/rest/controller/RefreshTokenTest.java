@@ -1,53 +1,54 @@
 package com.electron.rest.controller;
 
-
+import com.electron.rest.TestConstants;
 import com.electron.rest.sql.SqlQueryAfter;
 import com.electron.rest.sql.SqlQueryBefore;
-import com.electron.rest.TestConstants;
-import com.electron.rest.security.auth_dto.LoginDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.*;
+import jakarta.servlet.http.Cookie;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
-import static com.electron.rest.TestConstants.TEST_USER_EMAIL;
-import static com.electron.rest.TestConstants.TEST_USER_PASSWORD;
-import static com.electron.rest.constants.EndpointsPaths.*;
-import static org.hamcrest.Matchers.is;
+import static com.electron.rest.constants.EndpointsPaths.API_V1_AUTH;
+import static com.electron.rest.constants.EndpointsPaths.REFRESH_TOKEN;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.is;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-public class AuthControllerTest {
+public class RefreshTokenTest {
+
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper mapper;
-
-    @Autowired
     private JdbcTemplate jdbc;
 
-    private LoginDto loginDto;
+    @Value("${app-refresh-token-name}")
+    private String tokenName;
 
+    private Cookie cookie;
 
     @BeforeEach
     public void init() {
-        loginDto = new LoginDto(TEST_USER_EMAIL, TEST_USER_PASSWORD);
+        cookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN);
         jdbc.execute(SqlQueryBefore.ADD_ROLES);
         jdbc.execute(SqlQueryBefore.ADD_ACCOUNT_STATUSES);
         jdbc.execute(SqlQueryBefore.ADD_USER);
         jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_USER);
+        jdbc.execute(SqlQueryBefore.ADD_REFRESH_TOKEN);
     }
 
     @AfterEach
@@ -61,31 +62,23 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void emptyTest() {
-
-    }
-
-
-    @Test
-    @DisplayName("[200] POST " + API_V1_AUTH + LOGIN)
-    public void successfulLogin() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + LOGIN)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(mapper.writeValueAsString(loginDto)))
+    @DisplayName("[200] POST " + API_V1_AUTH + REFRESH_TOKEN)
+    public void successfulRefreshToken() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
+                        .cookie(this.cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tokenType", is(TestConstants.TOKEN_TYPE)));
     }
 
     @Test
-    @DisplayName("[500] POST " + API_V1_AUTH + LOGIN)
-    public void badCredentials() throws Exception {
-        LoginDto incorrectCred = new LoginDto("123", "321");
+    @DisplayName("[403] POST " + API_V1_AUTH + REFRESH_TOKEN)
+    public void invalidToken() throws Exception {
+        Cookie badCookie = new Cookie(tokenName, "123");
 
-        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + LOGIN)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(mapper.writeValueAsString(incorrectCred)))
-                .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.message", is(TestConstants.BAD_CREDENTIALS_MESSAGE)));
+        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
+                        .cookie(badCookie))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.message", is(TestConstants.INVALID_TOKEN)));
     }
 
 
