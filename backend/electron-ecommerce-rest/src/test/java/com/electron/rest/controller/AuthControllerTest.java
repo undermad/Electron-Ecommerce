@@ -60,11 +60,6 @@ public class AuthControllerTest {
         jdbc.execute(SqlQueryAfter.DROP_ACCOUNT_STATUSES);
     }
 
-    @Test
-    public void emptyTest() {
-
-    }
-
 
     @Test
     @DisplayName("[200] POST " + API_V1_AUTH + LOGIN)

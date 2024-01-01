@@ -7,8 +7,8 @@ import org.springframework.http.ResponseCookie;
 
 
 public interface RefreshTokenService {
-    RefreshToken generateToken(Long userId);
+    RefreshToken saveRefreshToken(RefreshToken token);
     String isTokenUpToDate(HttpServletRequest request);
-    ResponseCookie generateRefreshTokenCookie(LoginDto loginDto);
+    ResponseCookie getRefreshTokenCookie(LoginDto loginDto);
     void deleteRefreshToken(Long userId);
 }

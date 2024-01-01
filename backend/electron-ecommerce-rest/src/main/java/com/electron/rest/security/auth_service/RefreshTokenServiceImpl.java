@@ -3,7 +3,6 @@ package com.electron.rest.security.auth_service;
 import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.security.auth_dto.LoginDto;
 import com.electron.rest.security.auth_entity.RefreshToken;
-import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
 import com.electron.rest.security.auth_repository.projections.RefreshTokenProjection;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -40,39 +38,31 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public ResponseCookie generateRefreshTokenCookie(LoginDto loginDto) {
+    public ResponseCookie getRefreshTokenCookie(LoginDto loginDto) {
         List<UserProjection> usersList = userRepository.getUserIdFromEmail(loginDto.email());
         if(usersList.isEmpty())
             throw new UsernameNotFoundException("User not found");
         Long userId = usersList.get(0).getId();
         deleteRefreshToken(userId);
-        RefreshToken refreshToken = generateToken(userId);
+        RefreshToken refreshToken = saveRefreshToken(refreshTokenProvider.generateToken(userId));
         return refreshTokenProvider.createRefreshTokenCookie(refreshToken.getToken());
     }
 
     @Override
-    public RefreshToken generateToken(Long userId) {
-        RefreshToken token = new RefreshToken();
-        User user = new User();
-        user.setId(userId);
-        token.setUser(user);
-        token.setExpiryDate(Instant.now().plusMillis(Long.parseLong(refreshTokenExpirationTime)));
-        token.setToken(UUID.randomUUID().toString());
-
+    public RefreshToken saveRefreshToken(RefreshToken token){
         return refreshTokenRepository.save(token);
     }
 
     @Override
     public String isTokenUpToDate(HttpServletRequest request) {
 
-        String refreshToken = refreshTokenProvider.getRefreshToken(request);
+        String refreshToken = refreshTokenProvider.getRefreshTokenFromHttpRequest(request);
         if (refreshToken != null) {
 
             List<RefreshTokenProjection> refreshTokenProjectionList = refreshTokenRepository.findRefreshTokenByToken(refreshToken);
             if(refreshTokenProjectionList.isEmpty())
                 throw new RefreshTokenException("Invalid token");
             RefreshTokenProjection refreshTokenProjection = refreshTokenProjectionList.get(0);
-
 
             if (refreshTokenProjection.getExpirationDate().compareTo(Instant.now()) < 0) {
                 refreshTokenRepository.deleteById(refreshTokenProjection.getId());

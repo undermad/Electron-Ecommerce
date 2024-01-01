@@ -57,3 +57,5 @@
 6. Email service:
     - account email veryfication
     - password recovery
+
+7. Add logging system

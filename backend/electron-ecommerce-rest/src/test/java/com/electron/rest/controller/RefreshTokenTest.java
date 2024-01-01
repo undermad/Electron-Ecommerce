@@ -84,7 +84,7 @@ public class RefreshTokenTest {
     }
 
     @Test
-    @DisplayName("[?] POST " + API_V1_AUTH + REFRESH_TOKEN)
+    @DisplayName("[403] POST " + API_V1_AUTH + REFRESH_TOKEN)
     public void outdatedToken() throws Exception {
         Cookie outdatedCookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_USER);
 

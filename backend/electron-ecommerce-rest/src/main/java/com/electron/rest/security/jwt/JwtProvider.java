@@ -1,12 +1,9 @@
 package com.electron.rest.security.jwt;
 
-import com.electron.rest.exception.ApiException;
-import com.electron.rest.security.auth_repository.UserRepository;
-import com.electron.rest.security.auth_repository.projections.UserProjection;
+import com.electron.rest.exception.UnauthorizedException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -70,13 +67,13 @@ public class JwtProvider {
                     .build()
                     .parse(token);
         } catch (MalformedJwtException e) {
-            throw new ApiException("Invalid token");
+            throw new UnauthorizedException("Invalid token");
         } catch (ExpiredJwtException e) {
-            throw new ApiException("Expired token");
+            throw new UnauthorizedException("Expired token");
         } catch (UnsupportedJwtException e) {
-            throw new ApiException("Unsupported JWT token");
+            throw new UnauthorizedException("Unsupported JWT token");
         } catch (IllegalArgumentException e) {
-            throw new ApiException("JWT claims string is empty.");
+            throw new UnauthorizedException("JWT claims string is empty.");
         }
 
         return true;
