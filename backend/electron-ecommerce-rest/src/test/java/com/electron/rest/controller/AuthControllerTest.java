@@ -1,6 +1,9 @@
 package com.electron.rest.controller;
 
 
+import com.electron.rest.constants.ErrorResponses;
+import com.electron.rest.constants.SuccessResponses;
+import com.electron.rest.security.auth_dto.RegisterDto;
 import com.electron.rest.sql.SqlQueryAfter;
 import com.electron.rest.sql.SqlQueryBefore;
 import com.electron.rest.TestConstants;
@@ -17,8 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
-import static com.electron.rest.TestConstants.USER_ADMIN_EMAIL;
-import static com.electron.rest.TestConstants.USER_ADMIN_PASSWORD;
+import static com.electron.rest.TestConstants.*;
 import static com.electron.rest.constants.EndpointsPaths.*;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -82,6 +84,32 @@ public class AuthControllerTest {
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message", is(TestConstants.BAD_CREDENTIALS_MESSAGE)));
     }
+
+    @Test
+    @DisplayName("[201] POST " + API_V1_AUTH + REGISTER)
+    public void successfulRegister() throws Exception {
+        RegisterDto registerDto = new RegisterDto(REGISTER_DTO_EMAIL, REGISTER_DTO_PASSWORD, REGISTER_DTO_SUBSCRIPTION);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(mapper.writeValueAsString(registerDto)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.message", is(SuccessResponses.REGISTER_SUCCESS)));
+    }
+
+    @Test
+    @DisplayName("[409] POST " + API_V1_AUTH + REGISTER)
+    public void emailAlreadyExist() throws Exception {
+        RegisterDto registerDto = new RegisterDto(USER_ADMIN_EMAIL, "123", false);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(mapper.writeValueAsString(registerDto)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message", is(ErrorResponses.EMAIL_ALREADY_IN_USE)));
+    }
+
+
 
 
 }

@@ -2,11 +2,14 @@ package com.electron.rest.security.auth_controller;
 
 import com.electron.rest.security.auth_dto.JwtResponse;
 import com.electron.rest.security.auth_dto.LoginDto;
+import com.electron.rest.security.auth_dto.RegisterDto;
+import com.electron.rest.security.auth_dto.RegisterResponse;
 import com.electron.rest.security.auth_service.AuthService;
 import com.electron.rest.security.auth_service.RefreshTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,19 +35,21 @@ public class AuthController {
     //basic auth header is required and body is required
     @PostMapping(LOGIN)
     public ResponseEntity<JwtResponse> login(@RequestBody LoginDto loginDto) {
-        JwtResponse jwtResponse = new JwtResponse(authService.login(loginDto));
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
                         refreshTokenService.getRefreshTokenCookie(loginDto).toString())
-                .body(jwtResponse);
+                .body(authService.login(loginDto));
     }
 
     @PostMapping(REFRESH_TOKEN)
     public ResponseEntity<JwtResponse> refreshToken(HttpServletRequest request) {
         String refreshToken = refreshTokenService.isTokenUpToDate(request);
-        JwtResponse jwtResponse = new JwtResponse(authService.refreshJwt(refreshToken));
-        return ResponseEntity.ok(jwtResponse);
+        return ResponseEntity.ok(authService.refreshJwt(refreshToken));
+    }
+
+    @PostMapping(REGISTER)
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterDto registerDto) {
+        return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
     }
 
 

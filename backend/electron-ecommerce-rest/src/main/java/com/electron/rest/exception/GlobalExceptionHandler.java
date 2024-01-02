@@ -68,8 +68,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 webRequest.getDescription(false));
 
         return new ResponseEntity<>(errorDto, HttpStatus.FORBIDDEN);
-
     }
 
+    @ExceptionHandler(EmailAlreadyExistException.class)
+    public ResponseEntity<ErrorDto> handleUserAlreadyExistException(EmailAlreadyExistException exception, WebRequest webRequest) {
+
+        ErrorDto errorDto = new ErrorDto(
+                exception.getMessage(),
+                new Date(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDto, HttpStatus.CONFLICT);
+    }
 
 }

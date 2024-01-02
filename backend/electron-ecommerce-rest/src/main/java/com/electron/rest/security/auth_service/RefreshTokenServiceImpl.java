@@ -39,9 +39,9 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     @Override
     public ResponseCookie getRefreshTokenCookie(LoginDto loginDto) {
-        List<UserProjection> usersList = userRepository.getUserIdFromEmail(loginDto.email());
+        List<UserProjection> usersList = userRepository.findUserIdFromEmail(loginDto.email());
         if(usersList.isEmpty())
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("Bad credentials");
         Long userId = usersList.get(0).getId();
         deleteRefreshToken(userId);
         RefreshToken refreshToken = saveRefreshToken(refreshTokenProvider.generateToken(userId));

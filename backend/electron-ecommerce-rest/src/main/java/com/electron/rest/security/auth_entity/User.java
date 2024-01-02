@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Set;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users", schema = "electron_ecommerce")
 public class User {
@@ -27,7 +30,7 @@ public class User {
     private boolean newsletterSubscription;
 
     @CreationTimestamp
-    private Date createdOn;
+    private Instant createdOn;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_status_id", nullable = false)

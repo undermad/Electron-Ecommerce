@@ -2,7 +2,6 @@ package com.electron.rest.security;
 
 import com.electron.rest.security.auth_repository.RoleRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
-import com.electron.rest.security.auth_repository.projections.RoleProjection;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        List<UserProjection> users = userRepository.getUserEmailAndPassword(email);
+        List<UserProjection> users = userRepository.findUserEmailAndPassword(email);
         if(users.isEmpty()){
             throw new UsernameNotFoundException("Email or password is incorrect.");
         }

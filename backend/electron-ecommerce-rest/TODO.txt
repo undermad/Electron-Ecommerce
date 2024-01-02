@@ -29,13 +29,13 @@
 
     REGISTER:
     - implement registration
-    - create endpoint
-    - create authService method
-    - create exception
-    - create query
+    - create endpoint                                 COMPLETED
+    - create authService method                       COMPLETED
+    - create exception                                COMPLETED
+    - create query                                    COMPLETED
     - add validation
     - send verification email
-    - write tests
+    - write tests                                     COMPLETED
 
     PASSWORD RECOVERY:
     - implement password recovery
@@ -47,7 +47,8 @@
         - AuthController
             - login                                 COMPLETED
             - refreshtoken                          COMPLETED
-            - registration
+            - registration                          COMPLETED
+            - validation
             - forgot password
             - validation
 
