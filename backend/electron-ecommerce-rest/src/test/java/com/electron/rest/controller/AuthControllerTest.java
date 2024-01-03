@@ -82,7 +82,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(mapper.writeValueAsString(incorrectCred)))
                 .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.message", is(ErrorMessages.BAD_CREDENTIALS_MESSAGE)));
+                .andExpect(jsonPath("$.message", is(ErrorMessages.BAD_CREDENTIALS)));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class AuthControllerTest {
     @Test
     @DisplayName("[409] POST " + API_V1_AUTH + REGISTER)
     public void emailAlreadyExist() throws Exception {
-        RegisterDto registerDto = new RegisterDto(USER_ADMIN_EMAIL, "123", false);
+        RegisterDto registerDto = new RegisterDto(USER_ADMIN_EMAIL, USER_USER_PASSWORD, false);
 
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -109,7 +109,18 @@ public class AuthControllerTest {
                 .andExpect(jsonPath("$.message", is(ErrorMessages.EMAIL_ALREADY_IN_USE)));
     }
 
+    @Test
+    @DisplayName("[400] POST" + API_V1_AUTH + REGISTER)
+    public void validationFailed() throws Exception {
+        RegisterDto registerDto = new RegisterDto("123", "12345678901234567890123456789012345678901234567890", null);
 
+        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(registerDto)))
+                .andExpect(jsonPath("$.email", is(ErrorMessages.EMAIL_INCORRECT_FORMAT)))
+                .andExpect(jsonPath("$.password", is(ErrorMessages.PASSWORD_INCORRECT_LENGTH)))
+                .andExpect(jsonPath("$.newsletterSubscription", is(ErrorMessages.NULL)));
+    }
 
 
 }

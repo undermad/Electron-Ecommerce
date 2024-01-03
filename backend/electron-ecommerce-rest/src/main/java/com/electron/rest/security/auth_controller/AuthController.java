@@ -7,6 +7,7 @@ import com.electron.rest.security.auth_dto.RegisterResponse;
 import com.electron.rest.security.auth_service.AuthService;
 import com.electron.rest.security.auth_service.RefreshTokenService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class AuthController {
 
     //basic auth header is required and body is required
     @PostMapping(LOGIN)
-    public ResponseEntity<JwtResponse> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginDto loginDto) {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
                         refreshTokenService.getRefreshTokenCookie(loginDto).toString())
@@ -48,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping(REGISTER)
-    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterDto registerDto) {
         return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
     }
 
