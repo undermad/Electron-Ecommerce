@@ -1,6 +1,7 @@
 package com.electron.rest.controller;
 
 import com.electron.rest.TestConstants;
+import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.sql.SqlQueryAfter;
 import com.electron.rest.sql.SqlQueryBefore;
 import jakarta.servlet.http.Cookie;
@@ -80,7 +81,7 @@ public class RefreshTokenTest {
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
                         .cookie(badCookie))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message", is(TestConstants.INVALID_TOKEN)));
+                .andExpect(jsonPath("$.message", is(ErrorMessages.INVALID_TOKEN)));
     }
 
     @Test

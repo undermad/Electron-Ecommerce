@@ -1,8 +1,8 @@
 package com.electron.rest.controller;
 
 
-import com.electron.rest.constants.ErrorResponses;
-import com.electron.rest.constants.SuccessResponses;
+import com.electron.rest.constants.ErrorMessages;
+import com.electron.rest.constants.SuccessMessages;
 import com.electron.rest.security.auth_dto.RegisterDto;
 import com.electron.rest.sql.SqlQueryAfter;
 import com.electron.rest.sql.SqlQueryBefore;
@@ -82,7 +82,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(mapper.writeValueAsString(incorrectCred)))
                 .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.message", is(TestConstants.BAD_CREDENTIALS_MESSAGE)));
+                .andExpect(jsonPath("$.message", is(ErrorMessages.BAD_CREDENTIALS_MESSAGE)));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(mapper.writeValueAsString(registerDto)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.message", is(SuccessResponses.REGISTER_SUCCESS)));
+                .andExpect(jsonPath("$.message", is(SuccessMessages.REGISTER_SUCCESS)));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(mapper.writeValueAsString(registerDto)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.message", is(ErrorResponses.EMAIL_ALREADY_IN_USE)));
+                .andExpect(jsonPath("$.message", is(ErrorMessages.EMAIL_ALREADY_IN_USE)));
     }
 
 

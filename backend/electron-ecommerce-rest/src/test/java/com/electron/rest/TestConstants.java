@@ -33,6 +33,5 @@ public class TestConstants {
     public static final String REFRESH_TOKEN_USER = "0c3f8351-2d38-4b59-8de7-113b8e89c0fe";
 
 
-    public static final String BAD_CREDENTIALS_MESSAGE = "Bad credentials";
-    public static final String INVALID_TOKEN = "Invalid token";
+
 }
