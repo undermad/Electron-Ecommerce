@@ -36,10 +36,11 @@ public class AuthController {
     //basic auth header is required and body is required
     @PostMapping(LOGIN)
     public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginDto loginDto) {
+        JwtResponse jwtResponse = authService.login(loginDto);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
                         refreshTokenService.getRefreshTokenCookie(loginDto).toString())
-                .body(authService.login(loginDto));
+                .body(jwtResponse);
     }
 
     @PostMapping(REFRESH_TOKEN)

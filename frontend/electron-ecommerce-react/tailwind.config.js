@@ -18,6 +18,7 @@ export default {
             'electron-button-bg-blue': '#2287FD',
             'electron-placeholder-grey:':'#667085',
             'electron-input-ash-blue':'#484C60',
+            'electron-error':'#f40000'
         },
         extend: {},
     },
