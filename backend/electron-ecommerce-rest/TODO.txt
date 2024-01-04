@@ -33,7 +33,7 @@
     - create authService method                       COMPLETED
     - create exception                                COMPLETED
     - create query                                    COMPLETED
-    - add validation
+    - add validation                                  COMPLETED
     - send verification email
     - write tests                                     COMPLETED
 
@@ -48,7 +48,7 @@
             - login                                 COMPLETED
             - refreshtoken                          COMPLETED
             - registration                          COMPLETED
-            - validation
+            - validation                            COMPLETED
             - forgot password
             - validation
 

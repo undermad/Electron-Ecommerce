@@ -64,7 +64,7 @@ public class AuthControllerTest {
 
 
     @Test
-    @DisplayName("[200] POST " + API_V1_AUTH + LOGIN)
+    @DisplayName("[200] POST " + API_V1_AUTH + LOGIN + " Successful login.")
     public void successfulLogin() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + LOGIN)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -74,7 +74,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("[500] POST " + API_V1_AUTH + LOGIN)
+    @DisplayName("[500] POST " + API_V1_AUTH + LOGIN +  " Bad credentials.")
     public void badCredentials() throws Exception {
         LoginDto incorrectCred = new LoginDto("123", "321");
 
@@ -86,7 +86,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("[201] POST " + API_V1_AUTH + REGISTER)
+    @DisplayName("[201] POST " + API_V1_AUTH + REGISTER + " Successful registration.")
     public void successfulRegister() throws Exception {
         RegisterDto registerDto = new RegisterDto(REGISTER_DTO_EMAIL, REGISTER_DTO_PASSWORD, REGISTER_DTO_SUBSCRIPTION);
 
@@ -98,7 +98,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("[409] POST " + API_V1_AUTH + REGISTER)
+    @DisplayName("[409] POST " + API_V1_AUTH + REGISTER + " Email already exist.")
     public void emailAlreadyExist() throws Exception {
         RegisterDto registerDto = new RegisterDto(USER_ADMIN_EMAIL, USER_USER_PASSWORD, false);
 
@@ -110,7 +110,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("[400] POST" + API_V1_AUTH + REGISTER)
+    @DisplayName("[400] POST" + API_V1_AUTH + REGISTER + " Invalid register dto.")
     public void validationFailed() throws Exception {
         RegisterDto registerDto = new RegisterDto("123", "12345678901234567890123456789012345678901234567890", null);
 
@@ -119,6 +119,19 @@ public class AuthControllerTest {
                         .content(mapper.writeValueAsString(registerDto)))
                 .andExpect(jsonPath("$.email", is(ErrorMessages.EMAIL_INCORRECT_FORMAT)))
                 .andExpect(jsonPath("$.password", is(ErrorMessages.PASSWORD_INCORRECT_LENGTH)))
+                .andExpect(jsonPath("$.newsletterSubscription", is(ErrorMessages.NULL)));
+    }
+
+    @Test
+    @DisplayName("[400] POST" + API_V1_AUTH + REGISTER + " Empty register dto.")
+    public void emptyRegisterDto() throws Exception {
+        RegisterDto registerDto = new RegisterDto(null, null, null);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(registerDto)))
+                .andExpect(jsonPath("$.email", is(ErrorMessages.BLANK_FIELD)))
+                .andExpect(jsonPath("$.password", is(ErrorMessages.BLANK_FIELD)))
                 .andExpect(jsonPath("$.newsletterSubscription", is(ErrorMessages.NULL)));
     }
 
