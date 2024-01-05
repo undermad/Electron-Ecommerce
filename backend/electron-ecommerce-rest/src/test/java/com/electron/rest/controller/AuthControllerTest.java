@@ -4,6 +4,8 @@ package com.electron.rest.controller;
 import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.constants.SuccessMessages;
 import com.electron.rest.security.auth_dto.RegisterDto;
+import com.electron.rest.security.auth_entity.RefreshToken;
+import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import com.electron.rest.sql.SqlQueryAfter;
 import com.electron.rest.sql.SqlQueryBefore;
 import com.electron.rest.TestConstants;
@@ -39,6 +41,9 @@ public class AuthControllerTest {
 
     @Autowired
     private JdbcTemplate jdbc;
+
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
 
     private LoginDto loginDto;
 
@@ -84,6 +89,7 @@ public class AuthControllerTest {
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message", is(ErrorMessages.BAD_CREDENTIALS)));
     }
+
 
     @Test
     @DisplayName("[201] POST " + API_V1_AUTH + REGISTER + " Successful registration.")

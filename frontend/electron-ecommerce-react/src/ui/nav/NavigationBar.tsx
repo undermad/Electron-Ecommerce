@@ -3,7 +3,7 @@ import {ElectronLogo} from "./ElectronLogo.tsx";
 import {CategoriesList} from "./CategoriesList.tsx";
 import {BasketLink} from "./BasketLink.tsx";
 import {AccountLink} from "./AccountLink.tsx";
-import {useViewport} from "../custom_hooks/CustomHooks.ts";
+import {useViewport} from "../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../custom_hooks/Breakpoints.ts";
 
 export const NavigationBar = () => {
@@ -23,16 +23,16 @@ export const NavigationBar = () => {
                         <CategoriesList/>
                     </div>
                     <SearchBar/>
-                    <AccountLink/>
                     <BasketLink/>
+                    <AccountLink/>
                 </>
                 :
                 // MOBILE
                 <>
                     <ElectronLogo dark={false}/>
                     <SearchBar/>
-                    <AccountLink/>
                     <BasketLink/>
+                    <AccountLink/>
                     <CategoriesList/>
 
                 </>

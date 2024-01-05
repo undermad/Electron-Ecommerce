@@ -16,7 +16,7 @@ export default {
             'electron-gradient-light-blue': '#4AA8FF',
             'electron-gradient-eye-blue': '#00F0FF',
             'electron-button-bg-blue': '#2287FD',
-            'electron-placeholder-grey:':'#667085',
+            'electron-placeholder-grey':'#667085',
             'electron-input-ash-blue':'#484C60',
             'electron-error':'#f40000'
         },

@@ -18,4 +18,6 @@ public interface RefreshTokenRepository extends CrudRepository<RefreshToken, Lon
     @Modifying
     @Query(value = "DELETE FROM refresh_tokens WHERE user_id = :userId", nativeQuery = true)
     void deleteTokenByUserId(@Param("userId") Long userId);
+
+
 }

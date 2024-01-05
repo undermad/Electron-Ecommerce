@@ -1,4 +1,4 @@
-import {useViewport} from "../custom_hooks/CustomHooks.ts";
+import {useViewport} from "../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../custom_hooks/Breakpoints.ts";
 import {Hero} from "./Hero.tsx";
 
