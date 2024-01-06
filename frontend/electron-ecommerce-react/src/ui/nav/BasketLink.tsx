@@ -1,5 +1,5 @@
 import basketSVG from "../../assets/icons/basket.svg";
-import {useViewport} from "../custom_hooks/useViewport.ts"
+import {useViewport} from "../../custom_hooks/useViewport.ts"
 import {Link} from "react-router-dom";
 import {BASKET} from "../../constants/Routes.ts";
 

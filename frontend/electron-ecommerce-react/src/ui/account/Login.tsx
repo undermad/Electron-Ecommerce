@@ -1,7 +1,7 @@
 import {SyntheticEvent, useEffect, useRef, useState} from "react";
 import {ElectronLogoHero} from "./ElectronLogoHero.tsx";
-import {useAuth} from "../custom_hooks/useAuth.ts";
-import { useNavigate, useLocation} from "react-router-dom";
+import {useAuth} from "../../custom_hooks/useAuth.ts";
+import {useNavigate, useLocation} from "react-router-dom";
 import {HOME} from "../../constants/Routes.ts";
 import {LoginRequest} from "../../api/dto/LoginRequest.ts";
 import {LoginResponse} from "../../api/dto/LoginResponse.ts";
@@ -41,6 +41,9 @@ export const Login = () => {
         login(data)
             .then((response: LoginResponse) => {
                 auth?.setAuth({...response});
+                console.log(auth?.auth?.token)
+                console.log(auth?.auth?.roles)
+                console.log(auth?.auth?.tokenType)
                 navigate(from, {replace: true});
             })
             .catch((error) => {
@@ -51,6 +54,7 @@ export const Login = () => {
 
         if (errorRef.current !== null)
             errorRef.current.focus();
+
     }
 
     return (

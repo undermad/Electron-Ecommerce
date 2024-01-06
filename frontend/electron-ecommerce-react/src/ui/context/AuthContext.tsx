@@ -4,8 +4,8 @@ type AuthContextProps = {
     children: React.ReactNode;
 }
 export type Auth = {
-    email?: string,
-    accessToken?: string,
+    token?: string,
+   tokenType?: string
     roles?: string[],
 }
 

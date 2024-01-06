@@ -6,6 +6,4 @@ export const Basket = () => {
             Welcome in the basket!
         </div>
     )
-
-
 }
