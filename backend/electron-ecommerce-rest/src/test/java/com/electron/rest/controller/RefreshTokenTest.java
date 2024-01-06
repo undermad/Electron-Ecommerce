@@ -63,33 +63,33 @@ public class RefreshTokenTest {
     }
 
     @Test
-    @DisplayName("[200] POST " + API_V1_AUTH + REFRESH_TOKEN)
+    @DisplayName("[200] GET " + API_V1_AUTH + REFRESH_TOKEN)
     public void successfulRefreshToken() throws Exception {
         Cookie cookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_ADMIN);
 
-        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
+        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
                         .cookie(cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tokenType", is(TestConstants.TOKEN_TYPE)));
     }
 
     @Test
-    @DisplayName("[403] POST " + API_V1_AUTH + REFRESH_TOKEN)
+    @DisplayName("[403] GET " + API_V1_AUTH + REFRESH_TOKEN)
     public void invalidToken() throws Exception {
         Cookie badCookie = new Cookie(tokenName, "123");
 
-        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
+        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
                         .cookie(badCookie))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message", is(ErrorMessages.INVALID_TOKEN)));
     }
 
     @Test
-    @DisplayName("[403] POST " + API_V1_AUTH + REFRESH_TOKEN)
+    @DisplayName("[403] GET " + API_V1_AUTH + REFRESH_TOKEN)
     public void outdatedToken() throws Exception {
         Cookie outdatedCookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_USER);
 
-        mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REFRESH_TOKEN)
+        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
                         .cookie(outdatedCookie))
                 .andExpect(status().isForbidden());
 
