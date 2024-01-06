@@ -7,6 +7,7 @@ export default {
         },
         colors: {
             'electron-primary-dark-blue': '#0E1120',
+            'electron-primary-disabled-dark-blue': '#2f2f2f',
             'electron-primary-white': '#FFFFFF',
             'electron-primary-grey': '#afafaf',
             'electron-input-bg': '#262836',

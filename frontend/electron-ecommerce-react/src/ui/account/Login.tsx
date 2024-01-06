@@ -1,10 +1,11 @@
 import {SyntheticEvent, useEffect, useRef, useState} from "react";
 import {ElectronLogoHero} from "./ElectronLogoHero.tsx";
-import {axiosAuthApi} from "../../api/Axios.ts";
-import {LOGIN} from "../../constants/ApiPaths.ts";
 import {useAuth} from "../custom_hooks/useAuth.ts";
 import {Link, Navigate, Location, useNavigate, useLocation} from "react-router-dom";
 import {HOME} from "../../constants/Routes.ts";
+import {LoginRequest} from "../../api/dto/LoginRequest.ts";
+import {LoginResponse} from "../../api/dto/LoginResponse.ts";
+import {login} from "../../api/service/authService.ts";
 
 
 export const Login = () => {
@@ -22,6 +23,7 @@ export const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (emailRef.current !== null) {
@@ -32,21 +34,19 @@ export const Login = () => {
 
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
+        setLoading(true);
 
+        const data = new LoginRequest(email, password);
 
-        try {
-            const response = await axiosAuthApi.post(LOGIN, JSON.stringify({
-                email: email,
-                password: password,
-            }));
-
-
-            auth?.setAuth({email: email, accessToken: response?.data?.accessToken})
-
-            navigate(from, {replace: true});
-        } catch (err) {
-            console.log(err)
-        }
+        login(data)
+            .then((response: LoginResponse) => {
+                auth?.setAuth({email: email, accessToken: response.accessToken})
+                navigate(from, {replace: true})
+            })
+            .catch((error) => {
+                setLoading(false);
+                setErrorMessage(error.message)
+            })
 
 
         if (errorRef.current !== null)
@@ -111,8 +111,9 @@ export const Login = () => {
 
                         <div className={"flex flex-col gap-[14px] mt-[24px]"}>
                             <button
-                                className={"button-electron"}>Log
-                                In
+                                className={loading ? "button-electron-disabled" : "button-electron"}
+                                disabled={loading}>
+                                Log In
                             </button>
                         </div>
 
