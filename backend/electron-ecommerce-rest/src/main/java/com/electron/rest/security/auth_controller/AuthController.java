@@ -1,9 +1,6 @@
 package com.electron.rest.security.auth_controller;
 
-import com.electron.rest.security.auth_dto.JwtResponse;
-import com.electron.rest.security.auth_dto.LoginDto;
-import com.electron.rest.security.auth_dto.RegisterDto;
-import com.electron.rest.security.auth_dto.RegisterResponse;
+import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_service.AuthService;
 import com.electron.rest.security.auth_service.RefreshTokenService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,12 +29,12 @@ public class AuthController {
 
     //basic auth header is required and body is required
     @PostMapping(LOGIN)
-    public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginDto loginDto) {
-        JwtResponse jwtResponse = authService.login(loginDto);
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDto loginDto) {
+        LoginResponse loginResponse = authService.login(loginDto);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
                         refreshTokenService.getRefreshTokenCookie(loginDto).toString())
-                .body(jwtResponse);
+                .body(loginResponse);
     }
 
     @GetMapping(REFRESH_TOKEN)

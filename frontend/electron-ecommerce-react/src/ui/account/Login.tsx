@@ -1,7 +1,7 @@
 import {SyntheticEvent, useEffect, useRef, useState} from "react";
 import {ElectronLogoHero} from "./ElectronLogoHero.tsx";
 import {useAuth} from "../custom_hooks/useAuth.ts";
-import {Link, Navigate, Location, useNavigate, useLocation} from "react-router-dom";
+import { useNavigate, useLocation} from "react-router-dom";
 import {HOME} from "../../constants/Routes.ts";
 import {LoginRequest} from "../../api/dto/LoginRequest.ts";
 import {LoginResponse} from "../../api/dto/LoginResponse.ts";
@@ -40,8 +40,8 @@ export const Login = () => {
 
         login(data)
             .then((response: LoginResponse) => {
-                auth?.setAuth({email: email, accessToken: response.accessToken})
-                navigate(from, {replace: true})
+                auth?.setAuth({...response});
+                navigate(from, {replace: true});
             })
             .catch((error) => {
                 setLoading(false);

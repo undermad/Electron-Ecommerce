@@ -6,6 +6,7 @@ type AuthContextProps = {
 export type Auth = {
     email?: string,
     accessToken?: string,
+    roles?: string[],
 }
 
 type AuthContextType = {

@@ -1,6 +1,5 @@
 package com.electron.rest.security.auth_dto;
 
-import com.electron.rest.constants.ErrorMessages;
 import jakarta.validation.constraints.*;
 
 import static com.electron.rest.constants.ErrorMessages.*;
