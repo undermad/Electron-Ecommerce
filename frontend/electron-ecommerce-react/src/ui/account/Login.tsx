@@ -41,9 +41,6 @@ export const Login = () => {
         login(data)
             .then((response: LoginResponse) => {
                 auth?.setAuth({...response});
-                console.log(auth?.auth?.token)
-                console.log(auth?.auth?.roles)
-                console.log(auth?.auth?.tokenType)
                 navigate(from, {replace: true});
             })
             .catch((error) => {

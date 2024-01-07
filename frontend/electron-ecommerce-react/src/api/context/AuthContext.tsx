@@ -5,8 +5,9 @@ type AuthContextProps = {
 }
 export type Auth = {
     token?: string,
-   tokenType?: string
+    tokenType?: string,
     roles?: string[],
+    accountStatus?: string,
 }
 
 type AuthContextType = {
@@ -16,7 +17,6 @@ type AuthContextType = {
 
 
 export const AuthContext = createContext<AuthContextType | null>(null);
-
 
 
 export const AuthContextProvider = ({children}: AuthContextProps) => {

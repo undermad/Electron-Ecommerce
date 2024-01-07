@@ -12,13 +12,13 @@ export const RequireAuth = (props: RequireAuthProps) => {
 
     return (
         auth?.auth?.roles?.find((role) => props.allowedRoles.includes(role))
-                ?
+            ?
             <Outlet/>
             :
             //change ternary subject
             auth?.auth?.token ?
-                <Navigate to={LOGIN} state={{from: location}} replace/>
-                :
                 <Navigate to={UNAUTHORIZED} state={{from: location}} replace/>
+                :
+                <Navigate to={LOGIN} state={{from: location}} replace/>
     )
 }
