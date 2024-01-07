@@ -4,6 +4,7 @@ public interface UserProjection {
     Long getId();
     String getEmail();
     String getPassword();
+    String getAccountStatus();
 
 
 }

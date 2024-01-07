@@ -7,8 +7,9 @@ import java.util.Set;
 public record LoginResponse(
         String token,
         String tokenType,
-        Set<String> roles) {
-    public LoginResponse(String accessToken, Set<String> roles) {
-        this(accessToken, "Bearer", roles);
+        Set<String> roles,
+        String accountStatus) {
+    public LoginResponse(String accessToken, Set<String> roles, String accountStatus) {
+        this(accessToken, "Bearer", roles, accountStatus);
     }
 }

@@ -8,6 +8,7 @@ public interface AccountStatusRepository extends CrudRepository<AccountStatus, L
 
     AccountStatus findAccountStatusByStatusType(String statusType);
 
+
 //    @Query(value = "SELECT  FROM account_statuses where status_type = 'awaiting activation'")
 //    List<AccountStatusProjection> findAwaitingActivationStatus();
 }

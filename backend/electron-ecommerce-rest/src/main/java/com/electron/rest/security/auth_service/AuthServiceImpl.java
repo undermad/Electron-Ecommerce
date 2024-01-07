@@ -6,6 +6,7 @@ import com.electron.rest.exception.EmailAlreadyExistException;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_entity.factory.UserFactory;
+import com.electron.rest.security.auth_repository.AccountStatusRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
 import com.electron.rest.security.jwt.JwtProvider;
@@ -43,11 +44,12 @@ public class AuthServiceImpl implements AuthService {
                 loginDto.password()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateTokenFromAuthentication(authentication);
+        String accountStatus = userRepository.findUserAccountStatusByEmail(loginDto.email()).get(0).getAccountStatus();
         Set<String> roles = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
-        return new LoginResponse(token, roles);
+        return new LoginResponse(token, roles, accountStatus);
     }
 
     @Override
