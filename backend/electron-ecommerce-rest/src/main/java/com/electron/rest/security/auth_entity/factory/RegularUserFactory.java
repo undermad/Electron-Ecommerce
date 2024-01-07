@@ -16,13 +16,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class BasicUserFactory implements UserFactory {
+public class RegularUserFactory implements UserFactory {
 
     private final PasswordEncoder passwordEncoder;
     private final AccountStatusRepository accountStatusRepository;
     private final RoleRepository roleRepository;
 
-    public BasicUserFactory(PasswordEncoder passwordEncoder, AccountStatusRepository accountStatusRepository, RoleRepository roleRepository) {
+    public RegularUserFactory(PasswordEncoder passwordEncoder, AccountStatusRepository accountStatusRepository, RoleRepository roleRepository) {
         this.passwordEncoder = passwordEncoder;
         this.accountStatusRepository = accountStatusRepository;
         this.roleRepository = roleRepository;
