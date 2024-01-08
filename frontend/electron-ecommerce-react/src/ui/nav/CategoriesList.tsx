@@ -2,7 +2,7 @@ import arrowDownSVG from "../../assets/icons/arrow-down.svg";
 import listSVG from '../../assets/icons/list.svg';
 import xSVG from '../../assets/icons/x.svg';
 import {useViewport} from "../../custom_hooks/useViewport.ts";
-import {Breakpoints} from "../../custom_hooks/Breakpoints.ts";
+import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import {CategoryLink} from "./CategoryLink.tsx";

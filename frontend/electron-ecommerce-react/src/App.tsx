@@ -5,7 +5,7 @@ import {Basket} from "./ui/basket/Basket.tsx";
 import {Home} from "./ui/home/Home.tsx";
 import {Login} from "./ui/account/Login.tsx";
 import {Missing} from "./ui/global/Missing.tsx";
-import {LOGIN, BASKET, HOME, SEARCH, ADMIN, UNAUTHORIZED} from "./constants/Routes.ts";
+import {LOGIN_ROUTE, BASKET_ROUTE, HOME_ROUTE, SEARCH_ROUTE, ADMIN_ROUTE, UNAUTHORIZED_ROUTE} from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
 import {Admin} from "./ui/admin/Admin.tsx";
@@ -16,23 +16,23 @@ function App() {
 
     return (
         <Routes>
-            <Route path={HOME} element={<AppLayout/>}>
+            <Route path={HOME_ROUTE} element={<AppLayout/>}>
                 {/*public routes*/}
-                <Route path={HOME} element={<Home/>}></Route>
-                <Route path={SEARCH} element={<Search/>}></Route>
-                <Route path={LOGIN} element={<Login/>}></Route>
+                <Route path={HOME_ROUTE} element={<Home/>}></Route>
+                <Route path={SEARCH_ROUTE} element={<Search/>}></Route>
+                <Route path={LOGIN_ROUTE} element={<Login/>}></Route>
 
                 {/*protected routes*/}
                 <Route element={<RequireAuth allowedRoles={[ROLE_USER]}/>}>
-                    <Route path={BASKET} element={<Basket/>}></Route>
+                    <Route path={BASKET_ROUTE} element={<Basket/>}></Route>
                 </Route>
 
                 {/*admin protected routes*/}
                 <Route element={<RequireAuth allowedRoles={[ROLE_ADMIN]}/>}>
-                    <Route path={ADMIN} element={<Admin/>}></Route>
+                    <Route path={ADMIN_ROUTE} element={<Admin/>}></Route>
                 </Route>
 
-                <Route path={UNAUTHORIZED} element={<Unauthorized/>}></Route>
+                <Route path={UNAUTHORIZED_ROUTE} element={<Unauthorized/>}></Route>
 
                 {/*error*/}
                 <Route path={"*"} element={<Missing/>}></Route>

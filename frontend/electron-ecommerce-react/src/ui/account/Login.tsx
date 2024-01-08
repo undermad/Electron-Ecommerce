@@ -2,10 +2,11 @@ import {SyntheticEvent, useEffect, useRef, useState} from "react";
 import {ElectronLogoHero} from "./ElectronLogoHero.tsx";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
 import {useNavigate, useLocation} from "react-router-dom";
-import {HOME} from "../../constants/Routes.ts";
+import {HOME_ROUTE} from "../../constants/Routes.ts";
 import {LoginRequest} from "../../api/dto/LoginRequest.ts";
 import {LoginResponse} from "../../api/dto/LoginResponse.ts";
 import {login} from "../../api/service/authService.ts";
+import {ErrorResponse} from "../../api/dto/ErrorResponse.ts";
 
 
 export const Login = () => {
@@ -13,7 +14,7 @@ export const Login = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || HOME;
+    const from = location.state?.from?.pathname || HOME_ROUTE;
 
 
     const emailRef = useRef<HTMLInputElement>(null);
@@ -43,7 +44,7 @@ export const Login = () => {
                 auth?.setAuth({...response});
                 navigate(from, {replace: true});
             })
-            .catch((error) => {
+            .catch((error: ErrorResponse) => {
                 setLoading(false);
                 setErrorMessage(error.message)
             })

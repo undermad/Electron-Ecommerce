@@ -1,6 +1,6 @@
 import {useLocation, Navigate, Outlet} from "react-router-dom";
 import {useAuth} from "../custom_hooks/useAuth.ts";
-import {LOGIN, UNAUTHORIZED} from "../constants/Routes.ts";
+import {LOGIN_ROUTE, UNAUTHORIZED_ROUTE} from "../constants/Routes.ts";
 
 interface RequireAuthProps {
     allowedRoles: string[],
@@ -17,8 +17,8 @@ export const RequireAuth = (props: RequireAuthProps) => {
             :
             //change ternary subject
             auth?.auth?.token ?
-                <Navigate to={UNAUTHORIZED} state={{from: location}} replace/>
+                <Navigate to={UNAUTHORIZED_ROUTE} state={{from: location}} replace/>
                 :
-                <Navigate to={LOGIN} state={{from: location}} replace/>
+                <Navigate to={LOGIN_ROUTE} state={{from: location}} replace/>
     )
 }

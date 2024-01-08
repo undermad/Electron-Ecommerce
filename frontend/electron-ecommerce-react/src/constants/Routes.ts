@@ -1,7 +1,7 @@
-export const HOME: string = "/";
-export const SEARCH: string = "/search";
-export const LOGIN: string = "/login";
-export const BASKET: string = "/basket";
-export const UNAUTHORIZED: string = "/unauthorized";
-export const ADMIN: string = "/admin";
+export const HOME_ROUTE: string = "/";
+export const SEARCH_ROUTE: string = "/search";
+export const LOGIN_ROUTE: string = "/login";
+export const BASKET_ROUTE: string = "/basket";
+export const UNAUTHORIZED_ROUTE: string = "/unauthorized";
+export const ADMIN_ROUTE: string = "/admin";
 

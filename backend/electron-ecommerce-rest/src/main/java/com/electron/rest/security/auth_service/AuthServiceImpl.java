@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public JwtResponse refreshJwt(String refreshToken) {
+    public JwtResponse refreshToken(String refreshToken) {
         List<UserProjection> usersList = userRepository.findUserByRefreshToken(refreshToken);
         if (usersList.isEmpty())
             throw new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND);

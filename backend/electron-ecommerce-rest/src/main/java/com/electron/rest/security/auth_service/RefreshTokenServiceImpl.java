@@ -70,7 +70,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
             }
             return refreshToken;
         }
-        throw new RefreshTokenException("Please, login!");
+        throw new RefreshTokenException("Please, loginasdasd!");
     }
 
     @Override

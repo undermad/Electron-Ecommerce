@@ -40,7 +40,7 @@ public class AuthController {
     @GetMapping(REFRESH_TOKEN)
     public ResponseEntity<JwtResponse> refreshToken(HttpServletRequest request) {
         String refreshToken = refreshTokenService.isTokenUpToDate(request);
-        return ResponseEntity.ok(authService.refreshJwt(refreshToken));
+        return ResponseEntity.ok(authService.refreshToken(refreshToken));
     }
 
     @PostMapping(REGISTER)

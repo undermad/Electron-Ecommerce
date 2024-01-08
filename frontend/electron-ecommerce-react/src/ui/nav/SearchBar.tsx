@@ -1,7 +1,7 @@
 import searchSVG from "../../assets/icons/search.svg";
 import {useRef, useState} from "react";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
-import {Breakpoints} from "../../custom_hooks/Breakpoints.ts";
+import {Breakpoints} from "../../constants/Breakpoints.ts";
 
 export const SearchBar = () => {
 

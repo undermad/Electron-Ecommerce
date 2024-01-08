@@ -1,8 +1,8 @@
 import userSVG from "../../assets/icons/user.svg";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
-import {Breakpoints} from "../../custom_hooks/Breakpoints.ts";
+import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {HOME, LOGIN} from "../../constants/Routes.ts";
+import {HOME_ROUTE, LOGIN_ROUTE} from "../../constants/Routes.ts";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
 
 export const AccountLink = () => {
@@ -11,7 +11,7 @@ export const AccountLink = () => {
 
     const navigation = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || HOME;
+    const from = location.state?.from?.pathname || HOME_ROUTE;
 
 
     const handleLogout = () => {
@@ -32,7 +32,7 @@ export const AccountLink = () => {
 
                 :
 
-                <Link to={LOGIN}>
+                <Link to={LOGIN_ROUTE}>
                     <div className={"flex gap-[8px] items-center"}>
                         <img src={userSVG} className={"w-[20px] h-[20px]"} alt={'user svg icon'}/>
                         {width >= Breakpoints.LARGE ? <span>Login</span> : ''}

@@ -4,7 +4,7 @@ import {CategoriesList} from "./CategoriesList.tsx";
 import {BasketLink} from "./BasketLink.tsx";
 import {AccountLink} from "./AccountLink.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
-import {Breakpoints} from "../../custom_hooks/Breakpoints.ts";
+import {Breakpoints} from "../../constants/Breakpoints.ts";
 
 export const NavigationBar = () => {
 

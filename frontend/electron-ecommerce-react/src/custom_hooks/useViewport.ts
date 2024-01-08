@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Breakpoints} from "./Breakpoints.ts";
+import {Breakpoints} from "../constants/Breakpoints.ts";
 
 export const useViewport = () => {
     const [width, setWidth] = useState<number>(window.innerWidth);
