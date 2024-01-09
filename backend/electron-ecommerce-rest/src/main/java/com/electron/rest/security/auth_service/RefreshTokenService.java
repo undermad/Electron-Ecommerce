@@ -9,6 +9,6 @@ import org.springframework.http.ResponseCookie;
 public interface RefreshTokenService {
     RefreshToken saveRefreshToken(RefreshToken token);
     String isTokenUpToDate(HttpServletRequest request);
-    ResponseCookie getRefreshTokenCookie(LoginDto loginDto);
+    ResponseCookie createRefreshTokenCookie(LoginDto loginDto);
     void deleteRefreshToken(Long userId);
 }

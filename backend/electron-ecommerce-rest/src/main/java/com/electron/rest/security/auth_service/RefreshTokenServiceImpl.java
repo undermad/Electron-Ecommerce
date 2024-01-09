@@ -38,9 +38,9 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public ResponseCookie getRefreshTokenCookie(LoginDto loginDto) {
+    public ResponseCookie createRefreshTokenCookie(LoginDto loginDto) {
         List<UserProjection> usersList = userRepository.findUserIdFromEmail(loginDto.email());
-        if(usersList.isEmpty())
+        if (usersList.isEmpty())
             throw new UsernameNotFoundException("Bad credentials");
         Long userId = usersList.get(0).getId();
         deleteRefreshToken(userId);
@@ -49,7 +49,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public RefreshToken saveRefreshToken(RefreshToken token){
+    public RefreshToken saveRefreshToken(RefreshToken token) {
         return refreshTokenRepository.save(token);
     }
 
@@ -60,7 +60,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         if (refreshToken != null) {
 
             List<RefreshTokenProjection> refreshTokenProjectionList = refreshTokenRepository.findRefreshTokenByToken(refreshToken);
-            if(refreshTokenProjectionList.isEmpty())
+            if (refreshTokenProjectionList.isEmpty())
                 throw new RefreshTokenException("Invalid token");
             RefreshTokenProjection refreshTokenProjection = refreshTokenProjectionList.get(0);
 
@@ -74,7 +74,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public void deleteRefreshToken(Long userId){
+    public void deleteRefreshToken(Long userId) {
         refreshTokenRepository.deleteTokenByUserId(userId);
     }
 

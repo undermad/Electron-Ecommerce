@@ -33,7 +33,7 @@ public class AuthController {
         LoginResponse loginResponse = authService.login(loginDto);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
-                        refreshTokenService.getRefreshTokenCookie(loginDto).toString())
+                        refreshTokenService.createRefreshTokenCookie(loginDto).toString())
                 .body(loginResponse);
     }
 

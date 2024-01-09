@@ -16,7 +16,7 @@ public class TestController {
 
 
 
-    @GetMapping
+    @GetMapping("/test")
     public ResponseEntity<ErrorDto> getTest(){
         return ResponseEntity.ok(new ErrorDto("im here", new Date(), "motfu"));
     }
