@@ -1,7 +1,7 @@
 import {AxiosResponse} from "axios";
-import {useRefreshToken} from "../custom_hooks/useRefreshToken.ts";
-import {useAuth} from "../custom_hooks/useAuth.ts";
-import {axiosPrivate} from "./axios.ts";
+import {useRefreshToken} from "./useRefreshToken.ts";
+import {useAuth} from "./useAuth.ts";
+import {axiosPrivate} from "../api/axios.ts";
 import {useEffect} from "react";
 
 const useAxiosPrivate = () => {
@@ -26,7 +26,7 @@ const useAxiosPrivate = () => {
                     prevRequest.retry = true;
                     const newAccessToken = await refresh();
                     prevRequest.headers['Authorization'] = `${auth?.auth?.tokenType} ${newAccessToken}`;
-                    return prevRequest;
+                    return axiosPrivate(prevRequest);
                 }
                 return Promise.reject(error);
             }

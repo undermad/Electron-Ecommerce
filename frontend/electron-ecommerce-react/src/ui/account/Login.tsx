@@ -5,8 +5,9 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {HOME_ROUTE} from "../../constants/Routes.ts";
 import {LoginRequest} from "../../api/dto/LoginRequest.ts";
 import {LoginResponse} from "../../api/dto/LoginResponse.ts";
-import {login} from "../../api/service/authService.ts";
-import {ErrorResponse} from "../../api/dto/ErrorResponse.ts";
+import {axiosAuth} from "../../api/axios.ts";
+import {LOGIN_API_PATH} from "../../constants/ApiPaths.ts";
+import {AxiosResponse} from "axios";
 
 
 export const Login = () => {
@@ -39,16 +40,17 @@ export const Login = () => {
 
         const data = new LoginRequest(email, password);
 
-        login(data)
-            .then((response: LoginResponse) => {
-                auth?.setAuth({...response});
+        axiosAuth.post(LOGIN_API_PATH, data)
+            .then((response: AxiosResponse<LoginResponse>) => {
+                console.log(response.data);
+                auth?.setAuth({...response.data});
                 navigate(from, {replace: true});
             })
-            .catch((error: ErrorResponse) => {
+            .catch(error => {
+                console.log(error?.response?.data);
                 setLoading(false);
-                setErrorMessage(error.message)
+                setErrorMessage(error?.response?.data?.message);
             })
-
 
         if (errorRef.current !== null)
             errorRef.current.focus();
