@@ -6,8 +6,9 @@ import com.electron.rest.exception.EmailAlreadyExistException;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_entity.factory.UserFactory;
-import com.electron.rest.security.auth_repository.AccountStatusRepository;
+import com.electron.rest.security.auth_repository.RoleRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
+import com.electron.rest.security.auth_repository.projections.RoleProjection;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
 import com.electron.rest.security.jwt.JwtProvider;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,12 +29,14 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final UserFactory userFactory;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, UserFactory userFactory) {
+    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, UserFactory userFactory) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.userFactory = userFactory;
     }
 
@@ -49,16 +52,26 @@ public class AuthServiceImpl implements AuthService {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
+
         return new LoginResponse(token, roles, accountStatus);
     }
 
     @Override
-    public JwtResponse refreshToken(String refreshToken) {
+    public LoginResponse refreshToken(String refreshToken) {
         List<UserProjection> usersList = userRepository.findUserByRefreshToken(refreshToken);
         if (usersList.isEmpty())
             throw new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND);
         UserProjection user = usersList.get(0);
-        return new JwtResponse(jwtProvider.generateToken(user.getEmail()));
+        String accountStatus = userRepository.findUserAccountStatusByEmail(user.getEmail())
+                .get(0)
+                .getAccountStatus();
+        Set<String> roles = roleRepository.getRolesByUserId(user.getId())
+                .stream()
+                .map(RoleProjection::getRoleName)
+                .collect(Collectors.toSet());
+        String token = jwtProvider.generateToken(user.getEmail());
+
+        return new LoginResponse(token, roles, accountStatus);
     }
 
     @Override

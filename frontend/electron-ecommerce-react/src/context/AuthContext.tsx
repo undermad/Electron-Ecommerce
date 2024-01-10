@@ -1,26 +1,19 @@
 import React, {createContext, useState} from "react";
+import {LoginResponse} from "../api/dto/LoginResponse.ts";
 
 type AuthContextProps = {
     children: React.ReactNode;
 }
-export type Auth = {
-    token?: string,
-    tokenType?: string,
-    roles?: string[],
-    accountStatus?: string,
-}
 
 type AuthContextType = {
-    auth: Auth | null,
-    setAuth: React.Dispatch<React.SetStateAction<Auth | null>>,
+    auth: LoginResponse | null,
+    setAuth: React.Dispatch<React.SetStateAction<LoginResponse | null>>,
 }
-
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-
 export const AuthContextProvider = ({children}: AuthContextProps) => {
-    const [auth, setAuth] = useState<Auth | null>({});
+    const [auth, setAuth] = useState<LoginResponse | null>({});
 
     return <AuthContext.Provider value={{auth, setAuth}}>{children}</AuthContext.Provider>
 }

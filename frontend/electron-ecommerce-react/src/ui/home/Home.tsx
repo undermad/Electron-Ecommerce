@@ -28,6 +28,7 @@ export const Home = () => {
             <Link to={ADMIN_ROUTE}>Admin Section Click</Link>
             <br/>
             <button onClick={() => refresh()}>Refresh Token</button>
+            <br/>
             <button onClick={() => test()}>Protected Route</button>
 
 

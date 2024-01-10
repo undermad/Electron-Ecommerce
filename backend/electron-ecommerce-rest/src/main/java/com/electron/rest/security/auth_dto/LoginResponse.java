@@ -9,7 +9,7 @@ public record LoginResponse(
         String tokenType,
         Set<String> roles,
         String accountStatus) {
-    public LoginResponse(String accessToken, Set<String> roles, String accountStatus) {
-        this(accessToken, "Bearer", roles, accountStatus);
+    public LoginResponse(String token, Set<String> roles, String accountStatus) {
+        this(token, "Bearer", roles, accountStatus);
     }
 }

@@ -1,10 +1,10 @@
 import {useAuth} from "./useAuth.ts";
-import {JwtResponse} from "../api/dto/JwtResponse.ts";
 import {axiosAuth} from "../api/axios.ts";
 import {REFRESH_TOKEN_API_PATH} from "../constants/ApiPaths.ts";
 import {AxiosResponse} from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import {LOGIN_ROUTE} from "../constants/Routes.ts";
+import {LoginResponse} from "../api/dto/LoginResponse.ts";
 
 export const useRefreshToken = () => {
     const auth = useAuth();
@@ -14,9 +14,8 @@ export const useRefreshToken = () => {
     return async () => {
         axiosAuth.get(REFRESH_TOKEN_API_PATH, {
             withCredentials: true
-        }).then((result: AxiosResponse<JwtResponse>) => {
-            console.log(result.data.token);
-            console.log(result.data.tokenType);
+        }).then((result: AxiosResponse<LoginResponse>) => {
+            console.log(result.data);
             const temp = auth?.auth;
             auth?.setAuth({
                 ...temp,
