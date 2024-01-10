@@ -6,7 +6,7 @@ import {HOME_ROUTE} from "../../constants/Routes.ts";
 import {LoginRequest} from "../../api/dto/LoginRequest.ts";
 import {LoginResponse} from "../../api/dto/LoginResponse.ts";
 import {axiosAuth} from "../../api/axios.ts";
-import {LOGIN_API_PATH} from "../../constants/ApiPaths.ts";
+import {LOGIN_API_PATH} from "../../constants/ApiEndpointsPaths.ts";
 import {AxiosResponse} from "axios";
 
 
@@ -26,12 +26,15 @@ export const Login = () => {
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const [remember, setRemember] = useState<boolean>(false);
+
 
     useEffect(() => {
         if (emailRef.current !== null) {
             emailRef.current.focus()
         }
     }, [])
+
 
 
     const handleSubmit = async (e: SyntheticEvent) => {
@@ -56,6 +59,14 @@ export const Login = () => {
             errorRef.current.focus();
 
     }
+
+    const togglePersist = () => {
+        setRemember(!remember);
+    }
+
+    useEffect(() => {
+        localStorage.setItem("persist", JSON.stringify(remember));
+    }, [remember]);
 
     return (
         <section
@@ -108,8 +119,18 @@ export const Login = () => {
                                        placeholder={"Enter your password"}
                                        onChange={(e) => setPassword(e.target.value)}
                                 />
-                                <p className={"text-[12px] font-[400] leading-5 text-right w-full align-middle text-electron-input-ash-blue"}>
-                                    Forgot Password?</p>
+                                <div className={"flex"}>
+                                    <div className={"flex w-1/2 gap-1"}>
+                                        <input
+                                            type={"checkbox"}
+                                            id={"checked"}
+                                            onChange={togglePersist}
+                                        />
+                                        <label id={"persist"} className={"text-[12px] font-[400] leading-5"}>Remember me?</label>
+                                    </div>
+                                    <p className={"text-[12px] font-[400] leading-5 text-right w-1/2 align-middle text-electron-input-ash-blue"}>
+                                        Forgot Password?</p>
+                                </div>
                             </div>
                         </div>
 

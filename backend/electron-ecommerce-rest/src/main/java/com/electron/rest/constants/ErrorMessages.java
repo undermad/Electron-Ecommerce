@@ -5,6 +5,7 @@ public class ErrorMessages {
     public static final String BAD_CREDENTIALS = "Bad credentials";
     public static final String INVALID_TOKEN = "Invalid token";
     public static final String USER_NOT_FOUND = "User not found";
+    public static final String EXPIRED_TOKEN = "Expired token.";
 
 
     public static final String PASSWORD_INCORRECT_LENGTH = "Password should have at least 6 characters and no longer than 36";

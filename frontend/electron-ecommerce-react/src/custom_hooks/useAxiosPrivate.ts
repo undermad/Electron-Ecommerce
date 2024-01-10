@@ -5,7 +5,7 @@ import {axiosPrivate} from "../api/axios.ts";
 import {useEffect} from "react";
 
 const useAxiosPrivate = () => {
-    const refresh = useRefreshToken();
+    const refresh = useRefreshToken({redirectToLogin: true});
     const auth = useAuth();
 
 

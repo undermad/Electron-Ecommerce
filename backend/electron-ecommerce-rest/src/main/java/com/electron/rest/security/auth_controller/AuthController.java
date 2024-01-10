@@ -8,10 +8,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.electron.rest.constants.EndpointsPaths.*;
+import static com.electron.rest.constants.SuccessMessages.LOGOUT_SUCCESS;
 
 
 @RestController
@@ -33,8 +35,13 @@ public class AuthController {
         LoginResponse loginResponse = authService.login(loginDto);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
-                        refreshTokenService.createRefreshTokenCookie(loginDto).toString())
+                        refreshTokenService.createCookie(loginDto).toString())
                 .body(loginResponse);
+    }
+
+    @PostMapping(REGISTER)
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterDto registerDto) {
+        return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
     }
 
     @GetMapping(REFRESH_TOKEN)
@@ -43,9 +50,13 @@ public class AuthController {
         return ResponseEntity.ok(authService.refreshToken(refreshToken));
     }
 
-    @PostMapping(REGISTER)
-    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterDto registerDto) {
-        return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
+    @GetMapping(REFRESH_TOKEN + LOGOUT)
+    public ResponseEntity<LogoutResponse> logout(HttpServletRequest request) {
+        ResponseCookie clearCookie = refreshTokenService.createClearCookie(request);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE,
+                        clearCookie.toString())
+                .body(new LogoutResponse(LOGOUT_SUCCESS));
     }
 
 

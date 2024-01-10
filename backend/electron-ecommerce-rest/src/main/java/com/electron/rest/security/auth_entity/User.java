@@ -27,7 +27,7 @@ public class User {
     private String password;
 
     @Column(name = "newsletter", nullable = false)
-    private boolean newsletterSubscription;
+    private Boolean newsletterSubscription;
 
     @CreationTimestamp
     private Instant createdOn;

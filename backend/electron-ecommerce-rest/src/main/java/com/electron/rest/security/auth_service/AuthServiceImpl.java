@@ -11,6 +11,7 @@ import com.electron.rest.security.auth_repository.UserRepository;
 import com.electron.rest.security.auth_repository.projections.RoleProjection;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
 import com.electron.rest.security.jwt.JwtProvider;
+import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;

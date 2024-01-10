@@ -1,5 +1,5 @@
 import axios from "axios";
-import {AUTH_API_PATH, BASE_API_URL,} from "../constants/ApiPaths.ts";
+import {AUTH_API_PATH, BASE_API_URL,} from "../constants/ApiEndpointsPaths.ts";
 
 export const axiosAuth = axios.create({
     baseURL: BASE_API_URL + AUTH_API_PATH,

@@ -5,12 +5,14 @@ import {Link} from "react-router-dom";
 import {ADMIN_ROUTE} from "../../constants/Routes.ts";
 import {useRefreshToken} from "../../custom_hooks/useRefreshToken.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
+import {useLogout} from "../../custom_hooks/useLogout.ts";
 
 export const Home = () => {
 
     const width = useViewport();
-    const refresh = useRefreshToken();
+    const refresh = useRefreshToken({redirectToLogin: true});
     const axiosPrivate = useAxiosPrivate();
+    const logout = useLogout();
 
     const test = () => {
         axiosPrivate.get("/test/test")
@@ -30,6 +32,8 @@ export const Home = () => {
             <button onClick={() => refresh()}>Refresh Token</button>
             <br/>
             <button onClick={() => test()}>Protected Route</button>
+            <br/>
+            <button onClick={() => logout()}>Logout</button>
 
 
 
