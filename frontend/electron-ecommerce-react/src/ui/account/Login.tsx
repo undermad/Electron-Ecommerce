@@ -36,14 +36,15 @@ export const Login = () => {
     }, [])
 
 
-
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         setLoading(true);
 
         const data = new LoginRequest(email, password);
 
-        axiosAuth.post(LOGIN_API_PATH, data)
+        axiosAuth.post(LOGIN_API_PATH, data, {
+            params: {remember: remember}
+        })
             .then((response: AxiosResponse<LoginResponse>) => {
                 console.log(response.data);
                 auth?.setAuth({...response.data});
@@ -63,10 +64,6 @@ export const Login = () => {
     const togglePersist = () => {
         setRemember(!remember);
     }
-
-    useEffect(() => {
-        localStorage.setItem("persist", JSON.stringify(remember));
-    }, [remember]);
 
     return (
         <section
@@ -126,7 +123,8 @@ export const Login = () => {
                                             id={"checked"}
                                             onChange={togglePersist}
                                         />
-                                        <label id={"persist"} className={"text-[12px] font-[400] leading-5"}>Remember me?</label>
+                                        <label id={"persist"} className={"text-[12px] font-[400] leading-5"}>Remember
+                                            me?</label>
                                     </div>
                                     <p className={"text-[12px] font-[400] leading-5 text-right w-1/2 align-middle text-electron-input-ash-blue"}>
                                         Forgot Password?</p>

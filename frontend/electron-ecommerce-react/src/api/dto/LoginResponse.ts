@@ -3,4 +3,5 @@ export type LoginResponse = {
     tokenType?: string,
     roles?: string[],
     accountStatus?: string,
+    loading?: boolean
 }

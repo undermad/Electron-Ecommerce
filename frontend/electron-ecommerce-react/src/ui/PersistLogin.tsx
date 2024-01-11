@@ -12,8 +12,13 @@ export const PersistLogin = () => {
     useEffect(() => {
         const verifyToken = async () => {
             await refresh()
-                .catch(error => console.log(error))
-                .finally(() => setLoading(false));
+                .catch(error => {
+                    setLoading(false)
+                    console.log(error)
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
         !auth?.auth?.token ? verifyToken() : setLoading(false);
     }, []);

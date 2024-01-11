@@ -3,6 +3,7 @@ package com.electron.rest.security.auth_controller;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_service.AuthService;
 import com.electron.rest.security.auth_service.RefreshTokenService;
+import com.electron.rest.security.refresh_token.RefreshTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +23,30 @@ public class AuthController {
 
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
+    private final RefreshTokenProvider refreshTokenProvider;
 
     @Autowired
-    public AuthController(AuthService authService, RefreshTokenService refreshTokenService) {
+    public AuthController(AuthService authService, RefreshTokenService refreshTokenService, RefreshTokenProvider refreshTokenProvider) {
         this.authService = authService;
         this.refreshTokenService = refreshTokenService;
+        this.refreshTokenProvider = refreshTokenProvider;
     }
 
     //basic auth header is required and body is required
     @PostMapping(LOGIN)
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody
+                                               LoginDto loginDto,
+                                               @RequestParam(name = "remember", defaultValue = "false", required = false)
+                                               Boolean remember) {
         LoginResponse loginResponse = authService.login(loginDto);
+        ResponseCookie refreshTokenCookie = remember ?
+                refreshTokenService.createCookie(loginDto) : refreshTokenProvider.createClearCookie();
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE,
-                        refreshTokenService.createCookie(loginDto).toString())
+                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
                 .body(loginResponse);
     }
+
 
     @PostMapping(REGISTER)
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterDto registerDto) {

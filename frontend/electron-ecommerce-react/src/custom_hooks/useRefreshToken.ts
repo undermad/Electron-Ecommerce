@@ -19,9 +19,10 @@ export const useRefreshToken = ({redirectToLogin}: useRefreshTokenProps) => {
         axiosAuth.get(REFRESH_TOKEN_API_PATH)
             .then((result: AxiosResponse<LoginResponse>) => {
             console.log(result.data);
-            auth?.setAuth({...result.data})
+            auth?.setAuth({...result.data, loading: false})
         })
             .catch(error => {
+                auth?.setAuth({loading: false});
             console.log(error);
             if (redirectToLogin) {
                 navigate(LOGIN_ROUTE, {state: {from: location}, replace: true});
