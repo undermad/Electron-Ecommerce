@@ -8,5 +8,6 @@ public class EndpointsPaths {
     public static final String REFRESH_TOKEN = "/refreshtoken";
     public static final String REGISTER = "/register";
     public static final String LOGOUT = "/logout";
+    public static final String LOGOUT_EVERYWHERE = "/logout_everywhere";
 
 }

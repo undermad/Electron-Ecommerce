@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -42,8 +43,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private RefreshToken refreshToken;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<RefreshToken> refreshTokens;
 
 
 }

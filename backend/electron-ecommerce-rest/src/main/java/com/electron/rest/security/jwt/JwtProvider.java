@@ -21,12 +21,6 @@ public class JwtProvider {
     @Value("${app-jwt-expiration-millisecond}")
     private String jwtExpirationTime;
 
-    @Value("${app-refresh-token-expiration-millisecond}")
-    private String refreshTokenExpirationTime;
-
-    @Value("${app-refresh-token-name}")
-    private String refreshTokenName;
-
     private SecretKey key() {
         // decode secret key and return as SecretKey class
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));

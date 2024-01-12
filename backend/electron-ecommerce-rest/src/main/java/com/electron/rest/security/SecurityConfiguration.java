@@ -24,6 +24,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.electron.rest.constants.EndpointsPaths.LOGOUT_EVERYWHERE;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {

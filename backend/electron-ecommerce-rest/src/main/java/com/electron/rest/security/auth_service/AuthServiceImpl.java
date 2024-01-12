@@ -12,6 +12,7 @@ import com.electron.rest.security.auth_repository.projections.RoleProjection;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
 import com.electron.rest.security.jwt.JwtProvider;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,14 +33,16 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final UserFactory userFactory;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, UserFactory userFactory) {
+    @Qualifier("regularUserFactory")
+    private final UserFactory regularUserFactory;
+
+    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, UserFactory regularUserFactory) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.userFactory = userFactory;
+        this.regularUserFactory = regularUserFactory;
     }
 
     @Override
@@ -59,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public LoginResponse refreshToken(String refreshToken) {
+    public LoginResponse refreshJwt(String refreshToken) {
         List<UserProjection> usersList = userRepository.findUserByRefreshToken(refreshToken);
         if (usersList.isEmpty())
             throw new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND);
@@ -81,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
         List<UserProjection> usersList = userRepository.findUserEmail(registerDto.email());
         if (!usersList.isEmpty()) throw new EmailAlreadyExistException(ErrorMessages.EMAIL_ALREADY_IN_USE);
 
-        User newUser = userFactory.createUser(registerDto);
+        User newUser = regularUserFactory.createUser(registerDto);
         userRepository.save(newUser);
 
         return new RegisterResponse(SuccessMessages.REGISTER_SUCCESS);

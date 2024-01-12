@@ -15,4 +15,11 @@ export const axiosPrivate = axios.create({
     withCredentials: true,
 });
 
+export const axiosBearer = axios.create({
+    baseURL: BASE_API_URL + AUTH_API_PATH,
+    headers: {'Content-Type': 'application/json'},
+    timeout: 10000,
+    withCredentials: true,
+})
+
 

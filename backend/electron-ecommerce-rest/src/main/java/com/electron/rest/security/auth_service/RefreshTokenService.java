@@ -7,6 +7,7 @@ import org.springframework.http.ResponseCookie;
 
 public interface RefreshTokenService {
     String isTokenUpToDate(HttpServletRequest request);
-    ResponseCookie createCookie(LoginDto loginDto);
-    ResponseCookie createClearCookie(HttpServletRequest request);
+    ResponseCookie getRefreshTokenCookie(LoginDto loginDto);
+    ResponseCookie getLogoutCookie(HttpServletRequest request);
+    Boolean logoutEverywhere(HttpServletRequest request);
 }

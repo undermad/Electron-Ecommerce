@@ -6,6 +6,8 @@ import {ADMIN_ROUTE} from "../../constants/Routes.ts";
 import {useRefreshToken} from "../../custom_hooks/useRefreshToken.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {useLogout} from "../../custom_hooks/useLogout.ts";
+import {LOGOUT_EVERYWHERE} from "../../constants/ApiEndpointsPaths.ts";
+import LogoutEverywhereButton from "../account/LogoutEverywhereButton.tsx";
 
 export const Home = () => {
 
@@ -34,6 +36,8 @@ export const Home = () => {
             <button onClick={() => test()}>Protected Route</button>
             <br/>
             <button onClick={() => logout()}>Logout</button>
+            <br/>
+            <LogoutEverywhereButton/>
 
 
 

@@ -1,5 +1,6 @@
 package com.electron.rest.security.jwt;
 
+import com.electron.rest.security.AuthUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         //get jwt from http request
-        String token = getTokenFromRequest(request);
+        String token = AuthUtils.getTokenFromRequest(request);
 
         //validate the token
         if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
@@ -49,16 +50,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
-    }
-
-
-    private String getTokenFromRequest(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
-            return token.substring(7);
-        }
-
-        return null;
     }
 
 }

@@ -15,7 +15,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+@Component("regularUserFactory")
 public class RegularUserFactory implements UserFactory {
 
     private final PasswordEncoder passwordEncoder;
@@ -44,7 +44,7 @@ public class RegularUserFactory implements UserFactory {
                 .createdOn(Instant.now())
                 .accountStatus(awaitingActivationStatus)
                 .roles(roles)
-                .refreshToken(null)
+                .refreshTokens(null)
                 .build();
     }
 }

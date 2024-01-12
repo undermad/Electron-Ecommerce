@@ -40,7 +40,7 @@ public class AuthController {
                                                Boolean remember) {
         LoginResponse loginResponse = authService.login(loginDto);
         ResponseCookie refreshTokenCookie = remember ?
-                refreshTokenService.createCookie(loginDto) : refreshTokenProvider.createClearCookie();
+                refreshTokenService.getRefreshTokenCookie(loginDto) : refreshTokenProvider.createClearCookie();
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
@@ -56,16 +56,22 @@ public class AuthController {
     @GetMapping(REFRESH_TOKEN)
     public ResponseEntity<LoginResponse> refreshToken(HttpServletRequest request) {
         String refreshToken = refreshTokenService.isTokenUpToDate(request);
-        return ResponseEntity.ok(authService.refreshToken(refreshToken));
+        return ResponseEntity.ok(authService.refreshJwt(refreshToken));
     }
 
-    @GetMapping(REFRESH_TOKEN + LOGOUT)
+    @PostMapping(REFRESH_TOKEN + LOGOUT)
     public ResponseEntity<LogoutResponse> logout(HttpServletRequest request) {
-        ResponseCookie clearCookie = refreshTokenService.createClearCookie(request);
+        ResponseCookie clearCookie = refreshTokenService.getLogoutCookie(request);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
                         clearCookie.toString())
                 .body(new LogoutResponse(LOGOUT_SUCCESS));
+    }
+
+    @PostMapping(LOGOUT_EVERYWHERE)
+    public ResponseEntity<LogoutResponse> logoutFromAllDevices(HttpServletRequest request) {
+        refreshTokenService.logoutEverywhere(request);
+        return ResponseEntity.ok(new LogoutResponse(LOGOUT_SUCCESS));
     }
 
 
