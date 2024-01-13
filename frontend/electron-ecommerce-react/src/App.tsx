@@ -11,16 +11,16 @@ import {
     HOME_ROUTE,
     SEARCH_ROUTE,
     ADMIN_ROUTE,
-    UNAUTHORIZED_ROUTE
+    UNAUTHORIZED_ROUTE, MESSAGE_SCREEN
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
 import {Admin} from "./ui/admin/Admin.tsx";
 import {Unauthorized} from "./ui/global/Unauthorized.tsx";
 import {PersistLogin} from "./ui/PersistLogin.tsx";
+import {MessageScreen} from "./ui/global/MessageScreen.tsx";
 
 function App() {
-
 
     return (
         <Routes>
@@ -46,6 +46,10 @@ function App() {
 
                     {/*error*/}
                     <Route path={"*"} element={<Missing/>}></Route>
+
+                    {/*message screen*/}
+                    <Route path={MESSAGE_SCREEN} element={<MessageScreen/>}></Route>
+
                 </Route>
             </Route>
         </Routes>

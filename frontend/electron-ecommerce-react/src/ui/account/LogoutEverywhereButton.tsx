@@ -1,37 +1,36 @@
-import {LOGOUT_EVERYWHERE} from "../../constants/ApiEndpointsPaths.ts";
+import {AUTH_API_PATH, LOGOUT_EVERYWHERE} from "../../constants/ApiEndpointsPaths.ts";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
-import {axiosBearer} from "../../api/axios.ts";
 import {useNavigate} from "react-router-dom";
-import {LOGIN_ROUTE} from "../../constants/Routes.ts";
+import {MESSAGE_SCREEN} from "../../constants/Routes.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
+import {useContext} from "react";
+import {MessageScreenContext} from "../../context/MessageScreenContext.tsx";
+import {LOGOUT_EVERYWHERE_SUCCESSFUL} from "../../constants/Messages.ts";
 
 const LogoutEverywhereButton = () => {
 
     const auth = useAuth();
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
+    const messageCtx = useContext(MessageScreenContext);
 
     const handleLogoutEverywhere = () => {
-        auth?.setAuth({});
-        const attachBearerToken = axiosBearer.interceptors.request.use(config => {
-            config.headers['Authorization'] = `${auth?.auth?.tokenType} ` + `${auth?.auth?.token}`;
-            return config;
-        }, (error) => Promise.reject(error));
 
-        axiosPrivate.post(LOGOUT_EVERYWHERE)
+        axiosPrivate.post(AUTH_API_PATH + LOGOUT_EVERYWHERE)
             .then((response) => {
                 console.log(response.data);
-                navigate(LOGIN_ROUTE)
+                auth?.setAuth({});
+                messageCtx?.setMessage(LOGOUT_EVERYWHERE_SUCCESSFUL)
+                navigate(MESSAGE_SCREEN)
             })
             .catch((error) => {
                 console.log(error);
             })
 
-        axiosBearer.interceptors.request.eject(attachBearerToken);
     }
 
     return (
-        <button onClick={handleLogoutEverywhere}>Logout Eveywhere</button>
+        <button onClick={handleLogoutEverywhere}>Logout all devices</button>
     )
 }
 

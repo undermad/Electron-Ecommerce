@@ -4,14 +4,17 @@ import App from './App.tsx'
 import './index.css'
 import {AuthContextProvider} from "./context/AuthContext.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {MessageScreenContextProvider} from "./context/MessageScreenContext.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <BrowserRouter>
             <AuthContextProvider>
-                <Routes>
-                    <Route path={"/*"} element={<App/>}></Route>
-                </Routes>
+                <MessageScreenContextProvider>
+                    <Routes>
+                        <Route path={"/*"} element={<App/>}></Route>
+                    </Routes>
+                </MessageScreenContextProvider>
             </AuthContextProvider>
         </BrowserRouter>
     </React.StrictMode>,

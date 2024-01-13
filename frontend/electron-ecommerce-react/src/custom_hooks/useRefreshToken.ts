@@ -10,23 +10,30 @@ type useRefreshTokenProps = {
     redirectToLogin: boolean
 }
 
-export const useRefreshToken = ({redirectToLogin}: useRefreshTokenProps) => {
+const useRefreshToken = ({redirectToLogin}: useRefreshTokenProps) => {
     const auth = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
+
     return async () => {
-        axiosAuth.get(REFRESH_TOKEN_API_PATH)
-            .then((result: AxiosResponse<LoginResponse>) => {
+        try {
+            const result: AxiosResponse<LoginResponse> =
+                await axiosAuth.get(REFRESH_TOKEN_API_PATH);
+
             console.log(result.data);
             auth?.setAuth({...result.data, loading: false})
-        })
-            .catch(error => {
-                auth?.setAuth({loading: false});
+            return result.data;
+        } catch (error) {
+            auth?.setAuth({loading: false});
             console.log(error);
             if (redirectToLogin) {
                 navigate(LOGIN_ROUTE, {state: {from: location}, replace: true});
             }
-        })
+            return null;
+        }
+
     };
 }
+
+export default useRefreshToken;

@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios";
-import {useRefreshToken} from "./useRefreshToken.ts";
+import useRefreshToken from "./useRefreshToken.ts";
 import {useAuth} from "./useAuth.ts";
 import {axiosPrivate} from "../api/axios.ts";
 import {useEffect} from "react";
@@ -10,21 +10,24 @@ const useAxiosPrivate = () => {
 
 
     useEffect(() => {
-        const requestInterceptor = axiosPrivate.interceptors.request.use(config => {
-            if (!config.headers['Authorization']) {
-                config.headers['Authorization'] = `${auth?.auth?.tokenType} ` + auth?.auth?.token;
-            }
-            return config;
-        }, (error) => Promise.reject(error));
+
+        const requestInterceptor = axiosPrivate.interceptors.request.use(
+            config => {
+                if (!config.headers['Authorization']) {
+                    config.headers['Authorization'] = `${auth?.auth?.tokenType} ` + auth?.auth?.token;
+                }
+                return config;
+            }, (error) => Promise.reject(error));
 
         const responseInterceptor = axiosPrivate.interceptors.response.use(
             (response: AxiosResponse) => response,
             async (error) => {
-                const prevRequest = error.config;
+                const prevRequest = error?.config;
                 if (error?.response?.status === 401 && !prevRequest.retry) {
                     prevRequest.retry = true;
-                    const newAccessToken = await refresh();
-                    prevRequest.headers['Authorization'] = `${auth?.auth?.tokenType} ${newAccessToken}`;
+                    let newAccessToken;
+                    await refresh().then(result => newAccessToken = result?.token);
+                    prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return axiosPrivate(prevRequest);
                 }
                 return Promise.reject(error);

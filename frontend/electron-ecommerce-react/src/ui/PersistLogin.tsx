@@ -1,5 +1,5 @@
 import {useAuth} from "../custom_hooks/useAuth.ts";
-import {useRefreshToken} from "../custom_hooks/useRefreshToken.ts";
+import useRefreshToken from "../custom_hooks/useRefreshToken.ts";
 import {useEffect, useState} from "react";
 import {Loading} from "./global/Loading.tsx";
 import {Outlet} from "react-router-dom";

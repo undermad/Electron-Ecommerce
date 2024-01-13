@@ -71,6 +71,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Override
     public void logoutEverywhere(String jwt) {
         if(jwt == null) throw new UnauthorizedException(INVALID_TOKEN);
+        jwt = AuthUtils.substringBearer(jwt);
         String email = jwtProvider.getEmail(jwt);
 
         List<UserProjection> userList = userRepository.findUserIdFromEmail(email);

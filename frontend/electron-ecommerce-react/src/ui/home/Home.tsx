@@ -3,7 +3,7 @@ import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {Hero} from "./Hero.tsx";
 import {Link} from "react-router-dom";
 import {ADMIN_ROUTE} from "../../constants/Routes.ts";
-import {useRefreshToken} from "../../custom_hooks/useRefreshToken.ts";
+import useRefreshToken from "../../custom_hooks/useRefreshToken.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {useLogout} from "../../custom_hooks/useLogout.ts";
 import LogoutEverywhereButton from "../account/LogoutEverywhereButton.tsx";

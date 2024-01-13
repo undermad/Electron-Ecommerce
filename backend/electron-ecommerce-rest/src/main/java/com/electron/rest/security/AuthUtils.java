@@ -1,16 +1,13 @@
 package com.electron.rest.security;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.util.StringUtils;
 
 public class AuthUtils {
 
-    public static String getTokenFromRequest(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
-            return token.substring(7);
+    public static String substringBearer(String tokenWithBearerPrefix) {
+        if (StringUtils.hasText(tokenWithBearerPrefix) && tokenWithBearerPrefix.startsWith("Bearer ")) {
+            return tokenWithBearerPrefix.substring(7);
         }
-
         return null;
     }
 }

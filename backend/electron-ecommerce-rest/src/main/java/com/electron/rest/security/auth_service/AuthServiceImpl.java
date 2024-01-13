@@ -33,7 +33,6 @@ import static com.electron.rest.constants.ErrorMessages.INVALID_TOKEN;
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
-    private final RefreshTokenService refreshTokenService;
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -41,9 +40,8 @@ public class AuthServiceImpl implements AuthService {
     @Qualifier("regularUserFactory")
     private final UserFactory regularUserFactory;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, RefreshTokenService refreshTokenService, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, UserFactory regularUserFactory) {
+    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, UserFactory regularUserFactory) {
         this.authenticationManager = authenticationManager;
-        this.refreshTokenService = refreshTokenService;
         this.jwtProvider = jwtProvider;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
