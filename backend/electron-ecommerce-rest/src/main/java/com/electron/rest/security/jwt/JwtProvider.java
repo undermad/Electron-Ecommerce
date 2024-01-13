@@ -54,7 +54,7 @@ public class JwtProvider {
         return claims.getSubject();
     }
 
-    public boolean validateToken(String token) {
+    public Boolean validateToken(String token) {
         try {
             Jwts.parser()
                     .verifyWith(key())

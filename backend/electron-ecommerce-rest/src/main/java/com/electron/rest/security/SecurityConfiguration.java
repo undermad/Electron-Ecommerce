@@ -53,7 +53,7 @@ public class SecurityConfiguration {
 
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://" + hostname));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
@@ -74,6 +74,7 @@ public class SecurityConfiguration {
                         ((authorization) -> authorization
                                 .requestMatchers("/api/v1/test/**").hasRole("ADMIN") //spring will add prefix ROLE_ADMIN
                                 .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/auth/logout_everywhere)").hasRole("USER")
                                 .anyRequest()
                                 .authenticated())
 
@@ -86,7 +87,6 @@ public class SecurityConfiguration {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .httpBasic(Customizer.withDefaults());
-
 
 
         // filters

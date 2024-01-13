@@ -2,7 +2,7 @@ package com.electron.rest.security.refresh_token;
 
 import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_entity.User;
-import com.electron.rest.utility.UnitConverter;
+import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,16 +20,17 @@ import static com.electron.rest.constants.EndpointsPaths.*;
 public class RefreshTokenProviderImpl implements RefreshTokenProvider {
 
     @Value("${app-refresh-token-name}")
-    private String refreshTokenName;
+    private String refreshTokenCookieName;
 
     @Value("${app-refresh-token-expiration-millisecond}")
     private String refreshTokenExpirationTime;
 
 
+
     @Override
     public ResponseCookie createCookie(String refreshToken) {
         return ResponseCookie
-                .from(refreshTokenName, refreshToken)
+                .from(refreshTokenCookieName, refreshToken)
                 .maxAge(Duration.ofMillis(Long.parseLong(refreshTokenExpirationTime)))
                 .path(API_V1_AUTH + REFRESH_TOKEN)
                 .httpOnly(true)
@@ -39,7 +40,7 @@ public class RefreshTokenProviderImpl implements RefreshTokenProvider {
     @Override
     public ResponseCookie createClearCookie() {
         return ResponseCookie
-                .from(refreshTokenName, "")
+                .from(refreshTokenCookieName, "")
                 .maxAge(Duration.ZERO)
                 .path(API_V1_AUTH + REFRESH_TOKEN)
                 .httpOnly(true)
@@ -48,7 +49,7 @@ public class RefreshTokenProviderImpl implements RefreshTokenProvider {
 
     @Override
     public String getTokenFromHttpRequest(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, refreshTokenName);
+        Cookie cookie = WebUtils.getCookie(request, refreshTokenCookieName);
         return cookie != null ? cookie.getValue() : null;
     }
 

@@ -18,7 +18,7 @@ const LogoutEverywhereButton = () => {
             return config;
         }, (error) => Promise.reject(error));
 
-        axiosBearer.post(LOGOUT_EVERYWHERE)
+        axiosPrivate.post(LOGOUT_EVERYWHERE)
             .then((response) => {
                 console.log(response.data);
                 navigate(LOGIN_ROUTE)

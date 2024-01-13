@@ -3,6 +3,7 @@ package com.electron.rest.security.auth_service;
 import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.constants.SuccessMessages;
 import com.electron.rest.exception.EmailAlreadyExistException;
+import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_entity.factory.UserFactory;
@@ -25,11 +26,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.electron.rest.constants.ErrorMessages.INVALID_TOKEN;
+
 @Service
 @Transactional
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
+    private final RefreshTokenService refreshTokenService;
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -37,8 +41,9 @@ public class AuthServiceImpl implements AuthService {
     @Qualifier("regularUserFactory")
     private final UserFactory regularUserFactory;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, UserFactory regularUserFactory) {
+    public AuthServiceImpl(AuthenticationManager authenticationManager, RefreshTokenService refreshTokenService, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, UserFactory regularUserFactory) {
         this.authenticationManager = authenticationManager;
+        this.refreshTokenService = refreshTokenService;
         this.jwtProvider = jwtProvider;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -63,6 +68,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginResponse refreshJwt(String refreshToken) {
+
         List<UserProjection> usersList = userRepository.findUserByRefreshToken(refreshToken);
         if (usersList.isEmpty())
             throw new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND);
