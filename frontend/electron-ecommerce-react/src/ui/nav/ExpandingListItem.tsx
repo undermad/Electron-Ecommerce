@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import {HoverScale} from "./HoverScale.tsx";
 
 interface CategoryLinkProps {
     children: React.ReactNode;
@@ -9,8 +10,8 @@ interface CategoryLinkProps {
 export const ExpandingListItem = (props: CategoryLinkProps) => {
 
     return (
-        <div className={"mb-2 hover:scale-105"}>
+        <HoverScale>
             <Link to={props.route}>{props.children}</Link>
-        </div>
+        </HoverScale>
     )
-}
+} 

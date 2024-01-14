@@ -4,5 +4,6 @@ export const LOGIN_ROUTE: string = "/login";
 export const BASKET_ROUTE: string = "/basket";
 export const UNAUTHORIZED_ROUTE: string = "/unauthorized";
 export const ADMIN_ROUTE: string = "/admin";
-export const MESSAGE_SCREEN: string = "/message";
-
+export const MESSAGE_SCREEN_ROUTE: string = "/message";
+export const ACCOUNT_ROUTE: string = "/account";
+export const LOGOUT_ROUTE: string = "/logout";

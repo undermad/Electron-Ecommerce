@@ -1,5 +1,4 @@
-export const Account = () => {
-
+export const MyAccount = () => {
 
     return (
         <div>

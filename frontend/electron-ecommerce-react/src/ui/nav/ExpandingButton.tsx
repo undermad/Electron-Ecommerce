@@ -5,13 +5,14 @@ import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {ReactNode, useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import {ExpandingListItem} from "./ExpandingListItem.tsx";
-import {SEARCH_ROUTE} from "../../constants/Routes.ts";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
+import {HoverScale} from "./HoverScale.tsx";
 
 type ExpandingButtonProps = {
-    items: string[],
+    items: Map<string, string>,
     name: string,
     svg: ReactNode,
+    sideIcon?: boolean,
 }
 
 export const ExpandingButton = (props: ExpandingButtonProps) => {
@@ -19,7 +20,7 @@ export const ExpandingButton = (props: ExpandingButtonProps) => {
     const width = useViewport();
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const buttonRef = useRef<HTMLDivElement | null>(null);
-    const itemsList: string[] = props.items;
+    const itemsList: Map<string, string> = props.items;
 
 
     const expand = () => {
@@ -79,8 +80,8 @@ export const ExpandingButton = (props: ExpandingButtonProps) => {
                         className={`${isExpanded ? '' : 'hidden'} absolute left-0 top-full w-full bg-electron-primary-dark-blue`}>
 
                         <ul className={"flex flex-col items-center"}>
-                            {itemsList.map((item, key) => (
-                                <ExpandingListItem route={SEARCH_ROUTE} key={key}>{item}</ExpandingListItem>
+                            {Array.from(itemsList).map(([key, value]) => (
+                                <ExpandingListItem key={key} route={value}>{key}</ExpandingListItem>
                             ))}
                         </ul>
                     </motion.div>
@@ -90,17 +91,24 @@ export const ExpandingButton = (props: ExpandingButtonProps) => {
             {width >= Breakpoints.LARGE &&
                 <section className={'relative'}>
 
-                    <div className={"flex gap-[6px] items-center cursor-pointer"}>
-                        <span className={"h-10px hover:scale-105"}>{props.name}</span>
-                        <motion.div
-                            animate={{
-                                rotate: isExpanded ? 180 : 0,
-                            }}>
-                            <SmallSvgIcon>
-                                <ArrowDown/>
-                            </SmallSvgIcon>
-                        </motion.div>
-                    </div>
+                    <HoverScale>
+                        <div className={"flex gap-[6px] items-center cursor-pointer"}>
+                            {props?.sideIcon ?
+                                <SmallSvgIcon>
+                                    {props.svg}
+                                </SmallSvgIcon> : ''
+                            }
+                            <span className={"h-10px"}>{props.name}</span>
+                            <motion.div
+                                animate={{
+                                    rotate: isExpanded ? 180 : 0,
+                                }}>
+                                <SmallSvgIcon>
+                                    <ArrowDown/>
+                                </SmallSvgIcon>
+                            </motion.div>
+                        </div>
+                    </HoverScale>
 
                     <motion.div
                         animate={{
@@ -109,8 +117,8 @@ export const ExpandingButton = (props: ExpandingButtonProps) => {
                         }}
                         className={`${isExpanded ? '' : 'hidden'} absolute top-[50px]  bg-electron-primary-dark-blue p-5 `}>
 
-                        {itemsList.map((item, key) => (
-                            <ExpandingListItem route={SEARCH_ROUTE} key={key}>{item}</ExpandingListItem>
+                        {Array.from(itemsList).map(([key, value]) => (
+                            <ExpandingListItem key={key} route={value}>{key}</ExpandingListItem>
                         ))}
                     </motion.div>
                 </section>

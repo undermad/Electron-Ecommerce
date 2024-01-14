@@ -23,8 +23,8 @@ export const NavigationBar = () => {
                         <Categories/>
                     </div>
                     <SearchBar/>
-                    <BasketLink/>
                     <Account/>
+                    <BasketLink/>
                 </>
                 :
                 // MOBILE

@@ -17,5 +17,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 </MessageScreenContextProvider>
             </AuthContextProvider>
         </BrowserRouter>
-    </React.StrictMode>,
+    </React.StrictMode>
 )
