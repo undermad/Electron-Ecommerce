@@ -20,6 +20,7 @@ import {Unauthorized} from "./ui/global/Unauthorized.tsx";
 import {PersistLogin} from "./ui/PersistLogin.tsx";
 import {MessageScreen} from "./ui/global/MessageScreen.tsx";
 
+
 function App() {
 
     return (
@@ -29,26 +30,31 @@ function App() {
 
                     {/*public routes*/}
                     <Route path={HOME_ROUTE} element={<Home/>}></Route>
-                    <Route path={SEARCH_ROUTE} element={<Search/>}></Route>
-                    <Route path={LOGIN_ROUTE} element={<Login/>}></Route>
+                    <Route path={SEARCH_ROUTE} element={<Search/>}>
 
-                    {/*protected routes*/}
-                    <Route element={<RequireAuth allowedRoles={[ROLE_USER]}/>}>
-                        <Route path={BASKET_ROUTE} element={<Basket/>}></Route>
                     </Route>
+
+                    <Route path={LOGIN_ROUTE} element={<Login/>}/>
+
+
+                    {/*user protected routes*/}
+                    <Route element={<RequireAuth allowedRoles={[ROLE_USER]}/>}>
+                        <Route path={BASKET_ROUTE} element={<Basket/>}/>
+                    </Route>
+
 
                     {/*admin protected routes*/}
                     <Route element={<RequireAuth allowedRoles={[ROLE_ADMIN]}/>}>
-                        <Route path={ADMIN_ROUTE} element={<Admin/>}></Route>
+                        <Route path={ADMIN_ROUTE} element={<Admin/>}/>
                     </Route>
 
-                    <Route path={UNAUTHORIZED_ROUTE} element={<Unauthorized/>}></Route>
-
-                    {/*error*/}
-                    <Route path={"*"} element={<Missing/>}></Route>
+                    <Route path={UNAUTHORIZED_ROUTE} element={<Unauthorized/>}/>
 
                     {/*message screen*/}
-                    <Route path={MESSAGE_SCREEN} element={<MessageScreen/>}></Route>
+                    <Route path={MESSAGE_SCREEN} element={<MessageScreen/>}/>
+
+                    {/*error*/}
+                    <Route path={"*"} element={<Missing/>}/>
 
                 </Route>
             </Route>

@@ -1,7 +1,8 @@
-import searchSVG from "../../assets/icons/search.svg";
+import {SearchSvg} from "../../assets/icons/SearchSvg.tsx";
 import {useRef, useState} from "react";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
+import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
 
 export const SearchBar = () => {
 
@@ -31,7 +32,9 @@ export const SearchBar = () => {
                 <div
                     onClick={handleFocus}
                     className={"focus-within:ring-1 cursor-text grow flex items-center gap-[6px] px-[14px] py-[10px] bg-electron-input-bg border border-electron-input-border rounded-xl"}>
-                    <img src={searchSVG} alt={'search svg icon'} className={"w-[20px] h-[20px]"}/>
+                    <SmallSvgIcon>
+                        <SearchSvg/>
+                    </SmallSvgIcon>
                     <input
                         ref={inputBigRef}
                         type={'text'}
@@ -44,9 +47,11 @@ export const SearchBar = () => {
 
                 <div
                     className={"grow flex flex-row-reverse"}>
-                    <img
-                        onClick={expandSmallInput}
-                        src={searchSVG} alt={'search svg icon'} className={"w-[20px] h-[20px]"}/>
+                    <div onClick={expandSmallInput}>
+                        <SmallSvgIcon>
+                            <SearchSvg/>
+                        </SmallSvgIcon>
+                    </div>
                     <input
                         ref={inputSmallRef}
                         onBlur={wrapSmallInput}

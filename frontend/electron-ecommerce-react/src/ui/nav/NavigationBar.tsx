@@ -1,10 +1,10 @@
 import {SearchBar} from "./SearchBar.tsx";
 import {ElectronLogo} from "./ElectronLogo.tsx";
-import {CategoriesList} from "./CategoriesList.tsx";
 import {BasketLink} from "./BasketLink.tsx";
-import {AccountLink} from "./AccountLink.tsx";
+import {Account} from "./Account.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
+import {Categories} from "./Categories.tsx";
 
 export const NavigationBar = () => {
 
@@ -20,11 +20,11 @@ export const NavigationBar = () => {
                 <>
                     <div className={"flex gap-[60px] "}>
                         <ElectronLogo dark={false}/>
-                        <CategoriesList/>
+                        <Categories/>
                     </div>
                     <SearchBar/>
                     <BasketLink/>
-                    <AccountLink/>
+                    <Account/>
                 </>
                 :
                 // MOBILE
@@ -32,8 +32,8 @@ export const NavigationBar = () => {
                     <ElectronLogo dark={false}/>
                     <SearchBar/>
                     <BasketLink/>
-                    <AccountLink/>
-                    <CategoriesList/>
+                    <Account/>
+                    <Categories/>
 
                 </>
 

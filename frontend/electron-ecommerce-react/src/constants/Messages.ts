@@ -1,1 +1,1 @@
-export const LOGOUT_EVERYWHERE_SUCCESSFUL = "You have been logged out from every device successfully.";
+export const LOGOUT_EVERYWHERE_SUCCESSFUL = "You have been logged out from every device.";

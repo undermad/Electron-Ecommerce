@@ -1,5 +1,5 @@
-import logoSVG from "../../assets/images/logo-electron.svg";
-import logSVGdark from "../../assets/images/logo-electron-black.svg";
+import {ElectronLogoSvgBright} from "../../assets/images/ElectronLogoSvgBright.tsx";
+import {ElectronLogoSvgDark} from "../../assets/images/ElectronLogoSvgDark.tsx";
 import {Link} from "react-router-dom";
 import {HOME_ROUTE} from "../../constants/Routes.ts";
 
@@ -15,9 +15,9 @@ export const ElectronLogo = (props: ElectronLogoProps) => {
         <div className={'flex justify-center'}>
             <Link to={HOME_ROUTE}>
                 {props.dark ?
-                    <img src={logSVGdark} alt={'electron logoSVG'}/>
+                    <ElectronLogoSvgDark/>
                     :
-                    <img src={logoSVG} alt={'electron logoSVG'}/>
+                    <ElectronLogoSvgBright/>
                 }
             </Link>
         </div>
