@@ -11,7 +11,7 @@ import {
     HOME_ROUTE,
     SEARCH_ROUTE,
     ADMIN_ROUTE,
-    UNAUTHORIZED_ROUTE, MESSAGE_SCREEN_ROUTE, ACCOUNT_ROUTE, LOGOUT_ROUTE
+    UNAUTHORIZED_ROUTE, MESSAGE_SCREEN_ROUTE, ACCOUNT_ROUTE, LOGOUT_ROUTE, REGISTER_ROUTE
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
@@ -21,6 +21,7 @@ import {PersistLogin} from "./ui/PersistLogin.tsx";
 import {MessageScreen} from "./ui/global/MessageScreen.tsx";
 import {MyAccount} from "./ui/account/MyAccount.tsx";
 import {Logout} from "./ui/account/Logout.tsx";
+import {Register} from "./ui/account/Register.tsx";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
                     </Route>
 
                     <Route path={LOGIN_ROUTE} element={<Login/>}/>
+                    <Route path={REGISTER_ROUTE} element={<Register/>}/>
 
 
                     {/*user protected routes*/}

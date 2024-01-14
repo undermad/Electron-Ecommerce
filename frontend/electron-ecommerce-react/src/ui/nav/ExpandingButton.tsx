@@ -6,7 +6,7 @@ import {ReactNode, useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import {ExpandingListItem} from "./ExpandingListItem.tsx";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
-import {HoverScale} from "./HoverScale.tsx";
+import {HoverScale} from "../reusable/HoverScale.tsx";
 
 type ExpandingButtonProps = {
     items: Map<string, string>,

@@ -12,4 +12,5 @@ public class ErrorMessages {
     public static final String BLANK_FIELD = "Field can not be blank";
     public static final String NULL = "Can not be null";
     public static final String EMAIL_INCORRECT_FORMAT = "Incorrect email format";
+    public static final String PASSWORDS_MUST_BE_SAME = "Passwords must be the same.";
 }

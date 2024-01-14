@@ -3,7 +3,7 @@ package com.electron.rest.security.auth_service;
 import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.constants.SuccessMessages;
 import com.electron.rest.exception.EmailAlreadyExistException;
-import com.electron.rest.exception.RefreshTokenException;
+import com.electron.rest.exception.InvalidInputException;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_entity.factory.UserFactory;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.electron.rest.constants.ErrorMessages.INVALID_TOKEN;
+import static com.electron.rest.constants.ErrorMessages.*;
 
 @Service
 @Transactional
@@ -85,8 +85,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public RegisterResponse register(RegisterDto registerDto) {
+        if(!registerDto.password().equals(registerDto.reEnteredPassword())) throw new InvalidInputException(PASSWORDS_MUST_BE_SAME);
         List<UserProjection> usersList = userRepository.findUserEmail(registerDto.email());
-        if (!usersList.isEmpty()) throw new EmailAlreadyExistException(ErrorMessages.EMAIL_ALREADY_IN_USE);
+        if (!usersList.isEmpty()) throw new EmailAlreadyExistException(EMAIL_ALREADY_IN_USE);
 
         User newUser = regularUserFactory.createUser(registerDto);
         userRepository.save(newUser);

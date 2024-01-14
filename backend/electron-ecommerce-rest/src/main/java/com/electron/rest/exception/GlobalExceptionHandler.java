@@ -100,4 +100,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errorDto, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<ErrorDto> handleUserAlreadyExistException
+            (InvalidInputException exception, WebRequest webRequest) {
+
+        ErrorDto errorDto = new ErrorDto(
+                exception.getMessage(),
+                new Date(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
 }

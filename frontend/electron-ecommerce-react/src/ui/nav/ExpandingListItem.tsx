@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {HoverScale} from "./HoverScale.tsx";
+import {HoverScale} from "../reusable/HoverScale.tsx";
 
 interface CategoryLinkProps {
     children: React.ReactNode;

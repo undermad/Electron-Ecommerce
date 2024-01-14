@@ -6,6 +6,7 @@ import {LOGIN_ROUTE} from "../../constants/Routes.ts";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
 import {AccountFunctions} from "./AccountFunctions.tsx";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
+import {HoverScale} from "../reusable/HoverScale.tsx";
 
 export const Account = () => {
     const width = useViewport();
@@ -15,16 +16,18 @@ export const Account = () => {
         <>
             {auth?.auth?.token ?
 
-                    <AccountFunctions/>
+                <AccountFunctions/>
                 :
-                <Link to={LOGIN_ROUTE}>
-                    <div className={"flex gap-[8px] items-center"}>
-                        <SmallSvgIcon>
-                            <UserSvg/>
-                        </SmallSvgIcon>
-                        {width >= Breakpoints.LARGE ? <span>Login</span> : ''}
-                    </div>
-                </Link>
+                <HoverScale>
+                    <Link to={LOGIN_ROUTE}>
+                        <div className={"flex gap-[8px] items-center"}>
+                            <SmallSvgIcon>
+                                <UserSvg/>
+                            </SmallSvgIcon>
+                            {width >= Breakpoints.LARGE ? <span>Login</span> : ''}
+                        </div>
+                    </Link>
+                </HoverScale>
             }
         </>
     )

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {BASKET_ROUTE} from "../../constants/Routes.ts";
 import {BasketSvg} from "../../assets/icons/BasketSvg.tsx";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
-import {HoverScale} from "./HoverScale.tsx";
+import {HoverScale} from "../reusable/HoverScale.tsx";
 
 export const BasketLink = () => {
     const width = useViewport();
