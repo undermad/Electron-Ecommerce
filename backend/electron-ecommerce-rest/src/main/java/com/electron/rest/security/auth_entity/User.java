@@ -24,8 +24,14 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 64)
     private String password;
+
+    @Column(name = "first_name", nullable = false, length = 36)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 36)
+    private String lastName;
 
     @Column(name = "newsletter", nullable = false)
     private Boolean newsletterSubscription;

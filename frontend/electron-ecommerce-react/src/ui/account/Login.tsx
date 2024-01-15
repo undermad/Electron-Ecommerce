@@ -8,14 +8,12 @@ import {LoginResponse} from "../../api/dto/LoginResponse.ts";
 import {axiosAuth} from "../../api/axios.ts";
 import {LOGIN_API_PATH} from "../../constants/ApiEndpointsPaths.ts";
 import {AxiosResponse} from "axios";
-import {HoverScale} from "../reusable/HoverScale.tsx";
 import {Header2} from "../reusable/Header2.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
 import {Label} from "../reusable/Label.tsx";
 import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
-
 
 export const Login = () => {
     const auth = useAuth();
@@ -77,8 +75,8 @@ export const Login = () => {
         <section
             className={"px-responsive-electron w-full max-w-[1440px] flex justify-center mt-[16px] font-inter"}>
 
-            <div className={"w-[706px] h-[1024px] flex justify-center"}>
-                <div className={"w-[355px] mt-16"}>
+            <div className={"w-full  md:w-[706px] h-[1024px] flex justify-center"}>
+                <div className={"w-full md:w-[355px] mt-16"}>
 
                     <ElectronLogoHero/>
 
@@ -106,6 +104,7 @@ export const Login = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                     value={email}
                                     required={true}
+                                    autoComplete={"email"}
                                 />
                             </LabelInputHolder>
 
@@ -118,12 +117,15 @@ export const Login = () => {
                                     ref={passwordRef}
                                     placeholder={"Enter your password"}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    autoComplete={"password"}
                                 />
                                 <div className={"flex"}>
                                     <LabelCheckboxHolder tailwind="w-1/2">
                                         <input type={"checkbox"}
                                                id={"persist"}
-                                               onChange={togglePersist}/>
+                                               onChange={togglePersist}
+                                               autoComplete={"off"}
+                                        />
                                         <CheckboxLabel htmlFor={"persist"}>Remember me?</CheckboxLabel>
                                     </LabelCheckboxHolder>
                                     <ParagraphSmall tailwind="font-[400] text-right">Forgot Password?</ParagraphSmall>
@@ -144,11 +146,9 @@ export const Login = () => {
 
                     <ParagraphSmall tailwind="flex justify-center mt-3">
                         Don't have an account?&nbsp;
-                        <HoverScale>
                             <Link to={REGISTER_ROUTE}>
                                 <span className={"font-[600]"}>Register</span>
                             </Link>
-                        </HoverScale>
                     </ParagraphSmall>
 
                 </div>

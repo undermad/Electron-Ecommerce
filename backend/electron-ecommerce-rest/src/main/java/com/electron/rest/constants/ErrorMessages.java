@@ -8,7 +8,9 @@ public class ErrorMessages {
     public static final String EXPIRED_TOKEN = "Expired token.";
 
 
+    //VALIDATION ERROR MESSAGES
     public static final String PASSWORD_INCORRECT_LENGTH = "Password should have at least 6 characters and no longer than 36";
+    public static final String INCORRECT_LENGTH = "Maximum length is 36.";
     public static final String BLANK_FIELD = "Field can not be blank";
     public static final String NULL = "Can not be null";
     public static final String EMAIL_INCORRECT_FORMAT = "Incorrect email format";

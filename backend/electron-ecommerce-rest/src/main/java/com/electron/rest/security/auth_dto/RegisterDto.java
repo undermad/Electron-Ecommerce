@@ -5,6 +5,15 @@ import jakarta.validation.constraints.*;
 import static com.electron.rest.constants.ErrorMessages.*;
 
 public record RegisterDto(
+
+        @NotBlank
+        @Size(max = 36, message = INCORRECT_LENGTH)
+        String firstName,
+
+        @NotBlank
+        @Size(max = 36, message = INCORRECT_LENGTH)
+        String lastName,
+
         @NotBlank (message = BLANK_FIELD)
         @Email (message = EMAIL_INCORRECT_FORMAT)
         String email,

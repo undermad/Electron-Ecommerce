@@ -6,7 +6,7 @@ export const AppLayout = () => {
 
 
     return (
-        <div className={"font-inter flex items-center flex-col "}>
+        <div className={"font-inter flex items-center flex-col w-full"}>
                 <NavigationBar/>
                 <Outlet/>
                 <Footer/>

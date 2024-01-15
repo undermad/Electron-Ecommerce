@@ -10,7 +10,6 @@ export const SearchBar = () => {
     const inputSmallRef = useRef<HTMLInputElement | null>(null);
     const width = useViewport();
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
-
     const handleFocus = () => {
         inputBigRef.current?.focus();
     }
@@ -25,6 +24,8 @@ export const SearchBar = () => {
     }
 
 
+
+
     return (
 
         <>
@@ -35,13 +36,16 @@ export const SearchBar = () => {
                     <SmallSvgIcon>
                         <SearchSvg/>
                     </SmallSvgIcon>
+                    <input name="abc" type="text" style={{display:'none'}}/>
                     <input
                         ref={inputBigRef}
                         type={'text'}
                         name={'search'}
                         placeholder={'Search for products'}
-                        autoComplete={'off'}
-                        className={`w-full bg-electron-input-bg placeholder:text-electron-primary-grey focus:outline-0`}/>
+                        autoComplete={'new-password'}
+                        className={`w-full bg-electron-input-bg placeholder:text-electron-primary-grey focus:outline-0`}
+                        onFocus={(event) => event.target.setAttribute('autocomplete', 'off')}
+                    />
                 </div>
                 :
 
@@ -58,7 +62,7 @@ export const SearchBar = () => {
                         type={'text'}
                         name={'search'}
                         placeholder={'Search for products'}
-                        autoComplete={'off'}
+                        autoComplete={'new-password'}
                         className={`${isExpanded ? '' : 'hidden'} w-full bg-electron-input-bg placeholder:text-electron-primary-grey focus:outline- absolute top-1/2 left-0 -translate-y-1/2 rounded-xl py-1 px-3 focus:ring-1 border border-electron-input-border`}/>
 
                 </div>

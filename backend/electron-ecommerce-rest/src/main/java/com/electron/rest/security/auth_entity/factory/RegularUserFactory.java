@@ -39,6 +39,8 @@ public class RegularUserFactory implements UserFactory {
 
         return User.builder()
                 .email(registerDto.email())
+                .firstName(registerDto.firstName())
+                .lastName(registerDto.lastName())
                 .newsletterSubscription(registerDto.newsletterSubscription())
                 .password(passwordEncoder.encode(registerDto.password()))
                 .createdOn(Instant.now())

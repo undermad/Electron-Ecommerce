@@ -5,8 +5,54 @@ import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {Label} from "../reusable/Label.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
+import {useRef, useState} from "react";
+import {RegisterRequest} from "../../api/dto/RegisterRequest.ts";
+import {AxiosResponse} from "axios";
+import {axiosAuth} from "../../api/axios.ts";
+import {REGISTER_API_PATH} from "../../constants/ApiEndpointsPaths.ts";
+import {RegisterResponse} from "../../api/dto/RegisterResponse.ts";
+import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
+import {REGISTRATION_SUCCESSFUL} from "../../constants/Messages.ts";
+
 
 export const Register = () => {
+
+    const [registerFormData, setRegisterFormData] = useState<RegisterRequest>({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        reEnteredPassword: '',
+        newsletterSubscription: false,
+    })
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const errorRef = useRef<HTMLParagraphElement>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const messageScreen = useMessageScreen();
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value, type, checked} = e.target;
+        const inputValue = type === 'checkbox' ? checked : value;
+        setRegisterFormData((prevState) => ({
+            ...prevState,
+            [name]: inputValue,
+        }));
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log(registerFormData);
+        axiosAuth.post(REGISTER_API_PATH, registerFormData)
+            .then((response: AxiosResponse<RegisterResponse>) => {
+                console.log(response.data.message);
+                messageScreen(REGISTRATION_SUCCESSFUL);
+            })
+            .catch((error) => {
+                console.log(error?.response);
+                setLoading(false);
+                setErrorMessage(error?.response?.data?.message);
+            })
+    }
 
 
     return (
@@ -21,26 +67,39 @@ export const Register = () => {
                     <Header2>Register your account</Header2>
                     <ParagraphSmall>Stay with us forever!</ParagraphSmall>
 
+                    <p ref={errorRef}
+                       className={errorMessage ? "text-electron-error text-xl" : ""}>
+                        {errorMessage}
+                    </p>
 
-                    <form className={"mt-[35px] flex flex-col"}>
+
+                    <form className={"mt-[35px] flex flex-col"}
+                          onSubmit={handleSubmit}>
 
                         <div className={"flex flex-col gap-[16px]"}>
                             <LabelInputHolder>
-                                <Label htmlFor={"name"}>First name</Label>
+                                <Label htmlFor={"firstName"}>First name</Label>
                                 <input
                                     className={"input-electron"}
-                                    id={"name"}
-                                    type={"text"}
+                                    id={"firstName"}
                                     required={true}
+                                    type={"text"}
+                                    name={"firstName"}
+                                    value={registerFormData.firstName}
+                                    onChange={handleInputChange}
+                                    autoComplete={"given-name"}
                                 />
                             </LabelInputHolder>
                             <LabelInputHolder>
-                                <Label htmlFor={"name"}>Last name</Label>
+                                <Label htmlFor={"lastName"}>Last name</Label>
                                 <input
                                     className={"input-electron"}
-                                    id={"name"}
-                                    type={"text"}
+                                    id={"lastName"}
                                     required={true}
+                                    type={"text"}
+                                    name={"lastName"}
+                                    onChange={handleInputChange}
+                                    autoComplete={"family-name"}
                                 />
                             </LabelInputHolder>
                             <LabelInputHolder>
@@ -48,47 +107,63 @@ export const Register = () => {
                                 <input
                                     className={"input-electron"}
                                     id={"email"}
-                                    type={"text"}
                                     required={true}
+                                    type={"text"}
+                                    name={"email"}
+                                    onChange={handleInputChange}
+                                    autoComplete={"email"}
                                 />
                             </LabelInputHolder>
 
                             <LabelInputHolder>
                                 <Label htmlFor={"password"}>Password</Label>
+                                <input name="abc" type="text" style={{display:'none'}}/>
                                 <input
                                     className={"input-electron"}
                                     id={"password"}
-                                    type={"password"}
                                     placeholder={"At least six characters"}
                                     required={true}
+                                    type={"password"}
+                                    name={"password"}
+                                    onChange={handleInputChange}
+                                    autoComplete={"new-password"}
                                 />
                             </LabelInputHolder>
                             <LabelInputHolder>
                                 <Label htmlFor={"re-enter-password"}>Re-enter password</Label>
+                                <input name="abc" type="text" style={{display:'none'}}/>
                                 <input
                                     className={"input-electron"}
                                     id={"re-enter-password"}
-                                    type={"password"}
                                     required={true}
+                                    type={"password"}
+                                    name={"reEnteredPassword"}
+                                    onChange={handleInputChange}
+                                    autoComplete={"new-password"}
                                 />
                             </LabelInputHolder>
                             <LabelCheckboxHolder>
                                 <input type={"checkbox"}
-                                       id={"persist"}/>
-                                <CheckboxLabel htmlFor={"persist"}>Would you like to sign for the newsletter?</CheckboxLabel>
+                                       id={"persist"}
+                                       name={"newsletter"}
+                                       onChange={handleInputChange}
+                                       autoComplete={"off"}
+                                />
+                                <CheckboxLabel htmlFor={"persist"}>
+                                    Would you like to sign for the newsletter?
+                                </CheckboxLabel>
                             </LabelCheckboxHolder>
                         </div>
 
 
-
                         <div className={"flex flex-col gap-[14px] mt-[24px]"}>
-                            <button className={"button-electron"}>
+                            <button className={loading ? "button-electron-disabled" : "button-electron"}
+                                    type={"submit"}>
                                 Register
                             </button>
                         </div>
 
                     </form>
-
 
 
                 </div>
