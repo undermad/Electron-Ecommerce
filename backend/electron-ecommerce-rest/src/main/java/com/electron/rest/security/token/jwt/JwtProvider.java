@@ -1,4 +1,4 @@
-package com.electron.rest.security.jwt;
+package com.electron.rest.security.token.jwt;
 
 import com.electron.rest.token.TokenFactory;
 

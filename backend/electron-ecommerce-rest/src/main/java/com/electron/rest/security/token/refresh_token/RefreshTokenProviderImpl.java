@@ -1,4 +1,4 @@
-package com.electron.rest.security.refresh_token;
+package com.electron.rest.security.token.refresh_token;
 
 import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_entity.User;

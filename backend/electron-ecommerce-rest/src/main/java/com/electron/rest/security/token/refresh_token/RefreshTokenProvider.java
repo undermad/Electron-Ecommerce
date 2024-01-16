@@ -1,4 +1,4 @@
-package com.electron.rest.security.refresh_token;
+package com.electron.rest.security.token.refresh_token;
 
 import com.electron.rest.cookie.CookieFactory;
 import com.electron.rest.token.TokenFactory;

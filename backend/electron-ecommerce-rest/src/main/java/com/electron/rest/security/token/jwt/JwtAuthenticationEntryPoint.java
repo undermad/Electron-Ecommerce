@@ -1,4 +1,4 @@
-package com.electron.rest.security.jwt;
+package com.electron.rest.security.token.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -3,7 +3,6 @@ package com.electron.rest.security.auth_controller;
 import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_service.AuthService;
-import com.electron.rest.security.auth_service.RefreshTokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,15 +18,13 @@ import static com.electron.rest.constants.SuccessMessages.LOGOUT_SUCCESS;
 
 @RestController
 @RequestMapping(API_V1_AUTH)
-public class AuthController {
+public class AuthenticationController {
 
     private final AuthService authService;
-    private final RefreshTokenService refreshTokenService;
 
     @Autowired
-    public AuthController(AuthService authService, RefreshTokenService refreshTokenService) {
+    public AuthenticationController(AuthService authService) {
         this.authService = authService;
-        this.refreshTokenService = refreshTokenService;
     }
 
     //basic auth header is required and body is required
@@ -37,7 +34,7 @@ public class AuthController {
                                                @RequestParam(name = "remember", defaultValue = "false", required = false)
                                                Boolean remember) {
         LoginResponse loginResponse = authService.login(loginDto);
-        ResponseCookie refreshTokenCookie = refreshTokenService.getRefreshTokenCookie(loginDto, remember);
+        ResponseCookie refreshTokenCookie = authService.getRefreshTokenCookie(loginDto, remember);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
@@ -47,21 +44,16 @@ public class AuthController {
     @GetMapping(REFRESH_TOKEN)
     public ResponseEntity<LoginResponse> refreshToken(@CookieValue(value = "${app-refresh-token-name}")
                                                       String refreshToken) {
-        if (!refreshTokenService.isTokenUpToDate(refreshToken)) throw new RefreshTokenException(INVALID_TOKEN);
+        if (!authService.isRefreshTokenUpToDate(refreshToken)) throw new RefreshTokenException(INVALID_TOKEN);
         LoginResponse loginResponse = authService.refreshJwt(refreshToken);
 
         return ResponseEntity.ok(loginResponse);
     }
 
-    @PostMapping(REGISTER)
-    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterDto registerDto) {
-        return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
-    }
-
     @PostMapping(REFRESH_TOKEN + LOGOUT)
     public ResponseEntity<LogoutResponse> logout(@CookieValue(value = "${app-refresh-token-name}")
                                                  String refreshToken) {
-        ResponseCookie clearCookie = refreshTokenService.getLogoutCookie(refreshToken);
+        ResponseCookie clearCookie = authService.getLogoutCookie(refreshToken);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
                         clearCookie.toString())
@@ -71,9 +63,11 @@ public class AuthController {
     @PostMapping(LOGOUT_EVERYWHERE)
     public ResponseEntity<LogoutResponse> logoutFromAllDevices(@RequestHeader("Authorization")
                                                                String jwt) {
-        refreshTokenService.logoutEverywhere(jwt);
+        authService.logoutEverywhere(jwt);
         return ResponseEntity.ok(new LogoutResponse(LOGOUT_SUCCESS));
     }
+
+
 
 
 }
