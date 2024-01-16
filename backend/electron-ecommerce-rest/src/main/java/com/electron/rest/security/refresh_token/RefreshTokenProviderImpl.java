@@ -2,30 +2,27 @@ package com.electron.rest.security.refresh_token;
 
 import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_entity.User;
-import com.electron.rest.security.auth_repository.RefreshTokenRepository;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+import com.electron.rest.token.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
-import static com.electron.rest.constants.EndpointsPaths.*;
+import static com.electron.rest.constants.EndpointsPaths.API_V1_AUTH;
+import static com.electron.rest.constants.EndpointsPaths.REFRESH_TOKEN;
 
 @Component
-public class RefreshTokenProviderImpl implements RefreshTokenProvider {
+public class RefreshTokenProviderImpl extends RefreshTokenProvider {
+
 
     @Value("${app-refresh-token-name}")
     private String refreshTokenCookieName;
 
     @Value("${app-refresh-token-expiration-millisecond}")
     private String refreshTokenExpirationTime;
-
-
 
     @Override
     public ResponseCookie createCookie(String refreshToken) {
@@ -48,21 +45,13 @@ public class RefreshTokenProviderImpl implements RefreshTokenProvider {
     }
 
     @Override
-    public String getTokenFromHttpRequest(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, refreshTokenCookieName);
-        return cookie != null ? cookie.getValue() : null;
-    }
-
-    @Override
-    public RefreshToken generateToken(Long userId) {
-        RefreshToken token = new RefreshToken();
+    public Token generateToken(Long userId) {
         User user = new User();
         user.setId(userId);
-        token.setUser(user);
-        token.setExpiryDate(Instant.now().plusMillis(Long.parseLong(refreshTokenExpirationTime)));
-        token.setToken(UUID.randomUUID().toString());
-        return token;
+        return RefreshToken.builder()
+                .token(UUID.randomUUID().toString())
+                .expiryDate(Instant.now().plusMillis(Long.parseLong(refreshTokenExpirationTime)))
+                .user(user)
+                .build();
     }
-
-
 }

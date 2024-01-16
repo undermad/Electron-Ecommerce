@@ -1,12 +1,7 @@
 package com.electron.rest.security.refresh_token;
 
-import com.electron.rest.security.auth_entity.RefreshToken;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseCookie;
+import com.electron.rest.cookie.CookieFactory;
+import com.electron.rest.token.TokenFactory;
 
-public interface RefreshTokenProvider {
-    ResponseCookie createCookie(String refreshToken);
-    String getTokenFromHttpRequest(HttpServletRequest request);
-    RefreshToken generateToken(Long userId);
-    ResponseCookie createClearCookie();
+public abstract class RefreshTokenProvider implements TokenFactory<Long>, CookieFactory {
 }

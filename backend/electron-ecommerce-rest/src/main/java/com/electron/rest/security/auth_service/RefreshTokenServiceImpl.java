@@ -5,19 +5,17 @@ import com.electron.rest.exception.UnauthorizedException;
 import com.electron.rest.security.AuthUtils;
 import com.electron.rest.security.auth_dto.LoginDto;
 import com.electron.rest.security.auth_entity.RefreshToken;
+import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
 import com.electron.rest.security.auth_repository.projections.RefreshTokenProjection;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
+import com.electron.rest.security.jwt.Jwt;
 import com.electron.rest.security.jwt.JwtProvider;
 import com.electron.rest.security.refresh_token.RefreshTokenProvider;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +28,10 @@ import static com.electron.rest.constants.ErrorMessages.*;
 @Transactional
 public class RefreshTokenServiceImpl implements RefreshTokenService {
 
-    @Value("${app-refresh-token-expiration-millisecond}")
-    private String refreshTokenExpirationTime;
-
-    private RefreshTokenRepository refreshTokenRepository;
-    private RefreshTokenProvider refreshTokenProvider;
-    private UserRepository userRepository;
-    private JwtProvider jwtProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenProvider refreshTokenProvider;
+    private final UserRepository userRepository;
+    private final JwtProvider jwtProvider;
 
     @Autowired
     public RefreshTokenServiceImpl(RefreshTokenRepository refreshTokenRepository, RefreshTokenProvider refreshTokenProvider, UserRepository userRepository, JwtProvider jwtProvider) {
@@ -51,9 +46,8 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         List<UserProjection> usersList = userRepository.findUserIdFromEmail(loginDto.email());
         if (usersList.isEmpty())
             throw new UsernameNotFoundException("Bad credentials");
-        Long userId = usersList.get(0).getId();
         if (remember) {
-            RefreshToken newToken = refreshTokenProvider.generateToken(userId);
+            RefreshToken newToken = (RefreshToken) refreshTokenProvider.generateToken(usersList.get(0).getId());
             refreshTokenRepository.save(newToken);
             return refreshTokenProvider.createCookie(newToken.getToken());
         }
@@ -69,10 +63,10 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public void logoutEverywhere(String jwt) {
-        if(jwt == null) throw new UnauthorizedException(INVALID_TOKEN);
-        jwt = AuthUtils.substringBearer(jwt);
-        String email = jwtProvider.getEmail(jwt);
+    public void logoutEverywhere(String token) {
+        if(token == null) throw new UnauthorizedException(INVALID_TOKEN);
+        Jwt jwt = new Jwt(AuthUtils.substringBearer(token));
+        String email = jwtProvider.getSubject(jwt);
 
         List<UserProjection> userList = userRepository.findUserIdFromEmail(email);
         if (userList == null) throw new UsernameNotFoundException(USER_NOT_FOUND);

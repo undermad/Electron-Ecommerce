@@ -11,6 +11,7 @@ import com.electron.rest.security.auth_repository.RoleRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
 import com.electron.rest.security.auth_repository.projections.RoleProjection;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
+import com.electron.rest.security.jwt.Jwt;
 import com.electron.rest.security.jwt.JwtProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,20 +55,20 @@ public class AuthServiceImpl implements AuthService {
                 loginDto.email(),
                 loginDto.password()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtProvider.generateTokenFromAuthentication(authentication);
+        Jwt token = (Jwt) jwtProvider.generateToken(authentication.getName());
         String accountStatus = userRepository.findUserAccountStatusByEmail(loginDto.email()).get(0).getAccountStatus();
         Set<String> roles = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
 
-        return new LoginResponse(token, roles, accountStatus);
+        return new LoginResponse(token.getValue(), roles, accountStatus);
     }
 
     @Override
     public LoginResponse refreshJwt(String refreshToken) {
 
-        List<UserProjection> usersList = userRepository.findUserByRefreshToken(refreshToken);
+        List<UserProjection> usersList = userRepository.findUserIdAndEmailByRefreshToken(refreshToken);
         if (usersList.isEmpty())
             throw new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND);
         UserProjection user = usersList.get(0);
@@ -78,9 +79,9 @@ public class AuthServiceImpl implements AuthService {
                 .stream()
                 .map(RoleProjection::getRoleName)
                 .collect(Collectors.toSet());
-        String token = jwtProvider.generateToken(user.getEmail());
+        Jwt token = (Jwt) jwtProvider.generateToken(user.getEmail());
 
-        return new LoginResponse(token, roles, accountStatus);
+        return new LoginResponse(token.getValue(), roles, accountStatus);
     }
 
     @Override
