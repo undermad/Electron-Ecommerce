@@ -6,7 +6,6 @@ import com.electron.rest.security.auth_service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +52,7 @@ public class AuthenticationController {
     @PostMapping(REFRESH_TOKEN + LOGOUT)
     public ResponseEntity<LogoutResponse> logout(@CookieValue(value = "${app-refresh-token-name}")
                                                  String refreshToken) {
-        ResponseCookie clearCookie = authService.getLogoutCookie(refreshToken);
+        ResponseCookie clearCookie = authService.logout(refreshToken);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
                         clearCookie.toString())

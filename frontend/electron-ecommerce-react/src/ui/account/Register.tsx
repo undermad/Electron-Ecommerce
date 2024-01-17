@@ -8,8 +8,7 @@ import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 import {useRef, useState} from "react";
 import {RegisterRequest} from "../../api/dto/RegisterRequest.ts";
 import {AxiosResponse} from "axios";
-import {axiosAuth} from "../../api/axios.ts";
-import {REGISTER_API_PATH} from "../../constants/ApiEndpointsPaths.ts";
+import {axiosRegistration, REGISTER_API_PATH} from "../../api/axios.ts";
 import {RegisterResponse} from "../../api/dto/RegisterResponse.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {REGISTRATION_SUCCESSFUL} from "../../constants/Messages.ts";
@@ -42,7 +41,7 @@ export const Register = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(registerFormData);
-        axiosAuth.post(REGISTER_API_PATH, registerFormData)
+        axiosRegistration.post(REGISTER_API_PATH, registerFormData)
             .then((response: AxiosResponse<RegisterResponse>) => {
                 console.log(response.data.message);
                 messageScreen(REGISTRATION_SUCCESSFUL);

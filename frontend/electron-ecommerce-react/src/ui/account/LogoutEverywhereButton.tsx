@@ -1,8 +1,8 @@
-import {AUTH_API_PATH, LOGOUT_EVERYWHERE} from "../../constants/ApiEndpointsPaths.ts";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {LOGOUT_EVERYWHERE_SUCCESSFUL} from "../../constants/Messages.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
+import {AUTH_API_PATH, LOGOUT_EVERYWHERE} from "../../api/axios.ts";
 
 const LogoutEverywhereButton = () => {
 

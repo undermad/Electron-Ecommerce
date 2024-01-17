@@ -1,8 +1,29 @@
 import axios from "axios";
-import {AUTH_API_PATH, BASE_API_URL,} from "../constants/ApiEndpointsPaths.ts";
+
+export const BASE_API_URL = "http://localhost:8080/api/v1";
+
+
+export const AUTH_API_PATH = "/auth"
+export const LOGIN_API_PATH = "/login";
+export const REFRESH_TOKEN_API_PATH = "/refreshtoken";
+export const LOGOUT_API_PATH = "/logout";
+export const LOGOUT_EVERYWHERE = "/logout_everywhere";
+
+
+export const REGISTRATION_API_PATH = "/registration"
+export const REGISTER_API_PATH = "/register";
+
+
 
 export const axiosAuth = axios.create({
     baseURL: BASE_API_URL + AUTH_API_PATH,
+    headers: {'Content-Type': 'application/json'},
+    timeout: 10000,
+    withCredentials: true,
+});
+
+export const axiosRegistration = axios.create({
+    baseURL: BASE_API_URL + REGISTRATION_API_PATH,
     headers: {'Content-Type': 'application/json'},
     timeout: 10000,
     withCredentials: true,

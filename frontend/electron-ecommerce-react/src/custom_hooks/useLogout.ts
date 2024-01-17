@@ -1,6 +1,5 @@
 import {useAuth} from "./useAuth.ts";
-import {axiosAuth} from "../api/axios.ts";
-import {LOGOUT_API_PATH, REFRESH_TOKEN_API_PATH} from "../constants/ApiEndpointsPaths.ts";
+import {axiosAuth, LOGOUT_API_PATH, REFRESH_TOKEN_API_PATH} from "../api/axios.ts";
 
 export const useLogout = () => {
     const auth = useAuth();

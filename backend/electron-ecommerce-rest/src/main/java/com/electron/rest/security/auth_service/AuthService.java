@@ -1,9 +1,13 @@
 package com.electron.rest.security.auth_service;
 
 import com.electron.rest.security.auth_dto.*;
+import org.springframework.http.ResponseCookie;
 
 public interface AuthService {
     LoginResponse login(LoginDto loginDto);
     LoginResponse refreshJwt(String refreshToken);
-    RegisterResponse register(RegisterDto registerDto);
+    Boolean isRefreshTokenUpToDate(String token);
+    ResponseCookie getRefreshTokenCookie(LoginDto loginDto, Boolean remember);
+    ResponseCookie logout(String refreshToken);
+    void logoutEverywhere(String jwt);
 }

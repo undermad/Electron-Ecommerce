@@ -17,7 +17,7 @@ public class ActivationTokenProvider implements TokenFactory<Long> {
         user.setId(userId);
         return ActivationToken.builder()
                 .user(user)
-                .activationToken(UUID.randomUUID().toString())
+                .token(UUID.randomUUID().toString())
                 .build();
     }
 

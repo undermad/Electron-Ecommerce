@@ -1,20 +1,25 @@
 package com.electron.rest.security.auth_service;
 
 import com.electron.rest.constants.ErrorMessages;
-import com.electron.rest.constants.SuccessMessages;
-import com.electron.rest.exception.EmailAlreadyExistException;
-import com.electron.rest.exception.InvalidInputException;
+import com.electron.rest.email.EmailService;
+import com.electron.rest.exception.RefreshTokenException;
+import com.electron.rest.exception.UnauthorizedException;
+import com.electron.rest.security.AuthUtils;
 import com.electron.rest.security.auth_dto.*;
-import com.electron.rest.security.auth_entity.User;
+import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_entity.factory.UserFactory;
+import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import com.electron.rest.security.auth_repository.RoleRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
+import com.electron.rest.security.auth_repository.projections.RefreshTokenProjection;
 import com.electron.rest.security.auth_repository.projections.RoleProjection;
 import com.electron.rest.security.auth_repository.projections.UserProjection;
-import com.electron.rest.security.jwt.Jwt;
-import com.electron.rest.security.jwt.JwtProvider;
+import com.electron.rest.security.token.jwt.Jwt;
+import com.electron.rest.security.token.jwt.JwtProvider;
+import com.electron.rest.security.token.refresh_token.RefreshTokenProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,16 +43,17 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenProvider refreshTokenProvider;
 
-    @Qualifier("regularUserFactory")
-    private final UserFactory regularUserFactory;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, UserFactory regularUserFactory) {
+    public AuthServiceImpl(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, RoleRepository roleRepository, RefreshTokenRepository refreshTokenRepository, RefreshTokenProvider refreshTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.regularUserFactory = regularUserFactory;
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.refreshTokenProvider = refreshTokenProvider;
     }
 
     @Override
@@ -85,15 +92,51 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public RegisterResponse register(RegisterDto registerDto) {
-        if(!registerDto.password().equals(registerDto.reEnteredPassword())) throw new InvalidInputException(PASSWORDS_MUST_BE_SAME);
-        List<UserProjection> usersList = userRepository.findUserEmail(registerDto.email());
-        if (!usersList.isEmpty()) throw new EmailAlreadyExistException(EMAIL_ALREADY_IN_USE);
+    public ResponseCookie getRefreshTokenCookie(LoginDto loginDto, Boolean remember) {
+        List<UserProjection> usersList = userRepository.findUserIdFromEmail(loginDto.email());
+        if (usersList.isEmpty())
+            throw new UsernameNotFoundException(BAD_CREDENTIALS);
+        if (remember) {
+            RefreshToken newToken = (RefreshToken) refreshTokenProvider.generateToken(usersList.get(0).getId());
+            refreshTokenRepository.save(newToken);
+            return refreshTokenProvider.createCookie(newToken.getToken());
+        }
+        return refreshTokenProvider.createClearCookie();
+    }
 
-        User newUser = regularUserFactory.createUser(registerDto);
-        userRepository.save(newUser);
+    @Override
+    public ResponseCookie logout(String refreshToken) {
+        if (refreshToken == null) throw new RefreshTokenException(INVALID_TOKEN);
+        refreshTokenRepository.deleteRefreshTokenByToken(refreshToken);
 
-        return new RegisterResponse(SuccessMessages.REGISTER_SUCCESS);
+        return refreshTokenProvider.createClearCookie();
+    }
+
+    @Override
+    public void logoutEverywhere(String jwt) {
+        if (jwt == null) throw new UnauthorizedException(INVALID_TOKEN);
+        Jwt jwToken = new Jwt(AuthUtils.substringBearer(jwt));
+        String email = jwtProvider.getSubject(jwToken);
+
+        List<UserProjection> userList = userRepository.findUserIdFromEmail(email);
+        if (userList == null) throw new UsernameNotFoundException(USER_NOT_FOUND);
+        Long userId = userList.get(0).getId();
+        refreshTokenRepository.deleteRefreshTokenByUserId(userId);
+    }
+
+    @Override
+    public Boolean isRefreshTokenUpToDate(String token) {
+        if (token == null) throw new RefreshTokenException(INVALID_TOKEN);
+        List<RefreshTokenProjection> refreshTokenProjectionList = refreshTokenRepository.findRefreshTokenByToken(token);
+        if (refreshTokenProjectionList.isEmpty())
+            throw new RefreshTokenException(INVALID_TOKEN);
+        RefreshTokenProjection refreshTokenProjection = refreshTokenProjectionList.get(0);
+
+        if (refreshTokenProjection.getExpirationDate().compareTo(Instant.now()) < 0) {
+            refreshTokenRepository.deleteById(refreshTokenProjection.getId());
+            throw new RefreshTokenException(EXPIRED_TOKEN);
+        }
+        return true;
     }
 
 

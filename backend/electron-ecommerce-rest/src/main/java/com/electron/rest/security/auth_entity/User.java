@@ -52,5 +52,9 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<RefreshToken> refreshTokens;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "activation_token_id", referencedColumnName = "id")
+    private ActivationToken activationToken;
+
 
 }

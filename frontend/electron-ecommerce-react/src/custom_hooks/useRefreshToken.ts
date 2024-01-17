@@ -1,6 +1,5 @@
 import {useAuth} from "./useAuth.ts";
-import {axiosAuth} from "../api/axios.ts";
-import {REFRESH_TOKEN_API_PATH} from "../constants/ApiEndpointsPaths.ts";
+import {axiosAuth, REFRESH_TOKEN_API_PATH} from "../api/axios.ts";
 import {AxiosResponse} from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import {LOGIN_ROUTE} from "../constants/Routes.ts";

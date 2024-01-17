@@ -94,7 +94,7 @@ public class AuthenticationControllerTest {
     @Test
     @DisplayName("[201] POST " + API_V1_AUTH + REGISTER + " Successful registration.")
     public void successfulRegister() throws Exception {
-        RegisterDto registerDto = new RegisterDto(REGISTER_DTO_EMAIL, REGISTER_DTO_PASSWORD, REGISTER_DTO_PASSWORD, REGISTER_DTO_SUBSCRIPTION);
+        RegisterDto registerDto = new RegisterDto("Dominik"," Tworek",REGISTER_DTO_EMAIL, REGISTER_DTO_PASSWORD, REGISTER_DTO_PASSWORD, REGISTER_DTO_SUBSCRIPTION);
 
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -106,7 +106,7 @@ public class AuthenticationControllerTest {
     @Test
     @DisplayName("[409] POST " + API_V1_AUTH + REGISTER + " Email already exist.")
     public void emailAlreadyExist() throws Exception {
-        RegisterDto registerDto = new RegisterDto(USER_ADMIN_EMAIL, USER_ADMIN_PASSWORD, USER_ADMIN_PASSWORD, false);
+        RegisterDto registerDto = new RegisterDto("Dominik"," Tworek",USER_ADMIN_EMAIL, USER_ADMIN_PASSWORD, USER_ADMIN_PASSWORD, false);
 
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -118,7 +118,7 @@ public class AuthenticationControllerTest {
     @Test
     @DisplayName("[400] POST" + API_V1_AUTH + REGISTER + " Invalid register dto.")
     public void validationFailed() throws Exception {
-        RegisterDto registerDto = new RegisterDto("123", "12345678901234567890123456789012345678901234567890", "123", null);
+        RegisterDto registerDto = new RegisterDto("Dominik"," Tworek","123", "12345678901234567890123456789012345678901234567890", "123", null);
 
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -131,7 +131,7 @@ public class AuthenticationControllerTest {
     @Test
     @DisplayName("[400] POST" + API_V1_AUTH + REGISTER + " Empty register dto.")
     public void emptyRegisterDto() throws Exception {
-        RegisterDto registerDto = new RegisterDto(null, null, null, null);
+        RegisterDto registerDto = new RegisterDto("Dominik"," Tworek",null, null, null, null);
 
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -144,7 +144,7 @@ public class AuthenticationControllerTest {
     @Test
     @DisplayName("[400] POST" + API_V1_AUTH + REGISTER + " Different password.")
     public void differentPassword() throws Exception {
-        RegisterDto registerDto = new RegisterDto("unexistingemail@gmail.com", "14315436765", "1234567", null);
+        RegisterDto registerDto = new RegisterDto("Dominik"," Tworek","unexistingemail@gmail.com", "14315436765", "1234567", null);
 
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
                         .contentType(MediaType.APPLICATION_JSON)

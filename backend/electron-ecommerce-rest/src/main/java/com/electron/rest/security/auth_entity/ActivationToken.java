@@ -20,10 +20,10 @@ public class ActivationToken implements Token {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "activation_token", nullable = false)
-    private String activationToken;
+    @Column(name = "token", nullable = false)
+    private String token;
 
-    @OneToOne(mappedBy = "activationToken")
+    @OneToOne(mappedBy = "activationToken", fetch = FetchType.LAZY)
     private User user;
 
 }
