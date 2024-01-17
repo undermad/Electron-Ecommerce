@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Activation Link</title>
+</head>
+<body>
+<section>
+    <p>
+        Greetings <span th:text="${user.firstName}"></span>
+        <br/>
+        Welcome in Electron ecommerce website!
+        <br/>
+        It is a big pleasure that you choose us.
+        <br/>
+        Click link below to activate your account:
+        <br/>
+        <span th:text="${activationLink}"></span>
+    </p>
+</section>
+
+<footer>
+    2024 Electron ecommerce!
+</footer>
+
+</body>
+</html>

@@ -68,9 +68,10 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests
                         ((authorization) -> authorization
-                                .requestMatchers("/api/v1/test/**").hasRole("ADMIN") //spring will add prefix ROLE_ADMIN
                                 .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/registration/**").permitAll()
                                 .requestMatchers("/api/v1/auth/logout_everywhere)").hasRole("USER")
+                                .requestMatchers("/api/v1/test/**").hasRole("ADMIN") //spring will add prefix ROLE_ADMIN
                                 .anyRequest()
                                 .authenticated())
 
