@@ -2,7 +2,12 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/backend/electron-ecommerce-rest/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/electron-ecommerce-rest/src/main/resources/static" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/electron-ecommerce-rest/target" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/electron-ecommerce-react/.idea" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
