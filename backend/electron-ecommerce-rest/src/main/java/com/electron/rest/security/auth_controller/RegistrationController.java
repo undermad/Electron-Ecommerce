@@ -3,6 +3,7 @@ package com.electron.rest.security.auth_controller;
 import com.electron.rest.security.auth_dto.RegisterDto;
 import com.electron.rest.security.auth_dto.RegisterResponse;
 import com.electron.rest.security.auth_service.RegistrationService;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class RegistrationController {
     }
 
     @PostMapping(REGISTER)
-    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterDto registerDto) {
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterDto registerDto) throws MessagingException {
         return new ResponseEntity<>(registrationService.register(registerDto), HttpStatus.CREATED);
     }
 }

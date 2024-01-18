@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class ActivationTokenProvider implements TokenFactory<Long> {
+public class ActivationTokenProvider implements TokenFactory<User> {
 
     @Override
-    public Token generateToken(Long userId) {
-        User user = new User();
-        user.setId(userId);
+    public Token generateToken(User user) {
         return ActivationToken.builder()
                 .user(user)
                 .token(UUID.randomUUID().toString())

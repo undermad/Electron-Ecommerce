@@ -4,10 +4,12 @@ import com.electron.rest.constants.AccountStatuses;
 import com.electron.rest.constants.Roles;
 import com.electron.rest.security.auth_dto.RegisterDto;
 import com.electron.rest.security.auth_entity.AccountStatus;
+import com.electron.rest.security.auth_entity.ActivationToken;
 import com.electron.rest.security.auth_entity.Role;
 import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_repository.AccountStatusRepository;
 import com.electron.rest.security.auth_repository.RoleRepository;
+import com.electron.rest.security.token.activation_token.ActivationTokenProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
