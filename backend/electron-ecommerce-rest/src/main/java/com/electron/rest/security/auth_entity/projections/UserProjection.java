@@ -1,4 +1,4 @@
-package com.electron.rest.security.auth_repository.projections;
+package com.electron.rest.security.auth_entity.projections;
 
 public interface UserProjection {
     Long getId();

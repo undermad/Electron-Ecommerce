@@ -19,5 +19,6 @@ public class ErrorMessages {
 
     //ApiExceptions
     public static final String TEMPLATE_NOT_FOUND = "Email template not found.";
+    public static final String STATUS_NOT_FOUND = "Account status not found";
 
 }

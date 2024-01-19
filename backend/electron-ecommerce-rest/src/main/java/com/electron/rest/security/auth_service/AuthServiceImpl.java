@@ -1,24 +1,21 @@
 package com.electron.rest.security.auth_service;
 
 import com.electron.rest.constants.ErrorMessages;
-import com.electron.rest.email.EmailService;
 import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.exception.UnauthorizedException;
 import com.electron.rest.security.AuthUtils;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_entity.RefreshToken;
-import com.electron.rest.security.auth_entity.factory.UserFactory;
 import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import com.electron.rest.security.auth_repository.RoleRepository;
 import com.electron.rest.security.auth_repository.UserRepository;
-import com.electron.rest.security.auth_repository.projections.RefreshTokenProjection;
-import com.electron.rest.security.auth_repository.projections.RoleProjection;
-import com.electron.rest.security.auth_repository.projections.UserProjection;
+import com.electron.rest.security.auth_entity.projections.RefreshTokenProjection;
+import com.electron.rest.security.auth_entity.projections.RoleProjection;
+import com.electron.rest.security.auth_entity.projections.UserProjection;
 import com.electron.rest.security.token.jwt.Jwt;
 import com.electron.rest.security.token.jwt.JwtProvider;
 import com.electron.rest.security.token.refresh_token.RefreshTokenProvider;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

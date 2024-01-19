@@ -1,4 +1,4 @@
-package com.electron.rest.security.auth_repository.projections;
+package com.electron.rest.security.auth_entity.projections;
 
 import com.electron.rest.security.auth_entity.User;
 

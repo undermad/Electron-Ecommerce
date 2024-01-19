@@ -1,7 +1,7 @@
 package com.electron.rest.security.auth_repository;
 
 import com.electron.rest.security.auth_entity.RefreshToken;
-import com.electron.rest.security.auth_repository.projections.RefreshTokenProjection;
+import com.electron.rest.security.auth_entity.projections.RefreshTokenProjection;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

@@ -112,4 +112,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ActivationTokenException.class)
+    public ResponseEntity<ErrorDto> handleUserAlreadyExistException
+            (ActivationTokenException exception, WebRequest webRequest) {
+
+        ErrorDto errorDto = new ErrorDto(
+                exception.getMessage(),
+                new Date(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
 }

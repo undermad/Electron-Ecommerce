@@ -1,12 +1,13 @@
 package com.electron.rest.security.auth_repository;
 
 import com.electron.rest.security.auth_entity.User;
-import com.electron.rest.security.auth_repository.projections.UserProjection;
+import com.electron.rest.security.auth_entity.projections.UserProjection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserRepository extends CrudRepository<User, Long> {
@@ -25,5 +26,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query(value = "SELECT status_type AS accountStatus FROM account_statuses accs RIGHT JOIN users u ON accs.id = u.account_status_id WHERE email = :email", nativeQuery = true)
     List<UserProjection> findUserAccountStatusByEmail(@Param("email") String email);
+
+    Optional<User> findByActivationToken_Id(Long id);
 
 }

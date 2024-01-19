@@ -1,7 +1,9 @@
 package com.electron.rest.security.auth_entity.factory;
 
 import com.electron.rest.constants.AccountStatuses;
+import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.constants.Roles;
+import com.electron.rest.exception.ApiException;
 import com.electron.rest.security.auth_dto.RegisterDto;
 import com.electron.rest.security.auth_entity.AccountStatus;
 import com.electron.rest.security.auth_entity.ActivationToken;
@@ -15,7 +17,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+
+import static com.electron.rest.constants.ErrorMessages.STATUS_NOT_FOUND;
 
 @Component("regularUserFactory")
 public class RegularUserFactory implements UserFactory {
@@ -36,8 +41,11 @@ public class RegularUserFactory implements UserFactory {
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findRoleByRoleName(Roles.USER));
 
-        AccountStatus awaitingActivationStatus = accountStatusRepository
+        Optional<AccountStatus> awaitingActivationStatusAsOptional = accountStatusRepository
                 .findAccountStatusByStatusType(AccountStatuses.AWAITING_ACTIVATION);
+
+        if(awaitingActivationStatusAsOptional.isEmpty()) throw new ApiException(STATUS_NOT_FOUND);
+
 
         return User.builder()
                 .email(registerDto.email())
@@ -46,7 +54,7 @@ public class RegularUserFactory implements UserFactory {
                 .newsletterSubscription(registerDto.newsletterSubscription())
                 .password(passwordEncoder.encode(registerDto.password()))
                 .createdOn(Instant.now())
-                .accountStatus(awaitingActivationStatus)
+                .accountStatus(awaitingActivationStatusAsOptional.get())
                 .roles(roles)
                 .refreshTokens(null)
                 .build();
