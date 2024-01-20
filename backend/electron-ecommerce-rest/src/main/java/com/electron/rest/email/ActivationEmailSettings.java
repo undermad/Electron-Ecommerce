@@ -19,7 +19,7 @@ public class ActivationEmailSettings implements EmailSettingsFactory<ActivationT
                 .receiver(activationToken.getUser().getEmail())
                 .subject("Electron - Your account activation link.")
                 .variables(Map.of(
-                        "activationLink", "http://" + hostname + "/" + activationToken.getToken(),
+                        "activationLink", "http://" + hostname + "/activate/" + activationToken.getToken(),
                         "firstName", activationToken.getUser().getFirstName()))
                 .build();
     }

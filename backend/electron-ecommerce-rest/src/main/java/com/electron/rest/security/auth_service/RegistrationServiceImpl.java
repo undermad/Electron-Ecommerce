@@ -12,10 +12,10 @@ import com.electron.rest.exception.InvalidInputException;
 import com.electron.rest.security.auth_dto.AccountActivationResponse;
 import com.electron.rest.security.auth_dto.RegisterDto;
 import com.electron.rest.security.auth_dto.RegisterResponse;
-import com.electron.rest.security.auth_entity.AccountStatus;
 import com.electron.rest.security.auth_entity.ActivationToken;
 import com.electron.rest.security.auth_entity.User;
 import com.electron.rest.security.auth_entity.factory.UserFactory;
+import com.electron.rest.security.auth_entity.projections.AccountStatusProjection;
 import com.electron.rest.security.auth_entity.projections.ActivationTokenProjection;
 import com.electron.rest.security.auth_repository.AccountStatusRepository;
 import com.electron.rest.security.auth_repository.ActivationTokenRepository;
@@ -39,10 +39,10 @@ import static com.electron.rest.constants.SuccessMessages.ACCOUNT_ACTIVATED;
 public class RegistrationServiceImpl implements RegistrationService {
 
     private final UserRepository userRepository;
+    private final AccountStatusRepository accountStatusRepository;
     private final ActivationTokenRepository activationTokenRepository;
     private final ActivationTokenProvider activationTokenProvider;
     private final EmailService emailService;
-    private final AccountStatusRepository accountStatusRepository;
 
     @Qualifier("activationEmailSettings")
     private final EmailSettingsFactory<ActivationToken> emailSettingsFactory;
@@ -52,10 +52,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     public RegistrationServiceImpl(UserRepository userRepository, ActivationTokenRepository activationTokenRepository, ActivationTokenProvider activationTokenProvider, EmailService emailService, AccountStatusRepository accountStatusRepository, EmailSettingsFactory emailSettingsFactory, UserFactory regularUserFactory) {
         this.userRepository = userRepository;
+        this.accountStatusRepository = accountStatusRepository;
         this.activationTokenRepository = activationTokenRepository;
         this.activationTokenProvider = activationTokenProvider;
         this.emailService = emailService;
-        this.accountStatusRepository = accountStatusRepository;
         this.emailSettingsFactory = emailSettingsFactory;
         this.regularUserFactory = regularUserFactory;
     }
@@ -69,8 +69,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (!usersList.isEmpty()) throw new EmailAlreadyExistException(EMAIL_ALREADY_IN_USE);
 
         User newUser = regularUserFactory.createUser(registerDto);
-        ActivationToken savedActivationToken = activationTokenRepository.save((ActivationToken) activationTokenProvider.generateToken(newUser));
-        newUser.setActivationToken(savedActivationToken);
+//        ActivationToken savedActivationToken =
+//                activationTokenRepository.save((ActivationToken) activationTokenProvider.generateToken(newUser));
+
+        ActivationToken activationToken = (ActivationToken) activationTokenProvider.generateToken(newUser);
+        newUser.setActivationToken(activationToken);
         User savedUser = userRepository.save(newUser);
 
         EmailSettings activationEmailSettings = emailSettingsFactory.createSettings(savedUser.getActivationToken());
@@ -81,21 +84,29 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public AccountActivationResponse activate(String activationToken) throws ActivationTokenException {
-        Optional<ActivationToken> tokenAsOptional = activationTokenRepository.findActivationTokenByToken(activationToken);
-        if(tokenAsOptional.isEmpty()) throw new ActivationTokenException(INVALID_TOKEN);
-        ActivationToken token = tokenAsOptional.get();
+        Optional<ActivationTokenProjection> tokenAsOptional = activationTokenRepository.findActivationTokenIdByToken(activationToken);
+        if (tokenAsOptional.isEmpty()) throw new ActivationTokenException(INVALID_TOKEN);
+        Long tokenId = tokenAsOptional.get().getId();
 
-        Optional<User> userAsOptional = userRepository.findByActivationToken_Id(token.getId());
-        if(userAsOptional.isEmpty()) throw new UsernameNotFoundException(USER_NOT_FOUND);
+        Optional<AccountStatusProjection> statusAsOptional =
+                accountStatusRepository.findAccountStatusIdByStatusType(AccountStatuses.ACTIVE);
+        if (statusAsOptional.isEmpty()) throw new ApiException(STATUS_NOT_FOUND);
+        Long statusId = statusAsOptional.get().getId();
 
-        Optional<AccountStatus> statusAsOptional = accountStatusRepository.findAccountStatusByStatusType(AccountStatuses.ACTIVE);
-        if(statusAsOptional.isEmpty()) throw new ApiException(STATUS_NOT_FOUND);
+        Optional<UserProjection> userProjectionAsOptional = userRepository.findUserIdByActivationToken(tokenId);
+        if(userProjectionAsOptional.isEmpty()) throw new UsernameNotFoundException(USER_NOT_FOUND);
+        Long userId = userProjectionAsOptional.get().getId();
 
-        User user = userAsOptional.get();
-        user.setAccountStatus(statusAsOptional.get());
-        user.setActivationToken(null);
-        userRepository.save(user);
-        activationTokenRepository.delete(token);
+        userRepository.updateAccountStatus(statusId, userId);
+        userRepository.updateActivationToken(null, userId);
+        activationTokenRepository.deleteActivationTokenById(tokenId);
+
+//        Optional<User> userAsOptional = userRepository.findByActivationToken_Id(token.getId());
+//        if (userAsOptional.isEmpty()) throw new UsernameNotFoundException(USER_NOT_FOUND);
+//        user.setAccountStatus(statusAsOptional.get());
+//        user.setActivationToken(null);
+//        userRepository.save(user);
+
 
         return new AccountActivationResponse(ACCOUNT_ACTIVATED);
     }

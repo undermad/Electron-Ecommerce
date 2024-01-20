@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "activation_tokens", schema = "electron_ecommerce")
 public class ActivationToken implements Token {
 
     @Id

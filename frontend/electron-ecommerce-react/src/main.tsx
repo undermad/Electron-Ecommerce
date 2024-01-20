@@ -7,7 +7,6 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {MessageScreenContextProvider} from "./context/MessageScreenContext.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
         <BrowserRouter>
             <AuthContextProvider>
                 <MessageScreenContextProvider>
@@ -17,5 +16,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 </MessageScreenContextProvider>
             </AuthContextProvider>
         </BrowserRouter>
-    </React.StrictMode>
 )

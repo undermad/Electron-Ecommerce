@@ -11,7 +11,7 @@ import {
     HOME_ROUTE,
     SEARCH_ROUTE,
     ADMIN_ROUTE,
-    UNAUTHORIZED_ROUTE, MESSAGE_SCREEN_ROUTE, ACCOUNT_ROUTE, LOGOUT_ROUTE, REGISTER_ROUTE
+    UNAUTHORIZED_ROUTE, MESSAGE_SCREEN_ROUTE, ACCOUNT_ROUTE, LOGOUT_ROUTE, REGISTER_ROUTE, ACTIVATE
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
@@ -22,6 +22,7 @@ import {MessageScreen} from "./ui/global/MessageScreen.tsx";
 import {MyAccount} from "./ui/account/MyAccount.tsx";
 import {Logout} from "./ui/account/Logout.tsx";
 import {Register} from "./ui/account/Register.tsx";
+import {ActivateAccount} from "./ui/account/ActivateAccount.tsx";
 
 function App() {
 
@@ -60,6 +61,8 @@ function App() {
 
                     {/*error*/}
                     <Route path={"*"} element={<Missing/>}/>
+
+                    <Route path={ACTIVATE + "/:token"} element={<ActivateAccount/> } />
 
                 </Route>
             </Route>

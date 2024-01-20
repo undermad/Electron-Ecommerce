@@ -6,6 +6,7 @@ export const BASKET_ROUTE: string = "/basket";
 
 export const MESSAGE_SCREEN_ROUTE: string = "/message";
 export const UNAUTHORIZED_ROUTE: string = "/unauthorized";
+export const ACTIVATE: string = "/activate";
 
 export const LOGIN_ROUTE: string = "/login";
 export const REGISTER_ROUTE: string = "/register";

@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.util.Date;
 
 @Component
-public class JwtProviderImpl extends JwtProvider {
+public class JwtProviderImpl implements JwtProvider {
 
     @Value("${app.jwt-secret}")
     private String jwtSecret;

@@ -12,7 +12,7 @@ export const LOGOUT_EVERYWHERE = "/logout_everywhere";
 
 export const REGISTRATION_API_PATH = "/registration"
 export const REGISTER_API_PATH = "/register";
-
+export const ACTIVATE_API_PATH = "/activate";
 
 
 export const axiosAuth = axios.create({
