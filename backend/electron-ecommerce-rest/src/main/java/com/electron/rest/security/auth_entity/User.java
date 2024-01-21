@@ -56,5 +56,9 @@ public class User {
     @JoinColumn(name = "activation_token_id", referencedColumnName = "id")
     private ActivationToken activationToken;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "password_recovery_token_id", referencedColumnName = "id")
+    private PasswordRecoveryToken passwordRecoveryToken;
+
 
 }

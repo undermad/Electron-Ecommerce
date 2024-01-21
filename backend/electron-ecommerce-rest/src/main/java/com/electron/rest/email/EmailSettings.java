@@ -10,5 +10,6 @@ import java.util.Map;
 public class EmailSettings {
     private String receiver;
     private String subject;
+    private String template;
     private Map<String, Object> variables;
 }

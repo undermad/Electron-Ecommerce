@@ -1,7 +1,7 @@
 package com.electron.rest.security.auth_controller;
 
 import com.electron.rest.exception.ActivationTokenException;
-import com.electron.rest.security.auth_dto.AccountActivationResponse;
+import com.electron.rest.security.auth_dto.MessageResponse;
 import com.electron.rest.security.auth_dto.RegisterDto;
 import com.electron.rest.security.auth_dto.RegisterResponse;
 import com.electron.rest.security.auth_service.RegistrationService;
@@ -29,7 +29,7 @@ public class RegistrationController {
     }
 
     @PatchMapping(ACTIVATE + "/{activationToken}")
-    public ResponseEntity<AccountActivationResponse> activateAccount(@PathVariable String activationToken) throws ActivationTokenException {
+    public ResponseEntity<MessageResponse> activateAccount(@PathVariable String activationToken) throws ActivationTokenException {
         return ResponseEntity.ok(registrationService.activate(activationToken));
     }
 }

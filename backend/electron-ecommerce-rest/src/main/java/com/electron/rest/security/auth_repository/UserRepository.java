@@ -17,7 +17,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List<UserProjection> findUserEmailAndPassword(@Param("email") String email);
 
     @Query(value = "SELECT u.id AS id FROM users u where email = :email", nativeQuery = true)
-    List<UserProjection> findUserIdFromEmail(@Param("email") String email);
+    Optional<UserProjection> findUserIdFromEmail(@Param("email") String email);
 
     @Query(value = "SELECT u.id AS id, u.email AS email FROM refresh_tokens INNER JOIN users u ON u.id = user_id WHERE token = :token", nativeQuery = true)
     List<UserProjection> findUserIdAndEmailByRefreshToken(@Param("token") String token);
@@ -39,6 +39,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = "UPDATE users u SET u.activation_token_id = :activationToken WHERE u.id = :userId", nativeQuery = true)
     void updateActivationToken(@Param("activationToken") String activationToken, @Param("userId") Long userId);
 
+    @Modifying
+    @Query(value = "UPDATE users u SET u.password_recovery_token_id = :passwordRecoveryTokenId WHERE u.id = :userId", nativeQuery = true)
+    void updatePasswordRecoveryToken(@Param("passwordRecoveryTokenId") Long passwordRecoveryTokenId, @Param("userId") Long userId);
 
 
 }

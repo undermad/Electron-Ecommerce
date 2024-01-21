@@ -3,6 +3,7 @@ package com.electron.rest.security.auth_controller;
 import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_service.AuthService;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.electron.rest.constants.EndpointsPaths.*;
 import static com.electron.rest.constants.ErrorMessages.INVALID_TOKEN;
+import static com.electron.rest.constants.SuccessMessages.FORGOT_PASSWORD_PROCESS_ACTIVATED;
 import static com.electron.rest.constants.SuccessMessages.LOGOUT_SUCCESS;
 
 
@@ -50,23 +52,27 @@ public class AuthenticationController {
     }
 
     @PostMapping(REFRESH_TOKEN + LOGOUT)
-    public ResponseEntity<LogoutResponse> logout(@CookieValue(value = "${app-refresh-token-name}")
-                                                 String refreshToken) {
+    public ResponseEntity<MessageResponse> logout(@CookieValue(value = "${app-refresh-token-name}")
+                                                  String refreshToken) {
         ResponseCookie clearCookie = authService.logout(refreshToken);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE,
                         clearCookie.toString())
-                .body(new LogoutResponse(LOGOUT_SUCCESS));
+                .body(new MessageResponse(LOGOUT_SUCCESS));
     }
 
     @PostMapping(LOGOUT_EVERYWHERE)
-    public ResponseEntity<LogoutResponse> logoutFromAllDevices(@RequestHeader("Authorization")
-                                                               String jwt) {
+    public ResponseEntity<MessageResponse> logoutFromAllDevices(@RequestHeader("Authorization")
+                                                                String jwt) {
         authService.logoutEverywhere(jwt);
-        return ResponseEntity.ok(new LogoutResponse(LOGOUT_SUCCESS));
+        return ResponseEntity.ok(new MessageResponse(LOGOUT_SUCCESS));
     }
 
-
+    @PostMapping(FORGOT_PASSWORD)
+    public ResponseEntity<MessageResponse> recoverPassword(@Valid @RequestBody PasswordRecoveryDto passwordRecoveryDto) throws MessagingException {
+        authService.recoverPassword(passwordRecoveryDto);
+        return ResponseEntity.ok(new MessageResponse(FORGOT_PASSWORD_PROCESS_ACTIVATED));
+    }
 
 
 }

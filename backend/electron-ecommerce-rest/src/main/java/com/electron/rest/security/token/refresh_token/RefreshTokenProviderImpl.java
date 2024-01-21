@@ -2,7 +2,7 @@ package com.electron.rest.security.token.refresh_token;
 
 import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_entity.User;
-import com.electron.rest.token.Token;
+import com.electron.rest.security.token.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -49,9 +49,9 @@ public class RefreshTokenProviderImpl extends RefreshTokenProvider {
         User user = new User();
         user.setId(userId);
         return RefreshToken.builder()
+                .user(user)
                 .token(UUID.randomUUID().toString())
                 .expiryDate(Instant.now().plusMillis(Long.parseLong(refreshTokenExpirationTime)))
-                .user(user)
                 .build();
     }
 }

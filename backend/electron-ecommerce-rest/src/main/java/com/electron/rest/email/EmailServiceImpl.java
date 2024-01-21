@@ -12,13 +12,13 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import java.util.Locale;
 
 @Service
-public class ActivationEmailService implements EmailService {
+public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender emailSender;
     private final SpringTemplateEngine thymeleafTemplateEngine;
 
 
-    public ActivationEmailService(JavaMailSender mailSender, SpringTemplateEngine thymeleafTemplateEngine) {
+    public EmailServiceImpl(JavaMailSender mailSender, SpringTemplateEngine thymeleafTemplateEngine) {
         this.emailSender = mailSender;
         this.thymeleafTemplateEngine = thymeleafTemplateEngine;
     }
@@ -29,7 +29,7 @@ public class ActivationEmailService implements EmailService {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         String htmlBody = thymeleafTemplateEngine.process(
-                "activation-link",
+                emailSettings.getTemplate(),
                 new Context(Locale.ENGLISH, emailSettings.getVariables()));
         helper.setTo(emailSettings.getReceiver());
         helper.setSubject(emailSettings.getSubject());

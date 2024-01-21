@@ -4,18 +4,18 @@ import com.electron.rest.security.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Entity
-@Table(name = "refresh_tokens", schema = "electron_ecommerce")
-public class RefreshToken implements Token {
+@Table(name = "password_recovery_tokens", schema = "electron_ecommerce")
+public class PasswordRecoveryToken implements Token {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +27,7 @@ public class RefreshToken implements Token {
     @Column(name = "expiry_date", nullable = false)
     private Instant expiryDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(mappedBy = "passwordRecoveryToken", fetch = FetchType.LAZY)
     private User user;
 
 

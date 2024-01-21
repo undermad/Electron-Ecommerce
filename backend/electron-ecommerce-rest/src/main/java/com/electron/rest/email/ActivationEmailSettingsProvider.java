@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component("activationEmailSettings")
-public class ActivationEmailSettings implements EmailSettingsFactory<ActivationToken> {
+public class ActivationEmailSettingsProvider implements EmailSettingsFactory<ActivationToken> {
 
     @Value("${hostname}")
     private String hostname;
@@ -18,6 +18,7 @@ public class ActivationEmailSettings implements EmailSettingsFactory<ActivationT
         return EmailSettings.builder()
                 .receiver(activationToken.getUser().getEmail())
                 .subject("Electron - Your account activation link.")
+                .template("activation-link")
                 .variables(Map.of(
                         "activationLink", "http://" + hostname + "/activate/" + activationToken.getToken(),
                         "firstName", activationToken.getUser().getFirstName()))

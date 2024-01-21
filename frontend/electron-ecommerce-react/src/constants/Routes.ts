@@ -12,6 +12,7 @@ export const LOGIN_ROUTE: string = "/login";
 export const REGISTER_ROUTE: string = "/register";
 export const ACCOUNT_ROUTE: string = "/account";
 export const LOGOUT_ROUTE: string = "/logout";
+export const FORGOT_PASSWORD: string = "/forgotpassword"
 
 
 export const ADMIN_ROUTE: string = "/admin";

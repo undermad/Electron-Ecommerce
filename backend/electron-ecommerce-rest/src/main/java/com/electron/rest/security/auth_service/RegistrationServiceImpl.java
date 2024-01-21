@@ -9,7 +9,7 @@ import com.electron.rest.exception.ActivationTokenException;
 import com.electron.rest.exception.ApiException;
 import com.electron.rest.exception.EmailAlreadyExistException;
 import com.electron.rest.exception.InvalidInputException;
-import com.electron.rest.security.auth_dto.AccountActivationResponse;
+import com.electron.rest.security.auth_dto.MessageResponse;
 import com.electron.rest.security.auth_dto.RegisterDto;
 import com.electron.rest.security.auth_dto.RegisterResponse;
 import com.electron.rest.security.auth_entity.ActivationToken;
@@ -50,7 +50,13 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Qualifier("regularUserFactory")
     private final UserFactory regularUserFactory;
 
-    public RegistrationServiceImpl(UserRepository userRepository, ActivationTokenRepository activationTokenRepository, ActivationTokenProvider activationTokenProvider, EmailService emailService, AccountStatusRepository accountStatusRepository, EmailSettingsFactory emailSettingsFactory, UserFactory regularUserFactory) {
+    public RegistrationServiceImpl(UserRepository userRepository,
+                                   ActivationTokenRepository activationTokenRepository,
+                                   ActivationTokenProvider activationTokenProvider,
+                                   EmailService emailService,
+                                   AccountStatusRepository accountStatusRepository,
+                                   EmailSettingsFactory<ActivationToken> emailSettingsFactory,
+                                   UserFactory regularUserFactory) {
         this.userRepository = userRepository;
         this.accountStatusRepository = accountStatusRepository;
         this.activationTokenRepository = activationTokenRepository;
@@ -69,9 +75,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (!usersList.isEmpty()) throw new EmailAlreadyExistException(EMAIL_ALREADY_IN_USE);
 
         User newUser = regularUserFactory.createUser(registerDto);
-//        ActivationToken savedActivationToken =
-//                activationTokenRepository.save((ActivationToken) activationTokenProvider.generateToken(newUser));
-
         ActivationToken activationToken = (ActivationToken) activationTokenProvider.generateToken(newUser);
         newUser.setActivationToken(activationToken);
         User savedUser = userRepository.save(newUser);
@@ -83,7 +86,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public AccountActivationResponse activate(String activationToken) throws ActivationTokenException {
+    public MessageResponse activate(String activationToken) throws ActivationTokenException {
         Optional<ActivationTokenProjection> tokenAsOptional = activationTokenRepository.findActivationTokenIdByToken(activationToken);
         if (tokenAsOptional.isEmpty()) throw new ActivationTokenException(INVALID_TOKEN);
         Long tokenId = tokenAsOptional.get().getId();
@@ -101,13 +104,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         userRepository.updateActivationToken(null, userId);
         activationTokenRepository.deleteActivationTokenById(tokenId);
 
-//        Optional<User> userAsOptional = userRepository.findByActivationToken_Id(token.getId());
-//        if (userAsOptional.isEmpty()) throw new UsernameNotFoundException(USER_NOT_FOUND);
-//        user.setAccountStatus(statusAsOptional.get());
-//        user.setActivationToken(null);
-//        userRepository.save(user);
-
-
-        return new AccountActivationResponse(ACCOUNT_ACTIVATED);
+        return new MessageResponse(ACCOUNT_ACTIVATED);
     }
 }

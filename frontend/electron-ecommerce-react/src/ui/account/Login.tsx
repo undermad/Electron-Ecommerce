@@ -2,7 +2,7 @@ import {SyntheticEvent, useEffect, useRef, useState} from "react";
 import {ElectronLogoHero} from "./ElectronLogoHero.tsx";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
 import {useNavigate, useLocation, Link} from "react-router-dom";
-import {HOME_ROUTE, REGISTER_ROUTE} from "../../constants/Routes.ts";
+import {FORGOT_PASSWORD, HOME_ROUTE, REGISTER_ROUTE} from "../../constants/Routes.ts";
 import {LoginRequest} from "../../api/dto/LoginRequest.ts";
 import {LoginResponse} from "../../api/dto/LoginResponse.ts";
 import {axiosAuth, LOGIN_API_PATH} from "../../api/axios.ts";
@@ -74,7 +74,7 @@ export const Login = () => {
         <section
             className={"px-responsive-electron w-full max-w-[1440px] flex justify-center mt-[16px] font-inter"}>
 
-            <div className={"w-full  md:w-[706px] h-[1024px] flex justify-center"}>
+            <div className={"h-[1024px]"}>
                 <div className={"w-full md:w-[355px] mt-16"}>
 
                     <ElectronLogoHero/>
@@ -127,7 +127,11 @@ export const Login = () => {
                                         />
                                         <CheckboxLabel htmlFor={"persist"}>Remember me?</CheckboxLabel>
                                     </LabelCheckboxHolder>
-                                    <ParagraphSmall tailwind="font-[400] text-right">Forgot Password?</ParagraphSmall>
+                                    <ParagraphSmall tailwind="font-[400] text-right">
+                                        <Link to={FORGOT_PASSWORD}>
+                                            Forgot Password?
+                                        </Link>
+                                    </ParagraphSmall>
                                 </div>
                             </LabelInputHolder>
 
@@ -145,9 +149,9 @@ export const Login = () => {
 
                     <ParagraphSmall tailwind="flex justify-center mt-3">
                         Don't have an account?&nbsp;
-                            <Link to={REGISTER_ROUTE}>
-                                <span className={"font-[600]"}>Register</span>
-                            </Link>
+                        <Link to={REGISTER_ROUTE}>
+                            <span className={"font-[600]"}>Register</span>
+                        </Link>
                     </ParagraphSmall>
 
                 </div>

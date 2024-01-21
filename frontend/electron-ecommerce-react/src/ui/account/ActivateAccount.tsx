@@ -9,11 +9,10 @@ export const ActivateAccount = () => {
     const messageScreen = useMessageScreen();
 
     useEffect(() => {
-
         axiosRegistration.patch(ACTIVATE_API_PATH + "/" +  activationToken)
             .then((result) => {
                 console.log(result);
-                messageScreen("activated")
+                messageScreen(result.data.message)
             })
             .catch((error) => {
                 console.log(error);

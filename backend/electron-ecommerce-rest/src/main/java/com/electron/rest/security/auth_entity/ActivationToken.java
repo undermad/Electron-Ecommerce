@@ -1,7 +1,7 @@
 package com.electron.rest.security.auth_entity;
 
 
-import com.electron.rest.token.Token;
+import com.electron.rest.security.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
