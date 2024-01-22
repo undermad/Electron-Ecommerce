@@ -1,7 +1,7 @@
 import {ElectronLogoHero} from "./ElectronLogoHero.tsx";
 import {Header2} from "../reusable/Header2.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
-import {ForgotPasswordStageOne} from "./ForgotPasswordStageOne.tsx";
+import {ForgotPasswordForm} from "./ForgotPasswordForm.tsx";
 
 export const ForgotPassword = () => {
 
@@ -16,7 +16,7 @@ export const ForgotPassword = () => {
                     <Header2>Password recovery</Header2>
                     <ParagraphSmall>Our support is here to help you</ParagraphSmall>
 
-                    <ForgotPasswordStageOne/>
+                    <ForgotPasswordForm/>
 
 
                 </div>

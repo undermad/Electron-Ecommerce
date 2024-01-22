@@ -23,7 +23,7 @@ public class PasswordRecoveryEmailSettingsProvider implements EmailSettingsFacto
                 .template("password-recovery-link")
                 .variables(Map.of(
                         "duration", convertExpirationTimeToMinutes(this.expirationTime),
-                        "passwordRecoveryLink", "http://" + hostname + "/passwordrecovery/" + passwordRecoveryToken.getToken()
+                        "passwordRecoveryLink", "http://" + hostname + "/changeforgottenpassword/" + passwordRecoveryToken.getToken()
                 ))
                 .build();
     }

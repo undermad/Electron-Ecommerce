@@ -1,5 +1,6 @@
 package com.electron.rest.security.auth_service;
 
+import com.electron.rest.exception.TokenException;
 import com.electron.rest.security.auth_dto.*;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseCookie;
@@ -12,5 +13,5 @@ public interface AuthService {
     ResponseCookie logout(String refreshToken);
     void logoutEverywhere(String jwt);
     void recoverPassword(PasswordRecoveryDto passwordRecoveryDto) throws MessagingException;
-    void changeForgottenPassword(String passwordRecoveryToken, ChangePasswordDto changePasswordDto);
+    void changeForgottenPassword(String passwordRecoveryToken, ChangeForgottenPasswordDto changeForgottenPasswordDto) throws TokenException;
 }

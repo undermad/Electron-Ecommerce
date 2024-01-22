@@ -5,13 +5,14 @@ import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {Label} from "../reusable/Label.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {RegisterRequest} from "../../api/dto/RegisterRequest.ts";
 import {AxiosResponse} from "axios";
 import {axiosRegistration, REGISTER_API_PATH} from "../../api/axios.ts";
 import {RegisterResponse} from "../../api/dto/RegisterResponse.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {REGISTRATION_SUCCESSFUL} from "../../constants/Messages.ts";
+import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
 
 
 export const Register = () => {
@@ -74,8 +75,7 @@ export const Register = () => {
 
                     <form className={"mt-[35px] flex flex-col"}
                           onSubmit={handleSubmit}>
-
-                        <div className={"flex flex-col gap-[16px]"}>
+                        <MultiInputHolder>
                             <LabelInputHolder>
                                 <Label htmlFor={"firstName"}>First name</Label>
                                 <input
@@ -116,7 +116,7 @@ export const Register = () => {
 
                             <LabelInputHolder>
                                 <Label htmlFor={"password"}>Password</Label>
-                                <input name="abc" type="text" style={{display:'none'}}/>
+                                <input name="abc" type="text" style={{display: 'none'}}/>
                                 <input
                                     className={"input-electron"}
                                     id={"password"}
@@ -130,7 +130,7 @@ export const Register = () => {
                             </LabelInputHolder>
                             <LabelInputHolder>
                                 <Label htmlFor={"re-enter-password"}>Re-enter password</Label>
-                                <input name="abc" type="text" style={{display:'none'}}/>
+                                <input name="abc" type="text" style={{display: 'none'}}/>
                                 <input
                                     className={"input-electron"}
                                     id={"re-enter-password"}
@@ -152,7 +152,7 @@ export const Register = () => {
                                     Would you like to sign for the newsletter?
                                 </CheckboxLabel>
                             </LabelCheckboxHolder>
-                        </div>
+                        </MultiInputHolder>
 
 
                         <div className={"flex flex-col gap-[14px] mt-[24px]"}>

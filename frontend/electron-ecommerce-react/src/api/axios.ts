@@ -9,6 +9,7 @@ export const REFRESH_TOKEN_API_PATH = "/refreshtoken";
 export const LOGOUT_API_PATH = "/logout";
 export const LOGOUT_EVERYWHERE = "/logout_everywhere";
 export const FORGOT_PASSWORD_API_PATH = "/forgot_password";
+export const CHANGE_FORGOTTEN_PASSWORD_API_PATH = "/change_forgotten_password"
 
 
 export const REGISTRATION_API_PATH = "/registration"

@@ -4,13 +4,16 @@ import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.email.EmailService;
 import com.electron.rest.email.EmailSettings;
 import com.electron.rest.email.EmailSettingsFactory;
+import com.electron.rest.exception.InvalidInputException;
 import com.electron.rest.exception.RefreshTokenException;
+import com.electron.rest.exception.TokenException;
 import com.electron.rest.exception.UnauthorizedException;
 import com.electron.rest.security.AuthUtils;
 import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_entity.PasswordRecoveryToken;
 import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_entity.User;
+import com.electron.rest.security.auth_entity.projections.PasswordRecoveryTokenProjection;
 import com.electron.rest.security.auth_repository.PasswordRecoveryTokenRepository;
 import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import com.electron.rest.security.auth_repository.RoleRepository;
@@ -32,6 +35,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -54,6 +58,7 @@ public class AuthServiceImpl implements AuthService {
     private final RefreshTokenProvider refreshTokenProvider;
     private final PasswordRecoveryTokenProvider passwordRecoveryTokenProvider;
     private final PasswordRecoveryTokenRepository passwordRecoveryTokenRepository;
+    private final PasswordEncoder passwordEncoder;
 
     private final EmailService emailService;
 
@@ -69,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
                            RefreshTokenProvider refreshTokenProvider,
                            PasswordRecoveryTokenProvider passwordRecoveryTokenProvider,
                            PasswordRecoveryTokenRepository passwordRecoveryTokenRepository,
-                           EmailService emailService,
+                           PasswordEncoder passwordEncoder, EmailService emailService,
                            EmailSettingsFactory<PasswordRecoveryToken> emailSettingsFactory) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
@@ -79,6 +84,7 @@ public class AuthServiceImpl implements AuthService {
         this.refreshTokenProvider = refreshTokenProvider;
         this.passwordRecoveryTokenProvider = passwordRecoveryTokenProvider;
         this.passwordRecoveryTokenRepository = passwordRecoveryTokenRepository;
+        this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
         this.emailSettingsFactory = emailSettingsFactory;
     }
@@ -183,8 +189,18 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void changeForgottenPassword(String passwordRecoveryToken, ChangePasswordDto changePasswordDto) {
+    public void changeForgottenPassword(String passwordRecoveryToken, ChangeForgottenPasswordDto changeForgottenPasswordDto) throws TokenException {
+        if (!changeForgottenPasswordDto.newPassword().equals(changeForgottenPasswordDto.reNewPassword()))
+            throw new InvalidInputException(PASSWORDS_MUST_BE_SAME);
 
+        Optional<PasswordRecoveryTokenProjection> passwordRecoveryTokenProjectionAsOptional = passwordRecoveryTokenRepository
+                .findByPasswordRecoveryToken(passwordRecoveryToken);
+        if(passwordRecoveryTokenProjectionAsOptional.isEmpty()) throw new TokenException(INVALID_TOKEN);
+        Long userId = passwordRecoveryTokenProjectionAsOptional.get().getUserId();
+
+        String newEncodedPassword = passwordEncoder.encode(changeForgottenPasswordDto.newPassword());
+        userRepository.updatePassword(newEncodedPassword, userId);
+        passwordRecoveryTokenRepository.deleteByUserId(userId);
     }
 
 

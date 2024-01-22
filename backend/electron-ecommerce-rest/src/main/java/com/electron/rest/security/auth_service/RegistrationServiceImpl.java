@@ -5,7 +5,7 @@ import com.electron.rest.constants.SuccessMessages;
 import com.electron.rest.email.EmailService;
 import com.electron.rest.email.EmailSettings;
 import com.electron.rest.email.EmailSettingsFactory;
-import com.electron.rest.exception.ActivationTokenException;
+import com.electron.rest.exception.TokenException;
 import com.electron.rest.exception.ApiException;
 import com.electron.rest.exception.EmailAlreadyExistException;
 import com.electron.rest.exception.InvalidInputException;
@@ -86,9 +86,9 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public MessageResponse activate(String activationToken) throws ActivationTokenException {
+    public MessageResponse activate(String activationToken) throws TokenException {
         Optional<ActivationTokenProjection> tokenAsOptional = activationTokenRepository.findActivationTokenIdByToken(activationToken);
-        if (tokenAsOptional.isEmpty()) throw new ActivationTokenException(INVALID_TOKEN);
+        if (tokenAsOptional.isEmpty()) throw new TokenException(INVALID_TOKEN);
         Long tokenId = tokenAsOptional.get().getId();
 
         Optional<AccountStatusProjection> statusAsOptional =

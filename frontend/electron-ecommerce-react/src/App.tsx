@@ -11,7 +11,14 @@ import {
     HOME_ROUTE,
     SEARCH_ROUTE,
     ADMIN_ROUTE,
-    UNAUTHORIZED_ROUTE, MESSAGE_SCREEN_ROUTE, ACCOUNT_ROUTE, LOGOUT_ROUTE, REGISTER_ROUTE, ACTIVATE, FORGOT_PASSWORD
+    UNAUTHORIZED_ROUTE,
+    MESSAGE_SCREEN_ROUTE,
+    ACCOUNT_ROUTE,
+    LOGOUT_ROUTE,
+    REGISTER_ROUTE,
+    ACTIVATE,
+    FORGOT_PASSWORD,
+    CHANGE_FORGOTTEN_PASSWORD
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
@@ -24,6 +31,7 @@ import {Logout} from "./ui/account/Logout.tsx";
 import {Register} from "./ui/account/Register.tsx";
 import {ActivateAccount} from "./ui/account/ActivateAccount.tsx";
 import {ForgotPassword} from "./ui/account/ForgotPassword.tsx";
+import {ChangeForgottenPassword} from "./ui/account/ChangeForgottenPassword.tsx";
 
 function App() {
 
@@ -41,6 +49,8 @@ function App() {
                     <Route path={LOGIN_ROUTE} element={<Login/>}/>
                     <Route path={REGISTER_ROUTE} element={<Register/>}/>
                     <Route path={FORGOT_PASSWORD} element={<ForgotPassword/>}/>
+                    <Route path={CHANGE_FORGOTTEN_PASSWORD + "/:token"} element={<ChangeForgottenPassword/>}/>
+                    <Route path={ACTIVATE + "/:token"} element={<ActivateAccount/> } />
 
 
                     {/*user protected routes*/}
@@ -64,7 +74,6 @@ function App() {
                     {/*error*/}
                     <Route path={"*"} element={<Missing/>}/>
 
-                    <Route path={ACTIVATE + "/:token"} element={<ActivateAccount/> } />
 
                 </Route>
             </Route>

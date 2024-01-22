@@ -13,6 +13,7 @@ import {Label} from "../reusable/Label.tsx";
 import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
+import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
 
 export const Login = () => {
     const auth = useAuth();
@@ -91,7 +92,7 @@ export const Login = () => {
                         className={"mt-[35px] flex flex-col"}
                         onSubmit={handleSubmit}>
 
-                        <div className={"flex flex-col gap-[16px]"}>
+                        <MultiInputHolder>
                             <LabelInputHolder>
                                 <Label htmlFor={"email"}>Email Address</Label>
                                 <input
@@ -134,9 +135,7 @@ export const Login = () => {
                                     </ParagraphSmall>
                                 </div>
                             </LabelInputHolder>
-
-                        </div>
-
+                        </MultiInputHolder>
                         <div className={"flex flex-col gap-[14px] mt-[24px]"}>
                             <button
                                 className={loading ? "button-electron-disabled" : "button-electron"}

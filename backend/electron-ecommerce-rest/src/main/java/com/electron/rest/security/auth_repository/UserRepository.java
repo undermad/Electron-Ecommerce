@@ -28,14 +28,13 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = "SELECT status_type AS accountStatus FROM account_statuses accs RIGHT JOIN users u ON accs.id = u.account_status_id WHERE email = :email", nativeQuery = true)
     List<UserProjection> findUserAccountStatusByEmail(@Param("email") String email);
 
-    @Query(value = "SELECT u.id FROM users u WHERE u.activation_token_id = :activationTokenId", nativeQuery = true)
-    Optional<UserProjection> findUserIdByActivationToken(@Param("activationTokenId") Long activationTokenId);
-
     @Modifying
     @Query(value = "UPDATE users u SET u.account_status_id = :accountStatusId WHERE u.id = :userId", nativeQuery = true)
     void updateAccountStatus(@Param("accountStatusId") Long accountStatusId, @Param("userId") Long userId);
 
-
+    @Modifying
+    @Query(value = "UPDATE users u SET u.password = :newEncodedPassword WHERE u.id = :userId", nativeQuery = true)
+    void updatePassword(@Param("newEncodedPassword") String newEncodedPassword, @Param("userId") Long userId);
 
 
 }
