@@ -5,6 +5,5 @@ public interface UserProjection {
     String getEmail();
     String getPassword();
     String getAccountStatus();
-
-
+    Long getPasswordRecoveryTokenId();
 }

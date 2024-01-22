@@ -169,17 +169,22 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void recoverPassword(PasswordRecoveryDto passwordRecoveryDto) throws MessagingException {
         Optional<UserProjection> userAsOptional = userRepository.findUserIdFromEmail(passwordRecoveryDto.email());
-        if(userAsOptional.isEmpty()) return;
+        if (userAsOptional.isEmpty()) return;
         User user = new User();
         user.setId(userAsOptional.get().getId());
         user.setEmail(passwordRecoveryDto.email());
         PasswordRecoveryToken recoveryToken = (PasswordRecoveryToken) passwordRecoveryTokenProvider
                 .generateToken(user);
-        PasswordRecoveryToken savedPasswordRecoveryToken = passwordRecoveryTokenRepository.save(recoveryToken);
-        userRepository.updatePasswordRecoveryToken(savedPasswordRecoveryToken.getId(), user.getId());
 
+        passwordRecoveryTokenRepository.deleteByUserId(user.getId());
+        passwordRecoveryTokenRepository.save(recoveryToken);
         EmailSettings settings = emailSettingsFactory.createSettings(recoveryToken);
         emailService.sendThymeleafEmail(settings);
+    }
+
+    @Override
+    public void changeForgottenPassword(String passwordRecoveryToken, ChangePasswordDto changePasswordDto) {
+
     }
 
 

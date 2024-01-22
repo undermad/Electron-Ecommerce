@@ -96,12 +96,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (statusAsOptional.isEmpty()) throw new ApiException(STATUS_NOT_FOUND);
         Long statusId = statusAsOptional.get().getId();
 
-        Optional<UserProjection> userProjectionAsOptional = userRepository.findUserIdByActivationToken(tokenId);
-        if(userProjectionAsOptional.isEmpty()) throw new UsernameNotFoundException(USER_NOT_FOUND);
-        Long userId = userProjectionAsOptional.get().getId();
+        Optional<ActivationTokenProjection> activationTokenProjectionAsOptional = activationTokenRepository.findUserIdByActivationTokenId(tokenId);
+        if(activationTokenProjectionAsOptional.isEmpty()) throw new UsernameNotFoundException(USER_NOT_FOUND);
+        Long userId = activationTokenProjectionAsOptional.get().getUserId();
 
         userRepository.updateAccountStatus(statusId, userId);
-        userRepository.updateActivationToken(null, userId);
         activationTokenRepository.deleteActivationTokenById(tokenId);
 
         return new MessageResponse(ACCOUNT_ACTIVATED);

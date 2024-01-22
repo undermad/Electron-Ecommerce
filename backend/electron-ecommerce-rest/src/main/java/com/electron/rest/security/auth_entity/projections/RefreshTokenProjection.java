@@ -8,6 +8,4 @@ public interface RefreshTokenProjection {
     Long getId();
     String getToken();
     Instant getExpirationDate();
-    User user();
-
 }

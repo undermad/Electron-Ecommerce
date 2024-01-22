@@ -15,6 +15,9 @@ public interface ActivationTokenRepository extends CrudRepository<ActivationToke
     @Query(value = "SELECT t.id FROM activation_tokens t WHERE t.token = :token", nativeQuery = true)
     Optional<ActivationTokenProjection> findActivationTokenIdByToken(@Param("token") String token);
 
+    @Query(value = "SELECT t.user_id as userId FROM activation_tokens t WHERE t.id = :tokenId", nativeQuery = true)
+    Optional<ActivationTokenProjection> findUserIdByActivationTokenId(@Param("tokenId") Long tokenId);
+
     @Modifying
     @Query(value = "DELETE FROM activation_tokens t WHERE t.id = :activationTokenId", nativeQuery = true)
     void deleteActivationTokenById(@Param("activationTokenId") Long activationTokenId);

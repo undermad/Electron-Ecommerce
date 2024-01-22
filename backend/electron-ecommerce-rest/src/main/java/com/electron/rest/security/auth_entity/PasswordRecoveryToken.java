@@ -27,7 +27,8 @@ public class PasswordRecoveryToken implements Token {
     @Column(name = "expiry_date", nullable = false)
     private Instant expiryDate;
 
-    @OneToOne(mappedBy = "passwordRecoveryToken", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 

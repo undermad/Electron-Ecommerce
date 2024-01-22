@@ -35,13 +35,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = "UPDATE users u SET u.account_status_id = :accountStatusId WHERE u.id = :userId", nativeQuery = true)
     void updateAccountStatus(@Param("accountStatusId") Long accountStatusId, @Param("userId") Long userId);
 
-    @Modifying
-    @Query(value = "UPDATE users u SET u.activation_token_id = :activationToken WHERE u.id = :userId", nativeQuery = true)
-    void updateActivationToken(@Param("activationToken") String activationToken, @Param("userId") Long userId);
 
-    @Modifying
-    @Query(value = "UPDATE users u SET u.password_recovery_token_id = :passwordRecoveryTokenId WHERE u.id = :userId", nativeQuery = true)
-    void updatePasswordRecoveryToken(@Param("passwordRecoveryTokenId") Long passwordRecoveryTokenId, @Param("userId") Long userId);
 
 
 }

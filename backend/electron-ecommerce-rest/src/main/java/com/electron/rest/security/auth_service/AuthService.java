@@ -12,4 +12,5 @@ public interface AuthService {
     ResponseCookie logout(String refreshToken);
     void logoutEverywhere(String jwt);
     void recoverPassword(PasswordRecoveryDto passwordRecoveryDto) throws MessagingException;
+    void changeForgottenPassword(String passwordRecoveryToken, ChangePasswordDto changePasswordDto);
 }

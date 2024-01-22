@@ -24,7 +24,8 @@ public class ActivationToken implements Token {
     @Column(name = "token", nullable = false)
     private String token;
 
-    @OneToOne(mappedBy = "activationToken", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 }

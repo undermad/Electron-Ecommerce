@@ -9,6 +9,7 @@ public class EndpointsPaths {
     public static final String LOGOUT = "/logout";
     public static final String LOGOUT_EVERYWHERE = "/logout_everywhere";
     public static final String FORGOT_PASSWORD = "/forgot_password";
+    public static final String CHANGE_FORGOTTEN_PASSWORD = "/change_forgotten_password";
 
 
     // RegistrationController

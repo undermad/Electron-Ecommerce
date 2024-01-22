@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.electron.rest.constants.EndpointsPaths.*;
 import static com.electron.rest.constants.ErrorMessages.INVALID_TOKEN;
-import static com.electron.rest.constants.SuccessMessages.FORGOT_PASSWORD_PROCESS_ACTIVATED;
-import static com.electron.rest.constants.SuccessMessages.LOGOUT_SUCCESS;
+import static com.electron.rest.constants.SuccessMessages.*;
 
 
 @RestController
@@ -72,6 +71,15 @@ public class AuthenticationController {
     public ResponseEntity<MessageResponse> recoverPassword(@Valid @RequestBody PasswordRecoveryDto passwordRecoveryDto) throws MessagingException {
         authService.recoverPassword(passwordRecoveryDto);
         return ResponseEntity.ok(new MessageResponse(FORGOT_PASSWORD_PROCESS_ACTIVATED));
+    }
+
+    @PutMapping(CHANGE_FORGOTTEN_PASSWORD + "/passwordRecoveryToken")
+    public ResponseEntity<MessageResponse> changePasswordWithRecoveryToken(@PathVariable
+                                                          String passwordRecoveryToken,
+                                                                           @RequestBody @Valid
+                                                          ChangePasswordDto changePasswordDto) {
+        authService.changeForgottenPassword(passwordRecoveryToken, changePasswordDto);
+        return ResponseEntity.ok(new MessageResponse(PASSWORD_CHANGED));
     }
 
 

@@ -52,12 +52,10 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<RefreshToken> refreshTokens;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "activation_token_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private ActivationToken activationToken;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "password_recovery_token_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private PasswordRecoveryToken passwordRecoveryToken;
 
 
