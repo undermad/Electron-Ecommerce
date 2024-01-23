@@ -1,13 +1,17 @@
 import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {Label} from "../reusable/Label.tsx";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {PasswordRecoveryRequest} from "../../api/dto/PasswordRecoveryRequest.ts";
 import {axiosAuth, FORGOT_PASSWORD_API_PATH} from "../../api/axios.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
+import {TextInput} from "../reusable/TextInput.tsx";
+import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
+import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 
 export const ForgotPasswordForm = () => {
     const [email, setEmail] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const emailRef = useRef<HTMLInputElement>(null);
     const messageScreen = useMessageScreen();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -25,6 +29,12 @@ export const ForgotPasswordForm = () => {
 
     }
 
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    }
+
+    useFocusOnMount(emailRef);
+
     return (
         <form
             className={"mt-[35px] flex flex-col"}
@@ -32,22 +42,15 @@ export const ForgotPasswordForm = () => {
             <LabelInputHolder>
                 <LabelInputHolder>
                     <Label htmlFor="email">Email address</Label>
-                    <input className={"input-electron"}
-                           id={"email"}
-                           type={"text"}
-                           placeholder={"Enter your email address"}
-                            onChange={(event) => setEmail(event.target.value)}
-                    />
+                    <TextInput id={"email"}
+                               inputRef={emailRef}
+                               type={"text"}
+                               placeholder={"Enter your email address"}
+                               callback={handleEmailChange}/>
                 </LabelInputHolder>
             </LabelInputHolder>
 
-            <div className={"flex flex-col gap-[14px] mt-[24px]"}>
-                <button
-                    className={loading ? "button-electron-disabled" : "button-electron"}
-                    disabled={loading}>
-                    Next
-                </button>
-            </div>
+            <FormSubmitButton loading={loading}/>
         </form>
     )
 }

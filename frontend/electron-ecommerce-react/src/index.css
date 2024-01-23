@@ -8,22 +8,4 @@
         @apply px-[30px] sm:px-[40px] lg:px-[100px];
     }
 
-    .input-electron {
-        @apply focus:ring-1 border rounded-[8px] border-electron-input-grey px-[14px] py-[10px] shadow-md focus:outline-0 placeholder:text-electron-placeholder-grey;
-    }
-
-    .input-label-electron {
-        @apply text-[14px] text-electron-label-grey leading-5 font-[500];
-    }
-
-    .button-electron {
-        @apply text-electron-primary-white rounded-full bg-electron-primary-dark-blue shadow-md p-[14px] h-[48px];
-    }
-
-    .button-electron-disabled {
-        @apply text-electron-primary-white rounded-full bg-electron-primary-disabled-dark-blue shadow-md p-[14px] h-[48px];
-    }
-
-
-
 }

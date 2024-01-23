@@ -10,6 +10,11 @@ import {RegisterResponse} from "../../api/dto/RegisterResponse.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {REGISTRATION_SUCCESSFUL} from "../../constants/Messages.ts";
 import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
+import {TextInput} from "../reusable/TextInput.tsx";
+import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
+import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
+import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
+import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 
 
 export const RegisterForm = () => {
@@ -24,6 +29,7 @@ export const RegisterForm = () => {
     })
     const [errorMessage, setErrorMessage] = useState<string>('');
     const errorRef = useRef<HTMLParagraphElement>(null);
+    const firstNameRef = useRef<HTMLInputElement>(null)
     const [loading, setLoading] = useState<boolean>(false);
     const messageScreen = useMessageScreen();
 
@@ -51,108 +57,86 @@ export const RegisterForm = () => {
             })
     }
 
+    useFocusOnMount(firstNameRef);
 
     return (
 
 
+        <form className={"mt-[35px] flex flex-col"}
+              onSubmit={handleSubmit}>
 
+            <FormErrorMessage paragraphRef={errorRef} errorMessage={errorMessage}/>
 
+            <MultiInputHolder>
+                <LabelInputHolder>
+                    <Label htmlFor={"firstName"}>First name</Label>
+                    <TextInput id={"firstName"}
+                               inputRef={firstNameRef}
+                               required={true}
+                               type={"text"}
+                               name={"firstName"}
+                               value={registerFormData.firstName}
+                               callback={handleInputChange}
+                               autoComplete={"given-name"}
+                    />
+                </LabelInputHolder>
+                <LabelInputHolder>
+                    <Label htmlFor={"lastName"}>Last name</Label>
+                    <TextInput id={"lastName"}
+                               required={true}
+                               type={"text"}
+                               name={"lastName"}
+                               callback={handleInputChange}
+                               autoComplete={"family-name"}
+                    />
+                </LabelInputHolder>
+                <LabelInputHolder>
+                    <Label htmlFor={"email"}>Email Address</Label>
+                    <TextInput id={"email"}
+                               required={true}
+                               type={"text"}
+                               name={"email"}
+                               callback={handleInputChange}
+                               autoComplete={"email"}
+                    />
+                </LabelInputHolder>
 
-                    <form className={"mt-[35px] flex flex-col"}
-                          onSubmit={handleSubmit}>
+                <LabelInputHolder>
+                    <Label htmlFor={"password"}>Password</Label>
+                    <input name="abc" type="text" style={{display: 'none'}}/>
+                    <TextInput id={"password"}
+                               placeholder={"At least six characters"}
+                               required={true}
+                               type={"password"}
+                               name={"password"}
+                               callback={handleInputChange}
+                               autoComplete={"new-password"}
+                    />
+                </LabelInputHolder>
+                <LabelInputHolder>
+                    <Label htmlFor={"re-enter-password"}>Re-enter password</Label>
+                    <input name="abc" type="text" style={{display: 'none'}}/>
+                    <TextInput id={"re-enter-password"}
+                               required={true}
+                               type={"password"}
+                               name={"reEnteredPassword"}
+                               callback={handleInputChange}
+                               autoComplete={"new-password"}
+                    />
+                </LabelInputHolder>
+                <LabelCheckboxHolder>
+                    <CheckboxInput type={"checkbox"}
+                                   id={"persist"}
+                                   name={"newsletter"}
+                                   callback={handleInputChange}
+                                   autoComplete={"off"}/>
+                    <CheckboxLabel htmlFor={"persist"}>
+                        Would you like to sign for the newsletter?
+                    </CheckboxLabel>
+                </LabelCheckboxHolder>
+            </MultiInputHolder>
 
-                        <p ref={errorRef}
-                           className={errorMessage ? "text-electron-error text-xl" : ""}>
-                            {errorMessage}
-                        </p>
-
-                        <MultiInputHolder>
-                            <LabelInputHolder>
-                                <Label htmlFor={"firstName"}>First name</Label>
-                                <input
-                                    className={"input-electron"}
-                                    id={"firstName"}
-                                    required={true}
-                                    type={"text"}
-                                    name={"firstName"}
-                                    value={registerFormData.firstName}
-                                    onChange={handleInputChange}
-                                    autoComplete={"given-name"}
-                                />
-                            </LabelInputHolder>
-                            <LabelInputHolder>
-                                <Label htmlFor={"lastName"}>Last name</Label>
-                                <input
-                                    className={"input-electron"}
-                                    id={"lastName"}
-                                    required={true}
-                                    type={"text"}
-                                    name={"lastName"}
-                                    onChange={handleInputChange}
-                                    autoComplete={"family-name"}
-                                />
-                            </LabelInputHolder>
-                            <LabelInputHolder>
-                                <Label htmlFor={"email"}>Email Address</Label>
-                                <input
-                                    className={"input-electron"}
-                                    id={"email"}
-                                    required={true}
-                                    type={"text"}
-                                    name={"email"}
-                                    onChange={handleInputChange}
-                                    autoComplete={"email"}
-                                />
-                            </LabelInputHolder>
-
-                            <LabelInputHolder>
-                                <Label htmlFor={"password"}>Password</Label>
-                                <input name="abc" type="text" style={{display: 'none'}}/>
-                                <input
-                                    className={"input-electron"}
-                                    id={"password"}
-                                    placeholder={"At least six characters"}
-                                    required={true}
-                                    type={"password"}
-                                    name={"password"}
-                                    onChange={handleInputChange}
-                                    autoComplete={"new-password"}
-                                />
-                            </LabelInputHolder>
-                            <LabelInputHolder>
-                                <Label htmlFor={"re-enter-password"}>Re-enter password</Label>
-                                <input name="abc" type="text" style={{display: 'none'}}/>
-                                <input
-                                    className={"input-electron"}
-                                    id={"re-enter-password"}
-                                    required={true}
-                                    type={"password"}
-                                    name={"reEnteredPassword"}
-                                    onChange={handleInputChange}
-                                    autoComplete={"new-password"}
-                                />
-                            </LabelInputHolder>
-                            <LabelCheckboxHolder>
-                                <input type={"checkbox"}
-                                       id={"persist"}
-                                       name={"newsletter"}
-                                       onChange={handleInputChange}
-                                       autoComplete={"off"}
-                                />
-                                <CheckboxLabel htmlFor={"persist"}>
-                                    Would you like to sign for the newsletter?
-                                </CheckboxLabel>
-                            </LabelCheckboxHolder>
-                        </MultiInputHolder>
-
-
-                        <div className={"flex flex-col gap-[14px] mt-[24px]"}>
-                            <button className={loading ? "button-electron-disabled" : "button-electron"}
-                                    type={"submit"}>
-                                Register
-                            </button>
-                        </div>
-
-                    </form>
+            <FormSubmitButton loading={loading}/>
+        </form>
     )
 }

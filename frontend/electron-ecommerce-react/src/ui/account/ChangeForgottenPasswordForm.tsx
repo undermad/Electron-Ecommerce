@@ -2,16 +2,20 @@ import {useParams} from "react-router-dom";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {Label} from "../reusable/Label.tsx";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {ChangeForgottenPasswordRequest} from "../../api/dto/ChangeForgottenPasswordRequest.ts";
 import {axiosAuth, CHANGE_FORGOTTEN_PASSWORD_API_PATH} from "../../api/axios.ts";
 import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
+import {TextInput} from "../reusable/TextInput.tsx";
+import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
+import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 
 export const ChangeForgottenPasswordForm = () => {
     const params = useParams();
     const token = params.token;
     const messageScreen = useMessageScreen();
 
+    const newPasswordRef = useRef<HTMLInputElement>(null)
     const [loading, setLoading] = useState<boolean>(false);
     const [changeForgottenPasswordData, setChangeForgottenPasswordData] = useState<ChangeForgottenPasswordRequest>({
         newPassword: '',
@@ -44,6 +48,8 @@ export const ChangeForgottenPasswordForm = () => {
 
     }
 
+   useFocusOnMount(newPasswordRef);
+
     return (
         <form
             className={"mt-[35px] flex flex-col"}
@@ -53,36 +59,29 @@ export const ChangeForgottenPasswordForm = () => {
                 <LabelInputHolder>
                     <LabelInputHolder>
                         <Label htmlFor={"newPassword"}>New Password</Label>
-                        <input className={"input-electron"}
-                               id={"newPassword"}
-                               name={"newPassword"}
-                               type={"password"}
-                               onChange={handleInputChange}
-                               autoComplete={"new-password"}
+                        <TextInput id={"newPassword"}
+                                   inputRef={newPasswordRef}
+                                   name={"newPassword"}
+                                   type={"password"}
+                                   callback={handleInputChange}
+                                   autoComplete={"new-password"}
                         />
                     </LabelInputHolder>
                 </LabelInputHolder>
                 <LabelInputHolder>
                     <LabelInputHolder>
                         <Label htmlFor={"reNewPassword"}>New Password</Label>
-                        <input className={"input-electron"}
-                               id={"reNewPassword"}
-                               name={"reNewPassword"}
-                               type={"password"}
-                               onChange={handleInputChange}
-                               autoComplete={"new-password"}
+                        <TextInput id={"reNewPassword"}
+                                   name={"reNewPassword"}
+                                   type={"password"}
+                                   callback={handleInputChange}
+                                   autoComplete={"new-password"}
                         />
                     </LabelInputHolder>
                 </LabelInputHolder>
             </MultiInputHolder>
 
-            <div className={"flex flex-col gap-[14px] mt-[24px]"}>
-                <button
-                    className={loading ? "button-electron-disabled" : "button-electron"}
-                    disabled={loading}>
-                    Next
-                </button>
-            </div>
+            <FormSubmitButton loading={loading}/>
         </form>
 
     )

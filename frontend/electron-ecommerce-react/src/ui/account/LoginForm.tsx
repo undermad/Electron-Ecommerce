@@ -1,4 +1,4 @@
-import {SyntheticEvent, useEffect, useRef, useState} from "react";
+import React, {SyntheticEvent, useRef, useState} from "react";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
 import {useNavigate, useLocation, Link} from "react-router-dom";
 import {FORGOT_PASSWORD, HOME_ROUTE, REGISTER_ROUTE} from "../../constants/Routes.ts";
@@ -12,6 +12,12 @@ import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
+import {TextInput} from "../reusable/TextInput.tsx";
+import {ToggleCheckbox} from "../reusable/ToggleCheckbox.tsx";
+import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
+import {SpanWeightSix} from "../reusable/SpanWeightSix.tsx";
+import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
+import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 
 export const LoginForm = () => {
     const auth = useAuth();
@@ -20,9 +26,7 @@ export const LoginForm = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || HOME_ROUTE;
 
-
     const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
     const errorRef = useRef<HTMLParagraphElement>(null);
 
     const [email, setEmail] = useState<string>("");
@@ -30,14 +34,6 @@ export const LoginForm = () => {
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [remember, setRemember] = useState<boolean>(false);
-
-
-    useEffect(() => {
-        if (emailRef.current !== null) {
-            emailRef.current.focus()
-        }
-    }, [])
-
 
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
@@ -68,6 +64,14 @@ export const LoginForm = () => {
         setRemember(!remember);
     }
 
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    }
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    }
+
+    useFocusOnMount(emailRef);
 
     return (
 
@@ -76,44 +80,34 @@ export const LoginForm = () => {
             className={"mt-[35px] flex flex-col"}
             onSubmit={handleSubmit}>
 
-            <p ref={errorRef}
-               className={errorMessage ? "text-electron-error text-xl" : ""}>
-                {errorMessage}
-            </p>
+            <FormErrorMessage paragraphRef={errorRef} errorMessage={errorMessage}/>
             <MultiInputHolder>
                 <LabelInputHolder>
                     <Label htmlFor={"email"}>Email Address</Label>
-                    <input
-                        className={"input-electron"}
-                        id={"email"}
-                        type={"text"}
-                        placeholder={"Enter your email address"}
-                        ref={emailRef}
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        required={true}
-                        autoComplete={"email"}
-                    />
+                    <TextInput callback={handleEmailChange}
+                               id={"email"}
+                               type={"text"}
+                               placeholder={"Enter your email address"}
+                               inputRef={emailRef}
+                               value={email}
+                               required={true}
+                               autoComplete={"email"}/>
                 </LabelInputHolder>
 
                 <LabelInputHolder>
                     <Label htmlFor={"password"}>Password</Label>
-                    <input
-                        className={"input-electron"}
+                    <TextInput
                         id={"password"}
                         type={"password"}
-                        ref={passwordRef}
                         placeholder={"Enter your password"}
-                        onChange={(e) => setPassword(e.target.value)}
-                        autoComplete={"password"}
-                    />
+                        callback={handlePasswordChange}
+                        autoComplete={"password"}/>
                     <div className={"flex"}>
                         <LabelCheckboxHolder tailwind="w-1/2">
-                            <input type={"checkbox"}
-                                   id={"persist"}
-                                   onChange={togglePersist}
-                                   autoComplete={"off"}
-                            />
+                            <ToggleCheckbox type={"checkbox"}
+                                            id={"persist"}
+                                            autoComplete={"off"}
+                                            callback={togglePersist}/>
                             <CheckboxLabel htmlFor={"persist"}>Remember me?</CheckboxLabel>
                         </LabelCheckboxHolder>
                         <ParagraphSmall tailwind="font-[400] text-right">
@@ -124,18 +118,12 @@ export const LoginForm = () => {
                     </div>
                 </LabelInputHolder>
             </MultiInputHolder>
-            <div className={"flex flex-col gap-[14px] mt-[24px]"}>
-                <button
-                    className={loading ? "button-electron-disabled" : "button-electron"}
-                    disabled={loading}>
-                    Log In
-                </button>
-            </div>
+            <FormSubmitButton loading={loading}/>
 
             <ParagraphSmall tailwind="flex justify-center mt-3">
                 Don't have an account?&nbsp;
                 <Link to={REGISTER_ROUTE}>
-                    <span className={"font-[600]"}>Register</span>
+                    <SpanWeightSix>Register</SpanWeightSix>
                 </Link>
             </ParagraphSmall>
 
