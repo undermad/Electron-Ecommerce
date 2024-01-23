@@ -3,7 +3,6 @@ import {AppLayout} from "./ui/AppLayout.tsx";
 import {Search} from "./ui/search/Search.tsx";
 import {Basket} from "./ui/basket/Basket.tsx";
 import {Home} from "./ui/home/Home.tsx";
-import {Login} from "./ui/account/Login.tsx";
 import {Missing} from "./ui/global/Missing.tsx";
 import {
     LOGIN_ROUTE,
@@ -28,10 +27,11 @@ import {PersistLogin} from "./ui/PersistLogin.tsx";
 import {MessageScreen} from "./ui/global/MessageScreen.tsx";
 import {MyAccount} from "./ui/account/MyAccount.tsx";
 import {Logout} from "./ui/account/Logout.tsx";
-import {Register} from "./ui/account/Register.tsx";
 import {ActivateAccount} from "./ui/account/ActivateAccount.tsx";
 import {ForgotPassword} from "./ui/account/ForgotPassword.tsx";
 import {ChangeForgottenPassword} from "./ui/account/ChangeForgottenPassword.tsx";
+import {Login} from "./ui/account/Login.tsx";
+import {Register} from "./ui/account/Register.tsx";
 
 function App() {
 

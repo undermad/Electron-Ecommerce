@@ -8,9 +8,11 @@ export const Logout = () => {
     const navigate = useNavigate();
     useEffect(() => {
         console.log('Effect executed');
-        logout();
+        logout()
+            .then(res => console.log(res))
+            .catch(error => console.log(error));
         navigate(HOME_ROUTE);
-    },[])
+    }, [])
 
     return (
         <></>

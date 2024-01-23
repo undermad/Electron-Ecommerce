@@ -6,9 +6,12 @@ export const useLogout = () => {
 
     return async () => {
         auth?.setAuth({});
-        axiosAuth.post(REFRESH_TOKEN_API_PATH + LOGOUT_API_PATH)
-            .then(response => console.log(response.data))
-            .catch(error => console.log(error));
+        try {
+            const response = await axiosAuth.post(REFRESH_TOKEN_API_PATH + LOGOUT_API_PATH);
+            return response.data
+        } catch(error) {
+            console.log(error)
+        }
     }
 
 }
