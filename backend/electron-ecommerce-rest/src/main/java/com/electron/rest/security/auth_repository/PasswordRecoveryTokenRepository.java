@@ -22,4 +22,8 @@ public interface PasswordRecoveryTokenRepository extends CrudRepository<Password
     @Query(value = "SELECT t.token as token, t.expiry_date as expiryDate, t.id as id, t.user_id as userId FROM password_recovery_tokens t", nativeQuery = true)
     Optional<PasswordRecoveryTokenProjection> findByPasswordRecoveryToken(@Param("passwordRecoveryToken") String passwordRecoveryToken);
 
+    @Modifying
+    @Query(value = "DELETE FROM password_recovery_tokens t WHERE t.expiry_date < NOW()", nativeQuery = true)
+    void deleteExpiredTokens();
+
 }

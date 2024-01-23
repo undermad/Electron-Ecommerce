@@ -6,6 +6,8 @@ import com.electron.rest.security.auth_dto.*;
 import com.electron.rest.security.auth_service.AuthService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import static com.electron.rest.constants.EndpointsPaths.*;
 import static com.electron.rest.constants.ErrorMessages.INVALID_TOKEN;
 import static com.electron.rest.constants.SuccessMessages.*;
-
 
 @RestController
 @RequestMapping(API_V1_AUTH)

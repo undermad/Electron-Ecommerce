@@ -34,11 +34,11 @@
     - create exception                                COMPLETED
     - create query                                    COMPLETED
     - add validation                                  COMPLETED
-    - send verification email
+    - send verification email                         COMPLETED
     - write tests                                     COMPLETED
 
-    PASSWORD RECOVERY:
-    - implement password recovery
+    PASSWORD RECOVERY:                                COMPLETED
+    - implement password recovery                     COMPLETED
 
 
 
@@ -52,11 +52,11 @@
             - forgot password
             - validation
 
-5. Validation
-    - implement validation
+5. Validation                                       COMPLETED
+    - implement validation                          COMPLETED
 
 6. Email service:
-    - account email veryfication
-    - password recovery
+    - account email veryfication                    COMPLETED
+    - password recovery                             COMPLETED
 
 7. Add logging system
