@@ -1,9 +1,8 @@
-export class ChangeForgottenPasswordRequest {
+export type ChangeForgottenPasswordRequest = {
     newPassword: string;
     reNewPassword: string;
+}
 
-    constructor(newPassword: string, reNewPassword: string) {
-        this.newPassword = newPassword;
-        this.reNewPassword = reNewPassword;
-    }
+export type ChangeForgottenPasswordRequestError = ChangeForgottenPasswordRequest & {
+    message: string,
 }

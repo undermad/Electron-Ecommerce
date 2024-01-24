@@ -1,14 +1,11 @@
-import {RefObject} from "react";
-
 type FormErrorMessageProps = {
-    paragraphRef: RefObject<HTMLParagraphElement>,
     errorMessage: string,
 }
 
-export const FormErrorMessage = ({paragraphRef, errorMessage}: FormErrorMessageProps) => {
+export const FormErrorMessage = ({errorMessage}: FormErrorMessageProps) => {
 
     return (
-        <p ref={paragraphRef}
+        <p
            className={errorMessage ? "text-electron-error text-xl mb-4" : ""}>
             {errorMessage}
         </p>

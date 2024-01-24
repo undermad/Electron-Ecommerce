@@ -1,8 +1,14 @@
+
 export type RegisterRequest = {
     firstName: string,
     lastName: string,
     email: string,
     password: string,
-    reEnteredPassword: string,
+    rePassword: string,
     newsletterSubscription: boolean,
 }
+
+export type RegisterRequestValidationError = RegisterRequest & {
+    message: string,
+}
+

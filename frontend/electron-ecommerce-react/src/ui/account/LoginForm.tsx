@@ -2,7 +2,6 @@ import React, {SyntheticEvent, useRef, useState} from "react";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
 import {useNavigate, useLocation, Link} from "react-router-dom";
 import {FORGOT_PASSWORD, HOME_ROUTE, REGISTER_ROUTE} from "../../constants/Routes.ts";
-import {LoginRequest} from "../../api/dto/LoginRequest.ts";
 import {LoginResponse} from "../../api/dto/LoginResponse.ts";
 import {axiosAuth, LOGIN_API_PATH} from "../../api/axios.ts";
 import {AxiosResponse} from "axios";
@@ -18,6 +17,7 @@ import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
 import {SpanWeightSix} from "../reusable/SpanWeightSix.tsx";
 import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
 import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
+import {LoginRequest, LoginRequestError} from "../../api/dto/LoginRequest.ts";
 
 export const LoginForm = () => {
     const auth = useAuth();
@@ -27,11 +27,13 @@ export const LoginForm = () => {
     const from = location.state?.from?.pathname || HOME_ROUTE;
 
     const emailRef = useRef<HTMLInputElement>(null);
-    const errorRef = useRef<HTMLParagraphElement>(null);
-
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [loginRequestError, setLoginRequestError] = useState<LoginRequestError>({
+        email: '',
+        password: '',
+        message: '',
+    });
     const [loading, setLoading] = useState<boolean>(false);
     const [remember, setRemember] = useState<boolean>(false);
 
@@ -39,7 +41,7 @@ export const LoginForm = () => {
         e.preventDefault();
         setLoading(true);
 
-        const data = new LoginRequest(email, password);
+        const data: LoginRequest = {email: email, password: password};
 
         axiosAuth.post(LOGIN_API_PATH, data, {
             params: {remember: remember}
@@ -52,11 +54,9 @@ export const LoginForm = () => {
             .catch(error => {
                 console.log(error?.response?.data);
                 setLoading(false);
-                setErrorMessage(error?.response?.data?.message);
+                setLoginRequestError({...error?.response?.data});
             })
 
-        if (errorRef.current !== null)
-            errorRef.current.focus();
 
     }
 
@@ -80,10 +80,10 @@ export const LoginForm = () => {
             className={"mt-[35px] flex flex-col"}
             onSubmit={handleSubmit}>
 
-            <FormErrorMessage paragraphRef={errorRef} errorMessage={errorMessage}/>
+            <FormErrorMessage errorMessage={loginRequestError.message}/>
             <MultiInputHolder>
                 <LabelInputHolder>
-                    <Label htmlFor={"email"}>Email Address</Label>
+                    <Label errorMessage={loginRequestError.email} htmlFor={"email"}>Email Address</Label>
                     <TextInput callback={handleEmailChange}
                                id={"email"}
                                type={"text"}
@@ -95,7 +95,7 @@ export const LoginForm = () => {
                 </LabelInputHolder>
 
                 <LabelInputHolder>
-                    <Label htmlFor={"password"}>Password</Label>
+                    <Label errorMessage={loginRequestError.password} htmlFor={"password"}>Password</Label>
                     <TextInput
                         id={"password"}
                         type={"password"}

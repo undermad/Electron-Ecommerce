@@ -114,7 +114,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(TokenException.class)
-    public ResponseEntity<ErrorDto> handleUserAlreadyExistException
+    public ResponseEntity<ErrorDto> handleTokenException
             (TokenException exception, WebRequest webRequest) {
 
         ErrorDto errorDto = new ErrorDto(
@@ -124,4 +124,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
+
 }

@@ -3,7 +3,7 @@ import {Label} from "../reusable/Label.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 import React, {useRef, useState} from "react";
-import {RegisterRequest} from "../../api/dto/RegisterRequest.ts";
+import {RegisterRequest, RegisterRequestValidationError} from "../../api/dto/RegisterRequest.ts";
 import {AxiosResponse} from "axios";
 import {axiosRegistration, REGISTER_API_PATH} from "../../api/axios.ts";
 import {RegisterResponse} from "../../api/dto/RegisterResponse.ts";
@@ -16,20 +16,29 @@ import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
 import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 
+const registerFormDataInit: RegisterRequest = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    rePassword: '',
+    newsletterSubscription: false,
+}
+const validationErrorInit: RegisterRequestValidationError = {
+    ...registerFormDataInit,
+    message: '',
+}
+
 
 export const RegisterForm = () => {
 
-    const [registerFormData, setRegisterFormData] = useState<RegisterRequest>({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        reEnteredPassword: '',
-        newsletterSubscription: false,
-    })
-    const [errorMessage, setErrorMessage] = useState<string>('');
-    const errorRef = useRef<HTMLParagraphElement>(null);
-    const firstNameRef = useRef<HTMLInputElement>(null)
+    const [registerFormData, setRegisterFormData] =
+        useState<RegisterRequest>(registerFormDataInit);
+
+    const [validationError, setValidationError] =
+        useState<RegisterRequestValidationError>(validationErrorInit);
+
+    const firstNameRef = useRef<HTMLInputElement>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const messageScreen = useMessageScreen();
 
@@ -42,18 +51,20 @@ export const RegisterForm = () => {
         }));
     };
 
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(registerFormData);
+        setValidationError({...validationErrorInit})
         axiosRegistration.post(REGISTER_API_PATH, registerFormData)
             .then((response: AxiosResponse<RegisterResponse>) => {
                 console.log(response.data.message);
                 messageScreen(REGISTRATION_SUCCESSFUL);
             })
             .catch((error) => {
-                console.log(error?.response);
+                console.log(error)
+                setValidationError({...error.response.data});
                 setLoading(false);
-                setErrorMessage(error?.response?.data?.message);
             })
     }
 
@@ -65,11 +76,11 @@ export const RegisterForm = () => {
         <form className={"mt-[35px] flex flex-col"}
               onSubmit={handleSubmit}>
 
-            <FormErrorMessage paragraphRef={errorRef} errorMessage={errorMessage}/>
+            <FormErrorMessage errorMessage={validationError.message}/>
 
             <MultiInputHolder>
                 <LabelInputHolder>
-                    <Label htmlFor={"firstName"}>First name</Label>
+                    <Label errorMessage={validationError.firstName} htmlFor={"firstName"}>First name</Label>
                     <TextInput id={"firstName"}
                                inputRef={firstNameRef}
                                required={true}
@@ -81,7 +92,7 @@ export const RegisterForm = () => {
                     />
                 </LabelInputHolder>
                 <LabelInputHolder>
-                    <Label htmlFor={"lastName"}>Last name</Label>
+                    <Label errorMessage={validationError.lastName} htmlFor={"lastName"}>Last name</Label>
                     <TextInput id={"lastName"}
                                required={true}
                                type={"text"}
@@ -91,7 +102,7 @@ export const RegisterForm = () => {
                     />
                 </LabelInputHolder>
                 <LabelInputHolder>
-                    <Label htmlFor={"email"}>Email Address</Label>
+                    <Label errorMessage={validationError.email} htmlFor={"email"}>Email Address</Label>
                     <TextInput id={"email"}
                                required={true}
                                type={"text"}
@@ -102,7 +113,7 @@ export const RegisterForm = () => {
                 </LabelInputHolder>
 
                 <LabelInputHolder>
-                    <Label htmlFor={"password"}>Password</Label>
+                    <Label errorMessage={validationError.password} htmlFor={"password"}>Password</Label>
                     <input name="abc" type="text" style={{display: 'none'}}/>
                     <TextInput id={"password"}
                                placeholder={"At least six characters"}
@@ -114,12 +125,12 @@ export const RegisterForm = () => {
                     />
                 </LabelInputHolder>
                 <LabelInputHolder>
-                    <Label htmlFor={"re-enter-password"}>Re-enter password</Label>
+                    <Label errorMessage={validationError.rePassword} htmlFor={"re-password"}>Re enter password</Label>
                     <input name="abc" type="text" style={{display: 'none'}}/>
-                    <TextInput id={"re-enter-password"}
+                    <TextInput id={"re-password"}
                                required={true}
                                type={"password"}
-                               name={"reEnteredPassword"}
+                               name={"rePassword"}
                                callback={handleInputChange}
                                autoComplete={"new-password"}
                     />

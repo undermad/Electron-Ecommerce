@@ -4,7 +4,6 @@ package com.electron.rest.controller;
 import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.constants.SuccessMessages;
 import com.electron.rest.security.auth_dto.RegisterDto;
-import com.electron.rest.security.auth_entity.RefreshToken;
 import com.electron.rest.security.auth_repository.RefreshTokenRepository;
 import com.electron.rest.sql.SqlQueryAfter;
 import com.electron.rest.sql.SqlQueryBefore;
@@ -123,7 +122,7 @@ public class AuthenticationControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post(API_V1_AUTH + REGISTER)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(registerDto)))
-                .andExpect(jsonPath("$.email", is(ErrorMessages.EMAIL_INCORRECT_FORMAT)))
+                .andExpect(jsonPath("$.email", is(ErrorMessages.INCORRECT_EMAIL_FORMAT)))
                 .andExpect(jsonPath("$.password", is(ErrorMessages.PASSWORD_INCORRECT_LENGTH)))
                 .andExpect(jsonPath("$.newsletterSubscription", is(ErrorMessages.NULL)));
     }

@@ -69,7 +69,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public RegisterResponse register(RegisterDto registerDto) throws MessagingException {
-        if (!registerDto.password().equals(registerDto.reEnteredPassword()))
+        if (!registerDto.password().equals(registerDto.rePassword()))
             throw new InvalidInputException(PASSWORDS_MUST_BE_SAME);
         List<UserProjection> usersList = userRepository.findUserEmail(registerDto.email());
         if (!usersList.isEmpty()) throw new EmailAlreadyExistException(EMAIL_ALREADY_IN_USE);

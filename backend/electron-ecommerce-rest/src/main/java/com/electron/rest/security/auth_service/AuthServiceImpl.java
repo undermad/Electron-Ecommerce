@@ -128,7 +128,7 @@ public class AuthServiceImpl implements AuthService {
     public ResponseCookie getRefreshTokenCookie(LoginDto loginDto, Boolean remember) {
         Optional<UserProjection> userAsOptional = userRepository.findUserIdFromEmail(loginDto.email());
         if (userAsOptional.isEmpty())
-            throw new UsernameNotFoundException(BAD_CREDENTIALS);
+            throw new UsernameNotFoundException(USER_NOT_FOUND);
         if (remember) {
             RefreshToken newToken = (RefreshToken) refreshTokenProvider.generateToken(userAsOptional.get().getId());
             refreshTokenRepository.save(newToken);

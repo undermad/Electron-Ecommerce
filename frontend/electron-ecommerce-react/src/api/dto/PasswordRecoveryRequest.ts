@@ -1,6 +1,7 @@
-export class PasswordRecoveryRequest {
+export type PasswordRecoveryRequest ={
     email: string;
-    constructor(email: string) {
-        this.email = email;
-    }
+}
+
+export type PasswordRecoveryRequestError = PasswordRecoveryRequest & {
+    message: string,
 }
