@@ -11,12 +11,16 @@ The authentication system has been fully implemented on the frontend and backend
 More coming soon...
 
 Authentication Key Features:
-✅Responsive Design
-🌐 Optimized Performance
-🔐 Secure JWT/Refresh Token Implementation
-📧 Email Activation & Password Reset
-📱 Multi-Device Login
-🔒 Secure Logout from every device
+
+    🔐 Secure JWT/Refresh Token Implementation
+    📧 Email Activation & Password Reset
+    📱 Multi-Device Login
+    🔒 Secure Logout from every device
+    ✅Responsive Design
+    🌐 Optimized Performance
+
+![](screenshots/RegisterMobile.png)
+![](screenshots/LoginDesktop.png)
 
 Design - created in Figma by a designer from Fiverr:
 
