@@ -7,6 +7,7 @@ import useRefreshToken from "../../custom_hooks/useRefreshToken.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {useLogout} from "../../custom_hooks/useLogout.ts";
 import LogoutEverywhereButton from "../account/LogoutEverywhereButton.tsx";
+import {Container} from "../reusable/Container.tsx";
 
 export const Home = () => {
 
@@ -27,7 +28,7 @@ export const Home = () => {
 
     return (
 
-        <section className={"px-responsive-electron w-full max-w-[1440px] "}>
+        <Container>
             <Link to={ADMIN_ROUTE}>Admin Section Click</Link>
             <br/>
             <button onClick={() => refresh()}>Refresh Token</button>
@@ -45,6 +46,6 @@ export const Home = () => {
                 <Hero/>
                 : ""}
 
-        </section>
+        </Container>
     )
 }

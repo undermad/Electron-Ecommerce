@@ -42,7 +42,7 @@ function App() {
 
                     {/*public routes*/}
                     <Route path={HOME_ROUTE} element={<Home/>}></Route>
-                    <Route path={SEARCH_ROUTE} element={<Search/>}>
+                    <Route path={SEARCH_ROUTE + "/:category"} element={<Search/>}>
 
                     </Route>
 

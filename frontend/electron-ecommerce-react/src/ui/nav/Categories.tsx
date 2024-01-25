@@ -4,11 +4,10 @@ import {SEARCH_ROUTE} from "../../constants/Routes.ts";
 
 export const Categories = () => {
     const items: Map<string, string> = new Map();
-    items.set('GPU', SEARCH_ROUTE)
-    items.set('CPU', SEARCH_ROUTE)
-    items.set('Screens', SEARCH_ROUTE)
-    items.set('Headphones', SEARCH_ROUTE)
-    items.set('Accessories', SEARCH_ROUTE)
+    items.set('Graphic cards', SEARCH_ROUTE + "/gpu")
+    items.set('Memory', SEARCH_ROUTE + "/memory")
+    items.set('Monitors', SEARCH_ROUTE + "/monitors")
+    items.set('Headphones', SEARCH_ROUTE + "/headphones")
     return (
         <ExpandingButton items={items} name="Categories" svg={<ListSvg/>}/>
     )

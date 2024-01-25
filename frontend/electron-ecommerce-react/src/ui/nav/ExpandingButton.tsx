@@ -115,7 +115,7 @@ export const ExpandingButton = (props: ExpandingButtonProps) => {
                             y: isExpanded ? 0 : -100,
                             opacity: isExpanded ? 1 : 0,
                         }}
-                        className={`${isExpanded ? '' : 'hidden'} absolute top-[50px]  bg-electron-primary-dark-blue p-5 `}>
+                        className={`${isExpanded ? '' : 'hidden'} absolute w-44 top-[50px] bg-electron-primary-dark-blue p-5`}>
 
                         {Array.from(itemsList).map(([key, value]) => (
                             <ExpandingListItem key={key} route={value}>{key}</ExpandingListItem>
