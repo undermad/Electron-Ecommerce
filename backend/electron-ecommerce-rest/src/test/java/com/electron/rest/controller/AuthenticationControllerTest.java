@@ -3,12 +3,12 @@ package com.electron.rest.controller;
 
 import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.constants.SuccessMessages;
-import com.electron.rest.security.auth_dto.RegisterDto;
-import com.electron.rest.security.auth_repository.RefreshTokenRepository;
+import com.electron.rest.dto.RegisterDto;
+import com.electron.rest.repository.RefreshTokenRepository;
 import com.electron.rest.sql.SqlQueryAfter;
 import com.electron.rest.sql.SqlQueryBefore;
 import com.electron.rest.TestConstants;
-import com.electron.rest.security.auth_dto.LoginDto;
+import com.electron.rest.dto.LoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

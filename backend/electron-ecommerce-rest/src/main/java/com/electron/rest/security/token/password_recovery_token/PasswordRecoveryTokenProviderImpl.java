@@ -1,7 +1,7 @@
 package com.electron.rest.security.token.password_recovery_token;
 
-import com.electron.rest.security.auth_entity.PasswordRecoveryToken;
-import com.electron.rest.security.auth_entity.User;
+import com.electron.rest.entity.user.PasswordRecoveryToken;
+import com.electron.rest.entity.user.User;
 import com.electron.rest.security.token.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

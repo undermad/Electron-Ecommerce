@@ -1,7 +1,7 @@
 package com.electron.rest.security.token.activation_token;
 
-import com.electron.rest.security.auth_entity.ActivationToken;
-import com.electron.rest.security.auth_entity.User;
+import com.electron.rest.entity.user.ActivationToken;
+import com.electron.rest.entity.user.User;
 import com.electron.rest.security.token.Token;
 import org.springframework.stereotype.Component;
 

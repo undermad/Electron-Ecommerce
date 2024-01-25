@@ -1,7 +1,7 @@
 package com.electron.rest.security.token.refresh_token;
 
-import com.electron.rest.security.auth_entity.RefreshToken;
-import com.electron.rest.security.auth_entity.User;
+import com.electron.rest.entity.user.RefreshToken;
+import com.electron.rest.entity.user.User;
 import com.electron.rest.security.token.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;

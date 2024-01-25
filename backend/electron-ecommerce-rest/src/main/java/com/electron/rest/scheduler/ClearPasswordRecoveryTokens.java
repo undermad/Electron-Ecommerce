@@ -1,6 +1,6 @@
 package com.electron.rest.scheduler;
 
-import com.electron.rest.security.auth_repository.PasswordRecoveryTokenRepository;
+import com.electron.rest.repository.PasswordRecoveryTokenRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
