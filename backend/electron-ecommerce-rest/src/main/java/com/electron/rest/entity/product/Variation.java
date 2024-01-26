@@ -1,9 +1,11 @@
 package com.electron.rest.entity.product;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 @Entity
 @Table(name = "variation")
 public class Variation {
@@ -19,6 +21,6 @@ public class Variation {
     @JoinColumn(name = "category_id", nullable = false)
     Category category;
 
-    @OneToMany(mappedBy = "variation", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "variation", fetch = FetchType.EAGER)
     private List<VariationOption> variationOptions;
 }

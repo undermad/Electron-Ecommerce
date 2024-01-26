@@ -1,9 +1,9 @@
-package com.electron.rest.service;
+package com.electron.rest.service.auth;
 
-import com.electron.rest.dto.ChangeForgottenPasswordDto;
-import com.electron.rest.dto.LoginDto;
-import com.electron.rest.dto.LoginResponse;
-import com.electron.rest.dto.PasswordRecoveryDto;
+import com.electron.rest.dto.auth.ChangeForgottenPasswordDto;
+import com.electron.rest.dto.auth.LoginDto;
+import com.electron.rest.dto.auth.LoginResponse;
+import com.electron.rest.dto.auth.PasswordRecoveryDto;
 import com.electron.rest.exception.TokenException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseCookie;

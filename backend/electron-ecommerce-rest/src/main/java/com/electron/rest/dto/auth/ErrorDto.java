@@ -1,4 +1,4 @@
-package com.electron.rest.dto;
+package com.electron.rest.dto.auth;
 
 import java.util.Date;
 

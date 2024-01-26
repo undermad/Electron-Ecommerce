@@ -1,6 +1,6 @@
 package com.electron.rest.exception;
 
-import com.electron.rest.dto.ErrorDto;
+import com.electron.rest.dto.auth.ErrorDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -102,8 +102,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(InvalidInputException.class)
-    public ResponseEntity<ErrorDto> handleUserAlreadyExistException
-            (InvalidInputException exception, WebRequest webRequest) {
+    public ResponseEntity<ErrorDto> handleUserAlreadyExistException(InvalidInputException exception, WebRequest webRequest) {
 
         ErrorDto errorDto = new ErrorDto(
                 exception.getMessage(),
@@ -114,8 +113,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(TokenException.class)
-    public ResponseEntity<ErrorDto> handleTokenException
-            (TokenException exception, WebRequest webRequest) {
+    public ResponseEntity<ErrorDto> handleTokenException(TokenException exception, WebRequest webRequest) {
 
         ErrorDto errorDto = new ErrorDto(
                 exception.getMessage(),
@@ -124,5 +122,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
+
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorDto> resourceNotFound(ResourceNotFoundException exception, WebRequest webRequest) {
+
+        ErrorDto errorDto = new ErrorDto(
+                exception.getMessage(),
+                new Date(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
+    }
+
 
 }

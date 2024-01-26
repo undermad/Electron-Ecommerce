@@ -18,4 +18,8 @@ public class EndpointsPaths {
     public static final String ACTIVATE = "/activate";
 
 
+    // Category
+    public static final String API_V1_CATEGORY = "/api/v1/category";
+
+
 }

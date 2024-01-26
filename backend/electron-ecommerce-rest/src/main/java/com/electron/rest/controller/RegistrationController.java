@@ -1,10 +1,10 @@
 package com.electron.rest.controller;
 
 import com.electron.rest.exception.TokenException;
-import com.electron.rest.dto.MessageResponse;
-import com.electron.rest.dto.RegisterDto;
-import com.electron.rest.dto.RegisterResponse;
-import com.electron.rest.service.RegistrationService;
+import com.electron.rest.dto.auth.MessageResponse;
+import com.electron.rest.dto.auth.RegisterDto;
+import com.electron.rest.dto.auth.RegisterResponse;
+import com.electron.rest.service.auth.RegistrationService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

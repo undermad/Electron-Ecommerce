@@ -1,9 +1,11 @@
 package com.electron.rest.entity.product;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 @Entity
 @Table(name = "categories", schema = "electron_ecommerce")
 public class Category {
@@ -20,9 +22,9 @@ public class Category {
     private Category parentCategory;
 
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
-    private List<Product> products;
+    private List<ProductItem> productItems;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Variation> variations;
 
 }

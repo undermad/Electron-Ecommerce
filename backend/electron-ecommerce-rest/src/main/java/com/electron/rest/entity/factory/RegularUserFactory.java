@@ -3,12 +3,12 @@ package com.electron.rest.entity.factory;
 import com.electron.rest.constants.AccountStatuses;
 import com.electron.rest.constants.Roles;
 import com.electron.rest.exception.ApiException;
-import com.electron.rest.dto.RegisterDto;
+import com.electron.rest.dto.auth.RegisterDto;
 import com.electron.rest.entity.user.AccountStatus;
 import com.electron.rest.entity.user.Role;
 import com.electron.rest.entity.user.User;
-import com.electron.rest.repository.AccountStatusRepository;
-import com.electron.rest.repository.RoleRepository;
+import com.electron.rest.repository.auth.AccountStatusRepository;
+import com.electron.rest.repository.auth.RoleRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

@@ -1,9 +1,9 @@
 package com.electron.rest.controller;
 
-import com.electron.rest.dto.*;
+import com.electron.rest.dto.auth.*;
 import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.exception.TokenException;
-import com.electron.rest.service.AuthService;
+import com.electron.rest.service.auth.AuthService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

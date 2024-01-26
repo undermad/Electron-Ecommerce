@@ -1,4 +1,4 @@
-package com.electron.rest.repository;
+package com.electron.rest.repository.auth;
 
 import com.electron.rest.entity.user.AccountStatus;
 import com.electron.rest.entity.projections.AccountStatusProjection;

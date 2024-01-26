@@ -1,10 +1,12 @@
 package com.electron.rest.entity.product;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
+@Getter
 @Entity
 @Table(name = "product_item")
 public class ProductItem {
@@ -12,6 +14,12 @@ public class ProductItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @Column(name = "sku", nullable = false, unique = true)
     private String sku;
@@ -25,9 +33,9 @@ public class ProductItem {
     @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @ManyToMany
     @JoinTable(name = "product_configuration",

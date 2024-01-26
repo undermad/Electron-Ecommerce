@@ -1,7 +1,7 @@
 package com.electron.rest.security;
 
-import com.electron.rest.repository.RoleRepository;
-import com.electron.rest.repository.UserRepository;
+import com.electron.rest.repository.auth.RoleRepository;
+import com.electron.rest.repository.auth.UserRepository;
 import com.electron.rest.entity.projections.UserProjection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
