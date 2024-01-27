@@ -1,15 +1,32 @@
 import {useParams} from "react-router-dom";
 import {Container} from "../reusable/Container.tsx";
-import {Header3} from "../reusable/Header3.tsx";
-import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
-import {Span} from "../reusable/Span.tsx";
-import {RangeSlider} from "../reusable/RangeSlider.tsx";
+import {Filter} from "./Filter.tsx";
+import {useEffect, useState} from "react";
+import {axiosCategory} from "../../api/axios.ts";
+import {CategoryResponse} from "../../api/dto/CategoryResponse.ts";
 
 
 export const Search = () => {
     const param = useParams();
     const category = param.category;
+    const [data, setData] = useState<CategoryResponse>({
+        name: '',
+        filters: {},
+        maxPrice: 1,
+        productDto: []
+    });
 
+
+    useEffect(() => {
+        axiosCategory.get(`/${category}`)
+            .then(response => {
+                setData({...response.data})
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [category])
 
 
     return (
@@ -17,36 +34,7 @@ export const Search = () => {
         <Container>
             <div className={"flex gap-[42px] w-full mt-[24px]"}>
 
-                <div className={"w-1/4 flex flex-col gap-[24px]"}>
-
-                    <div>
-                        <Header3>Filters</Header3>
-                        <ParagraphSmall tailwind="text-[14px]">Apply filters to table data</ParagraphSmall>
-                    </div>
-
-                    <ParagraphSmall tailwind="text-[14px]">Price</ParagraphSmall>
-
-
-                    <RangeSlider minRange={100} maxRange={200} />
-
-
-
-
-                    <div className={"flex flex-col gap-[16px]"}>
-                        <Span>VariationName</Span>
-                        <p className={"pl-[16px] flex flex-col gap-[12px]"}>
-                            <Span>VariationOption</Span>
-                            <Span>VariationOption</Span>
-                            <Span>VariationOption</Span>
-                            <Span>VariationOption</Span>
-                            <Span>VariationOption</Span>
-                            <Span>VariationOption</Span>
-                        </p>
-                    </div>
-                    
-                    
-                    
-                </div>
+                <Filter filtersData={data.filters} maxPrice={data.maxPrice}/>
 
 
                 <div className={"w-3/4 h-screen bg-electron-primary-dark-blue"}>products</div>

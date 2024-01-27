@@ -14,13 +14,7 @@ export const RangeSlider = ({minRange, maxRange}: RangeSliderProps) => {
     const handleChange = (newValues: number[]) => {
         setValues(newValues);
     }
-    const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let temp = parseInt(e.target.value);
-        // if (parseInt(e.target.value) < minRange) {
-        //     temp = minRange;
-        // }
-        setValues([temp, values[1]])
-    }
+
 
     return (
         <>
@@ -63,7 +57,7 @@ export const RangeSlider = ({minRange, maxRange}: RangeSliderProps) => {
                             backgroundColor: '#ffffff',
                             borderRadius: '50%',
                             border: '2px solid #0e1120',
-                            cursor: 'grab',
+                            cursor: 'inherit',
                         }}
                     />
                 )}

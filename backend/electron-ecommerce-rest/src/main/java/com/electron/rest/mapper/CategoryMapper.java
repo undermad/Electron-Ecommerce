@@ -6,9 +6,7 @@ import com.electron.rest.entity.product.Category;
 import com.electron.rest.entity.product.VariationOption;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -32,11 +30,26 @@ public class CategoryMapper {
             variations.put(variationName, variationValues);
         });
 
-        List<ProductDto> productDtos = category.getProductItems()
+        List<ProductDto> productsDto = category.getProductItems()
                 .stream()
                 .map(productMapper::mapProductItemToProductDto)
                 .collect(Collectors.toList());
 
-        return new CategoryResponse(category.getName(), variations, productDtos);
+        double maxPrice = 2000D;
+        Optional<ProductDto> productWithHighestPrice = productsDto
+                .stream()
+                .max(Comparator.comparingDouble(p -> p.getPrice().doubleValue()));
+        if (productWithHighestPrice.isPresent())
+            maxPrice = productWithHighestPrice.get().getPrice().doubleValue();
+
+        maxPrice = ((Math.ceil(maxPrice / 10)) * 10);
+
+
+        return CategoryResponse.builder()
+                .name(category.getName())
+                .filters(variations)
+                .productDto(productsDto)
+                .maxPrice(maxPrice)
+                .build();
     }
 }

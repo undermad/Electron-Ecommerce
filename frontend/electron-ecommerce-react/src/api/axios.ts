@@ -16,6 +16,8 @@ export const REGISTRATION_API_PATH = "/registration"
 export const REGISTER_API_PATH = "/register";
 export const ACTIVATE_API_PATH = "/activate";
 
+export const CATEGORY_API_PATH = "/category";
+
 
 export const axiosAuth = axios.create({
     baseURL: BASE_API_URL + AUTH_API_PATH,
@@ -37,6 +39,12 @@ export const axiosPrivate = axios.create({
     timeout: 10000,
     withCredentials: true,
 });
+
+export const axiosCategory = axios.create({
+    baseURL: BASE_API_URL + CATEGORY_API_PATH,
+    headers: {'Content-Type': 'application/json'},
+    timeout: 10000,
+})
 
 
 
