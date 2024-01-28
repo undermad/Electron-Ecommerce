@@ -16,6 +16,7 @@ export const ProductList = ({category}: ProductListProps) => {
                 console.log(error);
             })
 
+
     },[])
 
     return (

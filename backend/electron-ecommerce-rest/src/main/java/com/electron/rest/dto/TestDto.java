@@ -1,11 +1,14 @@
 package com.electron.rest.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 import java.util.Map;
 
-@Data
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 public class TestDto {
     private Map<String, List<String>> filters;
 }

@@ -57,7 +57,7 @@ public class ProductItemWithFilterRepository {
         int counter = 0;
         for (Map.Entry<String, List<String>> entry : filters.entrySet()) {
             String vName = entry.getKey();
-            sb.append(" (v.name = 'Brand' AND vo.value IN (");
+            sb.append(" (v.name = '").append(vName).append("' AND vo.value IN (");
             List<String> values = filters.get(vName);
             for (int i = 0; i < values.size(); i++) {
                 sb.append("'")
@@ -73,19 +73,15 @@ public class ProductItemWithFilterRepository {
             }
             counter++;
         }
-        sb.append(" AND (pi.category_id = ")
-                .append(categoryId)
-                .append(") ")
+        sb.append(" AND (pi.category_id = ").append(categoryId).append(") ")
                 .append("GROUP BY pi.id ")
-                .append("HAVING COUNT(DISTINCT v.name) = ")
-                .append(filters.size())
-                .append(";");
+                .append("HAVING COUNT(DISTINCT v.name) = ").append(filters.size()).append(";");
 
         Query query = entityManager.createNativeQuery(sb.toString());
         List<Object[]> result = query.getResultList();
 
         result.forEach(record -> {
-            for(int i = 0; i<record.length; i++){
+            for (int i = 0; i < record.length; i++) {
                 System.out.println(record[i]);
             }
         });

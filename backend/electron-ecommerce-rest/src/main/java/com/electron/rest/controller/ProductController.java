@@ -33,13 +33,9 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductsByFilter(variations, category, pageNo));
     }
 
-    @GetMapping("/test")
+    @PostMapping("/test")
     public ResponseEntity<String > getProducts(@RequestBody TestDto test){
-
-        Map<String, List<String>> map = new HashMap<>();
-        List<String> brands = List.of("CORSAIR", "KINGSTON");
-        map.put("Brand", brands);
-        productService.getProducts(map, 1L);
+        productService.getProducts(test.getFilters(), 1L);
         return ResponseEntity.ok("Ok");
     }
 

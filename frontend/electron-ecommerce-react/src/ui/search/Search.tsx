@@ -26,6 +26,7 @@ export const Search = () => {
             .catch(error => {
                 console.log(error);
             })
+
     }, [category])
 
 

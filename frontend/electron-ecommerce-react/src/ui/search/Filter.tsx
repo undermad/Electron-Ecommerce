@@ -7,6 +7,26 @@ import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 
+// {
+//     "filters":{
+//
+//     "Brand": [
+//         "CORSAIR",
+//         "KINGSTON"
+//     ],
+//         "Module type": [
+//         "DDR4",
+//         "DDR5"
+//     ],
+//         "Memory capacity": [
+//         "8 GB",
+//         "16 GB",
+//         "32 GB",
+//         "64 GB"
+//     ]
+// }
+// }
+
 type FilterProps = {
     filters: { [key: string]: string[] },
     maxPrice: number,
