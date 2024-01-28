@@ -23,7 +23,7 @@ public class ProductMapper {
                         .map(VariationOption::getValue)
                         .collect(Collectors.toList()))
                 .build();
-
     }
+
 
 }

@@ -4,16 +4,20 @@ import com.electron.rest.dto.PageableResponse;
 import com.electron.rest.dto.product.ProductResponse;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.CategoryProjection;
+import com.electron.rest.entity.projections.ProductItemProjection;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
 import com.electron.rest.repository.product.CategoryRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
+import com.electron.rest.repository.product.ProductItemWithFilterRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.electron.rest.constants.ErrorMessages.CATEGORY_NOT_FOUND;
@@ -25,10 +29,13 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductItemRepository productItemRepository, CategoryRepository categoryRepository, ProductMapper productMapper) {
+    private final ProductItemWithFilterRepository productItemWithFilterRepository;
+
+    public ProductServiceImpl(ProductItemRepository productItemRepository, CategoryRepository categoryRepository, ProductMapper productMapper, ProductItemWithFilterRepository productItemWithFilterRepository) {
         this.productItemRepository = productItemRepository;
         this.categoryRepository = categoryRepository;
         this.productMapper = productMapper;
+        this.productItemWithFilterRepository = productItemWithFilterRepository;
     }
 
 
@@ -63,4 +70,13 @@ public class ProductServiceImpl implements ProductService {
                 .content(productsList)
                 .build();
     }
+
+    @Override
+    public List<Object[]> getProducts(Map<String, List<String>> filters, Long categoryId) {
+        List<Object[]> result = productItemWithFilterRepository.findProductByFilters(filters, categoryId);
+
+        return result;
+    }
+
+
 }

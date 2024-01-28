@@ -4,6 +4,7 @@ import {Filter} from "./Filter.tsx";
 import {useEffect, useState} from "react";
 import {axiosCategory} from "../../api/axios.ts";
 import {CategoryResponse} from "../../api/dto/CategoryResponse.ts";
+import {ProductList} from "./ProductList.tsx";
 
 
 export const Search = () => {
@@ -34,7 +35,7 @@ export const Search = () => {
             <div className={"flex gap-[42px] w-full mt-[24px]"}>
                 <Filter maxPrice={data.maxPrice} filters={data.filters}/>
 
-                <div className={"w-3/4 h-screen bg-electron-primary-dark-blue"}>products</div>
+                <ProductList category={category}/>
             </div>
         </Container>
     )

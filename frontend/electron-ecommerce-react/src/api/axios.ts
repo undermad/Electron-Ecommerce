@@ -18,6 +18,7 @@ export const ACTIVATE_API_PATH = "/activate";
 
 export const CATEGORY_API_PATH = "/category";
 
+export const PRODUCT_CATEGORY_PATH = "/product";
 
 export const axiosAuth = axios.create({
     baseURL: BASE_API_URL + AUTH_API_PATH,
@@ -42,6 +43,12 @@ export const axiosPrivate = axios.create({
 
 export const axiosCategory = axios.create({
     baseURL: BASE_API_URL + CATEGORY_API_PATH,
+    headers: {'Content-Type': 'application/json'},
+    timeout: 10000,
+})
+
+export const axiosBase = axios.create({
+    baseURL: BASE_API_URL,
     headers: {'Content-Type': 'application/json'},
     timeout: 10000,
 })

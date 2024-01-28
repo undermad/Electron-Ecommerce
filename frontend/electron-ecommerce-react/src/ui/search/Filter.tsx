@@ -2,14 +2,14 @@ import {Header3} from "../reusable/Header3.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
 import {RangeSlider} from "../reusable/RangeSlider.tsx";
 import {Span} from "../reusable/Span.tsx";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 
 type FilterProps = {
     filters: { [key: string]: string[] },
-    maxPrice: number
+    maxPrice: number,
 }
 
 type RequiredFilters = {
@@ -32,6 +32,10 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
 
         console.log(requiredFilters);
     };
+
+    useEffect(() => {
+        setRequiredFilters({filters: []})
+    }, [])
 
 
     return (
