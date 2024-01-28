@@ -1,6 +1,7 @@
 type LabelCheckboxHolderProps = {
     children: React.ReactNode,
-    tailwind?: string
+    tailwind?: string,
+    key?: number
 }
 
 export const LabelCheckboxHolder = ({children, tailwind}: LabelCheckboxHolderProps) => {

@@ -13,7 +13,6 @@ export const Search = () => {
         name: '',
         filters: {},
         maxPrice: 1,
-        productDto: []
     });
 
 
@@ -33,9 +32,7 @@ export const Search = () => {
 
         <Container>
             <div className={"flex gap-[42px] w-full mt-[24px]"}>
-
-                <Filter filtersData={data.filters} maxPrice={data.maxPrice}/>
-
+                <Filter maxPrice={data.maxPrice} filters={data.filters}/>
 
                 <div className={"w-3/4 h-screen bg-electron-primary-dark-blue"}>products</div>
             </div>

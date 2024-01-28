@@ -1,14 +1,14 @@
 package com.electron.rest.dto.product;
 
-import lombok.Builder;
+import lombok.*;
 
 import java.util.List;
 import java.util.Map;
 
 @Builder
-public record CategoryResponse(
-        String name,
-        Map<String, List<String>> filters,
-        Double maxPrice,
-        List<ProductDto> productDto
-){}
+@Data
+public final class CategoryResponse {
+    private String name;
+    private Map<String, List<String>> filters;
+    private Double maxPrice;
+}

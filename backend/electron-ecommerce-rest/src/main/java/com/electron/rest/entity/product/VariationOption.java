@@ -22,6 +22,6 @@ public class VariationOption {
     Variation variation;
 
     @ManyToMany(mappedBy = "variationOptions", fetch = FetchType.LAZY)
-    Set<ProductItem> productItems;
+    Set<ProductItem> products;
 
 }

@@ -21,5 +21,8 @@ public class EndpointsPaths {
     // Category
     public static final String API_V1_CATEGORY = "/api/v1/category";
 
+    // API_V1_PRODUCT
+    public static final String API_V1_PRODUCT = "/api/v1/product";
+
 
 }

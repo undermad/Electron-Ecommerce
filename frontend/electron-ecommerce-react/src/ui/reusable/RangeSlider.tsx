@@ -1,5 +1,5 @@
 import {Range} from "react-range";
-import React, {useState} from "react";
+import {useEffect, useState} from "react";
 
 type RangeSliderProps = {
     minRange: number,
@@ -15,6 +15,13 @@ export const RangeSlider = ({minRange, maxRange}: RangeSliderProps) => {
         setValues(newValues);
     }
 
+    const setInnerWidth = () => {
+        return ((values[1] - values[0]) / (maxRange - minRange)) * 100
+    }
+
+    useEffect(() => {
+        setValues([minRange, maxRange])
+    }, [maxRange])
 
     return (
         <>
@@ -39,7 +46,7 @@ export const RangeSlider = ({minRange, maxRange}: RangeSliderProps) => {
                             style={{
                                 position: 'absolute',
                                 height: '6px',
-                                width: `${((values[1] - values[0]) / (maxRange - minRange)) * 100}%`,
+                                width: `${setInnerWidth()}%`,
                                 backgroundColor: '#0e1120',
                                 left: `${((values[0] - minRange) / (maxRange - minRange)) * 100}%`,
                             }}

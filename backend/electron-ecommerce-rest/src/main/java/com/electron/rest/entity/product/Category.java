@@ -22,7 +22,7 @@ public class Category {
     private Category parentCategory;
 
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
-    private List<ProductItem> productItems;
+    private List<ProductItem> products;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Variation> variations;
