@@ -25,12 +25,10 @@ export const ExpandingButton = (props: ExpandingButtonProps) => {
 
     const expand = () => {
         setIsExpanded(!isExpanded);
-        console.log(isExpanded);
     }
 
     const handleClickOutside = (event: MouseEvent) => {
         if (buttonRef.current && !buttonRef.current?.contains(event.target as Node)) {
-            console.log(event.target)
             setIsExpanded(false);
         }
     }

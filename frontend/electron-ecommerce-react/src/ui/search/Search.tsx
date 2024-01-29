@@ -12,22 +12,25 @@ export const Search = () => {
     const category = param.category;
     const [data, setData] = useState<CategoryResponse>({
         name: '',
-        filters: {},
+        filters: new Map<string, string[]>,
         maxPrice: 1,
     });
-
 
     useEffect(() => {
         axiosCategory.get(`/${category}`)
             .then(response => {
                 setData({...response.data})
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.log(error);
             })
 
+
     }, [category])
+
+
+    useEffect(() => {
+        console.log(data)
+    }, [data]);
+
+
 
 
     return (
@@ -36,7 +39,7 @@ export const Search = () => {
             <div className={"flex gap-[42px] w-full mt-[24px]"}>
                 <Filter maxPrice={data.maxPrice} filters={data.filters}/>
 
-                <ProductList category={category}/>
+                <ProductList/>
             </div>
         </Container>
     )

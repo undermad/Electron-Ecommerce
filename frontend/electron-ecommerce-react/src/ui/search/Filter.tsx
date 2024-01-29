@@ -2,10 +2,10 @@ import {Header3} from "../reusable/Header3.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
 import {RangeSlider} from "../reusable/RangeSlider.tsx";
 import {Span} from "../reusable/Span.tsx";
-import {ChangeEvent, useEffect, useState} from "react";
 import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
+import {ChangeEvent, useEffect, useState} from "react";
 
 // {
 //     "filters":{
@@ -28,35 +28,27 @@ import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 // }
 
 type FilterProps = {
-    filters: { [key: string]: string[] },
+    filters: Map<string, string[]>,
     maxPrice: number,
 }
 
-type RequiredFilters = {
-    filters: string[],
-}
 
 export const Filter = ({filters, maxPrice}: FilterProps) => {
 
-    const [requiredFilters, setRequiredFilters] = useState<RequiredFilters>({filters: []});
+    const [requiredFilters, setRequiredFilters] = useState<Map<string, string[]>>(new Map<string, string[]>);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const filter = e.target.name;
-        setRequiredFilters((prevFilter) => {
-            if (prevFilter.filters.includes(filter)) {
-                return {filters: prevFilter.filters.filter((f) => f !== filter)};
-            } else {
-                return {filters: [...prevFilter.filters, filter]};
-            }
-        })
 
-        console.log(requiredFilters);
     };
 
     useEffect(() => {
-        setRequiredFilters({filters: []})
-    }, [])
-
+        const newVariations = new Map<string, string[]>;
+        Object.entries(filters).forEach(([key]) => {
+            newVariations.set(key, []);
+        })
+        setRequiredFilters(newVariations);
+        console.log(requiredFilters);
+    }, [filters]);
 
     return (
         <div className={"w-1/4 flex flex-col gap-[24px]"}>
