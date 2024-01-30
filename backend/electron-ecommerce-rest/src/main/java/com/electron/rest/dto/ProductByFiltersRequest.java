@@ -9,6 +9,9 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-public class TestDto {
+public class ProductByFiltersRequest {
     private Map<String, List<String>> filters;
+    private Integer minPrice;
+    private Integer maxPrice;
+    private String category;
 }

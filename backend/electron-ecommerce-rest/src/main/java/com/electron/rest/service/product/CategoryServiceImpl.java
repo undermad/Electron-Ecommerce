@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException(CATEGORY_NOT_FOUND));
         CategoryResponse categoryResponse = categoryMapper.mapCategoryToCategoryResponse(category);
         Optional<ProductItemProjection> expensiveItemAsOptional = productItemRepository
-                .findCheapestProductByCategoryId(category.getId());
+                .findMostExpensiveProductByCategoryId(category.getId());
         expensiveItemAsOptional.ifPresent(productItemProjection -> categoryResponse
                 .setMaxPrice(
                         Math.ceil(productItemProjection.getPrice().doubleValue() / 10) * 10

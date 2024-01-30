@@ -21,23 +21,13 @@ export const Search = () => {
             .then(response => {
                 setData({...response.data})
             })
-
-
     }, [category])
-
-
-    useEffect(() => {
-        console.log(data)
-    }, [data]);
-
-
-
 
     return (
 
         <Container>
             <div className={"flex gap-[42px] w-full mt-[24px]"}>
-                <Filter maxPrice={data.maxPrice} filters={data.filters}/>
+                <Filter maxPrice={data.maxPrice} filters={data.filters} category={category}/>
 
                 <ProductList/>
             </div>

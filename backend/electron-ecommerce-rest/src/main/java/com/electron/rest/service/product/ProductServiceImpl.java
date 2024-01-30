@@ -1,10 +1,10 @@
 package com.electron.rest.service.product;
 
 import com.electron.rest.dto.PageableResponse;
+import com.electron.rest.dto.ProductByFiltersRequest;
 import com.electron.rest.dto.product.ProductResponse;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.CategoryProjection;
-import com.electron.rest.entity.projections.ProductItemProjection;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
 import com.electron.rest.repository.product.CategoryRepository;
@@ -15,10 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.electron.rest.constants.ErrorMessages.CATEGORY_NOT_FOUND;
 
@@ -40,26 +39,19 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public PageableResponse<ProductResponse> getProductsByFilter(List<String> variations, String category, int pageNo) {
+    public PageableResponse<ProductResponse> getProductsByCategory(String category, int pageNo) {
 
         Optional<CategoryProjection> categoryProjectionAsOptional = categoryRepository.findCategoryIdByName(category);
         if (categoryProjectionAsOptional.isEmpty()) throw new ResourceNotFoundException(CATEGORY_NOT_FOUND);
         Long categoryId = categoryProjectionAsOptional.get().getId();
         Pageable pageable = PageRequest.of(pageNo, 25);
 
-        Page<ProductItem> productItems;
-        if (variations != null) {
-            productItems = productItemRepository
-                    .findByAllVariationsAndCategory(variations, (long) variations.size(), categoryId, pageable);
-        } else {
-            productItems = productItemRepository.findByCategory_Id(categoryId, pageable);
-        }
+        Page<ProductItem> productItems = productItemRepository.findByCategory_Id(categoryId, pageable);
 
         List<ProductResponse> productsList = productItems
                 .stream()
                 .map(productMapper::mapProductItemToProductResponse)
                 .toList();
-
 
         return PageableResponse.<ProductResponse>builder()
                 .resourceName(category)
@@ -72,10 +64,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Object[]> getProducts(Map<String, List<String>> filters, Long categoryId) {
-        List<Object[]> result = productItemWithFilterRepository.findProductByFilters(filters, categoryId);
+    public List<ProductResponse> getProductsByFilters(ProductByFiltersRequest productByFiltersRequest) {
+        Optional<CategoryProjection> categoryProjectionAsOptional = categoryRepository.findCategoryIdByName(productByFiltersRequest.getCategory());
+        if (categoryProjectionAsOptional.isEmpty()) throw new ResourceNotFoundException(CATEGORY_NOT_FOUND);
+        Long categoryId = categoryProjectionAsOptional.get().getId();
 
-        return result;
+        List<Object[]> result = productItemWithFilterRepository.findProductByFilters(
+                productByFiltersRequest.getFilters(),
+                categoryId,
+                productByFiltersRequest.getMinPrice(),
+                productByFiltersRequest.getMaxPrice());
+        List<ProductResponse> productResponseList = result
+                .stream()
+                .map(productMapper::mapRawObjectToProductResponse)
+                .toList();
+
+
+        return productResponseList;
     }
 
 

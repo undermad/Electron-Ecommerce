@@ -20,6 +20,8 @@ export const CATEGORY_API_PATH = "/category";
 
 export const PRODUCT_CATEGORY_PATH = "/product";
 
+export const PRODUCT_WITH_FILTERS_API_PATH = "/product/test"
+
 export const axiosAuth = axios.create({
     baseURL: BASE_API_URL + AUTH_API_PATH,
     headers: {'Content-Type': 'application/json'},

@@ -19,23 +19,7 @@ public class ProductItemWithFilterRepository {
         this.productMapper = productMapper;
     }
 
-
-//    SELECT DISTINCT pi.*
-//    FROM product_item pi
-//    JOIN product_configuration pc
-//    ON pi.id = pc.product_item_id
-//    JOIN variation_option vo
-//    ON pc.variation_option_id = vo.id
-//    JOIN variation v
-//    ON v.category_id = 1
-//    WHERE (v.name = 'Brand' AND vo.value IN ('CORSAIR', 'KINGSTON'))
-//    OR (v.name = 'Module type' AND vo.value IN ('DDR4'))
-//    AND (pi.category_id = 1)
-//    GROUP BY pi.id
-//    HAVING COUNT(DISTINCT v.name) = 2;
-
-
-    public List<Object[]> findProductByFilters(Map<String, List<String>> filters, Long categoryId) {
+    public List<Object[]> findProductByFilters(Map<String, List<String>> filters, Long categoryId, int minPrice, int maxPrice) {
         StringBuilder sb = new StringBuilder("""
                 SELECT DISTINCT 
                            pi.id as id,
@@ -57,8 +41,9 @@ public class ProductItemWithFilterRepository {
         int counter = 0;
         for (Map.Entry<String, List<String>> entry : filters.entrySet()) {
             String vName = entry.getKey();
-            sb.append(" (v.name = '").append(vName).append("' AND vo.value IN (");
             List<String> values = filters.get(vName);
+            if (values.isEmpty()) continue;
+            sb.append(" (v.name = '").append(vName).append("' AND vo.value IN (");
             for (int i = 0; i < values.size(); i++) {
                 sb.append("'")
                         .append(values.get(i))
@@ -74,18 +59,13 @@ public class ProductItemWithFilterRepository {
             counter++;
         }
         sb.append(" AND (pi.category_id = ").append(categoryId).append(") ")
+                .append(" AND (pi.price < ").append(maxPrice).append(") ")
+                .append(" AND (pi.price > ").append(minPrice).append(") ")
                 .append("GROUP BY pi.id ")
                 .append("HAVING COUNT(DISTINCT v.name) = ").append(filters.size()).append(";");
 
         Query query = entityManager.createNativeQuery(sb.toString());
-        List<Object[]> result = query.getResultList();
-
-        result.forEach(record -> {
-            for (int i = 0; i < record.length; i++) {
-                System.out.println(record[i]);
-            }
-        });
-        return result;
+        return query.getResultList();
     }
 
 }

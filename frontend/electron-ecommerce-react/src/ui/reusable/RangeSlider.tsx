@@ -4,14 +4,16 @@ import {useEffect, useState} from "react";
 type RangeSliderProps = {
     minRange: number,
     maxRange: number,
+    callback: (newValues: number[]) => void;
 
 }
 
-export const RangeSlider = ({minRange, maxRange}: RangeSliderProps) => {
+export const RangeSlider = ({minRange, maxRange, callback}: RangeSliderProps) => {
 
     const [values, setValues] = useState([minRange, maxRange]);
 
     const handleChange = (newValues: number[]) => {
+        callback(newValues);
         setValues(newValues);
     }
 
