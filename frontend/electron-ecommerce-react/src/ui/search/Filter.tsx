@@ -38,6 +38,22 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
     const [requiredFilters, setRequiredFilters] = useState<Map<string, string[]>>(new Map<string, string[]>);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        Object.entries(filters).forEach(([key, value]) => {
+            value.forEach((val: string) => {
+                if (e.target.name === val) {
+                    const arr = requiredFilters.get(key);
+                    if (arr && e.target.checked) arr.push(val);
+                    if (arr && !e.target.checked) {
+                        const idx = arr.indexOf(val);
+                        if(idx !== -1) arr.splice(idx, 1);
+                    }
+                    console.log(arr)
+                    console.log(requiredFilters)
+
+                }
+            })
+        })
+
 
     };
 
@@ -48,6 +64,7 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
         })
         setRequiredFilters(newVariations);
         console.log(requiredFilters);
+        console.log(filters)
     }, [filters]);
 
     return (
@@ -66,7 +83,7 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
                 <div key={filterName} className={"flex flex-col gap-[16px]"}>
                     <Span>{filterName}</Span>
                     <div className={"pl-[16px] flex flex-col gap-[12px]"}>
-                        {filterValues.map((value, key) => (
+                        {filterValues.map((value: string, key: number) => (
                             <LabelCheckboxHolder key={key}>
                                 <CheckboxInput
                                     type={"checkbox"}
