@@ -69,18 +69,23 @@ public class ProductServiceImpl implements ProductService {
         if (categoryProjectionAsOptional.isEmpty()) throw new ResourceNotFoundException(CATEGORY_NOT_FOUND);
         Long categoryId = categoryProjectionAsOptional.get().getId();
 
+        List<Object[]> count = productItemWithFilterRepository.findProductByFilters(
+                productByFiltersRequest.getFilters(),
+                categoryId,
+                productByFiltersRequest.getMinPrice(),
+                productByFiltersRequest.getMaxPrice(),
+                true);
+
         List<Object[]> result = productItemWithFilterRepository.findProductByFilters(
                 productByFiltersRequest.getFilters(),
                 categoryId,
                 productByFiltersRequest.getMinPrice(),
-                productByFiltersRequest.getMaxPrice());
-        List<ProductResponse> productResponseList = result
+                productByFiltersRequest.getMaxPrice(),
+                false);
+        return result
                 .stream()
                 .map(productMapper::mapRawObjectToProductResponse)
                 .toList();
-
-
-        return productResponseList;
     }
 
 

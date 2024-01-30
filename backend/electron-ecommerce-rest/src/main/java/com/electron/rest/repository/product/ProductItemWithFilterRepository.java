@@ -14,21 +14,31 @@ public class ProductItemWithFilterRepository {
     private EntityManager entityManager;
     private ProductMapper productMapper;
 
-    public ProductItemWithFilterRepository(EntityManager entityManager, ProductMapper productMapper) {
-        this.entityManager = entityManager;
-        this.productMapper = productMapper;
-    }
-
-    public List<Object[]> findProductByFilters(Map<String, List<String>> filters, Long categoryId, int minPrice, int maxPrice) {
-        StringBuilder sb = new StringBuilder("""
-                SELECT DISTINCT 
+    private String queryObjectSelect = """
+            SELECT DISTINCT 
                            pi.id as id,
                            pi.name as name,
                            pi.description as description,
                            pi.price as price,
                            pi.sku as sku,
                            pi.img_url as imgUrl,
-                           pi.stock_quantity as stockQuantity
+                           pi.stock_quantity as stockQuantity """;
+
+    private String queryCountSelect = "SELECT COUNT(*) ";
+
+
+    public ProductItemWithFilterRepository(EntityManager entityManager, ProductMapper productMapper) {
+        this.entityManager = entityManager;
+        this.productMapper = productMapper;
+    }
+
+    public List<Object[]> findProductByFilters(Map<String, List<String>> filters, Long categoryId, int minPrice, int maxPrice, boolean isCountingQuery) {
+        StringBuilder sb = new StringBuilder();
+        if (isCountingQuery) sb.append(queryCountSelect);
+        else sb.append(queryObjectSelect);
+
+
+        sb.append("""
                     FROM product_item pi
                     JOIN product_configuration pc
                     ON pi.id = pc.product_item_id
@@ -60,9 +70,13 @@ public class ProductItemWithFilterRepository {
         }
         sb.append(" AND (pi.category_id = ").append(categoryId).append(") ")
                 .append(" AND (pi.price < ").append(maxPrice).append(") ")
-                .append(" AND (pi.price > ").append(minPrice).append(") ")
-                .append("GROUP BY pi.id ")
-                .append("HAVING COUNT(DISTINCT v.name) = ").append(filters.size()).append(";");
+                .append(" AND (pi.price > ").append(minPrice).append(") ");
+        if (isCountingQuery) {
+            sb.append(";");
+        } else {
+            sb.append("GROUP BY pi.id ")
+                    .append("HAVING COUNT(DISTINCT v.name) = ").append(filters.size()).append(";");
+        }
 
         Query query = entityManager.createNativeQuery(sb.toString());
         return query.getResultList();
