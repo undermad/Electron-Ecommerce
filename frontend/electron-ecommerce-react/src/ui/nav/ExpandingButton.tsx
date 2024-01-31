@@ -2,7 +2,7 @@ import {ArrowDown} from "../../assets/icons/ArrowDown.tsx";
 import {CrossSvg} from '../../assets/icons/CrossSvg.tsx';
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
-import {ReactNode, useEffect, useRef, useState} from "react";
+import React, {ReactNode, useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import {ExpandingListItem} from "./ExpandingListItem.tsx";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";

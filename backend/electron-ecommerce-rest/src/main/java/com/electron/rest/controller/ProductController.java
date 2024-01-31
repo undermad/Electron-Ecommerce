@@ -31,8 +31,9 @@ public class ProductController {
     }
 
     @PostMapping("/test")
-    public ResponseEntity<List<ProductResponse>> getProducts(@RequestBody ProductByFiltersRequest test){
-        return ResponseEntity.ok(productService.getProductsByFilters(test));
+    public ResponseEntity<PageableResponse<ProductResponse>> getProducts(@RequestBody ProductByFiltersRequest test,
+                                                             @RequestParam(defaultValue = "0") Integer pageNo){
+        return ResponseEntity.ok(productService.getProductsByFilters(test, pageNo));
     }
 
 }

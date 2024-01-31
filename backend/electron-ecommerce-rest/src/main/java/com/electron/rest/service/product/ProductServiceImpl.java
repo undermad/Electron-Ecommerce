@@ -5,11 +5,13 @@ import com.electron.rest.dto.ProductByFiltersRequest;
 import com.electron.rest.dto.product.ProductResponse;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.CategoryProjection;
+import com.electron.rest.exception.InvalidInputException;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
 import com.electron.rest.repository.product.CategoryRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
 import com.electron.rest.repository.product.ProductItemWithFilterRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -64,28 +66,33 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponse> getProductsByFilters(ProductByFiltersRequest productByFiltersRequest) {
+    public PageableResponse<ProductResponse> getProductsByFilters(ProductByFiltersRequest productByFiltersRequest, Integer pageNo) {
         Optional<CategoryProjection> categoryProjectionAsOptional = categoryRepository.findCategoryIdByName(productByFiltersRequest.getCategory());
         if (categoryProjectionAsOptional.isEmpty()) throw new ResourceNotFoundException(CATEGORY_NOT_FOUND);
         Long categoryId = categoryProjectionAsOptional.get().getId();
 
-        List<Object[]> count = productItemWithFilterRepository.findProductByFilters(
+        List<Object[]> totalElementsResult = productItemWithFilterRepository.countRecords(productByFiltersRequest.getFilters(), categoryId, productByFiltersRequest.getMinPrice(), productByFiltersRequest.getMaxPrice());
+        Long totalElements = (Long) totalElementsResult.getFirst()[0];
+        if (pageNo * 10 == totalElements && totalElements != 0) throw new InvalidInputException("Page doesn't exist.");
+        List<Object[]> rawResult = productItemWithFilterRepository.findProductByFilters(
                 productByFiltersRequest.getFilters(),
                 categoryId,
                 productByFiltersRequest.getMinPrice(),
                 productByFiltersRequest.getMaxPrice(),
-                true);
+                pageNo);
 
-        List<Object[]> result = productItemWithFilterRepository.findProductByFilters(
-                productByFiltersRequest.getFilters(),
-                categoryId,
-                productByFiltersRequest.getMinPrice(),
-                productByFiltersRequest.getMaxPrice(),
-                false);
-        return result
-                .stream()
-                .map(productMapper::mapRawObjectToProductResponse)
-                .toList();
+        return PageableResponse.<ProductResponse>builder()
+                .content(rawResult
+                        .stream()
+                        .map(productMapper::mapRawObjectToProductResponse)
+                        .toList())
+                .pageNo(pageNo)
+                .pageSize(10)
+                .totalElements(totalElements)
+                .resourceName(productByFiltersRequest.getCategory() + " with filters")
+                .totalPages((int) (totalElements / 10))
+                .build();
+
     }
 
 

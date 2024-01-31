@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ProductService {
     PageableResponse<ProductResponse> getProductsByCategory(String category, int pageNo);
-    List<ProductResponse> getProductsByFilters(ProductByFiltersRequest productByFiltersRequest);
+    PageableResponse<ProductResponse> getProductsByFilters(ProductByFiltersRequest productByFiltersRequest, Integer pageNo);
 }
