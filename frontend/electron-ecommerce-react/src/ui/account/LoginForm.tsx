@@ -2,7 +2,7 @@ import React, {SyntheticEvent, useRef, useState} from "react";
 import {useAuth} from "../../custom_hooks/useAuth.ts";
 import {useNavigate, useLocation, Link} from "react-router-dom";
 import {FORGOT_PASSWORD, HOME_ROUTE, REGISTER_ROUTE} from "../../constants/Routes.ts";
-import {LoginResponse} from "../../api/dto/LoginResponse.ts";
+import {LoginResponse} from "../../api/dto/auth/LoginResponse.ts";
 import {axiosAuth, LOGIN_API_PATH} from "../../api/axios.ts";
 import {AxiosResponse} from "axios";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
@@ -17,7 +17,7 @@ import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
 import {SpanWeightSix} from "../reusable/SpanWeightSix.tsx";
 import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
 import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
-import {LoginRequest, LoginRequestError} from "../../api/dto/LoginRequest.ts";
+import {LoginRequest, LoginRequestError} from "../../api/dto/auth/LoginRequest.ts";
 
 export const LoginForm = () => {
     const auth = useAuth();

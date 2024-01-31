@@ -5,9 +5,10 @@ import {Span} from "../reusable/Span.tsx";
 import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useContext, useEffect, useState} from "react";
 import {axiosBase, PRODUCT_CATEGORY_PATH, PRODUCT_WITH_FILTERS_API_PATH} from "../../api/axios.ts";
-import {ProductWithFilterRequest} from "../../api/dto/ProductWithFilterRequest.ts";
+import {ProductWithFilterRequest} from "../../api/dto/product/ProductWithFilterRequest.ts";
+import {ProductListContext} from "../../context/ProductListContext.tsx";
 
 type FilterProps = {
     filters: Map<string, string[]>,
@@ -16,6 +17,8 @@ type FilterProps = {
 }
 
 export const Filter = ({filters, maxPrice, category}: FilterProps) => {
+
+    const productList = useContext(ProductListContext);
 
     const [requiredFilters, setRequiredFilters] = useState<Map<string, string[]>>(new Map<string, string[]>);
     const [priceValues, setPriceValues] = useState([0, maxPrice]);
@@ -41,7 +44,7 @@ export const Filter = ({filters, maxPrice, category}: FilterProps) => {
         setPriceValues(newValues);
     }
 
-    const fetchData = () => {
+    const fetchData = async () => {
         const filtersAsJson: { [key: string]: string[] } = {};
         requiredFilters.forEach((value, key) => {
             if (value.length !== 0) {
@@ -55,17 +58,19 @@ export const Filter = ({filters, maxPrice, category}: FilterProps) => {
             category: category,
         }
         if (Object.keys(filtersAsJson).length === 0) {
-            axiosBase.get(PRODUCT_CATEGORY_PATH + `?category=${category}`)
+            await axiosBase.get(PRODUCT_CATEGORY_PATH + `?category=${category}`)
                 .then(result => {
-                    console.log(result);
+                    productList?.setProductList({...result.data});
+                    console.log(result.data);
                 })
                 .catch(error => {
                     console.log(error);
                 })
         } else {
-            axiosBase.post(PRODUCT_WITH_FILTERS_API_PATH, requestData)
-                .then(res => {
-                    console.log(res);
+            await axiosBase.post(PRODUCT_WITH_FILTERS_API_PATH, requestData)
+                .then(result => {
+                    productList?.setProductList({...result.data});
+                    console.log(result.data);
                 })
                 .catch(error => {
                     console.log(error);

@@ -7,21 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
 public class ProductItemWithFilterRepository {
 
     private final EntityManager entityManager;
-    private final String fromTables = """
-                FROM product_item pi
-                JOIN product_configuration pc
-                ON pi.id = pc.product_item_id
-                JOIN variation_option vo
-                ON pc.variation_option_id = vo.id
-                JOIN variation v
-                ON v.category_id =
-            """;
 
 
     public ProductItemWithFilterRepository(EntityManager entityManager, ProductMapper productMapper) {
@@ -31,10 +21,10 @@ public class ProductItemWithFilterRepository {
     public List<Object[]> findProductByFilters(Map<String, List<String>> filters,
                                                Long categoryId,
                                                int minPrice,
-                                               int maxPrice,
-                                               Integer pageNo) {
+                                               int maxPrice) {
 
-        String queryObjectSelect = """
+        StringBuilder sb = new StringBuilder();
+        sb.append("""
                 SELECT DISTINCT\s
                                pi.id as id,
                                pi.name as name,
@@ -42,30 +32,34 @@ public class ProductItemWithFilterRepository {
                                pi.price as price,
                                pi.sku as sku,
                                pi.img_url as imgUrl,
-                               pi.stock_quantity as stockQuantity\s""";
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(queryObjectSelect);
-        sb.append(fromTables);
+                               pi.stock_quantity as stockQuantity\s""");
+        sb.append("""
+                    FROM product_item pi
+                    JOIN product_configuration pc
+                    ON pi.id = pc.product_item_id
+                    JOIN variation_option vo
+                    ON pc.variation_option_id = vo.id
+                    JOIN variation v
+                    ON v.category_id =
+                """);
         sb.append(categoryId).append("  WHERE ");
         addFilters(filters, sb);
         addCategoryAndPriceRange(categoryId, minPrice, maxPrice, sb);
         sb.append("GROUP BY pi.id ")
                 .append("HAVING COUNT(DISTINCT v.name) = ").append(filters.size())
-                .append(" LIMIT 10 OFFSET ").append(pageNo * 10)
                 .append(";");
 
         Query query = entityManager.createNativeQuery(sb.toString());
         return query.getResultList();
     }
 
-    private static void addCategoryAndPriceRange(Long categoryId, int minPrice, int maxPrice, StringBuilder sb) {
+    private void addCategoryAndPriceRange(Long categoryId, int minPrice, int maxPrice, StringBuilder sb) {
         sb.append(" AND (pi.category_id = ").append(categoryId).append(") ")
                 .append(" AND (pi.price < ").append(maxPrice).append(") ")
                 .append(" AND (pi.price > ").append(minPrice).append(") ");
     }
 
-    private static void addFilters(Map<String, List<String>> filters, StringBuilder sb) {
+    private void addFilters(Map<String, List<String>> filters, StringBuilder sb) {
         int counter = 0;
         for (Map.Entry<String, List<String>> entry : filters.entrySet()) {
             String vName = entry.getKey();
@@ -87,23 +81,5 @@ public class ProductItemWithFilterRepository {
             counter++;
         }
     }
-
-    public List<Object[]> countRecords(Map<String, List<String>> filters,
-                                        Long categoryId,
-                                        int minPrice,
-                                        int maxPrice) {
-        String queryCountSelect = "SELECT COUNT(*) as totalElements, pi.category_id as id ";
-        StringBuilder sb = new StringBuilder();
-        sb.append(queryCountSelect);
-        sb.append(fromTables);
-        sb.append(categoryId).append("  WHERE ");
-        addFilters(filters, sb);
-        addCategoryAndPriceRange(categoryId, minPrice, maxPrice, sb);
-        sb.append(";");
-        Query query = entityManager.createNativeQuery(sb.toString());
-        return query.getResultList();
-
-    }
-
 
 }

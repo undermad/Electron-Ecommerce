@@ -6,7 +6,7 @@ import React, {useRef, useState} from "react";
 import {
     ChangeForgottenPasswordRequest,
     ChangeForgottenPasswordRequestError
-} from "../../api/dto/ChangeForgottenPasswordRequest.ts";
+} from "../../api/dto/auth/ChangeForgottenPasswordRequest.ts";
 import {axiosAuth, CHANGE_FORGOTTEN_PASSWORD_API_PATH} from "../../api/axios.ts";
 import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
 import {TextInput} from "../reusable/TextInput.tsx";

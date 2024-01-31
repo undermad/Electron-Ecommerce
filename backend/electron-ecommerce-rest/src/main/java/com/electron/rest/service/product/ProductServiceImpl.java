@@ -71,26 +71,28 @@ public class ProductServiceImpl implements ProductService {
         if (categoryProjectionAsOptional.isEmpty()) throw new ResourceNotFoundException(CATEGORY_NOT_FOUND);
         Long categoryId = categoryProjectionAsOptional.get().getId();
 
-        List<Object[]> totalElementsResult = productItemWithFilterRepository.countRecords(productByFiltersRequest.getFilters(), categoryId, productByFiltersRequest.getMinPrice(), productByFiltersRequest.getMaxPrice());
-        Long totalElements = (Long) totalElementsResult.getFirst()[0];
-        if (pageNo * 10 == totalElements && totalElements != 0) throw new InvalidInputException("Page doesn't exist.");
         List<Object[]> rawResult = productItemWithFilterRepository.findProductByFilters(
                 productByFiltersRequest.getFilters(),
                 categoryId,
                 productByFiltersRequest.getMinPrice(),
-                productByFiltersRequest.getMaxPrice(),
-                pageNo);
+                productByFiltersRequest.getMaxPrice());
+        int start = pageNo * 10;
+        int end = rawResult.size();
+        if (rawResult.size() >= 10) {
+            end = start + 10;
+        }
+        List<Object[]> subRawResult = rawResult.subList(start, end);
 
         return PageableResponse.<ProductResponse>builder()
-                .content(rawResult
+                .content(subRawResult
                         .stream()
                         .map(productMapper::mapRawObjectToProductResponse)
                         .toList())
                 .pageNo(pageNo)
                 .pageSize(10)
-                .totalElements(totalElements)
+                .totalElements(rawResult.size())
                 .resourceName(productByFiltersRequest.getCategory() + " with filters")
-                .totalPages((int) (totalElements / 10))
+                .totalPages((int) (rawResult.size() / 10))
                 .build();
 
     }

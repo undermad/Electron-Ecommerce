@@ -1,5 +1,5 @@
 import React, {createContext, useState} from "react";
-import {LoginResponse} from "../api/dto/LoginResponse.ts";
+import {LoginResponse} from "../api/dto/auth/LoginResponse.ts";
 
 type AuthContextProps = {
     children: React.ReactNode;

@@ -3,7 +3,7 @@ import {axiosAuth, REFRESH_TOKEN_API_PATH} from "../api/axios.ts";
 import {AxiosResponse} from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import {LOGIN_ROUTE} from "../constants/Routes.ts";
-import {LoginResponse} from "../api/dto/LoginResponse.ts";
+import {LoginResponse} from "../api/dto/auth/LoginResponse.ts";
 
 type useRefreshTokenProps = {
     redirectToLogin: boolean

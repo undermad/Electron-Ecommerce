@@ -3,8 +3,9 @@ import {Container} from "../reusable/Container.tsx";
 import {Filter} from "./Filter.tsx";
 import {useEffect, useState} from "react";
 import {axiosCategory} from "../../api/axios.ts";
-import {CategoryResponse} from "../../api/dto/CategoryResponse.ts";
+import {CategoryResponse} from "../../api/dto/product/CategoryResponse.ts";
 import {ProductList} from "./ProductList.tsx";
+import {ProductListContextProvider} from "../../context/ProductListContext.tsx";
 
 
 export const Search = () => {
@@ -27,9 +28,10 @@ export const Search = () => {
 
         <Container>
             <div className={"flex gap-[42px] w-full mt-[24px]"}>
-                <Filter maxPrice={data.maxPrice} filters={data.filters} category={category}/>
-
-                <ProductList/>
+                <ProductListContextProvider>
+                    <Filter maxPrice={data.maxPrice} filters={data.filters} category={category}/>
+                    <ProductList/>
+                </ProductListContextProvider>
             </div>
         </Container>
     )

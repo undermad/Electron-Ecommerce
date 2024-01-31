@@ -1,7 +1,7 @@
 import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {Label} from "../reusable/Label.tsx";
 import React, {useRef, useState} from "react";
-import {PasswordRecoveryRequest, PasswordRecoveryRequestError} from "../../api/dto/PasswordRecoveryRequest.ts";
+import {PasswordRecoveryRequest, PasswordRecoveryRequestError} from "../../api/dto/auth/PasswordRecoveryRequest.ts";
 import {axiosAuth, FORGOT_PASSWORD_API_PATH} from "../../api/axios.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {TextInput} from "../reusable/TextInput.tsx";
