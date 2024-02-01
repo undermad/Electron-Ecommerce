@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
 import {PageNumber} from "./PageNumber.tsx";
+import {useProductList} from "../../custom_hooks/useProductList.ts";
 
 type PageControllerProps = {
     totalPages: number | undefined,
     pageNo: number | undefined
-
 }
 
 export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
 
+    const productContext = useProductList();
     const [pages, setPages] = useState<number[]>([]);
 
     function createArray(totalPages: number, pageNo: number): number[] {
@@ -25,12 +26,15 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
                 array.push(pageNo + i)
             }
         }
-        if(!array.includes(totalPages)) array.push(totalPages);
+        if (!array.includes(totalPages)) array.push(totalPages);
         return array;
     }
 
+
     useEffect(() => {
-        if (totalPages && pageNo) setPages(createArray(totalPages, pageNo))
+        if (productContext?.pageableProductList?.totalPages) setPages(createArray(
+            productContext?.pageableProductList?.totalPages,
+            productContext?.pageableProductList?.pageNo + 1))
     }, [totalPages, pageNo]);
 
     return (
@@ -42,27 +46,27 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
             <div className="flex gap-5">
 
                 {pages.map((page, index) => {
-                    const isFirstElement = index === 0;
-                    const isPrevElInSequence = !isFirstElement && (page === pages[index - 1] + 1);
-                    if (!isPrevElInSequence && !isFirstElement) {
-                        return (
-                            <>
-                                <PageNumber currentPage={false} text="..." ></PageNumber>
+                        const isFirstElement = index === 0;
+                        const isPrevElInSequence = !isFirstElement && (page === pages[index - 1] + 1);
+                        if (!isPrevElInSequence && !isFirstElement) {
+                            return (
+                                <>
+                                    <PageNumber currentPage={false} text="..."></PageNumber>
+                                    <PageNumber currentPage={page === pageNo} text={page} key={index}/>
+                                </>
+                            )
+                        } else {
+                            return (
                                 <PageNumber currentPage={page === pageNo} text={page} key={index}/>
-                            </>
-                        )
-                    } else {
-                        return (
-                            <PageNumber currentPage={page === pageNo} text={page} key={index}/>
-                        )
+                            )
+                        }
                     }
-                }
                 )}
-                </div>
+            </div>
 
-                    <button>
-                        Next
-                    </button>
-                </div>
-                )
-                }
+            <button>
+                Next
+            </button>
+        </div>
+    )
+}

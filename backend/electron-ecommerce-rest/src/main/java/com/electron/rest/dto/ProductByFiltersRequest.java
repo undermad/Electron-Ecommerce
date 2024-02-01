@@ -1,5 +1,6 @@
 package com.electron.rest.dto;
 
+import com.electron.rest.dto.product.PriceRange;
 import lombok.*;
 
 import java.util.List;
@@ -11,7 +12,5 @@ import java.util.Map;
 @Setter
 public class ProductByFiltersRequest {
     private Map<String, List<String>> filters;
-    private Integer minPrice;
-    private Integer maxPrice;
-    private String category;
+    private PriceRange priceRange;
 }

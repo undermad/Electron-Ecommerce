@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.electron.rest.constants.EndpointsPaths.API_V1_PRODUCT;
+import static com.electron.rest.constants.EndpointsPaths.API_V1_CATEGORY;
 
 @RestController
-@RequestMapping(API_V1_PRODUCT)
+@RequestMapping(API_V1_CATEGORY + "/{category}")
 public class ProductController {
 
 
@@ -22,18 +22,13 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
-    public ResponseEntity<PageableResponse<ProductResponse>> getProducts(
-            @RequestParam String category,
-            @RequestParam(defaultValue = "0") int pageNo) {
-
-        return ResponseEntity.ok(productService.getProductsByCategory(category, pageNo));
-    }
-
-    @PostMapping("/test")
-    public ResponseEntity<PageableResponse<ProductResponse>> getProducts(@RequestBody ProductByFiltersRequest test,
-                                                             @RequestParam(defaultValue = "0") Integer pageNo){
-        return ResponseEntity.ok(productService.getProductsByFilters(test, pageNo));
+    @PostMapping
+    public ResponseEntity<PageableResponse<ProductResponse>> getProductsByFilters(
+            @RequestBody ProductByFiltersRequest productByFiltersRequest,
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @PathVariable(name = "category") String category
+    ) {
+        return ResponseEntity.ok(productService.getProductsByFilters(productByFiltersRequest, pageNo, category));
     }
 
 }

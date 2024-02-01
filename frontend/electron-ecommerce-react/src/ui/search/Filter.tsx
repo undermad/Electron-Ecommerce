@@ -6,36 +6,38 @@ import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 import {ChangeEvent, useContext, useEffect, useState} from "react";
-import {axiosBase, PRODUCT_CATEGORY_PATH, PRODUCT_WITH_FILTERS_API_PATH} from "../../api/axios.ts";
+import {axiosBase, CATEGORY_API_PATH} from "../../api/axios.ts";
 import {ProductWithFilterRequest} from "../../api/dto/product/ProductWithFilterRequest.ts";
-import {ProductListContext} from "../../context/ProductListContext.tsx";
+import {ProductContext} from "../../context/ProductContext.tsx";
+import {useParams} from "react-router-dom";
 
 type FilterProps = {
-    filters: Map<string, string[]>,
-    maxPrice: number,
-    category: string | undefined,
+    filters: Map<string, string[]> | undefined,
+    maxPrice: number | undefined,
 }
 
-export const Filter = ({filters, maxPrice, category}: FilterProps) => {
+export const Filter = ({filters, maxPrice}: FilterProps) => {
 
-    const productList = useContext(ProductListContext);
+    const param = useParams();
+    const category = param.category;
+    const productContext = useContext(ProductContext);
 
-    const [requiredFilters, setRequiredFilters] = useState<Map<string, string[]>>(new Map<string, string[]>);
     const [priceValues, setPriceValues] = useState([0, maxPrice]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        Object.entries(filters).forEach(([key, value]) => {
-            value.forEach((val: string) => {
-                if (e.target.name === val) {
-                    const arr = requiredFilters.get(key);
-                    if (arr && e.target.checked) arr.push(val);
-                    if (arr && !e.target.checked) {
-                        const idx = arr.indexOf(val);
-                        if (idx !== -1) arr.splice(idx, 1);
+        if (filters)
+            Object.entries(filters).forEach(([key, value]) => {
+                value.forEach((val: string) => {
+                    if (e.target.name === val) {
+                        const arr = productContext?.filters?.get(key);
+                        if (arr && e.target.checked) arr.push(val);
+                        if (arr && !e.target.checked) {
+                            const idx = arr.indexOf(val);
+                            if (idx !== -1) arr.splice(idx, 1);
+                        }
                     }
-                }
+                })
             })
-        })
 
         fetchData();
     };
@@ -46,47 +48,42 @@ export const Filter = ({filters, maxPrice, category}: FilterProps) => {
 
     const fetchData = async () => {
         const filtersAsJson: { [key: string]: string[] } = {};
-        requiredFilters.forEach((value, key) => {
+        productContext?.filters?.forEach((value, key) => {
             if (value.length !== 0) {
                 filtersAsJson[key] = value;
             }
         });
         const requestData: ProductWithFilterRequest = {
             filters: filtersAsJson,
-            minPrice: priceValues[0],
-            maxPrice: priceValues[1],
-            category: category,
+            priceRange: {
+                minPrice: priceValues[0],
+                maxPrice: priceValues[1],
+            }
         }
-        if (Object.keys(filtersAsJson).length === 0) {
-            await axiosBase.get(PRODUCT_CATEGORY_PATH + `?category=${category}`)
-                .then(result => {
-                    productList?.setPageableProductList({...result.data});
-                    console.log(result.data)
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        } else {
-            await axiosBase.post(PRODUCT_WITH_FILTERS_API_PATH, requestData)
-                .then(result => {
-                    productList?.setPageableProductList({...result.data});
-                    console.log(result.data)
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
+        await axiosBase.post(
+            CATEGORY_API_PATH
+            + `/${productContext?.categoryResponse.name}`
+            + `?pageNo=${productContext?.pageableProductList?.pageNo}`,
+            requestData)
+            .then(result => {
+                productContext?.setPageableProductList({...result.data});
+                console.log(result.data)
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     useEffect(() => {
-        const newVariations = new Map<string, string[]>;
-        Object.entries(filters).forEach(([key]) => {
-            newVariations.set(key, []);
-        })
-        setRequiredFilters(newVariations);
-        setPriceValues([0, maxPrice])
-        console.log(requiredFilters);
-        console.log(filters)
+        if (productContext?.categoryResponse.name != category) {
+            const newVariations = new Map<string, string[]>;
+            if (filters)
+                Object.entries(filters).forEach(([key]) => {
+                    newVariations.set(key, []);
+                })
+            productContext?.setFilters(newVariations);
+            setPriceValues([0, maxPrice])
+        }
         fetchData();
     }, [filters]);
 
@@ -99,31 +96,33 @@ export const Filter = ({filters, maxPrice, category}: FilterProps) => {
             </div>
 
             <ParagraphSmall tailwind="text-[14px]">Price</ParagraphSmall>
-            <RangeSlider minRange={0} maxRange={maxPrice} callback={handlePriceChange}/>
+            {maxPrice &&
+                <RangeSlider minRange={0} maxRange={maxPrice} callback={handlePriceChange}/>}
 
 
-            {Object.entries(filters).map(([filterName, filterValues]) => (
-                <div key={filterName} className={"flex flex-col gap-[16px]"}>
-                    <Span>{filterName}</Span>
-                    <div className={"pl-[16px] flex flex-col gap-[12px]"}>
-                        {filterValues.map((value: string, key: number) => (
-                            <LabelCheckboxHolder key={key}>
-                                <CheckboxInput
-                                    type={"checkbox"}
-                                    id={value}
-                                    name={value}
-                                    callback={handleInputChange}/>
-                                <CheckboxLabel htmlFor={value}>
-                                    {value}
-                                </CheckboxLabel>
-                            </LabelCheckboxHolder>
+            {filters &&
+                Object.entries(filters).map(([filterName, filterValues]) => (
+                    <div key={filterValues} className={"flex flex-col gap-[16px]"}>
+                        <Span>{filterName}</Span>
+                        <div className={"pl-[16px] flex flex-col gap-[12px]"}>
+                            {filterValues.map((value: string, key: number) => (
+                                <LabelCheckboxHolder key={key}>
+                                    <CheckboxInput
+                                        type={"checkbox"}
+                                        id={value}
+                                        name={value}
+                                        callback={handleInputChange}/>
+                                    <CheckboxLabel htmlFor={value}>
+                                        {value}
+                                    </CheckboxLabel>
+                                </LabelCheckboxHolder>
 
 
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
 
-            ))}
+                ))}
 
         </div>
     )

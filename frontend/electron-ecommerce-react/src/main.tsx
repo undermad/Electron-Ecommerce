@@ -5,15 +5,18 @@ import './index.css'
 import {AuthContextProvider} from "./context/AuthContext.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {MessageScreenContextProvider} from "./context/MessageScreenContext.tsx";
+import {ProductContextProvider} from "./context/ProductContext.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <BrowserRouter>
             <AuthContextProvider>
                 <MessageScreenContextProvider>
-                    <Routes>
-                        <Route path={"/*"} element={<App/>}></Route>
-                    </Routes>
+                    <ProductContextProvider>
+                        <Routes>
+                            <Route path={"/*"} element={<App/>}></Route>
+                        </Routes>
+                    </ProductContextProvider>
                 </MessageScreenContextProvider>
             </AuthContextProvider>
         </BrowserRouter>

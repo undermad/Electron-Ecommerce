@@ -2,7 +2,7 @@ import {Range} from "react-range";
 import {useEffect, useState} from "react";
 
 type RangeSliderProps = {
-    minRange: number,
+    minRange: number ,
     maxRange: number,
     callback: (newValues: number[]) => void;
 

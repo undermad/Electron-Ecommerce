@@ -41,16 +41,15 @@ function App() {
                 <Route element={<PersistLogin/>}>
 
                     {/*public routes*/}
-                    <Route path={HOME_ROUTE} element={<Home/>}></Route>
-                    <Route path={SEARCH_ROUTE + "/:category"} element={<Search/>}>
+                    <Route path={HOME_ROUTE} element={<Home/>}/>
+                    <Route path={SEARCH_ROUTE + "/:category"} element={<Search/>}/>
 
-                    </Route>
 
                     <Route path={LOGIN_ROUTE} element={<Login/>}/>
                     <Route path={REGISTER_ROUTE} element={<Register/>}/>
                     <Route path={FORGOT_PASSWORD} element={<ForgotPassword/>}/>
                     <Route path={CHANGE_FORGOTTEN_PASSWORD + "/:token"} element={<ChangeForgottenPassword/>}/>
-                    <Route path={ACTIVATE + "/:token"} element={<ActivateAccount/> } />
+                    <Route path={ACTIVATE + "/:token"} element={<ActivateAccount/>}/>
 
 
                     {/*user protected routes*/}

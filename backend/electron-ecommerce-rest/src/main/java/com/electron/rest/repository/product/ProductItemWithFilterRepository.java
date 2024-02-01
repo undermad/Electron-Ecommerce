@@ -1,5 +1,6 @@
 package com.electron.rest.repository.product;
 
+import com.electron.rest.dto.product.PriceRange;
 import com.electron.rest.mapper.ProductMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -20,9 +21,10 @@ public class ProductItemWithFilterRepository {
 
     public List<Object[]> findProductByFilters(Map<String, List<String>> filters,
                                                Long categoryId,
-                                               int minPrice,
-                                               int maxPrice) {
+                                               PriceRange priceRange) {
 
+        int minPrice = priceRange.minPrice();
+        int maxPrice = priceRange.maxPrice();
         StringBuilder sb = new StringBuilder();
         sb.append("""
                 SELECT DISTINCT\s
@@ -42,19 +44,27 @@ public class ProductItemWithFilterRepository {
                     JOIN variation v
                     ON v.category_id =
                 """);
-        sb.append(categoryId).append("  WHERE ");
-        addFilters(filters, sb);
+        sb.append(categoryId);
+
+        sb.append("  WHERE ");
+        if (!filters.isEmpty()) {
+            addFilters(filters, sb);
+            sb.append(" AND ");
+        }
         addCategoryAndPriceRange(categoryId, minPrice, maxPrice, sb);
-        sb.append("GROUP BY pi.id ")
-                .append("HAVING COUNT(DISTINCT v.name) = ").append(filters.size())
-                .append(";");
+        if (filters.isEmpty()) sb.append(";");
+        else {
+            sb.append("GROUP BY pi.id ")
+                    .append("HAVING COUNT(DISTINCT v.name) = ").append(filters.size())
+                    .append(";");
+        }
 
         Query query = entityManager.createNativeQuery(sb.toString());
         return query.getResultList();
     }
 
     private void addCategoryAndPriceRange(Long categoryId, int minPrice, int maxPrice, StringBuilder sb) {
-        sb.append(" AND (pi.category_id = ").append(categoryId).append(") ")
+        sb.append(" (pi.category_id = ").append(categoryId).append(") ")
                 .append(" AND (pi.price < ").append(maxPrice).append(") ")
                 .append(" AND (pi.price > ").append(minPrice).append(") ");
     }

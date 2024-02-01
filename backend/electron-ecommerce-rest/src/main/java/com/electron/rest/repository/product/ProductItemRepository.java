@@ -21,7 +21,6 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
                           WHERE category_id = :categoryId);""", nativeQuery = true)
     Optional<ProductItemProjection> findMostExpensiveProductByCategoryId(@Param("categoryId") Long categoryId);
 
-    Page<ProductItem> findByCategory_Id(Long categoryId, Pageable pageable);
 
 
 

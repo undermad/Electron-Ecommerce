@@ -1,6 +1,6 @@
 
 export type CategoryResponse = {
-    name: string;
+    name: string | undefined;
     filters: Map<string, string[]>,
-    maxPrice: number;
+    maxPrice: number | undefined;
 }

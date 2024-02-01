@@ -1,14 +1,14 @@
 import {Header3} from "../reusable/Header3.tsx";
 import {ProductListItem} from "./ProductListItem.tsx";
-import {useContext, useEffect, useState} from "react";
-import {ProductListContext} from "../../context/ProductListContext.tsx";
+import {useEffect, useState} from "react";
 import {Product} from "../../api/dto/product/Product.ts";
 import {PageController} from "./PageController.tsx";
 import {PageableResponse} from "../../api/dto/PageableResponse.ts";
+import {useProductList} from "../../custom_hooks/useProductList.ts";
 
 
 export const ProductList = () => {
-    const pageableProductListContext = useContext(ProductListContext);
+    const pageableProductListContext = useProductList();
     const [pageableProductList, setPageableProductList] = useState<PageableResponse<Product>>({
         pageNo: 1,
         totalPages: 1,

@@ -114,9 +114,9 @@ public class AuthServiceImpl implements AuthService {
         List<UserProjection> usersList = userRepository.findUserIdAndEmailByRefreshToken(refreshToken);
         if (usersList.isEmpty())
             throw new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND);
-        UserProjection user = usersList.get(0);
+        UserProjection user = usersList.getFirst();
         String accountStatus = userRepository.findUserAccountStatusByEmail(user.getEmail())
-                .get(0)
+                .getFirst()
                 .getAccountStatus();
         Set<String> roles = roleRepository.getRolesByUserId(user.getId())
                 .stream()
@@ -166,7 +166,7 @@ public class AuthServiceImpl implements AuthService {
         List<RefreshTokenProjection> refreshTokenProjectionList = refreshTokenRepository.findRefreshTokenByToken(token);
         if (refreshTokenProjectionList.isEmpty())
             throw new RefreshTokenException(INVALID_TOKEN);
-        RefreshTokenProjection refreshTokenProjection = refreshTokenProjectionList.get(0);
+        RefreshTokenProjection refreshTokenProjection = refreshTokenProjectionList.getFirst();
 
         if (refreshTokenProjection.getExpirationDate().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.deleteById(refreshTokenProjection.getId());
