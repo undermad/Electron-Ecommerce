@@ -7,7 +7,7 @@ type MultiInputHolderProps = {
 export const MultiInputHolder = ({children}: MultiInputHolderProps) => {
 
     return(
-        <div className={"flex flex-col gap-[16px]"}>
+        <div className={"flex flex-col gap-[16px] mb-[20px]"}>
             {children}
         </div>
     )

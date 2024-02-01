@@ -49,8 +49,8 @@
             - refreshtoken                          COMPLETED
             - registration                          COMPLETED
             - validation                            COMPLETED
-            - forgot password
-            - validation
+            - forgot password                       COMPLETED
+            - validation                            COMPLETED
 
 5. Validation                                       COMPLETED
     - implement validation                          COMPLETED
@@ -59,4 +59,31 @@
     - account email veryfication                    COMPLETED
     - password recovery                             COMPLETED
 
-7. Add logging system
+7. Add logging system                               COMPLETED
+
+8. Add Product listing and filters                  COMPLETED
+
+///////////////////////////////////////////////////////
+///////////////////////CHAPTER 2///////////////////////
+Application keep growing, some new ideas come up,
+Todo list begin once again
+
+
+1. ADD TESTS!!! PLEASE DO IT!
+2. ADD DOCKER
+3. ADD SEARCH ENGINE AND TEXT FILTERS
+4. FIND SOLUTION FOR PRICE FILTERS
+5. ADD PAGINATION FOR PRODUCT LISTING PAGE
+6. ADD SPECIFIC PRODUCT PAGE
+7. ADD MORE PRODUCTS TO DATABASE
+8. BASKET
+
+
+
+CHILL OUT FRONTEND TASKS:
+1. BUILD FOOTER
+2. Build great carousel for home page
+
+
+
+

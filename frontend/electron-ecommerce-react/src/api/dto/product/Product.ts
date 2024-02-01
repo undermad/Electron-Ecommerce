@@ -1,4 +1,4 @@
-export type ProductDto = {
+export type Product = {
     name: string,
     description: string,
     sku: string,
@@ -7,3 +7,4 @@ export type ProductDto = {
     price: number,
     features: string[];
 }
+

@@ -1,19 +1,20 @@
 import React, {createContext, useState} from "react";
-import {ProductDto} from "../api/dto/product/ProductDto.ts";
+import {Product} from "../api/dto/product/Product.ts";
+import {PageableResponse} from "../api/dto/PageableResponse.ts";
 
 type ProductListContextProps = {
     children: React.ReactNode;
 }
 
 type ProductListContextType = {
-    productList: ProductDto[] | null,
-    setProductList: React.Dispatch<React.SetStateAction<ProductDto[] | null>>,
+    pageableProductList: PageableResponse<Product> | null,
+    setPageableProductList: React.Dispatch<React.SetStateAction<PageableResponse<Product> | null>>,
 }
 
 export const ProductListContext = createContext<ProductListContextType | null>(null);
 
 export const ProductListContextProvider = ({children}: ProductListContextProps) => {
-    const [productList, setProductList] = useState<ProductDto[] | null>(null);
+    const [pageableProductList, setPageableProductList] = useState<PageableResponse<Product> | null>(null);
 
-    return <ProductListContext.Provider value={{productList, setProductList}}>{children}</ProductListContext.Provider>
+    return <ProductListContext.Provider value={{pageableProductList, setPageableProductList}}>{children}</ProductListContext.Provider>
 }

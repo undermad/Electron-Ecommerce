@@ -13,7 +13,7 @@ import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
 import {TextInput} from "../reusable/TextInput.tsx";
 import {ToggleCheckbox} from "../reusable/ToggleCheckbox.tsx";
-import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
+import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import {SpanWeightSix} from "../reusable/SpanWeightSix.tsx";
 import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
 import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
@@ -118,7 +118,7 @@ export const LoginForm = () => {
                     </div>
                 </LabelInputHolder>
             </MultiInputHolder>
-            <FormSubmitButton loading={loading}/>
+            <ElectronButton loading={loading}>Log In</ElectronButton>
 
             <ParagraphSmall tailwind="flex justify-center mt-3">
                 Don't have an account?&nbsp;

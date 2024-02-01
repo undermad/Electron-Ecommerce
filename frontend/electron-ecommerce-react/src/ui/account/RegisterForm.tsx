@@ -13,7 +13,7 @@ import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
 import {TextInput} from "../reusable/TextInput.tsx";
 import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
 import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
-import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
+import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 
 const registerFormDataInit: RegisterRequest = {
@@ -147,7 +147,7 @@ export const RegisterForm = () => {
                 </LabelCheckboxHolder>
             </MultiInputHolder>
 
-            <FormSubmitButton loading={loading}/>
+            <ElectronButton loading={loading}>Register</ElectronButton>
         </form>
     )
 }

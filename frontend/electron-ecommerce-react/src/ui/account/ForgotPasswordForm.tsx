@@ -5,9 +5,10 @@ import {PasswordRecoveryRequest, PasswordRecoveryRequestError} from "../../api/d
 import {axiosAuth, FORGOT_PASSWORD_API_PATH} from "../../api/axios.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {TextInput} from "../reusable/TextInput.tsx";
-import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
+import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
+import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
 
 
 export const ForgotPasswordForm = () => {
@@ -49,18 +50,20 @@ export const ForgotPasswordForm = () => {
             onSubmit={handleSubmit}>
 
             <FormErrorMessage errorMessage={validationError.message}/>
-            <LabelInputHolder>
+            <MultiInputHolder>
                 <LabelInputHolder>
-                    <Label errorMessage={validationError.email} htmlFor="email">Email address</Label>
-                    <TextInput id={"email"}
-                               inputRef={emailRef}
-                               type={"text"}
-                               placeholder={"Enter your email address"}
-                               callback={handleEmailChange}/>
+                    <LabelInputHolder>
+                        <Label errorMessage={validationError.email} htmlFor="email">Email address</Label>
+                        <TextInput id={"email"}
+                                   inputRef={emailRef}
+                                   type={"text"}
+                                   placeholder={"Enter your email address"}
+                                   callback={handleEmailChange}/>
+                    </LabelInputHolder>
                 </LabelInputHolder>
-            </LabelInputHolder>
+            </MultiInputHolder>
 
-            <FormSubmitButton loading={loading}/>
+            <ElectronButton loading={loading}>Submit</ElectronButton>
         </form>
     )
 }

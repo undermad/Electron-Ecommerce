@@ -10,7 +10,7 @@ import {
 import {axiosAuth, CHANGE_FORGOTTEN_PASSWORD_API_PATH} from "../../api/axios.ts";
 import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
 import {TextInput} from "../reusable/TextInput.tsx";
-import {FormSubmitButton} from "../reusable/FormSubmitButton.tsx";
+import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
 
@@ -95,7 +95,7 @@ export const ChangeForgottenPasswordForm = () => {
                 </LabelInputHolder>
             </MultiInputHolder>
 
-            <FormSubmitButton loading={loading}/>
+            <ElectronButton loading={loading}>Submit</ElectronButton>
         </form>
 
     )

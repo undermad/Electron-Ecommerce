@@ -60,8 +60,7 @@ export const Filter = ({filters, maxPrice, category}: FilterProps) => {
         if (Object.keys(filtersAsJson).length === 0) {
             await axiosBase.get(PRODUCT_CATEGORY_PATH + `?category=${category}`)
                 .then(result => {
-                    productList?.setProductList({...result.data});
-                    console.log(result.data);
+                    productList?.setPageableProductList({...result.data});
                 })
                 .catch(error => {
                     console.log(error);
@@ -69,8 +68,7 @@ export const Filter = ({filters, maxPrice, category}: FilterProps) => {
         } else {
             await axiosBase.post(PRODUCT_WITH_FILTERS_API_PATH, requestData)
                 .then(result => {
-                    productList?.setProductList({...result.data});
-                    console.log(result.data);
+                    productList?.setPageableProductList({...result.data});
                 })
                 .catch(error => {
                     console.log(error);
