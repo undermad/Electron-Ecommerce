@@ -3,27 +3,41 @@ import {ProductListItem} from "./ProductListItem.tsx";
 import {useContext, useEffect, useState} from "react";
 import {ProductListContext} from "../../context/ProductListContext.tsx";
 import {Product} from "../../api/dto/product/Product.ts";
+import {PageController} from "./PageController.tsx";
+import {PageableResponse} from "../../api/dto/PageableResponse.ts";
 
 
 export const ProductList = () => {
     const pageableProductListContext = useContext(ProductListContext);
-    const [productList, setProductList] = useState<Product[] | null>(null);
+    const [pageableProductList, setPageableProductList] = useState<PageableResponse<Product>>({
+        pageNo: 1,
+        totalPages: 1,
+        totalElements: 0,
+        pageSize: 25,
+        content: []
+    });
 
 
     useEffect(() => {
-        setProductList(pageableProductListContext?.pageableProductList?.content || null);
+        if (pageableProductListContext?.pageableProductList) {
+            setPageableProductList(pageableProductListContext?.pageableProductList);
+        }
     }, [pageableProductListContext?.pageableProductList]);
 
     return (
         <div className="w-full">
-            <Header3 tailwind="mb-[20px]">Search Result</Header3>
             <div className="flex flex-col gap-[20px]">
-                {productList?.map((product, index) => (
-                    <ProductListItem product={product} key={index}/>
-                ))}
-
-
+                <Header3>Search Result</Header3>
+                <div className="flex flex-col gap-[20px]">
+                    {pageableProductList?.content.map((product, index) => (
+                        <ProductListItem product={product} key={index}/>
+                    ))}
+                </div>
+                <PageController pageNo={pageableProductList?.pageNo + 1}
+                                totalPages={pageableProductList?.totalPages}/>
             </div>
+
+
         </div>
     )
 }

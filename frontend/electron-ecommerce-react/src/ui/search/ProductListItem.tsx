@@ -23,7 +23,7 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
             </div>
             <div className={"w-2/6 flex flex-col justify-center text-center"}>
                 <Bold textSize={14} weight={600}>
-                    {product.price}
+                    £{product.price}
                 </Bold>
             </div>
             <div className="w-1/6 flex flex-col justify-center">

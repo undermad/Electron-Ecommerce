@@ -61,6 +61,7 @@ export const Filter = ({filters, maxPrice, category}: FilterProps) => {
             await axiosBase.get(PRODUCT_CATEGORY_PATH + `?category=${category}`)
                 .then(result => {
                     productList?.setPageableProductList({...result.data});
+                    console.log(result.data)
                 })
                 .catch(error => {
                     console.log(error);
@@ -69,6 +70,7 @@ export const Filter = ({filters, maxPrice, category}: FilterProps) => {
             await axiosBase.post(PRODUCT_WITH_FILTERS_API_PATH, requestData)
                 .then(result => {
                     productList?.setPageableProductList({...result.data});
+                    console.log(result.data)
                 })
                 .catch(error => {
                     console.log(error);

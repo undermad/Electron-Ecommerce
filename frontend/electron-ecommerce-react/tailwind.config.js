@@ -21,6 +21,8 @@ export default {
             'electron-input-ash-blue':'#484C60',
             'electron-error':'#f40000',
             'electron-header-font': '#101828',
+            'electron-current-page': '#1D2939',
+            'electron-other-page': '#475467',
         },
         extend: {},
     },
