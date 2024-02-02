@@ -5,11 +5,10 @@ import {Span} from "../reusable/Span.tsx";
 import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
-import {ChangeEvent, useContext, useEffect, useState} from "react";
-import {axiosBase, CATEGORY_API_PATH} from "../../api/axios.ts";
-import {ProductWithFilterRequest} from "../../api/dto/product/ProductWithFilterRequest.ts";
-import {ProductContext} from "../../context/ProductContext.tsx";
-import {useParams} from "react-router-dom";
+import {ChangeEvent, useEffect} from "react";
+import {useProductList} from "../../custom_hooks/useProductList.ts";
+import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
+import {render} from "react-dom";
 
 type FilterProps = {
     filters: Map<string, string[]> | undefined,
@@ -18,11 +17,8 @@ type FilterProps = {
 
 export const Filter = ({filters, maxPrice}: FilterProps) => {
 
-    const param = useParams();
-    const category = param.category;
-    const productContext = useContext(ProductContext);
-
-    const [priceValues, setPriceValues] = useState([0, maxPrice]);
+    const productContext = useProductList();
+    const fetchProducts = useFetchProducts();
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (filters)
@@ -38,53 +34,25 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
                     }
                 })
             })
-
-        fetchData();
+        fetchProducts();
     };
 
     const handlePriceChange = (newValues: number[]) => {
-        setPriceValues(newValues);
-    }
-
-    const fetchData = async () => {
-        const filtersAsJson: { [key: string]: string[] } = {};
-        productContext?.filters?.forEach((value, key) => {
-            if (value.length !== 0) {
-                filtersAsJson[key] = value;
-            }
-        });
-        const requestData: ProductWithFilterRequest = {
-            filters: filtersAsJson,
-            priceRange: {
-                minPrice: priceValues[0],
-                maxPrice: priceValues[1],
-            }
-        }
-        await axiosBase.post(
-            CATEGORY_API_PATH
-            + `/${productContext?.categoryResponse.name}`
-            + `?pageNo=${productContext?.pageableProductList?.pageNo}`,
-            requestData)
-            .then(result => {
-                productContext?.setPageableProductList({...result.data});
-                console.log(result.data)
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        productContext?.setPriceValues(newValues);
     }
 
     useEffect(() => {
-        if (productContext?.categoryResponse.name != category) {
-            const newVariations = new Map<string, string[]>;
-            if (filters)
-                Object.entries(filters).forEach(([key]) => {
-                    newVariations.set(key, []);
-                })
-            productContext?.setFilters(newVariations);
-            setPriceValues([0, maxPrice])
-        }
-        fetchData();
+        const newVariations = new Map<string, string[]>;
+        if (filters)
+            Object.entries(filters).forEach(([key]) => {
+                newVariations.set(key, []);
+            })
+        productContext?.setFilters(newVariations);
+        if (maxPrice)
+            productContext?.setPriceValues([0, maxPrice])
+        fetchProducts();
+
+
     }, [filters]);
 
     return (

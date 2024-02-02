@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductResponse {
 
+    private Long productId;
     private String name;
     private String description;
     private String sku;
@@ -22,12 +23,5 @@ public class ProductResponse {
     private Integer stockQuantity;
     private BigDecimal price;
     private List<String> features;
+    private Long categoryId;
 }
-//
-//pi.id as id, 0
-//pi.name as name, 1
-//pi.description as description, 2
-//pi.price as price, 3
-//pi.sku as sku, 4
-//pi.img_url as imgUrl, 5
-//pi.stock_quantity as stockQuantity 6    |

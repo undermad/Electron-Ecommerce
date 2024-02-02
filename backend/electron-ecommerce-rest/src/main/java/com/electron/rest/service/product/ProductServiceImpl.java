@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.electron.rest.constants.ErrorMessages.CATEGORY_NOT_FOUND;
+import static com.electron.rest.constants.ErrorMessages.PAGE_NOT_FOUND;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -46,10 +47,10 @@ public class ProductServiceImpl implements ProductService {
                 categoryId,
                 productByFiltersRequest.getPriceRange());
         int start = pageNo * 10;
+        if (start > rawResult.size()) throw new ResourceNotFoundException(PAGE_NOT_FOUND);
         int end = rawResult.size();
-        if (rawResult.size() >= 10) {
-            end = start + 10;
-        }
+        if (rawResult.size() >= 10) end = start + 10;
+        if (end > rawResult.size()) end = rawResult.size();
         List<Object[]> subRawResult = rawResult.subList(start, end);
 
         return PageableResponse.<ProductResponse>builder()
@@ -57,11 +58,11 @@ public class ProductServiceImpl implements ProductService {
                         .stream()
                         .map(productMapper::mapRawObjectToProductResponse)
                         .toList())
-                .pageNo(pageNo)
+                .pageNo(pageNo + 1)
                 .pageSize(10)
                 .totalElements(rawResult.size())
                 .resourceName(category + " with filters")
-                .totalPages((rawResult.size() / 10))
+                .totalPages((rawResult.size() / 10) + 1)
                 .build();
 
     }

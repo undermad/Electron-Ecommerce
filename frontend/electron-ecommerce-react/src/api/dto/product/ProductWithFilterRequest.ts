@@ -1,4 +1,4 @@
-import {PriceRange} from "../../../ui/model/PriceRange.ts";
+import {PriceRange} from "./PriceRange.ts";
 
 export type ProductWithFilterRequest = {
     filters: { [key: string]: string[] },

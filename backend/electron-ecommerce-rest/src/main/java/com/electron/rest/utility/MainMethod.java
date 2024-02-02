@@ -8,19 +8,10 @@ import java.util.Map;
 
 public class MainMethod {
 
-    private final ProductItemWithFilterRepository productItemWithFilterRepository;
-
-    public MainMethod(ProductItemWithFilterRepository productItemWithFilterRepository) {
-        this.productItemWithFilterRepository = productItemWithFilterRepository;
-    }
 
     public static void main(String[] args) {
 
-
-        Map<String, List<String>> map = new HashMap<>();
-        List<String> brands = List.of("CORSAIR", "KINGSTON");
-        map.put("Brand", brands);
-
+        System.out.println(25 / 10);
 
 
     }

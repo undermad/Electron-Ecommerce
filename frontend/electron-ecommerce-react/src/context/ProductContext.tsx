@@ -14,6 +14,8 @@ type ProductContextType = {
     setFilters: React.Dispatch<React.SetStateAction<Map<string, string[]> | null>>,
     categoryResponse: CategoryResponse,
     setCategoryResponse: React.Dispatch<React.SetStateAction<CategoryResponse>>,
+    priceValues: number[];
+    setPriceValues: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 export const ProductContext = createContext<ProductContextType | null>(null);
@@ -32,10 +34,12 @@ export const ProductContextProvider = ({children}: ProductContextProps) => {
         filters: new Map<string, string[]>,
         maxPrice: 1,
     })
+    const [priceValues, setPriceValues] = useState<number[]>([0, 1]);
 
     return <ProductContext.Provider value={{
         pageableProductList, setPageableProductList,
         filters, setFilters,
-        categoryResponse, setCategoryResponse
+        categoryResponse, setCategoryResponse,
+        priceValues, setPriceValues
     }}>{children}</ProductContext.Provider>
 }

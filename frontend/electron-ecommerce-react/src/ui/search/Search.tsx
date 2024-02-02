@@ -5,18 +5,28 @@ import {useEffect} from "react";
 import {axiosCategory} from "../../api/axios.ts";
 import {ProductList} from "./ProductList.tsx";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 
 
 export const Search = () => {
     const param = useParams();
     const category = param.category;
     const productContext = useProductList();
-
+    const messageScreen = useMessageScreen();
 
     useEffect(() => {
         axiosCategory.get(`/${category}`)
             .then(response => {
-                productContext?.setCategoryResponse({...response.data});
+                if (response.data.name != productContext?.categoryResponse.name) {
+                    console.log("IS NOT SAME")
+                    productContext?.setCategoryResponse({...response.data});
+                }
+            })
+            .catch(error => {
+                console.log(error)
+                messageScreen(error.response.data.message);
             })
     }, [category])
 

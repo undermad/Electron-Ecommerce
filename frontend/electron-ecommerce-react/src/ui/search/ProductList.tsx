@@ -8,7 +8,7 @@ import {useProductList} from "../../custom_hooks/useProductList.ts";
 
 
 export const ProductList = () => {
-    const pageableProductListContext = useProductList();
+    const productContext = useProductList();
     const [pageableProductList, setPageableProductList] = useState<PageableResponse<Product>>({
         pageNo: 1,
         totalPages: 1,
@@ -19,10 +19,15 @@ export const ProductList = () => {
 
 
     useEffect(() => {
-        if (pageableProductListContext?.pageableProductList) {
-            setPageableProductList(pageableProductListContext?.pageableProductList);
+        if (productContext?.pageableProductList) {
+            setPageableProductList(productContext?.pageableProductList);
         }
-    }, [pageableProductListContext?.pageableProductList]);
+
+        return () => {
+            productContext?.setPageableProductList(null);
+        }
+
+    }, [productContext?.pageableProductList]);
 
     return (
         <div className="w-full">
@@ -33,7 +38,7 @@ export const ProductList = () => {
                         <ProductListItem product={product} key={index}/>
                     ))}
                 </div>
-                <PageController pageNo={pageableProductList?.pageNo + 1}
+                <PageController pageNo={pageableProductList?.pageNo}
                                 totalPages={pageableProductList?.totalPages}/>
             </div>
 

@@ -34,7 +34,8 @@ public class ProductItemWithFilterRepository {
                                pi.price as price,
                                pi.sku as sku,
                                pi.img_url as imgUrl,
-                               pi.stock_quantity as stockQuantity\s""");
+                               pi.stock_quantity as stockQuantity,
+                               pi.category_id as categoryId\s""");
         sb.append("""
                     FROM product_item pi
                     JOIN product_configuration pc

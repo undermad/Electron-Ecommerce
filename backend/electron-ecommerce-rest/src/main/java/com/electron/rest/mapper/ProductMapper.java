@@ -28,12 +28,14 @@ public class ProductMapper {
 
     public ProductResponse mapRawObjectToProductResponse(Object[] rawObject) {
         return ProductResponse.builder()
+                .productId((Long)rawObject[0])
                 .name(rawObject[1].toString())
                 .description(rawObject[2].toString())
                 .sku(rawObject[4].toString())
                 .price((BigDecimal) rawObject[3])
                 .imgUrl(rawObject[5].toString())
                 .stockQuantity((Integer) rawObject[6])
+                .categoryId((Long) rawObject[7])
                 .build();
     }
 

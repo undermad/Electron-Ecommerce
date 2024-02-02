@@ -22,6 +22,7 @@ public class ErrorMessages {
 
     // RESOURCES
     public static final String CATEGORY_NOT_FOUND = "Category not found";
+    public static final String PAGE_NOT_FOUND = "Page not found";
 
 
 }

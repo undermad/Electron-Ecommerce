@@ -1,18 +1,19 @@
 import {useEffect, useState} from "react";
 import {PageNumber} from "./PageNumber.tsx";
-import {useProductList} from "../../custom_hooks/useProductList.ts";
+import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
 
 type PageControllerProps = {
-    totalPages: number | undefined,
-    pageNo: number | undefined
+    totalPages: number,
+    pageNo: number
 }
 
 export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
 
-    const productContext = useProductList();
+    const fetchProducts = useFetchProducts();
     const [pages, setPages] = useState<number[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    function createArray(totalPages: number, pageNo: number): number[] {
+    function createArray(pageNo: number, totalPages: number): number[] {
         const array: number[] = [1];
         if (pageNo - 2 >= 1) {
             array.push(pageNo - 1);
@@ -22,7 +23,7 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
             }
         } else {
             if (pageNo != 1) array.push(pageNo)
-            for (let i = 1; i < 3 && i < totalPages; i++) {
+            for (let i = 1; i < 3 && i + pageNo < totalPages; i++) {
                 array.push(pageNo + i)
             }
         }
@@ -31,18 +32,34 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
     }
 
 
+    const handlePreviousPageClick = () => {
+        if(pageNo === 1) return;
+        setLoading(true);
+        fetchProducts(pageNo - 2).then(() => {
+            setLoading(false);
+        })
+    }
+
+
+    const handleNextPageRequestClick = () => {
+        if(pageNo === totalPages) return;
+        setLoading(true);
+        fetchProducts(pageNo).then(() => {
+            setLoading(false);
+        })
+    }
+
+
     useEffect(() => {
-        if (productContext?.pageableProductList?.totalPages) setPages(createArray(
-            productContext?.pageableProductList?.totalPages,
-            productContext?.pageableProductList?.pageNo + 1))
+        setPages(createArray(pageNo, totalPages))
     }, [totalPages, pageNo]);
 
     return (
         <div className="flex justify-between">
-            <button>
 
-                Prev
-            </button>
+                <button onClick={handlePreviousPageClick} disabled={loading}>
+                    Prev
+                </button>
             <div className="flex gap-5">
 
                 {pages.map((page, index) => {
@@ -51,20 +68,26 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
                         if (!isPrevElInSequence && !isFirstElement) {
                             return (
                                 <>
-                                    <PageNumber currentPage={false} text="..."></PageNumber>
-                                    <PageNumber currentPage={page === pageNo} text={page} key={index}/>
+                                    <PageNumber loading={loading} currentPage={false} text="..."></PageNumber>
+                                    <PageNumber loading={loading}
+                                                currentPage={page === pageNo}
+                                                text={page}
+                                                key={index}/>
                                 </>
                             )
                         } else {
                             return (
-                                <PageNumber currentPage={page === pageNo} text={page} key={index}/>
+                                <PageNumber loading={loading}
+                                            currentPage={page === pageNo}
+                                            text={page}
+                                            key={index}/>
                             )
                         }
                     }
                 )}
             </div>
 
-            <button>
+            <button onClick={handleNextPageRequestClick} disabled={loading}>
                 Next
             </button>
         </div>
