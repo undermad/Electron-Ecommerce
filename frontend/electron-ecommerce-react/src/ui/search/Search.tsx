@@ -15,24 +15,27 @@ export const Search = () => {
     const messageScreen = useMessageScreen();
 
     useEffect(() => {
-        axiosCategory.get(`/${category}`)
-            .then(response => {
-                if (response.data.name != productContext?.categoryResponse.name) {
-                    console.log("IS NOT SAME")
+        if (productContext?.categoryResponse.name !== category) {
+            axiosCategory.get(`/${category}`)
+                .then(response => {
                     productContext?.setCategoryResponse({...response.data});
-                }
-            })
-            .catch(error => {
-                console.log(error)
-                messageScreen(error.response.data.message);
-            })
+                    const newVariations = new Map<string, string[]>;
+                    Object.entries(response.data.filters).forEach(([key]) => {
+                        newVariations.set(key, []);
+                    })
+                    productContext?.setFilters(newVariations);
+                    productContext?.setPriceValues([0, response.data?.maxPrice])
+                })
+                .catch(error => {
+                    messageScreen(error.response.data.message);
+                })
+        }
     }, [category])
 
     return (
         <Container>
             <div className={"flex gap-[42px] w-full mt-[24px]"}>
-                <Filter maxPrice={productContext?.categoryResponse.maxPrice}
-                        filters={productContext?.categoryResponse.filters}/>
+                <Filter/>
                 <ProductList/>
             </div>
         </Container>

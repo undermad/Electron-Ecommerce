@@ -5,23 +5,19 @@ import {Span} from "../reusable/Span.tsx";
 import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
-import {ChangeEvent, useEffect} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
 import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
 
-type FilterProps = {
-    filters: Map<string, string[]> | undefined,
-    maxPrice: number | undefined,
-}
-
-export const Filter = ({filters, maxPrice}: FilterProps) => {
+export const Filter = () => {
 
     const productContext = useProductList();
     const fetchProducts = useFetchProducts();
 
+    const [filters, setFilters] = useState<Map<string, string[]> | undefined>(new Map<string, string[]>);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (filters)
+        if(filters)
             Object.entries(filters).forEach(([key, value]) => {
                 value.forEach((val: string) => {
                     if (e.target.name === val) {
@@ -43,19 +39,9 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
 
 
     useEffect(() => {
-        const newVariations = new Map<string, string[]>;
-        if (filters)
-            Object.entries(filters).forEach(([key]) => {
-                newVariations.set(key, []);
-            })
-        productContext?.setFilters(newVariations);
-
-        if (maxPrice)
-            productContext?.setPriceValues([0, maxPrice])
-
-        console.log("a")
+        setFilters(productContext?.categoryResponse.filters);
         fetchProducts();
-    }, [filters]);
+    }, [productContext?.categoryResponse.name]);
 
     return (
         <div className={"w-1/4 flex flex-col gap-[24px]"}>
@@ -66,8 +52,8 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
             </div>
 
             <ParagraphSmall tailwind="text-[14px]">Price</ParagraphSmall>
-            {maxPrice &&
-                <RangeSlider minRange={0} maxRange={maxPrice} callback={handlePriceChange}/>}
+            { productContext?.categoryResponse.maxPrice &&
+                <RangeSlider minRange={0} maxRange={productContext?.categoryResponse.maxPrice} callback={handlePriceChange}/>}
 
 
             {filters &&
