@@ -8,7 +8,6 @@ import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 import {ChangeEvent, useEffect} from "react";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
 import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
-import {render} from "react-dom";
 
 type FilterProps = {
     filters: Map<string, string[]> | undefined,
@@ -19,6 +18,7 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
 
     const productContext = useProductList();
     const fetchProducts = useFetchProducts();
+
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (filters)
@@ -41,6 +41,7 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
         productContext?.setPriceValues(newValues);
     }
 
+
     useEffect(() => {
         const newVariations = new Map<string, string[]>;
         if (filters)
@@ -48,11 +49,10 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
                 newVariations.set(key, []);
             })
         productContext?.setFilters(newVariations);
+
         if (maxPrice)
             productContext?.setPriceValues([0, maxPrice])
         fetchProducts();
-
-
     }, [filters]);
 
     return (

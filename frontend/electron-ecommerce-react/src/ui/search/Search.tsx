@@ -5,8 +5,6 @@ import {useEffect} from "react";
 import {axiosCategory} from "../../api/axios.ts";
 import {ProductList} from "./ProductList.tsx";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 
 
@@ -31,7 +29,6 @@ export const Search = () => {
     }, [category])
 
     return (
-
         <Container>
             <div className={"flex gap-[42px] w-full mt-[24px]"}>
                 <Filter maxPrice={productContext?.categoryResponse.maxPrice}
