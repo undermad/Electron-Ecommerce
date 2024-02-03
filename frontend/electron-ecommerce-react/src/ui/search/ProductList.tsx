@@ -23,10 +23,6 @@ export const ProductList = () => {
             setPageableProductList(productContext?.pageableProductList);
         }
 
-        return () => {
-            productContext?.setPageableProductList(null);
-        }
-
     }, [productContext?.pageableProductList]);
 
     return (

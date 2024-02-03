@@ -19,6 +19,7 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
     const productContext = useProductList();
     const fetchProducts = useFetchProducts();
 
+
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (filters)
             Object.entries(filters).forEach(([key, value]) => {
@@ -40,6 +41,7 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
         productContext?.setPriceValues(newValues);
     }
 
+
     useEffect(() => {
         const newVariations = new Map<string, string[]>;
         if (filters)
@@ -47,6 +49,7 @@ export const Filter = ({filters, maxPrice}: FilterProps) => {
                 newVariations.set(key, []);
             })
         productContext?.setFilters(newVariations);
+
         if (maxPrice)
             productContext?.setPriceValues([0, maxPrice])
 

@@ -67,13 +67,12 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
                         const isPrevElInSequence = !isFirstElement && (page === pages[index - 1] + 1);
                         if (!isPrevElInSequence && !isFirstElement) {
                             return (
-                                <>
+                                <div key={index}>
                                     <PageNumber loading={loading} currentPage={false} text="..."></PageNumber>
                                     <PageNumber loading={loading}
                                                 currentPage={page === pageNo}
-                                                text={page}
-                                                key={index}/>
-                                </>
+                                                text={page}/>
+                                </div>
                             )
                         } else {
                             return (
