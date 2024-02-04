@@ -3,7 +3,7 @@ package com.electron.rest.repository.product;
 import com.electron.rest.dto.product.PriceRange;
 import com.electron.rest.mapper.ProductMapper;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +14,29 @@ public class ProductItemWithFilterRepository {
 
     private final EntityManager entityManager;
 
+    private final String selectProduct = """
+                pi.id as id,
+                pi.name as name,
+                pi.description as description,
+                pi.price as price,
+                pi.sku as sku,
+                pi.img_url as imgUrl,
+                pi.stock_quantity as stockQuantity,
+                pi.category_id as categoryId
+            """;
+    private final String from = "product_item pi";
+    private final String joins = """
+                JOIN product_configuration pc
+                ON pi.id = pc.product_item_id
+                JOIN variation_option vo
+                ON pc.variation_option_id = vo.id
+                JOIN variation v
+                ON v.category_id =
+            """;
+
+    @Value("${app-page-size}")
+    private Integer pageLimit;
+
 
     public ProductItemWithFilterRepository(EntityManager entityManager, ProductMapper productMapper) {
         this.entityManager = entityManager;
@@ -21,53 +44,53 @@ public class ProductItemWithFilterRepository {
 
     public List<Object[]> findProductByFilters(Map<String, List<String>> filters,
                                                Long categoryId,
-                                               PriceRange priceRange) {
+                                               PriceRange priceRange,
+                                               Integer pageNo) {
 
-        int minPrice = priceRange.minPrice();
-        int maxPrice = priceRange.maxPrice();
         StringBuilder sb = new StringBuilder();
-        sb.append("""
-                SELECT DISTINCT\s
-                               pi.id as id,
-                               pi.name as name,
-                               pi.description as description,
-                               pi.price as price,
-                               pi.sku as sku,
-                               pi.img_url as imgUrl,
-                               pi.stock_quantity as stockQuantity,
-                               pi.category_id as categoryId\s""");
-        sb.append("""
-                    FROM product_item pi
-                    JOIN product_configuration pc
-                    ON pi.id = pc.product_item_id
-                    JOIN variation_option vo
-                    ON pc.variation_option_id = vo.id
-                    JOIN variation v
-                    ON v.category_id =
-                """);
-        sb.append(categoryId);
+        addQueryBody(filters, categoryId, priceRange, sb, selectProduct);
+        addPageNo(pageNo, sb);
+        addSemicolon(sb);
 
-        sb.append("  WHERE ");
-        if (!filters.isEmpty()) {
-            addFilters(filters, sb);
-            sb.append(" AND ");
-        }
-        addCategoryAndPriceRange(categoryId, minPrice, maxPrice, sb);
-        if (filters.isEmpty()) sb.append(";");
-        else {
-            sb.append("GROUP BY pi.id ")
-                    .append("HAVING COUNT(DISTINCT v.name) = ").append(filters.size())
-                    .append(";");
-        }
-
-        Query query = entityManager.createNativeQuery(sb.toString());
-        return query.getResultList();
+        return entityManager.createNativeQuery(sb.toString()).getResultList();
     }
 
-    private void addCategoryAndPriceRange(Long categoryId, int minPrice, int maxPrice, StringBuilder sb) {
-        sb.append(" (pi.category_id = ").append(categoryId).append(") ")
-                .append(" AND (pi.price < ").append(maxPrice).append(") ")
-                .append(" AND (pi.price > ").append(minPrice).append(") ");
+    public List<Object> findTotalElementsFromFilter(Map<String, List<String>> filters,
+                                                    Long categoryId,
+                                                    PriceRange priceRange) {
+        StringBuilder sb = new StringBuilder();
+        addSelect(sb);
+        sb.append("COUNT(*) ");
+        addFrom(sb);
+        sb.append("(");
+        addQueryBody(filters, categoryId, priceRange, sb, selectProduct);
+        sb.append(") as ppvv");
+        addSemicolon(sb);
+
+        return entityManager.createNativeQuery(sb.toString()).getResultList();
+    }
+
+    private void addQueryBody(Map<String, List<String>> filters, Long categoryId, PriceRange priceRange, StringBuilder sb, String select) {
+        addSelect(sb);
+        addDistinct(sb);
+        addSelectAttributes(select, sb);
+        addFrom(sb);
+        addFromAttributes(from, sb);
+        addJoins(joins, categoryId, sb);
+        addWhere(sb);
+
+        if (!filters.isEmpty()) {
+            addFilters(filters, sb);
+            addAnd(sb);
+        }
+
+        addCategory(categoryId, sb);
+        addPriceRange(priceRange, sb);
+
+        if (!filters.isEmpty()) {
+            addGrouping(sb);
+            addHaving(filters.size(), sb);
+        }
     }
 
     private void addFilters(Map<String, List<String>> filters, StringBuilder sb) {
@@ -76,13 +99,13 @@ public class ProductItemWithFilterRepository {
             String vName = entry.getKey();
             List<String> values = filters.get(vName);
             if (values.isEmpty()) continue;
-            sb.append(" (v.name = '").append(vName).append("' AND vo.value IN (");
+            sb.append("(v.name = '").append(vName).append("' AND vo.value IN (");
             for (int i = 0; i < values.size(); i++) {
                 sb.append("'")
                         .append(values.get(i))
                         .append("'");
                 if (i == values.size() - 1) {
-                    sb.append("))");
+                    sb.append(")) ");
                 } else
                     sb.append(", ");
             }
@@ -91,6 +114,66 @@ public class ProductItemWithFilterRepository {
             }
             counter++;
         }
+    }
+
+    private void addSelect(StringBuilder sb) {
+        sb.append("SELECT ");
+    }
+
+    private void addDistinct(StringBuilder sb) {
+        sb.append("DISTINCT ");
+    }
+
+    private void addFrom(StringBuilder sb) {
+        sb.append("FROM ");
+    }
+
+    private void addFromAttributes(String from, StringBuilder sb) {
+        sb.append(from).append(" ");
+    }
+
+    private void addJoins(String joins, Long categoryId, StringBuilder sb) {
+        sb.append(joins).append(" ");
+        sb.append(categoryId).append(" ");
+    }
+
+    private void addSelectAttributes(String select, StringBuilder sb) {
+        sb.append(select).append(" ");
+    }
+
+    private void addAnd(StringBuilder sb) {
+        sb.append("AND ");
+    }
+
+    private void addWhere(StringBuilder sb) {
+        sb.append("WHERE ");
+    }
+
+    private static void addSemicolon(StringBuilder sb) {
+        sb.append(";");
+    }
+
+    private void addCategory(Long categoryId, StringBuilder sb) {
+        sb.append(" (pi.category_id = ").append(categoryId).append(") ");
+    }
+
+    private void addPriceRange(PriceRange priceRange, StringBuilder sb) {
+        sb.append(" AND (pi.price < ").append(priceRange.maxPrice()).append(") ");
+        sb.append(" AND (pi.price > ").append(priceRange.minPrice()).append(") ");
+    }
+
+    private static void addGrouping(StringBuilder sb) {
+        sb.append("GROUP BY pi.id ");
+    }
+
+    private void addHaving(int havingSize, StringBuilder sb) {
+        sb.append("HAVING COUNT(DISTINCT v.name) = ");
+        sb.append(havingSize).append(" ");
+    }
+
+    private void addPageNo(Integer pageNo, StringBuilder sb) {
+        sb.append("LIMIT ").append(pageLimit).append(" ");
+        sb.append("OFFSET ").append(pageNo * pageLimit).append(" ");
     }
 
 }

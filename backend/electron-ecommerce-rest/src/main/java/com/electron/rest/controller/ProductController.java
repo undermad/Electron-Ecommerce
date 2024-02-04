@@ -7,7 +7,6 @@ import com.electron.rest.service.product.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 import static com.electron.rest.constants.EndpointsPaths.API_V1_CATEGORY;
 
