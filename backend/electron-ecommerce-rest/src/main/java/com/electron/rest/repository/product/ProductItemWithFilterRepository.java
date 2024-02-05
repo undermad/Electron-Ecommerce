@@ -149,7 +149,7 @@ public class ProductItemWithFilterRepository {
         sb.append("WHERE ");
     }
 
-    private static void addSemicolon(StringBuilder sb) {
+    private void addSemicolon(StringBuilder sb) {
         sb.append(";");
     }
 
@@ -162,7 +162,7 @@ public class ProductItemWithFilterRepository {
         sb.append(" AND (pi.price > ").append(priceRange.minPrice()).append(") ");
     }
 
-    private static void addGrouping(StringBuilder sb) {
+    private void addGrouping(StringBuilder sb) {
         sb.append("GROUP BY pi.id ");
     }
 
