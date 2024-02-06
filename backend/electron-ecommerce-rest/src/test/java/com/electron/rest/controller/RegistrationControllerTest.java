@@ -12,10 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 public class RegistrationControllerTest {
-
-    @Autowired
-    MockMvc mockMvc;
-
-
+//
+//    @Autowired
+//    MockMvc mockMvc;
+//
+//
 
 }

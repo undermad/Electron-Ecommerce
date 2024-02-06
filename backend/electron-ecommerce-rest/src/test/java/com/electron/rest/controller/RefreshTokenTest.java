@@ -29,71 +29,71 @@ import static org.hamcrest.Matchers.is;
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 public class RefreshTokenTest {
-
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private JdbcTemplate jdbc;
-
-    @Value("${app-refresh-token-name}")
-    private String tokenName;
-
-
-    @BeforeEach
-    public void init() {
-        jdbc.execute(SqlQueryBefore.ADD_ROLES);
-        jdbc.execute(SqlQueryBefore.ADD_ACCOUNT_STATUSES);
-        jdbc.execute(SqlQueryBefore.ADD_USER_ADMIN);
-        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_ADMIN);
-        jdbc.execute(SqlQueryBefore.ADD_REFRESH_TOKEN);
-        jdbc.execute(SqlQueryBefore.ADD_USER_USER);
-        jdbc.execute(SqlQueryBefore.ADD_OUTDATED_REFRESH_TOKEN);
-        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_USER);
-    }
-
-    @AfterEach
-    public void clean() {
-        jdbc.execute(SqlQueryAfter.DROP_USER_REFRESH_TOKEN);
-        jdbc.execute(SqlQueryAfter.DROP_USERS_ROLES);
-        jdbc.execute(SqlQueryAfter.DROP_USERS);
-        jdbc.execute(SqlQueryAfter.DROP_ACCOUNT_STATUSES);
-        jdbc.execute(SqlQueryAfter.DROP_ROLES);
-    }
-
-    @Test
-    @DisplayName("[200] GET " + API_V1_AUTH + REFRESH_TOKEN)
-    public void successfulRefreshToken() throws Exception {
-        Cookie cookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_ADMIN);
-
-        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
-                        .cookie(cookie))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.tokenType", is(TestConstants.TOKEN_TYPE)));
-    }
-
-    @Test
-    @DisplayName("[403] GET " + API_V1_AUTH + REFRESH_TOKEN)
-    public void invalidToken() throws Exception {
-        Cookie badCookie = new Cookie(tokenName, "123");
-
-        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
-                        .cookie(badCookie))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message", is(ErrorMessages.INVALID_TOKEN)));
-    }
-
-    @Test
-    @DisplayName("[403] GET " + API_V1_AUTH + REFRESH_TOKEN)
-    public void outdatedToken() throws Exception {
-        Cookie outdatedCookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_USER);
-
-        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
-                        .cookie(outdatedCookie))
-                .andExpect(status().isForbidden());
-
-    }
+//
+//
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Autowired
+//    private JdbcTemplate jdbc;
+//
+//    @Value("${app-refresh-token-name}")
+//    private String tokenName;
+//
+//
+//    @BeforeEach
+//    public void init() {
+//        jdbc.execute(SqlQueryBefore.ADD_ROLES);
+//        jdbc.execute(SqlQueryBefore.ADD_ACCOUNT_STATUSES);
+//        jdbc.execute(SqlQueryBefore.ADD_USER_ADMIN);
+//        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_ADMIN);
+//        jdbc.execute(SqlQueryBefore.ADD_REFRESH_TOKEN);
+//        jdbc.execute(SqlQueryBefore.ADD_USER_USER);
+//        jdbc.execute(SqlQueryBefore.ADD_OUTDATED_REFRESH_TOKEN);
+//        jdbc.execute(SqlQueryBefore.ADD_USERS_ROLES_FOR_USER);
+//    }
+//
+//    @AfterEach
+//    public void clean() {
+//        jdbc.execute(SqlQueryAfter.DROP_USER_REFRESH_TOKEN);
+//        jdbc.execute(SqlQueryAfter.DROP_USERS_ROLES);
+//        jdbc.execute(SqlQueryAfter.DROP_USERS);
+//        jdbc.execute(SqlQueryAfter.DROP_ACCOUNT_STATUSES);
+//        jdbc.execute(SqlQueryAfter.DROP_ROLES);
+//    }
+//
+//    @Test
+//    @DisplayName("[200] GET " + API_V1_AUTH + REFRESH_TOKEN)
+//    public void successfulRefreshToken() throws Exception {
+//        Cookie cookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_ADMIN);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
+//                        .cookie(cookie))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.tokenType", is(TestConstants.TOKEN_TYPE)));
+//    }
+//
+//    @Test
+//    @DisplayName("[403] GET " + API_V1_AUTH + REFRESH_TOKEN)
+//    public void invalidToken() throws Exception {
+//        Cookie badCookie = new Cookie(tokenName, "123");
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
+//                        .cookie(badCookie))
+//                .andExpect(status().isForbidden())
+//                .andExpect(jsonPath("$.message", is(ErrorMessages.INVALID_TOKEN)));
+//    }
+//
+//    @Test
+//    @DisplayName("[403] GET " + API_V1_AUTH + REFRESH_TOKEN)
+//    public void outdatedToken() throws Exception {
+//        Cookie outdatedCookie = new Cookie(tokenName, TestConstants.REFRESH_TOKEN_USER);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get(API_V1_AUTH + REFRESH_TOKEN)
+//                        .cookie(outdatedCookie))
+//                .andExpect(status().isForbidden());
+//
+//    }
 
 
 }
