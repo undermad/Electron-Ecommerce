@@ -16,9 +16,9 @@ public class ClearPasswordRecoveryTokens implements Scheduler {
     }
 
     @Transactional
-    @Override
     @Async
     @Scheduled(fixedRateString = "${schedule-clear-password-recovery-token-millisecond}")
+    @Override
     public void performTask() {
         passwordRecoveryTokenRepository.deleteExpiredTokens();
     }

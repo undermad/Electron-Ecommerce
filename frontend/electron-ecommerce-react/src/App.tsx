@@ -32,6 +32,7 @@ import {ForgotPassword} from "./ui/account/ForgotPassword.tsx";
 import {ChangeForgottenPassword} from "./ui/account/ChangeForgottenPassword.tsx";
 import {Login} from "./ui/account/Login.tsx";
 import {Register} from "./ui/account/Register.tsx";
+import {ProductView} from "./ui/search/ProductView.tsx";
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
                     {/*public routes*/}
                     <Route path={HOME_ROUTE} element={<Home/>}/>
                     <Route path={SEARCH_ROUTE + "/:category"} element={<Search/>}/>
+                    <Route path={SEARCH_ROUTE + "/:category" + "/:productId"} element={<ProductView/>}/>
 
 
                     <Route path={LOGIN_ROUTE} element={<Login/>}/>
