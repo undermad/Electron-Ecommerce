@@ -44,12 +44,12 @@ export const Filter = () => {
     }, [productContext?.categoryResponse.name]);
 
     return (
-        <div className={"w-1/4 flex flex-col gap-[24px]"}>
+        <aside className={"w-full flex flex-col gap-[24px] overflow-y-auto pl-4"}>
 
-            <div>
+            <article>
                 <Header3>Filters</Header3>
                 <ParagraphSmall tailwind="text-[14px]">Apply filters to table data</ParagraphSmall>
-            </div>
+            </article>
 
             <ParagraphSmall tailwind="text-[14px]">Price</ParagraphSmall>
             { productContext?.categoryResponse.maxPrice &&
@@ -58,7 +58,7 @@ export const Filter = () => {
 
             {filters &&
                 Object.entries(filters).map(([filterName, filterValues]) => (
-                    <div key={filterValues} className={"flex flex-col gap-[16px]"}>
+                    <figure key={filterValues} className={"flex flex-col gap-[16px]"}>
                         <Span>{filterName}</Span>
                         <div className={"pl-[16px] flex flex-col gap-[12px]"}>
                             {filterValues.map((value: string, key: number) => (
@@ -76,10 +76,10 @@ export const Filter = () => {
 
                             ))}
                         </div>
-                    </div>
+                    </figure>
 
                 ))}
 
-        </div>
+        </aside>
     )
 }

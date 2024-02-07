@@ -4,9 +4,10 @@ import {BASKET_ROUTE} from "../../constants/Routes.ts";
 import {BasketSvg} from "../../assets/icons/BasketSvg.tsx";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
 import {HoverScale} from "../reusable/HoverScale.tsx";
+import {Breakpoints} from "../../constants/Breakpoints.ts";
 
 export const BasketLink = () => {
-    const width = useViewport();
+    const screenWidth = useViewport();
 
 
     return (
@@ -18,7 +19,7 @@ export const BasketLink = () => {
                         <BasketSvg/>
                     </SmallSvgIcon>
 
-                    {width >= 1024 ?
+                    {screenWidth >= Breakpoints.LARGE ?
                         <span>Basket</span>
                         : ''
                     }

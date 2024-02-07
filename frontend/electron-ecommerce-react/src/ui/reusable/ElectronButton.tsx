@@ -1,6 +1,6 @@
-import React from "react";
+import React, {ComponentProps} from "react";
 
-type ElectronButtonProps = {
+type ElectronButtonProps = ComponentProps<"button"> & {
     children: React.ReactNode,
     loading?: boolean,
     textSize?: number,
@@ -8,10 +8,11 @@ type ElectronButtonProps = {
 
 }
 
-export const ElectronButton = ({loading, children, textSize, width}: ElectronButtonProps) => {
+export const ElectronButton = ({loading, children, textSize, width, ...props}: ElectronButtonProps) => {
     return (
         <div className={"flex flex-col"}>
             <button
+                {...props}
                 className={"rounded-full text-electron-primary-white shadow-md p-[14px] h-[48px] "
                     + `${width ? 'w-[' + width + 'px] ' : ' '}`
                     + `${loading ? "bg-electron-primary-disabled-dark-blue " : "bg-electron-primary-dark-blue "}`

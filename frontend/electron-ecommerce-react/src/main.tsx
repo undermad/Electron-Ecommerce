@@ -6,17 +6,21 @@ import {AuthContextProvider} from "./context/AuthContext.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {MessageScreenContextProvider} from "./context/MessageScreenContext.tsx";
 import {ProductContextProvider} from "./context/ProductContext.tsx";
+import {ThemeContextProvider} from "./context/ThemeContext.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <BrowserRouter>
             <AuthContextProvider>
                 <MessageScreenContextProvider>
-                    <ProductContextProvider>
-                        <Routes>
-                            <Route path={"/*"} element={<App/>}></Route>
-                        </Routes>
-                    </ProductContextProvider>
+                    <ThemeContextProvider>
+
+                        <ProductContextProvider>
+                            <Routes>
+                                <Route path={"/*"} element={<App/>}></Route>
+                            </Routes>
+                        </ProductContextProvider>
+                    </ThemeContextProvider>
                 </MessageScreenContextProvider>
             </AuthContextProvider>
         </BrowserRouter>

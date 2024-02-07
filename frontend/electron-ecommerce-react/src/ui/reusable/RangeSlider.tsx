@@ -26,7 +26,7 @@ export const RangeSlider = ({minRange, maxRange, callback}: RangeSliderProps) =>
     }, [maxRange])
 
     return (
-        <>
+        <div className={"w-2/4 sm:w-5/6 mx-3"}>
             <Range
                 step={1}
                 min={minRange}
@@ -71,7 +71,7 @@ export const RangeSlider = ({minRange, maxRange, callback}: RangeSliderProps) =>
                     />
                 )}
             />
-            <div className={"flex gap-5 justify-center"}>
+            <div className={"flex gap-5 justify-center mt-3"}>
                 <div>
                     £{values[0]}
                 </div>
@@ -79,6 +79,6 @@ export const RangeSlider = ({minRange, maxRange, callback}: RangeSliderProps) =>
                     £{values[1]}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
