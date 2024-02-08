@@ -1,15 +1,18 @@
 import {Filter} from "./Filter.tsx";
-import {useViewport} from "../../custom_hooks/useViewport.ts";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {ThemeContext} from "../../context/ThemeContext.tsx";
 import {ElectronButton} from "../reusable/ElectronButton.tsx";
+import {Header3} from "../reusable/Header3.tsx";
+import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
+import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
+import {useProductList} from "../../custom_hooks/useProductList.ts";
 
 export const FilterSection = () => {
-
-    const viewport = useViewport();
     const filterRef = useRef<HTMLDivElement | null>(null);
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const themeContext = useContext(ThemeContext);
+    const fetchProducts = useFetchProducts();
+    const productContext = useProductList();
 
     const expandFilters = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
@@ -44,19 +47,34 @@ export const FilterSection = () => {
         }
     }, []);
 
+    useEffect(() => {
+        fetchProducts();
+    }, [productContext?.categoryResponse.name]);
+
     return (
         <main className="w-full">
             {isExpanded ?
-                <div className={"fixed flex flex-col left-0 top-0 z-40 w-full sm:w-[350px]  h-screen bg-electron-primary-white"}>
-                    <div className={"h-full flex overflow-y-auto"}
+                <article
+                    className={"fixed flex flex-col left-0 top-0 z-40 w-full sm:w-[350px] h-screen bg-electron-primary-white rounded-r-md"}>
+                    <div className={"h-full flex flex-col overflow-y-auto"}
                          ref={filterRef}>
+                        <div className={"flex justify-between mb-1 border-b border-electron-product-listing-bg"}>
+                            <div className={"w-5/6 px-4 py-2"}>
+                                <Header3>Filters</Header3>
+                                <ParagraphSmall tailwind="text-[14px]">Apply filters to table data</ParagraphSmall>
+                            </div>
+                            <div className={"w-1/6 flex items-center justify-center text-center cursor-pointer"}
+                                 onClick={expandFilters}>x
+                            </div>
+                        </div>
                         <Filter/>
-                        <div onClick={expandFilters}>x</div>
                     </div>
-                    <div>
-                        <ElectronButton onClick={handleShowResult}>Show result</ElectronButton>
+                    <div className={"w-full border-t border-electron-product-listing-bg"}>
+                        <div className={"ml-auto w-1/2 mt-1 mb-1 mr-1"}>
+                            <ElectronButton roundSize={"md"} onClick={handleShowResult}>Show result</ElectronButton>
+                        </div>
                     </div>
-                </div>
+                </article>
                 :
                 <div className={"border rounded cursor-pointer"} onClick={expandFilters}>
                     Filters

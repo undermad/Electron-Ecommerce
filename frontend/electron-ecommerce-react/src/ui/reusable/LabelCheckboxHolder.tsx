@@ -7,7 +7,7 @@ type LabelCheckboxHolderProps = {
 export const LabelCheckboxHolder = ({children, tailwind}: LabelCheckboxHolderProps) => {
 
     return (
-        <div className={"flex gap-3 " + tailwind}>
+        <div className={"flex gap-3 ju items-center " + tailwind}>
             {children}
         </div>
     )

@@ -5,15 +5,17 @@ type ElectronButtonProps = ComponentProps<"button"> & {
     loading?: boolean,
     textSize?: number,
     width?: number,
+    roundSize?: string,
 
 }
 
-export const ElectronButton = ({loading, children, textSize, width, ...props}: ElectronButtonProps) => {
+export const ElectronButton = ({loading, children, textSize, width, roundSize, ...props}: ElectronButtonProps) => {
     return (
         <div className={"flex flex-col"}>
             <button
                 {...props}
-                className={"rounded-full text-electron-primary-white shadow-md p-[14px] h-[48px] "
+                className={"text-electron-primary-white shadow-md p-[14px] h-[48px] "
+                    + `rounded-${roundSize ? `${roundSize}` : 'full'}`
                     + `${width ? 'w-[' + width + 'px] ' : ' '}`
                     + `${loading ? "bg-electron-primary-disabled-dark-blue " : "bg-electron-primary-dark-blue "}`
                     + `${textSize ? 'text-[' + textSize + 'px] ' : ''} `}

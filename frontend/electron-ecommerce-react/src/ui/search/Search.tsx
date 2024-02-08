@@ -9,6 +9,8 @@ import {FilterSection} from "./FilterSection.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {Filter} from "./Filter.tsx";
+import {Header3} from "../reusable/Header3.tsx";
+import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
 
 
 export const Search = () => {
@@ -43,8 +45,12 @@ export const Search = () => {
             {screenWidth >= Breakpoints.LARGE
                 ?
                 <div className={"flex gap-[42px] w-full"}>
-                    <div className={"w-1/4"}>
-                    <Filter/>
+                    <div className={"w-1/4 flex flex-col gap-5"}>
+                            <div className="flex flex-col pl-4">
+                                <Header3>Filters</Header3>
+                                <ParagraphSmall tailwind="text-[14px]">Apply filters to table data</ParagraphSmall>
+                            </div>
+                            <Filter/>
                     </div>
                     <ProductList/>
                 </div>

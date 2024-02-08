@@ -26,15 +26,14 @@ export const ProductList = () => {
     }, [productContext?.pageableProductList]);
 
 
-
-
     return (
+
         <div className="w-full">
             <div className="flex flex-col gap-[20px]">
                 <Header3>Search Result</Header3>
                 <div className="flex flex-col gap-[20px]">
                     {pageableProductList?.content.map((product, index) => (
-                        <ProductListItem product={product} key={index}/>
+                            <ProductListItem product={product} key={index}/>
                     ))}
                 </div>
                 <PageController pageNo={pageableProductList?.pageNo}

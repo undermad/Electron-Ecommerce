@@ -23,7 +23,8 @@ export default {
             'electron-header-font': '#101828',
             'electron-current-page': '#1D2939',
             'electron-other-page': '#475467',
-            'black':'#000'
+            'black':'#000',
+            'electron-product-listing-bg':'#e6e6e6',
         },
         extend: {},
     },

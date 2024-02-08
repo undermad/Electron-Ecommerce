@@ -26,7 +26,7 @@ export const RangeSlider = ({minRange, maxRange, callback}: RangeSliderProps) =>
     }, [maxRange])
 
     return (
-        <div className={"w-2/4 sm:w-5/6 mx-3"}>
+        <div className={"w-5/6 sm:w-5/6 mx-3"}>
             <Range
                 step={1}
                 min={minRange}

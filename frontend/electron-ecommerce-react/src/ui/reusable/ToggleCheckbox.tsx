@@ -10,7 +10,7 @@ export const ToggleCheckbox = ({callback, ...props}: ToggleCheckboxProps) => {
 
     return (
         <input
-            className={""}
+            className={"w-4 h-4 accent-electron-primary-dark-blue cursor-pointer"}
             {...props}
             onChange={callback}
         />

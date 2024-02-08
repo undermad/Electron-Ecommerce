@@ -1,4 +1,3 @@
-import {Header3} from "../reusable/Header3.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
 import {RangeSlider} from "../reusable/RangeSlider.tsx";
 import {Span} from "../reusable/Span.tsx";
@@ -37,6 +36,16 @@ export const Filter = () => {
         productContext?.setPriceValues(newValues);
     }
 
+    const check = (param: string) => {
+        let result = false;
+        productContext?.filters?.forEach(value => {
+            value.forEach(val => {
+                if(val === param) result = true;
+            })
+        })
+        return result;
+    }
+
 
     useEffect(() => {
         setFilters(productContext?.categoryResponse.filters);
@@ -46,11 +55,6 @@ export const Filter = () => {
     return (
         <aside className={"w-full flex flex-col gap-[24px] overflow-y-auto pl-4"}>
 
-            <article>
-                <Header3>Filters</Header3>
-                <ParagraphSmall tailwind="text-[14px]">Apply filters to table data</ParagraphSmall>
-            </article>
-
             <ParagraphSmall tailwind="text-[14px]">Price</ParagraphSmall>
             { productContext?.categoryResponse.maxPrice &&
                 <RangeSlider minRange={0} maxRange={productContext?.categoryResponse.maxPrice} callback={handlePriceChange}/>}
@@ -58,7 +62,7 @@ export const Filter = () => {
 
             {filters &&
                 Object.entries(filters).map(([filterName, filterValues]) => (
-                    <figure key={filterValues} className={"flex flex-col gap-[16px]"}>
+                    <figure key={filterValues} className={"flex flex-col gap-[16px] "}>
                         <Span>{filterName}</Span>
                         <div className={"pl-[16px] flex flex-col gap-[12px]"}>
                             {filterValues.map((value: string, key: number) => (
@@ -67,6 +71,7 @@ export const Filter = () => {
                                         type={"checkbox"}
                                         id={value}
                                         name={value}
+                                        checked={check(value)}
                                         callback={handleInputChange}/>
                                     <CheckboxLabel htmlFor={value}>
                                         {value}
