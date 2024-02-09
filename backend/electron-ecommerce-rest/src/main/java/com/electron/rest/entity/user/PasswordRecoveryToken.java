@@ -32,4 +32,5 @@ public class PasswordRecoveryToken implements Token {
     private User user;
 
 
+
 }

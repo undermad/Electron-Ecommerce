@@ -1,18 +1,20 @@
 import {useParams} from "react-router-dom";
-import {useEffect} from "react";
-import {axiosCategory} from "../../api/axios.ts";
+import {useEffect, useState} from "react";
+import {axiosBase, PRODUCT_API_PATH} from "../../api/axios.ts";
+import {defaultProduct, Product} from "../../api/dto/product/Product.ts";
 
 export const ProductView = () => {
 
     const param = useParams();
     const category = param.category;
     const productId = param.productId;
-
+    const [product, setProduct] = useState<Product>(defaultProduct);
 
     useEffect(() => {
-        axiosCategory.get(`/${category}/${productId}`)
+        axiosBase.get(PRODUCT_API_PATH + `/${productId}`)
             .then(response => {
-                console.log(response);
+                setProduct(response.data);
+                console.log(response.data)
             })
             .catch(error => {
                 console.log(error);

@@ -55,7 +55,7 @@ export const FilterSection = () => {
         <main className="w-full">
             {isExpanded ?
                 <article
-                    className={"fixed flex flex-col left-0 top-0 z-40 w-full sm:w-[350px] h-screen bg-electron-primary-white rounded-r-md"}>
+                    className={"fixed flex flex-col left-0 top-0 z-40 w-full sm:w-[350px] h-screen bg-electron-primary-white sm:rounded-r-md"}>
                     <div className={"h-full flex flex-col overflow-y-auto"}
                          ref={filterRef}>
                         <div className={"flex justify-between mb-1 border-b border-electron-product-listing-bg"}>

@@ -17,6 +17,7 @@ export const REGISTER_API_PATH = "/register";
 export const ACTIVATE_API_PATH = "/activate";
 
 export const CATEGORY_API_PATH = "/category";
+export const PRODUCT_API_PATH = "/product"
 
 export const PRODUCT_CATEGORY_PATH = "/product";
 

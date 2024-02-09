@@ -28,5 +28,4 @@ public class Role {
     private Set<User> users;
 
 
-
 }

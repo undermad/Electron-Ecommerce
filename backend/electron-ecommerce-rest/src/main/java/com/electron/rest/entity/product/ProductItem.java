@@ -2,8 +2,12 @@ package com.electron.rest.entity.product;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -13,7 +17,7 @@ public class ProductItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -43,5 +47,20 @@ public class ProductItem {
             inverseJoinColumns = @JoinColumn(name = "variation_option_id", referencedColumnName = "id"))
     private Set<VariationOption> variationOptions;
 
+    @OneToMany(mappedBy = "productItem", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
+    @Column(name = "current_rate", precision = 2, scale = 1)
+    private BigDecimal overallRate;
+
+    @OneToOne
+    @JoinColumn(name = "product_details_id", unique = true, referencedColumnName = "id")
+    private ProductDetails productDetails;
+
+    @CreationTimestamp
+    private Instant createdOn;
+
+    @UpdateTimestamp
+    private Instant updatedOn;
 
 }

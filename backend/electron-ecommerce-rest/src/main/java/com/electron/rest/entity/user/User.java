@@ -1,8 +1,10 @@
 package com.electron.rest.entity.user;
 
+import com.electron.rest.entity.product.Review;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.List;
@@ -39,6 +41,9 @@ public class User {
     @CreationTimestamp
     private Instant createdOn;
 
+    @UpdateTimestamp
+    private Instant updatedOn;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_status_id", nullable = false)
     private AccountStatus accountStatus;
@@ -57,6 +62,9 @@ public class User {
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private PasswordRecoveryToken passwordRecoveryToken;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
 
 
 }

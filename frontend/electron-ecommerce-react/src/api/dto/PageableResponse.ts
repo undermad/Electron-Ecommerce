@@ -5,3 +5,11 @@ export type PageableResponse<T> = {
     pageSize: number,
     content: T[],
 }
+
+export const defaultPageableProduct = {
+    pageNo: 0,
+    totalPages: 0,
+    totalElements: 0,
+    pageSize: 25,
+    content: [],
+}

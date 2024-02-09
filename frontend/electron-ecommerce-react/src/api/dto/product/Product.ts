@@ -6,16 +6,30 @@ export type Product = {
     imgUrl: string,
     stockQuantity: number,
     price: number,
+    currentRate: number,
     categoryId: number,
+    category: string,
+    productInformation: string,
+    images: string[],
     features: string[];
 }
 
-
-export const defaultPageableProduct = {
-    pageNo: 0,
-    totalPages: 0,
-    totalElements: 0,
-    pageSize: 25,
-    content: [],
+export const defaultProduct: Product = {
+    productId: 0,
+    name: '',
+    description: '',
+    sku: '',
+    imgUrl: '',
+    stockQuantity:0,
+    price:0,
+    currentRate:0,
+    categoryId:0,
+    category:'',
+    productInformation:'',
+    images: [],
+    features: [],
 }
+
+
+
 

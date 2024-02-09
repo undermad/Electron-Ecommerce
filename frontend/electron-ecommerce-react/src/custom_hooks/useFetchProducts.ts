@@ -1,5 +1,5 @@
 import {ProductWithFilterRequest} from "../api/dto/product/ProductWithFilterRequest.ts";
-import {axiosBase, CATEGORY_API_PATH} from "../api/axios.ts";
+import {axiosBase, PRODUCT_API_PATH} from "../api/axios.ts";
 import {useProductList} from "./useProductList.ts";
 
 export const useFetchProducts = () => {
@@ -24,7 +24,7 @@ export const useFetchProducts = () => {
         console.log(requestData);
         try {
             const response = await axiosBase.post(
-                CATEGORY_API_PATH
+                PRODUCT_API_PATH
                 + `/${productContext?.categoryResponse.name}`
                 + `?pageNo=${pageNo}`,
                 requestData);

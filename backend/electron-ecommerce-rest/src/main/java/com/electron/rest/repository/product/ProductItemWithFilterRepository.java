@@ -22,7 +22,8 @@ public class ProductItemWithFilterRepository {
                 pi.sku as sku,
                 pi.img_url as imgUrl,
                 pi.stock_quantity as stockQuantity,
-                pi.category_id as categoryId
+                pi.category_id as categoryId,
+                pi.current_rate as currentRate
             """;
     private final String from = "product_item pi";
     private final String joins = """
