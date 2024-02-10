@@ -10,7 +10,7 @@ export const Bold = ({children, weight, textSize}: BoldProps) => {
 
 
     return (
-        <h3 className={`text-electron-header-font text-[${textSize}px] font-[${weight}] leading-7`}>
+        <h3 className={`text-electron-header-font text-[${textSize}px] font-[${weight}] leading-6`}>
             {children}
         </h3>
     )

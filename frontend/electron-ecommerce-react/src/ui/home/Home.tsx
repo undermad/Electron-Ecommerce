@@ -39,9 +39,6 @@ export const Home = () => {
             <br/>
             <LogoutEverywhereButton/>
 
-
-
-
             {width >= Breakpoints.SMALL ?
                 <Hero/>
                 : ""}

@@ -1,3 +1,5 @@
+import {Feature} from "./Feature.ts";
+
 export type Product = {
     productId: number,
     name: string,
@@ -11,7 +13,7 @@ export type Product = {
     category: string,
     productInformation: string,
     images: string[],
-    features: string[];
+    features: Feature[];
 }
 
 export const defaultProduct: Product = {

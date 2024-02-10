@@ -10,6 +10,7 @@ export default {
             'electron-primary-disabled-dark-blue': '#2f2f2f',
             'electron-primary-white': '#FFFFFF',
             'electron-primary-grey': '#afafaf',
+            'electron-light-grey': '#F6F6F6',
             'electron-input-bg': '#262836',
             'electron-input-border': 'rgba(240, 240, 240, 0.05)',
             'electron-input-grey': '#D0D5DD',
