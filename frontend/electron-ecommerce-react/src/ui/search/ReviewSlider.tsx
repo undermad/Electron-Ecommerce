@@ -1,46 +1,45 @@
-import {Navigation, Scrollbar} from 'swiper/modules';
+import {Navigation} from 'swiper/modules';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
-import {Dispatch, SetStateAction} from "react";
 
 type ReviewSliderProps = {
-    reviews: string[],
-    productDescription: string,
-    callback: Dispatch<SetStateAction<number>>,
+    reviews: Review[],
+
 }
 
 
-export const ReviewSlider = ({images, productDescription, callback}: ReviewSliderProps) => {
+export const ReviewSlider = ({reviews}: ReviewSliderProps) => {
 
     return (
         <div className="w-full flex">
             <Swiper
                 spaceBetween={20}
                 slidesPerView={3}
-                modules={[Navigation, Scrollbar]}
+                modules={[Navigation]}
                 navigation={{
                     prevEl: ".button-next-slide",
                     nextEl: ".button-prev-slide"
                 }}
-                scrollbar={{draggable: true}}
                 className="px-10 relative"
             >
                 <div className={"flex gap-[16px] mt-auto items-center"}>
-                    {images.map((value, index) => (
-                        <SwiperSlide>
-                            <div className="py-3">
-                                <div key={index}
-                                     onClick={() => callback(index)}
-                                     className={"cursor-pointer border border-electron-product-listing-bg rounded-md p-3"}>
-                                    <img src={value} alt={productDescription}/>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
+                        {reviews.map((value, index) => (
+                                <SwiperSlide key={index}>
+                                    <div className="py-3">
+                                        <div key={index}
+                                             className={"cursor-pointer border border-electron-product-listing-bg rounded-md p-3"}>
+                                            <p>{value.fullName}</p>
+                                            <p>{value.review}</p>
+                                            <p>{value.rate}</p>
+                                        </div>
+                                    </div>
+                                </SwiperSlide>
+                            ))
+                    }
                 </div>
 
 

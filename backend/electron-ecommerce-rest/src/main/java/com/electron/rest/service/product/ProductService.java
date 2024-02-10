@@ -3,18 +3,22 @@ package com.electron.rest.service.product;
 import com.electron.rest.dto.PageableResponse;
 import com.electron.rest.dto.ProductByFiltersRequest;
 import com.electron.rest.dto.product.ProductResponse;
+import com.electron.rest.dto.product.ReviewDto;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.CategoryProjection;
+import com.electron.rest.entity.projections.ReviewProjection;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
 import com.electron.rest.repository.product.CategoryRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
 import com.electron.rest.repository.product.ProductItemWithFilterRepository;
+import com.electron.rest.repository.product.ReviewRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.electron.rest.constants.ErrorMessages.CATEGORY_NOT_FOUND;
 import static com.electron.rest.constants.ErrorMessages.PRODUCT_NOT_FOUND;
@@ -26,15 +30,17 @@ public class ProductService {
     private final ProductItemRepository productItemRepository;
     private final ProductMapper productMapper;
     private final ProductItemWithFilterRepository productItemWithFilterRepository;
+    private final ReviewRepository reviewRepository;
 
     @Value("${app-page-size}")
     private Integer pageSize;
 
-    public ProductService(CategoryRepository categoryRepository, ProductItemRepository productItemRepository, ProductMapper productMapper, ProductItemWithFilterRepository productItemWithFilterRepository) {
+    public ProductService(CategoryRepository categoryRepository, ProductItemRepository productItemRepository, ProductMapper productMapper, ProductItemWithFilterRepository productItemWithFilterRepository, ReviewRepository reviewRepository) {
         this.categoryRepository = categoryRepository;
         this.productItemRepository = productItemRepository;
         this.productMapper = productMapper;
         this.productItemWithFilterRepository = productItemWithFilterRepository;
+        this.reviewRepository = reviewRepository;
     }
 
 
@@ -42,7 +48,19 @@ public class ProductService {
         ProductItem productItem = productItemRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
-        return productMapper.mapProductItemToProductResponse(productItem);
+        ProductResponse productResponse = productMapper.mapProductItemToProductResponse(productItem);
+
+        List<ReviewProjection> listOfReviewProjections = reviewRepository.findAllByProductId(productId);
+        if (!listOfReviewProjections.isEmpty()) productResponse
+                .setReviews(listOfReviewProjections
+                        .stream()
+                        .map((reviewProjection -> new ReviewDto(
+                                reviewProjection.getRate(),
+                                reviewProjection.getReview(),
+                                reviewProjection.getFirstName() + " " + reviewProjection.getLastName())))
+                        .collect(Collectors.toList()));
+        return productResponse;
+
     }
 
 

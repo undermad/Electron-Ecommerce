@@ -19,7 +19,7 @@ type ActiveSliderProps = {
 export const ActiveSlider = ({images, productDescription, callback}: ActiveSliderProps) => {
 
     return (
-        <div className="w-full flex">
+        <div className="w-full flex mt-auto">
             <Swiper
                 spaceBetween={20}
                 slidesPerView={3}

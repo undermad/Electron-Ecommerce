@@ -10,6 +10,7 @@ import {MdStoreMallDirectory} from "react-icons/md";
 import {Bold} from "../reusable/Bold.tsx";
 import {ImageProductView} from "./ImageProductView.tsx";
 import {ProductDescription} from "./ProductDescription.tsx";
+import {ReviewSlider} from "./ReviewSlider.tsx";
 
 export const ProductView = () => {
 
@@ -33,6 +34,10 @@ export const ProductView = () => {
 
     }, []);
 
+    useEffect(() => {
+        console.log(product)
+    }, [product]);
+
 
     return (
         <Container>
@@ -45,9 +50,9 @@ export const ProductView = () => {
 
                         <article className={"flex flex-col gap-[24px]"}>
                             <div className={"flex flex-col gap-[23px]"}>
-                                <div>
-                                    <Bold textSize={28} weight={600}>{product.name}</Bold>
-                                    <ParagraphSmall>{product.description}</ParagraphSmall>
+                                <div className="flex flex-col gap-[8px]">
+                                    <Bold leading={8} textSize={28} weight={600}>{product.name}</Bold>
+                                    <ParagraphSmall tailwind="text-[16px]">{product.description}</ParagraphSmall>
                                 </div>
                                 <p>{product.currentRate}</p>
                             </div>
@@ -119,6 +124,8 @@ export const ProductView = () => {
                             <Bold weight={600} textSize={20}>Reviews</Bold>
                         </div>
                     </div>
+
+                    <ReviewSlider reviews={product.reviews}/>
 
 
                 </main>

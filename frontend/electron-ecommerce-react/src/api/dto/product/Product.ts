@@ -14,6 +14,7 @@ export type Product = {
     productInformation: string,
     images: string[],
     features: Feature[];
+    reviews: Review[];
 }
 
 export const defaultProduct: Product = {
@@ -30,6 +31,7 @@ export const defaultProduct: Product = {
     productInformation:'',
     images: [],
     features: [],
+    reviews: [],
 }
 
 

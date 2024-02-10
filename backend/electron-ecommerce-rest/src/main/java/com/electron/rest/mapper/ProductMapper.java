@@ -34,13 +34,6 @@ public class ProductMapper {
                                         variation.getVariation().getName(),
                                         variation.getValue()))
                         .collect(Collectors.toList()))
-                .reviews(productItem.getReviews()
-                        .stream()
-                        .map(review -> {
-                            System.out.println(review.getReview());
-                            return new ReviewDto(review.getRate(), review.getReview());
-                        })
-                        .collect(Collectors.toList()))
                 .build();
     }
 
