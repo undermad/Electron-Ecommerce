@@ -75,6 +75,7 @@ export const ExpandingButton = (props: ExpandingButtonProps) => {
                         initial={{
                             opacity: 0,
                         }}
+
                         className={`${isExpanded ? '' : 'hidden'} absolute left-0 top-full w-full bg-electron-primary-dark-blue`}>
 
                         <ul className={"flex flex-col items-center"}>

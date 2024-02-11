@@ -32,7 +32,7 @@ import {ForgotPassword} from "./ui/account/ForgotPassword.tsx";
 import {ChangeForgottenPassword} from "./ui/account/ChangeForgottenPassword.tsx";
 import {Login} from "./ui/account/Login.tsx";
 import {Register} from "./ui/account/Register.tsx";
-import {ProductView} from "./ui/search/ProductView.tsx";
+import {ProductView} from "./ui/product-view/ProductView.tsx";
 
 function App() {
 
@@ -45,6 +45,7 @@ function App() {
                     <Route path={HOME_ROUTE} element={<Home/>}/>
                     <Route path={SEARCH_ROUTE + "/:category"} element={<Search/>}/>
                     <Route path={SEARCH_ROUTE + "/:category" + "/:productId"} element={<ProductView/>}/>
+                    <Route path={BASKET_ROUTE} element={<Basket/>}/>
 
 
                     <Route path={LOGIN_ROUTE} element={<Login/>}/>
@@ -57,7 +58,6 @@ function App() {
                     {/*user protected routes*/}
                     <Route element={<RequireAuth allowedRoles={[ROLE_USER]}/>}>
                         <Route path={ACCOUNT_ROUTE} element={<MyAccount/>}/>
-                        <Route path={BASKET_ROUTE} element={<Basket/>}/>
                         <Route path={LOGOUT_ROUTE} element={<Logout/>}/>
                     </Route>
 

@@ -27,8 +27,8 @@ export const Home = () => {
     }
 
     return (
-
         <Container>
+
             <Link to={ADMIN_ROUTE}>Admin Section Click</Link>
             <br/>
             <button onClick={() => refresh()}>Refresh Token</button>

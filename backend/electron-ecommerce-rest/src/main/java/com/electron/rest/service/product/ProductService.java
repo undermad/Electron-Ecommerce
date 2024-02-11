@@ -9,6 +9,7 @@ import com.electron.rest.entity.projections.CategoryProjection;
 import com.electron.rest.entity.projections.ReviewProjection;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
+import com.electron.rest.mapper.ReviewMapper;
 import com.electron.rest.repository.product.CategoryRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
 import com.electron.rest.repository.product.ProductItemWithFilterRepository;
@@ -31,16 +32,18 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductItemWithFilterRepository productItemWithFilterRepository;
     private final ReviewRepository reviewRepository;
+    private final ReviewMapper reviewMapper;
 
     @Value("${app-page-size}")
     private Integer pageSize;
 
-    public ProductService(CategoryRepository categoryRepository, ProductItemRepository productItemRepository, ProductMapper productMapper, ProductItemWithFilterRepository productItemWithFilterRepository, ReviewRepository reviewRepository) {
+    public ProductService(CategoryRepository categoryRepository, ProductItemRepository productItemRepository, ProductMapper productMapper, ProductItemWithFilterRepository productItemWithFilterRepository, ReviewRepository reviewRepository, ReviewMapper reviewMapper) {
         this.categoryRepository = categoryRepository;
         this.productItemRepository = productItemRepository;
         this.productMapper = productMapper;
         this.productItemWithFilterRepository = productItemWithFilterRepository;
         this.reviewRepository = reviewRepository;
+        this.reviewMapper = reviewMapper;
     }
 
 
@@ -51,14 +54,11 @@ public class ProductService {
         ProductResponse productResponse = productMapper.mapProductItemToProductResponse(productItem);
 
         List<ReviewProjection> listOfReviewProjections = reviewRepository.findAllByProductId(productId);
-        if (!listOfReviewProjections.isEmpty()) productResponse
-                .setReviews(listOfReviewProjections
-                        .stream()
-                        .map((reviewProjection -> new ReviewDto(
-                                reviewProjection.getRate(),
-                                reviewProjection.getReview(),
-                                reviewProjection.getFirstName() + " " + reviewProjection.getLastName())))
-                        .collect(Collectors.toList()));
+        if (!listOfReviewProjections.isEmpty())
+            productResponse.setReviews(listOfReviewProjections
+                    .stream()
+                    .map((reviewMapper::mapReviewToDto))
+                    .collect(Collectors.toList()));
         return productResponse;
 
     }

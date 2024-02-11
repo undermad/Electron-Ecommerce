@@ -1,4 +1,5 @@
 import {Feature} from "./Feature.ts";
+import {Review} from "./Review.ts";
 
 export type Product = {
     productId: number,
@@ -13,8 +14,8 @@ export type Product = {
     category: string,
     productInformation: string,
     images: string[],
-    features: Feature[];
-    reviews: Review[];
+    features: Feature[],
+    reviews: Review[],
 }
 
 export const defaultProduct: Product = {

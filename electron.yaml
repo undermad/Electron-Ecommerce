@@ -1,0 +1,30 @@
+version: '3'
+services:
+  database:
+    image: mysql:8.0
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: electron-ecommerce
+      MYSQL_DATABASE: electron_ecommerce
+      MYSQL_USER: electron-ecommerce
+      MYSQL_PASSWORD: electron-ecommerce
+
+  server:
+    build:
+      context: backend/electron-ecommerce-rest/
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+
+  client:
+    build:
+      context: frontend/electron-ecommerce-react/
+    ports:
+      - 5173:5173
+    depends_on:
+      - server
+
+
+

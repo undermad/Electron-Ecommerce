@@ -10,6 +10,14 @@ import java.util.List;
 
 public interface ReviewRepository extends CrudRepository<Review, Long> {
 
-    @Query(value = "SELECT r.rate as rate, r.review as review, u.first_name as firstName, u.last_name as lastName FROM reviews r JOIN users u ON r.user_id = u.id WHERE product_item_id = :productId",nativeQuery = true)
+    @Query(value = """
+            SELECT r.rate as rate,
+                r.review as review,
+                u.first_name as firstName,
+                u.last_name as lastName,
+                r.created_on as createdOn
+            FROM reviews r JOIN users u ON r.user_id = u.id 
+            WHERE product_item_id = :productId
+            """,nativeQuery = true)
     List<ReviewProjection> findAllByProductId(@Param("productId") Long productId);
 }

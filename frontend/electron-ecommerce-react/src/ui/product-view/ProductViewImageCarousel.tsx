@@ -2,13 +2,14 @@ import {useEffect, useState} from "react";
 import {IoIosArrowBack} from "react-icons/io";
 import {IoIosArrowForward} from "react-icons/io";
 import {ActiveSlider} from "./ActiveSlider.tsx";
+import {ProductViewImage} from "./ProductViewImage.tsx";
 
 type ImageProductViewProps = {
     images: string[],
     productDescription: string,
 }
 
-export const ImageProductView = ({images, productDescription}: ImageProductViewProps) => {
+export const ProductViewImageCarousel = ({images, productDescription}: ImageProductViewProps) => {
 
     const [currentImage, setCurrentImage] = useState<string>('')
     const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -41,8 +42,9 @@ export const ImageProductView = ({images, productDescription}: ImageProductViewP
                         <IoIosArrowBack size={28}/>
                     </div> : ''
                 }
-                <img src={currentImage} alt={productDescription}
-                     className={""}/>
+                <ProductViewImage currentImage={currentImage} productDescription={productDescription}/>
+
+
                 {currentIndex !== images.length - 1 ?
                     <div
                         className={"absolute opacity-0 group-hover:opacity-100 right-0 top-1/2 translate-x-1/2 cursor-pointer"}
