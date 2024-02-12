@@ -4,34 +4,14 @@ import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import {CiDeliveryTruck} from "react-icons/ci";
 import {MdStoreMallDirectory} from "react-icons/md";
 import {Product} from "../../api/dto/product/Product.ts";
-import {useContext, useEffect, useState} from "react";
-import {BasketContext} from "../../context/BasketContext.tsx";
-import {BasketPosition} from "../../api/dto/basket/Basket.ts";
 import {AddToBasketButton} from "../reusable/AddToBasketButton.tsx";
+import {RatingStars} from "../reusable/RatingStars.tsx";
 
 type ProductViewPanelProps = {
     product: Product
 }
 
 export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
-    const [isInBasket, setIsInBasket] = useState<boolean>(false);
-
-    const basketContext = useContext(BasketContext);
-
-    const addToBasket = () => {
-        const basketPosition: BasketPosition = {
-            product: product,
-            quantity: 1,
-        }
-        basketContext.basket?.items.push(basketPosition);
-        setIsInBasket(false);
-    }
-
-    useEffect(() => {
-        if (!basketContext.basket?.items.some(basketPosition => basketPosition.product.productId === product.productId)) {
-            setIsInBasket(true);
-        }
-    }, []);
 
     return (
         <article className={"flex flex-col gap-[24px]"}>
@@ -40,12 +20,15 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
                     <Bold leading={8} textSize={28} weight={600}>{product.name}</Bold>
                     <ParagraphSmall tailwind="text-[16px]">{product.description}</ParagraphSmall>
                 </div>
-                <p>{product.currentRate}</p>
+                <div className={"flex items-center gap-1"}>
+                    <RatingStars currentRate={product.currentRate}/>
+                    <ParagraphSmall>({product.reviews.length})</ParagraphSmall>
+                </div>
             </div>
 
             <span className="border-b border-electron-product-listing-bg pb-[24px]">
-                                <Bold weight={600} textSize={28}>£{product.price}</Bold>
-                            </span>
+                <Bold weight={600} textSize={28}>£{product.price}</Bold>
+            </span>
 
             <figure>
                 <div className="flex flex-col gap-[16px]">
@@ -64,16 +47,8 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
 
             <div className="flex flex-col gap-[12px]">
                 <div className="flex gap-5">
-                    <div className="w-[150px]">
-
-
-                        {basketContext.basket?.items.some(basketPosition => basketPosition.product.productId === product.productId) ?
-                            <AddToBasketButton product={product}/>
-                            :
-                            <ElectronButton onClick={addToBasket}>Add</ElectronButton>
-                        }
-
-
+                    <div className="w-[102px]">
+                        <AddToBasketButton product={product}/>
                     </div>
                     <div className="w-[150px]">
                         <ElectronButton>Buy Now</ElectronButton>

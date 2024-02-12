@@ -4,6 +4,7 @@ import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import {useNavigate} from "react-router-dom";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
+import {AddToBasketButton} from "../reusable/AddToBasketButton.tsx";
 
 type ProductListItemProps = {
     product: Product,
@@ -45,7 +46,7 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
 
 
                     <div className="w-1/6 flex flex-col justify-center">
-                        <ElectronButton textSize={12}>Add To Cart</ElectronButton>
+                        <AddToBasketButton product={product}/>
                     </div>
                 </div>
                 :

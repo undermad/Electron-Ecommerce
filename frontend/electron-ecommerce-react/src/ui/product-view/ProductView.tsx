@@ -17,7 +17,7 @@ export const ProductView = () => {
 
 
     useEffect(() => {
-        setLoading(false);
+        setLoading(true);
         axiosBase.get(PRODUCT_API_PATH + `/${productId}`)
             .then(response => {
                 setProduct(response.data);
@@ -27,13 +27,7 @@ export const ProductView = () => {
                 console.log(error);
             })
             .finally(() => setLoading(false))
-
     }, []);
-
-    useEffect(() => {
-        console.log(product)
-    }, [product]);
-
 
     return (
         <Container>
