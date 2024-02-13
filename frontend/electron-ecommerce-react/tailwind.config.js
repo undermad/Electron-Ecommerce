@@ -26,6 +26,7 @@ export default {
             'electron-other-page': '#475467',
             'black':'#000',
             'electron-product-listing-bg':'#e6e6e6',
+            'electron-bg-grey': '#F9FAFB',
         },
         extend: {},
     },

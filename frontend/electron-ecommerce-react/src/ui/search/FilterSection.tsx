@@ -71,7 +71,7 @@ export const FilterSection = () => {
                     </div>
                     <div className={"w-full border-t border-electron-product-listing-bg"}>
                         <div className={"ml-auto w-1/2 mt-1 mb-1 mr-1"}>
-                            <ElectronButton roundSize={"md"} onClick={handleShowResult}>Show result</ElectronButton>
+                            <ElectronButton rounded={"xl"} onClick={handleShowResult}>Show result</ElectronButton>
                         </div>
                     </div>
                 </article>

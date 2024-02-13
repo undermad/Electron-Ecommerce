@@ -3,6 +3,7 @@ import {NavigationBar} from "./nav/NavigationBar.tsx";
 import {Footer} from "./footer/Footer.tsx";
 import {useContext} from "react";
 import {ThemeContext} from "../context/ThemeContext.tsx";
+import {NewsletterBanner} from "./footer/NewsletterBanner.tsx";
 
 export const AppLayout = () => {
 
@@ -17,6 +18,7 @@ export const AppLayout = () => {
 
             <NavigationBar/>
             <Outlet/>
+            <NewsletterBanner/>
             <Footer/>
         </div>
     )
