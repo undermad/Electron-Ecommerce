@@ -1,11 +1,15 @@
 package com.electron.rest.service.product;
 
+import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.dto.PageableResponse;
 import com.electron.rest.dto.ProductByFiltersRequest;
+import com.electron.rest.dto.product.FeatureDto;
 import com.electron.rest.dto.product.ProductResponse;
 import com.electron.rest.dto.product.ReviewDto;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.CategoryProjection;
+import com.electron.rest.entity.projections.FeatureProjection;
+import com.electron.rest.entity.projections.ProductItemProjection;
 import com.electron.rest.entity.projections.ReviewProjection;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
@@ -48,10 +52,23 @@ public class ProductService {
 
 
     public ProductResponse getProductById(Long productId) {
-        ProductItem productItem = productItemRepository.findById(productId)
+        ProductItemProjection productAsProjection = productItemRepository.findProductById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
+        ProductResponse productResponse = productMapper.mapProductItemToProductResponse(productAsProjection);
 
-        ProductResponse productResponse = productMapper.mapProductItemToProductResponse(productItem);
+        String category = categoryRepository.findCategoryNameById(productAsProjection.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException(CATEGORY_NOT_FOUND)).getName();
+
+        productResponse.setCategory(category);
+
+        List<ProductItemProjection> imagesAsProjections = productItemRepository
+                .findProductImages(productAsProjection.getProductDetailsId());
+
+        if (!imagesAsProjections.isEmpty())
+            productResponse.setImages(imagesAsProjections
+                    .stream()
+                    .map(ProductItemProjection::getImg)
+                    .collect(Collectors.toSet()));
 
         List<ReviewProjection> listOfReviewProjections = reviewRepository.findAllByProductId(productId);
         if (!listOfReviewProjections.isEmpty())
@@ -59,8 +76,16 @@ public class ProductService {
                     .stream()
                     .map((reviewMapper::mapReviewToDto))
                     .collect(Collectors.toList()));
-        return productResponse;
 
+        List<FeatureProjection> featuresAsProjections = productItemRepository.findProductFeatures(productId);
+        if (!featuresAsProjections.isEmpty())
+            productResponse.setFeatures(featuresAsProjections
+                    .stream()
+                    .map(feature -> new FeatureDto(feature.getName(), feature.getValue()))
+                    .collect(Collectors.toList()));
+
+
+        return productResponse;
     }
 
 

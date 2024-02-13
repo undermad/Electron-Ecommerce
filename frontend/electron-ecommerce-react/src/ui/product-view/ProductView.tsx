@@ -7,6 +7,9 @@ import {ProductViewImageCarousel} from "./ProductViewImageCarousel.tsx";
 import {ProductDescription} from "./ProductDescription.tsx";
 import {ProductViewPanel} from "./ProductViewPanel.tsx";
 import {ProductViewReviews} from "./ProductViewReviews.tsx";
+import {ProductViewTittle} from "./ProductViewTittle.tsx";
+import {useViewport} from "../../custom_hooks/useViewport.ts";
+import {Breakpoints} from "../../constants/Breakpoints.ts";
 
 export const ProductView = () => {
 
@@ -14,6 +17,7 @@ export const ProductView = () => {
     const productId = param.productId;
     const [product, setProduct] = useState<Product>(defaultProduct);
     const [loading, setLoading] = useState<boolean>(false);
+    const viewport = useViewport();
 
 
     useEffect(() => {
@@ -30,21 +34,38 @@ export const ProductView = () => {
     }, []);
 
     return (
-        <Container>
-            {!loading &&
-                <main className={"flex flex-col gap-[42px]"}>
 
-                    <div className="flex gap-[65px]">
+        <Container>
+            {viewport >= Breakpoints.LARGE ?
+                <div>
+                    {!loading &&
+                        <main className={"flex flex-col gap-[42px]"}>
+                            <div className="flex gap-[65px]">
+                                <ProductViewImageCarousel images={product.images}
+                                                          productDescription={product.description}/>
+                                <div>
+                                    <ProductViewTittle name={product.name} description={product.description}/>
+                                    <ProductViewPanel product={product}/>
+                                </div>
+                            </div>
+
+                            <ProductDescription description={product.productInformation}/>
+                            <ProductViewReviews reviews={product.reviews}/>
+
+                        </main>
+                    }
+                </div>
+                :
+                <div>
+                    <main className={"flex flex-col gap-[42px]"}>
+                        <ProductViewTittle name={product.name} description={product.description}/>
                         <ProductViewImageCarousel images={product.images} productDescription={product.description}/>
                         <ProductViewPanel product={product}/>
-                    </div>
-
-                    <ProductDescription description={product.productInformation}/>
-                    <ProductViewReviews reviews={product.reviews} />
-
-                </main>
+                        <ProductDescription description={product.productInformation}/>
+                        <ProductViewReviews reviews={product.reviews}/>
+                    </main>
+                </div>
             }
         </Container>
-
     )
 }

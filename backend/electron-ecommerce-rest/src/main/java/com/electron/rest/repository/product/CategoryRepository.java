@@ -15,4 +15,7 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
     @Query(value = "SELECT c.id as id FROM categories c WHERE c.name = :category", nativeQuery = true)
     Optional<CategoryProjection> findCategoryIdByName(@Param("category") String category);
 
+    @Query(value = "SELECT c.name as name FROM categories c WHERE c.id = :categoryId", nativeQuery = true)
+    Optional<CategoryProjection> findCategoryNameById(@Param("categoryId") Long categoryId);
+
 }

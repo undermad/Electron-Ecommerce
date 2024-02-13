@@ -25,9 +25,6 @@ public class ProductItem {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "sku", nullable = false, unique = true)
-    private String sku;
-
     @Column(name = "img_url")
     private String imgUrl;
 

@@ -20,14 +20,10 @@ public class Category {
     @Column(name = "name", unique = true, nullable = false, length = 32)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_category_id")
-    private Category parentCategory;
-
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
     private List<ProductItem> products;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Variation> variations;
 
     @CreationTimestamp

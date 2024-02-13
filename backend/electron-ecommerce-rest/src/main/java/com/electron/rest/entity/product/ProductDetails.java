@@ -17,6 +17,9 @@ public class ProductDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "sku", nullable = false, unique = true)
+    private String sku;
+
     @Column(name = "product_information", nullable = false)
     private String productInformation;
 

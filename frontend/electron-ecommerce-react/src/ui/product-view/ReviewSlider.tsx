@@ -8,6 +8,8 @@ import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
 import {Review} from "../../api/dto/product/Review.ts";
 import {ProductReview} from "./ProductReview.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
+import {useViewport} from "../../custom_hooks/useViewport.ts";
+import {Breakpoints} from "../../constants/Breakpoints.ts";
 
 type ReviewSliderProps = {
     reviews: Review[],
@@ -16,13 +18,15 @@ type ReviewSliderProps = {
 
 export const ReviewSlider = ({reviews}: ReviewSliderProps) => {
 
+    const viewport = useViewport();
+
 
     return (
         <div className="w-full flex">
             {reviews ?
                 <Swiper
                     spaceBetween={20}
-                    slidesPerView={3}
+                    slidesPerView={viewport >= Breakpoints.LARGE ? 3 : 1}
                     modules={[Navigation]}
                     navigation={{
                         prevEl: ".button-next-slide",

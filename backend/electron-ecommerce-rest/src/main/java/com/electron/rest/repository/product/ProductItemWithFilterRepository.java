@@ -19,7 +19,6 @@ public class ProductItemWithFilterRepository {
                 pi.name as name,
                 pi.description as description,
                 pi.price as price,
-                pi.sku as sku,
                 pi.img_url as imgUrl,
                 pi.stock_quantity as stockQuantity,
                 pi.category_id as categoryId,

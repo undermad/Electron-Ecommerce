@@ -24,7 +24,7 @@ public class Variation {
     @JoinColumn(name = "category_id", nullable = false)
     Category category;
 
-    @OneToMany(mappedBy = "variation", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "variation", fetch = FetchType.LAZY)
     private List<VariationOption> variationOptions;
 
     @CreationTimestamp

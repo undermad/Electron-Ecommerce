@@ -13,7 +13,6 @@ public class ReviewMapper {
 
 
     public ReviewDto mapReviewToDto(ReviewProjection reviewProjection) {
-        System.out.println(reviewProjection.getCreatedOn());
         LocalDateTime createdOn = LocalDateTime.ofInstant(reviewProjection.getCreatedOn(), ZoneId.systemDefault());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 

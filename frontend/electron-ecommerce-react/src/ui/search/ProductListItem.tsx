@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {AddToBasketButton} from "../reusable/AddToBasketButton.tsx";
+import {RatingStars} from "../reusable/RatingStars.tsx";
 
 type ProductListItemProps = {
     product: Product,
@@ -34,7 +35,7 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
                             {product.name}
                         </p>
                         <ParagraphSmall>{product.description}</ParagraphSmall>
-                        <p>Rating</p>
+                        <RatingStars currentRate={product.currentRate}/>
                     </div>
 
 

@@ -8,14 +8,16 @@ import java.util.Set;
 
 public interface ProductItemProjection {
     Long getId();
+    Long getProductDetailsId();
+    Long getCategoryId();
     String getName();
     String getDescription();
+    BigDecimal getPrice();
+    BigDecimal getCurrentRate();
+    Integer getStockQuantity();
+    String getProductInformation();
     String getSku();
     String getImgUrl();
-    Integer getStockQuantity();
-    BigDecimal getPrice();
+    String getImg();
     Category getCategory();
-    Set<VariationOption> getVariationOptions();
-
-
 }

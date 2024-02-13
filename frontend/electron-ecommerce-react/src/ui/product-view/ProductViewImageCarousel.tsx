@@ -33,7 +33,7 @@ export const ProductViewImageCarousel = ({images, productDescription}: ImageProd
     }, [currentIndex]);
 
     return (
-        <main className={"flex flex-col gap-[16px] items-center w-[500px] select-none"}>
+        <main className={"flex flex-col gap-[16px] items-center w-full lg:w-[500px] select-none"}>
             <div className={"relative group"}>
                 {currentIndex !== 0 ?
                     <div

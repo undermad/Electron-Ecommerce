@@ -16,10 +16,7 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
     return (
         <article className={"flex flex-col gap-[24px]"}>
             <div className={"flex flex-col gap-[23px]"}>
-                <div className="flex flex-col gap-[8px]">
-                    <Bold leading={8} textSize={28} weight={600}>{product.name}</Bold>
-                    <ParagraphSmall tailwind="text-[16px]">{product.description}</ParagraphSmall>
-                </div>
+
                 <div className={"flex items-center gap-1"}>
                     <RatingStars currentRate={product.currentRate}/>
                     <ParagraphSmall>({product.reviews.length})</ParagraphSmall>
