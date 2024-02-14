@@ -1,6 +1,7 @@
 package com.electron.rest.security.token.jwt;
 
 import com.electron.rest.exception.UnauthorizedException;
+import com.electron.rest.security.AuthUtils;
 import com.electron.rest.security.token.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.util.Date;
+
+import static com.electron.rest.constants.ErrorMessages.INVALID_TOKEN;
 
 @Component
 public class JwtProviderImpl implements JwtProvider {
@@ -48,6 +51,14 @@ public class JwtProviderImpl implements JwtProvider {
                 .getPayload();
 
         return claims.getSubject();
+    }
+
+    @Override
+    public String getSubject(String jwt) {
+        if (jwt == null) throw new UnauthorizedException(INVALID_TOKEN);
+        Jwt jwToken = new Jwt(AuthUtils.substringBearer(jwt));
+
+        return getSubject(jwToken);
     }
 
     @Override

@@ -22,8 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-import static com.electron.rest.constants.EndpointsPaths.API_V1_CATEGORY;
-import static com.electron.rest.constants.EndpointsPaths.API_V1_PRODUCT;
+import static com.electron.rest.constants.EndpointsPaths.*;
 
 @Configuration
 @EnableWebSecurity
@@ -74,9 +73,10 @@ public class SecurityConfiguration {
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/auth/logout_everywhere)").hasRole("USER")
                                 .requestMatchers("/api/v1/registration/**").permitAll()
-                                .requestMatchers("/api/v1/test/**").hasRole("ADMIN") //spring will add prefix ROLE_ADMIN
+                                .requestMatchers("/api/v1/test/**").hasRole("USER") //spring will add prefix ROLE_ADMIN
                                 .requestMatchers(API_V1_CATEGORY + "/**").permitAll()
                                 .requestMatchers(API_V1_PRODUCT + "/**").permitAll()
+                                .requestMatchers(API_V1_BASKET + "/**").hasAnyRole("USER", "ADMIN")
                                 .anyRequest()
                                 .authenticated())
 

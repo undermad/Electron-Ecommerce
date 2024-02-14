@@ -55,6 +55,7 @@ public class ProductService {
         ProductItemProjection productAsProjection = productItemRepository.findProductById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
         ProductResponse productResponse = productMapper.mapProductItemToProductResponse(productAsProjection);
+        productResponse.setProductId(productId);
 
         String category = categoryRepository.findCategoryNameById(productAsProjection.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException(CATEGORY_NOT_FOUND)).getName();
@@ -115,7 +116,6 @@ public class ProductService {
                 .resourceName(category + " with filters")
                 .totalPages((totalElements / pageSize) + 1)
                 .build();
-
     }
 
 

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,13 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
             WHERE pc.product_item_id = :productId
             """, nativeQuery = true)
     List<FeatureProjection> findProductFeatures(@Param("productId") Long productId);
+
+    @Query(value = """
+            SELECT pi.stock_quantity as stockQuantity 
+            FROM product_item pi 
+            WHERE pi.id = :productItemId
+            """, nativeQuery = true)
+    Optional<ProductItemProjection> findProductItemQuantity(@Param("productItemId") Long productItemId);
 
 
 }

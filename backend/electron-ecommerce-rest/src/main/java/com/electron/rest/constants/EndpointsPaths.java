@@ -25,4 +25,7 @@ public class EndpointsPaths {
     public static final String API_V1_PRODUCT = "/api/v1/product";
 
 
+    public static final String API_V1_BASKET = "/api/v1/basket";
+    public static final String ADD = "/add";
+
 }

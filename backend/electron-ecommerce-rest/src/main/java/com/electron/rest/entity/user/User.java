@@ -1,5 +1,6 @@
 package com.electron.rest.entity.user;
 
+import com.electron.rest.entity.basket.BasketItem;
 import com.electron.rest.entity.product.Review;
 import jakarta.persistence.*;
 import lombok.*;
@@ -65,6 +66,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<BasketItem> basketItem;
 
 
 }

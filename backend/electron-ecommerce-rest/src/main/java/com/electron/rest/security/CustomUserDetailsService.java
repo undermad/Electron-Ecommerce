@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if(users.isEmpty()){
             throw new UsernameNotFoundException("Email or password is incorrect.");
         }
-        UserProjection user = users.get(0);
+        UserProjection user = users.getFirst();
 
 
         Set<GrantedAuthority> authorities = roleRepository.getRolesByUserId(user.getId())

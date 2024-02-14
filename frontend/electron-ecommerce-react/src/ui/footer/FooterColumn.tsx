@@ -15,11 +15,11 @@ export const FooterColumn = ({name, links, applicationLinks}: FooterColumnProps)
             <ul className="flex flex-col gap-[12px]">
                 {Array.from(links).map(([key, value]) => (
                     applicationLinks ?
-                        <Link to={value}>
+                        <Link to={value} key={key}>
                             <li className="text-[16px] font-[600] text-electron-other-page">{key}</li>
                         </Link>
                         :
-                        <a href={value}>
+                        <a href={value} key={key}>
                             <li className="text-[16px] font-[600] text-electron-other-page">{key}</li>
                         </a>
                 ))}

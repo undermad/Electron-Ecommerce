@@ -150,10 +150,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void logoutEverywhere(String jwt) {
-        if (jwt == null) throw new UnauthorizedException(INVALID_TOKEN);
-        Jwt jwToken = new Jwt(AuthUtils.substringBearer(jwt));
-        String email = jwtProvider.getSubject(jwToken);
-
+        String email = jwtProvider.getSubject(jwt);
         Optional<UserProjection> userAsOptional = userRepository.findUserIdFromEmail(email);
         if (userAsOptional.isEmpty()) throw new UsernameNotFoundException(USER_NOT_FOUND);
         Long userId = userAsOptional.get().getId();

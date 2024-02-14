@@ -2,6 +2,7 @@ package com.electron.rest.entity.product;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Getter
 @Entity
+@Setter
 @Table(name = "product_item")
 public class ProductItem {
 

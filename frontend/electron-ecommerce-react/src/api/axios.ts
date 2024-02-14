@@ -19,7 +19,10 @@ export const ACTIVATE_API_PATH = "/activate";
 export const CATEGORY_API_PATH = "/category";
 export const PRODUCT_API_PATH = "/product"
 
-export const PRODUCT_CATEGORY_PATH = "/product";
+export const PRODUCT_CATEGORY_API_PATH = "/product";
+
+export const BASKET_API_PATH = "/basket";
+export const ADD = "/add";
 
 export const axiosAuth = axios.create({
     baseURL: BASE_API_URL + AUTH_API_PATH,

@@ -1,10 +1,12 @@
-import {FaPlus} from "react-icons/fa6";
-import {FaMinus} from "react-icons/fa6";
+import {FaMinus, FaPlus} from "react-icons/fa6";
 import {Bold} from "./Bold.tsx";
 import {useContext, useEffect, useState} from "react";
 import {BasketContext} from "../../context/BasketContext.tsx";
 import {Product} from "../../api/dto/product/Product.ts";
 import {BasketPosition} from "../../api/dto/basket/Basket.ts";
+import {ADD, BASKET_API_PATH} from "../../api/axios.ts";
+import {AddToBasketRequest} from "../../api/dto/basket/AddToBasketRequest.ts";
+import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 
 type AddToBasketButtonProps = {
     product: Product,
@@ -13,8 +15,10 @@ type AddToBasketButtonProps = {
 
 export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
+    const axiosPrivate = useAxiosPrivate();
     const basketContext = useContext(BasketContext);
     const [currentQuantity, setCurrentQuantity] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleDecreaseButton = () => {
         if (currentQuantity === 0) return;
@@ -28,11 +32,17 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
     const handleIncreaseButton = () => {
         console.log(basketContext.basket)
-        setCurrentQuantity(currentQuantity + 1);
-        const basketPosition = getPositionFromTheBasket(product.productId);
-        if (basketPosition) {
-            basketPosition.quantity++
-        }
+        updateBasketApi()
+            .then(() => {
+                setCurrentQuantity(currentQuantity + 1);
+                const basketPosition = getPositionFromTheBasket(product.productId);
+                if (basketPosition) {
+                    basketPosition.quantity++
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const removePositionFromBasket = (basketPosition: BasketPosition) => {
@@ -42,14 +52,21 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
 
     const addToBasket = () => {
-        if (currentQuantity === 0) {
-            console.log(basketContext.basket)
-            const basketPosition: BasketPosition = {
-                product: product,
-                quantity: 1,
-            }
-            basketContext.basket?.items.push(basketPosition);
-            setCurrentQuantity(1);
+        if (currentQuantity === 0 && !loading) {
+            updateBasketApi()
+                .then(() => {
+                    console.log(basketContext.basket)
+                    const basketPosition: BasketPosition = {
+                        product: product,
+                        quantity: 1,
+                    }
+                    basketContext.basket?.items.push(basketPosition);
+                    setCurrentQuantity(1);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+
         }
     }
 
@@ -58,6 +75,19 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
             basketPosition.product.productId === productId);
 
     }
+
+    const updateBasketApi = async () => {
+        setLoading(true);
+        const basketPosition = getPositionFromTheBasket(product.productId);
+
+        const data: AddToBasketRequest = {
+            productId: product.productId,
+            beforeQuantityInBasket: basketPosition?.quantity ?? 0,
+        };
+        return await axiosPrivate.post(BASKET_API_PATH + ADD, data)
+            .finally(() => setLoading(false));
+    }
+
 
     useEffect(() => {
         console.log("Product passed to the button")
@@ -77,17 +107,19 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
             {currentQuantity > 0 ?
                 <>
-                    <div className={"cursor-pointer h-full flex items-center pl-[14px]"}
-                         onClick={handleDecreaseButton}>
+                    <button className={"cursor-pointer h-full flex items-center pl-[14px]"}
+                            disabled={loading}
+                            onClick={handleDecreaseButton}>
                         <FaMinus size={20}/>
-                    </div>
+                    </button>
                     <Bold textSize={18} weight={500}>
                         {currentQuantity}
                     </Bold>
-                    <div className={"cursor-pointer h-full flex items-center pr-[14px]"}
-                         onClick={handleIncreaseButton}>
+                    <button className={"cursor-pointer h-full flex items-center pr-[14px]"}
+                            disabled={loading}
+                            onClick={handleIncreaseButton}>
                         <FaPlus size={20}/>
-                    </div>
+                    </button>
                 </>
                 :
                 <div>
