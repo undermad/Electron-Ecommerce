@@ -27,5 +27,6 @@ public class EndpointsPaths {
 
     public static final String API_V1_BASKET = "/api/v1/basket";
     public static final String ADD = "/add";
+    public static final String REMOVE = "/remove";
 
 }

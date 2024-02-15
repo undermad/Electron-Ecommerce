@@ -21,7 +21,6 @@ export const useFetchProducts = () => {
                 maxPrice: productContext?.priceValues[1],
             }
         }
-        console.log(requestData);
         try {
             const response = await axiosBase.post(
                 PRODUCT_API_PATH

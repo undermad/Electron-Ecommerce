@@ -99,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
                 loginDto.password()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         Jwt token = (Jwt) jwtProvider.generateToken(authentication.getName());
-        String accountStatus = userRepository.findUserAccountStatusByEmail(loginDto.email()).get(0).getAccountStatus();
+        String accountStatus = userRepository.findUserAccountStatusByEmail(loginDto.email()).getFirst().getAccountStatus();
         Set<String> roles = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)

@@ -7,4 +7,5 @@ public class SuccessMessages {
     public static final String FORGOT_PASSWORD_PROCESS_ACTIVATED = "Please, check provided email to recover your password.";
     public static final String PASSWORD_CHANGED = "Your password has been changed.";
     public static final String PRODUCT_ADDED = "Product has been added to the basket.";
+    public static final String PRODUCT_REMOVED = "Product has been removed from the basket.";
 }

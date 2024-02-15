@@ -1,6 +1,5 @@
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
 import {Product} from "../../api/dto/product/Product.ts";
-import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import {useNavigate} from "react-router-dom";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
@@ -66,7 +65,7 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
                             </h3>
                         </div>
                         <div className="w-full flex flex-col justify-center mt-[12px]">
-                            <ElectronButton textSize={12}>Add To Cart</ElectronButton>
+                            <AddToBasketButton product={product}/>
                         </div>
 
                     </div>

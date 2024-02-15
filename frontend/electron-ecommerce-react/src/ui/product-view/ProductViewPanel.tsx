@@ -19,7 +19,8 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
 
                 <div className={"flex items-center gap-1"}>
                     <RatingStars currentRate={product.currentRate}/>
-                    <ParagraphSmall>({product.reviews.length})</ParagraphSmall>
+                    {product.reviews &&
+                        <ParagraphSmall>({product.reviews.length})</ParagraphSmall>}
                 </div>
             </div>
 

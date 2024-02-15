@@ -24,28 +24,6 @@ public class ProductMapper {
                 .productInformation(productItem.getProductInformation())
                 .sku(productItem.getSku())
                 .build();
-
-
-//                .productId(productItem.getId())
-//                .name(productItem.getName())
-//                .description(productItem.getDescription())
-//                .sku(productItem.getProductDetails().getSku())
-//                .imgUrl(productItem.getImgUrl())
-//                .stockQuantity(productItem.getStockQuantity())
-//                .price(productItem.getPrice())
-//                .currentRate(productItem.getOverallRate())
-//                .categoryId(productItem.getCategory().getId())
-//                .category(productItem.getCategory().getName())
-//                .productInformation(productItem.getProductDetails().getProductInformation())
-//                .images(productItem.getProductDetails().getImages())
-//                .features(productItem.getVariationOptions()
-//                        .stream()
-//                        .map(variation ->
-//                                new FeatureDto(
-//                                        variation.getVariation().getName(),
-//                                        variation.getValue()))
-//                        .collect(Collectors.toList()))
-//                .build();
     }
 
     public ProductResponse mapRawObjectToProductResponse(Object[] rawObject) {
@@ -58,6 +36,19 @@ public class ProductMapper {
                 .stockQuantity((Integer) rawObject[5])
                 .categoryId((Long) rawObject[6])
                 .currentRate((BigDecimal) rawObject[7])
+                .build();
+    }
+
+    public ProductResponse mapProductItemProjectionToProductResponse(ProductItemProjection productItemProjection) {
+        return ProductResponse.builder()
+                .productId((productItemProjection.getId()))
+                .name(productItemProjection.getName())
+                .description(productItemProjection.getDescription())
+                .price(productItemProjection.getPrice())
+                .imgUrl(productItemProjection.getImgUrl())
+                .stockQuantity(productItemProjection.getStockQuantity())
+                .categoryId(productItemProjection.getCategoryId())
+                .currentRate(productItemProjection.getCurrentRate())
                 .build();
     }
 

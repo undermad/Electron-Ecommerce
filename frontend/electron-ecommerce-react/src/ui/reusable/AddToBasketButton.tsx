@@ -4,9 +4,10 @@ import {useContext, useEffect, useState} from "react";
 import {BasketContext} from "../../context/BasketContext.tsx";
 import {Product} from "../../api/dto/product/Product.ts";
 import {BasketPosition} from "../../api/dto/basket/Basket.ts";
-import {ADD, BASKET_API_PATH} from "../../api/axios.ts";
+import {ADD, BASKET_API_PATH, REMOVE} from "../../api/axios.ts";
 import {AddToBasketRequest} from "../../api/dto/basket/AddToBasketRequest.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
+import {RemoveFromBasketRequest} from "../../api/dto/basket/RemoveFromBasketRequest.ts";
 
 type AddToBasketButtonProps = {
     product: Product,
@@ -22,26 +23,28 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
     const handleDecreaseButton = () => {
         if (currentQuantity === 0) return;
-        setCurrentQuantity(currentQuantity - 1);
-        const basketPosition = getPositionFromTheBasket(product.productId);
-        if (basketPosition) {
-            if (basketPosition.quantity === 1) removePositionFromBasket(basketPosition);
-            else basketPosition.quantity--;
-        }
+        decrementQuantityApi()
+            .then(() => {
+                setCurrentQuantity(currentQuantity - 1);
+                const basketPosition = getPositionFromTheBasket(product.productId);
+                if (basketPosition) {
+                    if (basketPosition.quantity === 1) removePositionFromBasket(basketPosition);
+                    else basketPosition.quantity--;
+                }
+            })
+            .catch((error) => {
+              console.log(error)
+            })
     }
 
     const handleIncreaseButton = () => {
-        console.log(basketContext.basket)
-        updateBasketApi()
+        incrementQuantityApi()
             .then(() => {
                 setCurrentQuantity(currentQuantity + 1);
                 const basketPosition = getPositionFromTheBasket(product.productId);
                 if (basketPosition) {
                     basketPosition.quantity++
                 }
-            })
-            .catch(error => {
-                console.log(error);
             })
     }
 
@@ -53,18 +56,14 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
     const addToBasket = () => {
         if (currentQuantity === 0 && !loading) {
-            updateBasketApi()
+            incrementQuantityApi()
                 .then(() => {
-                    console.log(basketContext.basket)
                     const basketPosition: BasketPosition = {
                         product: product,
                         quantity: 1,
                     }
                     basketContext.basket?.items.push(basketPosition);
                     setCurrentQuantity(1);
-                })
-                .catch(error => {
-                    console.log(error);
                 })
 
         }
@@ -76,7 +75,7 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
     }
 
-    const updateBasketApi = async () => {
+    const incrementQuantityApi = async () => {
         setLoading(true);
         const basketPosition = getPositionFromTheBasket(product.productId);
 
@@ -84,20 +83,24 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
             productId: product.productId,
             beforeQuantityInBasket: basketPosition?.quantity ?? 0,
         };
-        return await axiosPrivate.post(BASKET_API_PATH + ADD, data)
+        return await axiosPrivate.patch(BASKET_API_PATH + ADD, data)
+            .finally(() => setLoading(false));
+    }
+
+    const decrementQuantityApi = async () => {
+        setLoading(true);
+        const data: RemoveFromBasketRequest = {productId: product.productId}
+        return await axiosPrivate.patch(BASKET_API_PATH + REMOVE, data)
             .finally(() => setLoading(false));
     }
 
 
     useEffect(() => {
-        console.log("Product passed to the button")
-        console.log(product)
         const basketPosition = getPositionFromTheBasket(product.productId);
         if (basketPosition) {
-            console.log("use effect");
             setCurrentQuantity(basketPosition.quantity);
         }
-    }, []);
+    }, [basketContext.basket]);
 
 
     return (

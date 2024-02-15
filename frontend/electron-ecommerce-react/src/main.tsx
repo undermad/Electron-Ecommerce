@@ -9,19 +9,19 @@ import {ThemeContextProvider} from "./context/ThemeContext.tsx";
 import {BasketContextProvider} from "./context/BasketContext.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-        <BrowserRouter>
+    <BrowserRouter>
+        <AuthContextProvider>
             <BasketContextProvider>
-                <AuthContextProvider>
-                    <MessageScreenContextProvider>
-                        <ThemeContextProvider>
-                            <ProductContextProvider>
-                                <Routes>
-                                    <Route path={"/*"} element={<App/>}></Route>
-                                </Routes>
-                            </ProductContextProvider>
-                        </ThemeContextProvider>
-                    </MessageScreenContextProvider>
-                </AuthContextProvider>
+                <MessageScreenContextProvider>
+                    <ThemeContextProvider>
+                        <ProductContextProvider>
+                            <Routes>
+                                <Route path={"/*"} element={<App/>}></Route>
+                            </Routes>
+                        </ProductContextProvider>
+                    </ThemeContextProvider>
+                </MessageScreenContextProvider>
             </BasketContextProvider>
-        </BrowserRouter>
+        </AuthContextProvider>
+    </BrowserRouter>
 )

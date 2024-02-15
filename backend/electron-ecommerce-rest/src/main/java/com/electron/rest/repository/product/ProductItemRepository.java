@@ -66,5 +66,18 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
             """, nativeQuery = true)
     Optional<ProductItemProjection> findProductItemQuantity(@Param("productItemId") Long productItemId);
 
+    @Query(value = """
+                    SELECT pi.id as id,
+                        pi.name as name,
+                        pi.description as description,
+                        pi.price as price,
+                        pi.img_url as imgUrl,
+                        pi.stock_quantity as stockQuantity,
+                        pi.category_id as categoryId,
+                        pi.current_rate as currentRate
+                        FROM product_item pi
+                        WHERE pi.id = :productId
+            """, nativeQuery = true)
+    Optional<ProductItemProjection> findProductListItem(@Param("productId") Long productId);
 
 }

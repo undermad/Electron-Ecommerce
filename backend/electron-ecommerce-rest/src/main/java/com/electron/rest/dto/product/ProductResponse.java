@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Builder
 @Data
-
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductResponse {
