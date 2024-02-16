@@ -1,5 +1,5 @@
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
-import {RangeSlider} from "../reusable/RangeSlider.tsx";
+import {PriceRange} from "../reusable/PriceRange.tsx";
 import {Span} from "../reusable/Span.tsx";
 import {CheckboxInput} from "../reusable/CheckboxInput.tsx";
 import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
@@ -57,7 +57,7 @@ export const Filter = () => {
 
             <ParagraphSmall tailwind="text-[14px]">Price</ParagraphSmall>
             { productContext?.categoryResponse.maxPrice &&
-                <RangeSlider minRange={0} maxRange={productContext?.categoryResponse.maxPrice} callback={handlePriceChange}/>}
+                <PriceRange minRange={0} maxRange={productContext?.categoryResponse.maxPrice} callback={handlePriceChange}/>}
 
 
             {filters &&

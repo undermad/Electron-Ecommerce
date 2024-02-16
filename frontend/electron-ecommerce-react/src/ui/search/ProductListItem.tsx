@@ -17,10 +17,8 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
     const screenWidth = useViewport();
 
     const handleProductClick = () => {
-        console.log(product.productId);
         navigate(location.pathname + '/' + product.productId)
     }
-
 
     return (
         <>

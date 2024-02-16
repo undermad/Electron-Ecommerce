@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import {Container} from "../reusable/Container.tsx";
 import {useEffect} from "react";
 import {axiosCategory} from "../../api/axios.ts";
-import {ProductList} from "./ProductList.tsx";
+import {PageableProductList} from "./PageableProductList.tsx";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {FilterSection} from "./FilterSection.tsx";
@@ -52,12 +52,12 @@ export const Search = () => {
                             </div>
                             <Filter/>
                     </div>
-                    <ProductList/>
+                    <PageableProductList/>
                 </div>
                 :
                 <div>
                     <FilterSection/>
-                    <ProductList/>
+                    <PageableProductList/>
                 </div>
             }
 

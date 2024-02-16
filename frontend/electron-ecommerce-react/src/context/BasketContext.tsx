@@ -6,7 +6,7 @@ type BasketContextProps = {
 }
 
 type BasketContextType = {
-    basket: Basket | null,
+    basket: Basket,
     setBasket: React.Dispatch<React.SetStateAction<Basket>>,
 }
 

@@ -7,7 +7,7 @@ import {PageableResponse} from "../../api/dto/PageableResponse.ts";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
 
 
-export const ProductList = () => {
+export const PageableProductList = () => {
     const productContext = useProductList();
     const [pageableProductList, setPageableProductList] = useState<PageableResponse<Product>>({
         pageNo: 1,

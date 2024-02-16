@@ -70,5 +70,8 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<BasketItem> basketItem;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Address> address;
+
 
 }

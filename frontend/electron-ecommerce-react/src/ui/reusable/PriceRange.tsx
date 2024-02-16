@@ -1,20 +1,25 @@
 import {Range} from "react-range";
 import {useEffect, useState} from "react";
+import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
 
 type RangeSliderProps = {
-    minRange: number ,
+    minRange: number,
     maxRange: number,
     callback: (newValues: number[]) => void;
-
 }
 
-export const RangeSlider = ({minRange, maxRange, callback}: RangeSliderProps) => {
+export const PriceRange = ({minRange, maxRange, callback}: RangeSliderProps) => {
 
     const [values, setValues] = useState([minRange, maxRange]);
+    const fetchProducts = useFetchProducts();
 
     const handleChange = (newValues: number[]) => {
         callback(newValues);
         setValues(newValues);
+    }
+
+    const handleFinalChange = () => {
+        fetchProducts();
     }
 
     const setInnerWidth = () => {
@@ -33,6 +38,7 @@ export const RangeSlider = ({minRange, maxRange, callback}: RangeSliderProps) =>
                 max={maxRange}
                 values={values}
                 onChange={handleChange}
+                onFinalChange={handleFinalChange}
                 renderTrack={({props, children}) => (
                     <div
                         {...props}

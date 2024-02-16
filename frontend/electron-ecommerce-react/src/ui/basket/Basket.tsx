@@ -1,3 +1,4 @@
+import {BasketPositionsList} from "./BasketPositionsList.tsx";
 
 export const Basket = () => {
 
@@ -5,6 +6,7 @@ export const Basket = () => {
 
     return (
         <div>
+            <BasketPositionsList/>
 
         </div>
     )

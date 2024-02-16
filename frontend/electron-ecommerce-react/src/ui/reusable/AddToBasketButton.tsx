@@ -25,34 +25,36 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
         if (currentQuantity === 0) return;
         decrementQuantityApi()
             .then(() => {
+                const updatedItems = basketContext.basket?.items.map(item => {
+                    if (item.product.productId === product.productId) {
+                        // Decrease the quantity by 1
+                        return {...item, quantity: item.quantity - 1};
+                    }
+                    return item;
+                });
+                const newBasketItems = updatedItems?.filter(item => item.quantity > 0);
+                basketContext.setBasket({...basketContext.basket, items: newBasketItems});
                 setCurrentQuantity(currentQuantity - 1);
-                const basketPosition = getPositionFromTheBasket(product.productId);
-                if (basketPosition) {
-                    if (basketPosition.quantity === 1) removePositionFromBasket(basketPosition);
-                    else basketPosition.quantity--;
-                }
             })
             .catch((error) => {
-              console.log(error)
+                console.log(error)
             })
     }
 
     const handleIncreaseButton = () => {
         incrementQuantityApi()
             .then(() => {
+                const newBasketItems = basketContext.basket.items.map(item => {
+                    if (item.product.productId === product.productId) {
+                        return {...item, quantity: item.quantity + 1}
+                    }
+                    return item;
+                })
+                console.log(newBasketItems)
+                basketContext.setBasket({...basketContext.basket, items: newBasketItems})
                 setCurrentQuantity(currentQuantity + 1);
-                const basketPosition = getPositionFromTheBasket(product.productId);
-                if (basketPosition) {
-                    basketPosition.quantity++
-                }
             })
     }
-
-    const removePositionFromBasket = (basketPosition: BasketPosition) => {
-        const newBasket = basketContext.basket?.items.filter(position => position !== basketPosition)
-        if (newBasket) basketContext.setBasket({...basketContext.basket, items: newBasket});
-    }
-
 
     const addToBasket = () => {
         if (currentQuantity === 0 && !loading) {
@@ -62,17 +64,12 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
                         product: product,
                         quantity: 1,
                     }
-                    basketContext.basket?.items.push(basketPosition);
+                    const newItems = [...basketContext.basket.items, basketPosition];
+                    basketContext.setBasket({...basketContext.basket, items: newItems})
                     setCurrentQuantity(1);
                 })
 
         }
-    }
-
-    const getPositionFromTheBasket = (productId: number) => {
-        return basketContext.basket?.items.find(basketPosition =>
-            basketPosition.product.productId === productId);
-
     }
 
     const incrementQuantityApi = async () => {
@@ -94,13 +91,20 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
             .finally(() => setLoading(false));
     }
 
+    const getPositionFromTheBasket = (productId: number) => {
+        return basketContext.basket?.items.find(basketPosition =>
+            basketPosition.product.productId === productId);
+    }
+
 
     useEffect(() => {
         const basketPosition = getPositionFromTheBasket(product.productId);
         if (basketPosition) {
             setCurrentQuantity(basketPosition.quantity);
         }
-    }, [basketContext.basket]);
+    }, [product]);
+
+
 
 
     return (

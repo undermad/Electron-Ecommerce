@@ -7,21 +7,24 @@ import {MessageScreenContextProvider} from "./context/MessageScreenContext.tsx";
 import {ProductContextProvider} from "./context/ProductContext.tsx";
 import {ThemeContextProvider} from "./context/ThemeContext.tsx";
 import {BasketContextProvider} from "./context/BasketContext.tsx";
+import {StrictMode} from 'react';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
-        <AuthContextProvider>
-            <BasketContextProvider>
-                <MessageScreenContextProvider>
-                    <ThemeContextProvider>
-                        <ProductContextProvider>
-                            <Routes>
-                                <Route path={"/*"} element={<App/>}></Route>
-                            </Routes>
-                        </ProductContextProvider>
-                    </ThemeContextProvider>
-                </MessageScreenContextProvider>
-            </BasketContextProvider>
-        </AuthContextProvider>
+        <StrictMode>
+            <AuthContextProvider>
+                <BasketContextProvider>
+                    <MessageScreenContextProvider>
+                        <ThemeContextProvider>
+                            <ProductContextProvider>
+                                <Routes>
+                                    <Route path={"/*"} element={<App/>}></Route>
+                                </Routes>
+                            </ProductContextProvider>
+                        </ThemeContextProvider>
+                    </MessageScreenContextProvider>
+                </BasketContextProvider>
+            </AuthContextProvider>
+        </StrictMode>
     </BrowserRouter>
 )

@@ -12,6 +12,7 @@ export const PersistLogin = () => {
     const fetchBasket = useFetchBasket();
 
     useEffect(() => {
+        setLoading(true);
         const verifyToken = async () => {
             await refresh()
                 .catch(() => {
@@ -25,8 +26,9 @@ export const PersistLogin = () => {
     }, []);
 
     useEffect(() => {
-        fetchBasket()
-            .then(() => console.log('finitp'));
+            if (auth?.auth?.token) {
+                fetchBasket();
+            }
     }, [auth?.auth?.token]);
 
 

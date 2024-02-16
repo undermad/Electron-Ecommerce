@@ -8,9 +8,8 @@ export const useFetchBasket = () => {
     return async () => {
         await axiosPrivate.get(BASKET_API_PATH + "/")
             .then(res => {
-
-                basketContext.setBasket({items: res.data?.products})
-                console.log(basketContext.basket)
+                basketContext.setBasket({...basketContext.basket, items: res.data?.products})
+                console.log('RES FROM THE FETCH BASKET')
                 console.log(res);
             })
             .catch(error => {
