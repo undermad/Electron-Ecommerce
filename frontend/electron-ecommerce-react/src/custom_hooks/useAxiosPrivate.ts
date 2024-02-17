@@ -1,16 +1,21 @@
-import {AxiosResponse} from "axios";
+import axios, {AxiosResponse} from "axios";
 import useRefreshToken from "./useRefreshToken.ts";
 import {useAuth} from "./useAuth.ts";
-import {axiosPrivate} from "../api/axios.ts";
+import {BASE_API_URL} from "../api/axios.ts";
 import {useEffect} from "react";
 
 const useAxiosPrivate = () => {
     const refresh = useRefreshToken({redirectToLogin: true});
     const auth = useAuth();
 
+    const axiosPrivate = axios.create({
+        baseURL: BASE_API_URL,
+        headers: {'Content-Type': 'application/json'},
+        timeout: 10000,
+        withCredentials: true,
+    });
 
     useEffect(() => {
-
         const requestInterceptor = axiosPrivate.interceptors.request.use(
             config => {
                 if (!config.headers['Authorization']) {

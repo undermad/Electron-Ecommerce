@@ -39,13 +39,6 @@ export const axiosRegistration = axios.create({
     withCredentials: true,
 });
 
-export const axiosPrivate = axios.create({
-    baseURL: BASE_API_URL,
-    headers: {'Content-Type': 'application/json'},
-    timeout: 10000,
-    withCredentials: true,
-});
-
 export const axiosCategory = axios.create({
     baseURL: BASE_API_URL + CATEGORY_API_PATH,
     headers: {'Content-Type': 'application/json'},

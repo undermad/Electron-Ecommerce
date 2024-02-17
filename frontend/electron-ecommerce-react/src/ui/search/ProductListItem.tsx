@@ -5,6 +5,7 @@ import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {AddToBasketButton} from "../reusable/AddToBasketButton.tsx";
 import {RatingStars} from "../reusable/RatingStars.tsx";
+import {useEffect, useState} from "react";
 
 type ProductListItemProps = {
     product: Product,
@@ -15,37 +16,49 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
 
     const navigate = useNavigate();
     const screenWidth = useViewport();
+    const [date, setDate] = useState<string>('');
+
 
     const handleProductClick = () => {
         navigate(location.pathname + '/' + product.productId)
     }
 
+    useEffect(() => {
+        const date = new Date();
+        date.setDate(date.getDate() + 5);
+        const deliveryDate = date.toLocaleDateString('en-GB', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+        setDate(deliveryDate)
+    }, []);
+
     return (
         <>
             {screenWidth >= Breakpoints.MEDIUM ?
                 <div className="flex gap-[12px]">
-                    <div className={"w-1/6 cursor-pointer"} onClick={handleProductClick}>
+                    <div className={"w-1/3 cursor-pointer flex justify-center items-center"} onClick={handleProductClick}>
                         <img src={product.imgUrl} alt={product.description}/>
                     </div>
-                    <div className={"w-2/6 flex flex-col justify-center cursor-pointer"} onClick={handleProductClick}>
-                        <p className={`text-electron-header-font text-[16px] font-[600] leading-7`}>
-                            {product.name}
-                        </p>
-                        <ParagraphSmall>{product.description}</ParagraphSmall>
-                        <RatingStars currentRate={product.currentRate}/>
+                    <div>
+
+                        <div className={"w-full flex flex-col justify-center cursor-pointer"}
+                             onClick={handleProductClick}>
+                            <p className={`text-electron-header-font text-[16px] font-[600] leading-7`}>
+                                {product.name}
+                            </p>
+                            <ParagraphSmall>{product.description}</ParagraphSmall>
+                            <RatingStars currentRate={product.currentRate}/>
+                            <h3 className={`text-electron-header-font text-[14px] font-[600] leading-7`}>
+                                £{product.price}
+                            </h3>
+                            <ParagraphSmall>Free delivery {date}</ParagraphSmall>
+                        </div>
+
+
                     </div>
 
-
-                    <div className={"w-2/6 flex flex-col justify-center text-center"}>
-                        <h3 className={`text-electron-header-font text-[14px] font-[600] leading-7`}>
-                            £{product.price}
-                        </h3>
-                    </div>
-
-
-                    <div className="w-1/6 flex flex-col justify-center">
-                        <AddToBasketButton product={product}/>
-                    </div>
                 </div>
                 :
                 <div className={"flex justify-center mb-5 border border-electron-product-listing-bg rounded-3xl p-3"}>

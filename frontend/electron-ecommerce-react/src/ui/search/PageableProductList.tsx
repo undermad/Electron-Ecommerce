@@ -27,7 +27,6 @@ export const PageableProductList = () => {
 
 
     return (
-
         <div className="w-full">
             <div className="flex flex-col gap-[20px]">
                 <Header3>Search Result</Header3>
@@ -39,8 +38,6 @@ export const PageableProductList = () => {
                 <PageController pageNo={pageableProductList?.pageNo}
                                 totalPages={pageableProductList?.totalPages}/>
             </div>
-
-
         </div>
     )
 }

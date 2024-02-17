@@ -18,7 +18,6 @@ export const Search = () => {
     const category = param.category;
     const productContext = useProductList();
     const messageScreen = useMessageScreen();
-
     const screenWidth = useViewport();
 
     useEffect(() => {
@@ -38,6 +37,7 @@ export const Search = () => {
                 })
         }
     }, [category])
+
 
     return (
         <Container>
