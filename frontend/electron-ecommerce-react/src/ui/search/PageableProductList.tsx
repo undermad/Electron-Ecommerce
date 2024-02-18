@@ -30,7 +30,7 @@ export const PageableProductList = () => {
         <div className="w-full">
             <div className="flex flex-col gap-[20px]">
                 <Header3>Search Result</Header3>
-                <div className="flex flex-col gap-[24px]">
+                <div className="flex flex-col gap-[24px] ">
                     {pageableProductList?.content.map((product, index) => (
                             <ProductListItem product={product} key={index}/>
                     ))}

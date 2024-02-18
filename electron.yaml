@@ -9,14 +9,24 @@ services:
       MYSQL_DATABASE: electron_ecommerce
       MYSQL_USER: electron-ecommerce
       MYSQL_PASSWORD: electron-ecommerce
+    volumes:
+      - db-data:/var/lib/mysql
 
   server:
     build:
       context: backend/electron-ecommerce-rest/
     ports:
       - 8080:8080
+    environment:
+      SPRING_DEVTOOLS_REMOTE_SECRET: electron
     depends_on:
       - database
+    volumes:
+      - ./backend/electron-ecommerce-rest/src:/app/src
+      - ./backend/electron-ecommerce-rest/target/classes:/app/target/classes
+    command: ["/bin/sh", "-c", "/wait-for-it.sh database:3306 --timeout=15 -- java -Dspring.devtools.restart.enabled=true -Dspring.devtools.livereload.enabled=true -cp /app/classes:/app/resources:/app/dependencies/* org.springframework.boot.loader.Main"]
+
+  #    command: ["/wait-for-it.sh", "database:3306", "--strict", "--timeout=30", "--", "java", "-jar", "app.jar"]
 
   client:
     build:
@@ -26,5 +36,6 @@ services:
     depends_on:
       - server
 
-
+volumes:
+  db-data:
 
