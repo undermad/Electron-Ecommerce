@@ -6,7 +6,7 @@ import {ADMIN_ROUTE} from "../../constants/Routes.ts";
 import useRefreshToken from "../../custom_hooks/useRefreshToken.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {useLogout} from "../../custom_hooks/useLogout.ts";
-import LogoutEverywhereButton from "../account/LogoutEverywhereButton.tsx";
+import LogoutEverywhereButton from "../auth/LogoutEverywhereButton.tsx";
 import {Container} from "../reusable/Container.tsx";
 
 export const Home = () => {

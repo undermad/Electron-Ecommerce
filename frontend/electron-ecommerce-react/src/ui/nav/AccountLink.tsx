@@ -8,7 +8,7 @@ import {AccountFunctions} from "./AccountFunctions.tsx";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
 import {HoverScale} from "../reusable/HoverScale.tsx";
 
-export const Account = () => {
+export const AccountLink = () => {
     const width = useViewport();
     const auth = useAuth();
 

@@ -82,12 +82,12 @@ Todo list begin once again
 
 
 DEBUG:
-    - persist filters       COMPLETED
-    - make sure basket is fetched after we refresh the website on search component
+    - persist filters                                                                   COMPLETED
+    - make sure basket is fetched after we refresh the website on search component      COMPLETED
 
 
 CHILL OUT FRONTEND TASKS:
-1. BUILD FOOTER                     COMPLETED
+1. BUILD FOOTER                                COMPLETED
 2. Build great carousel for home page          COMPLETED WITH SWIPER LIBRARY
 
 

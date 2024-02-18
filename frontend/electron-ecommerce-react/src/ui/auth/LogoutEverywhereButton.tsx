@@ -3,6 +3,7 @@ import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {LOGOUT_EVERYWHERE_SUCCESSFUL} from "../../constants/Messages.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {AUTH_API_PATH, LOGOUT_EVERYWHERE} from "../../api/axios.ts";
+import {Span} from "../reusable/Span.tsx";
 
 const LogoutEverywhereButton = () => {
 
@@ -25,7 +26,9 @@ const LogoutEverywhereButton = () => {
     }
 
     return (
-        <button onClick={handleLogoutEverywhere}>Logout all devices</button>
+        <div className="cursor-pointer" onClick={handleLogoutEverywhere}>
+            <Span>Logout all devices</Span>
+        </div>
     )
 }
 

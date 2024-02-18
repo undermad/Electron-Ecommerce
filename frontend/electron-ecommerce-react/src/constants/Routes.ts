@@ -1,6 +1,7 @@
 export const HOME_ROUTE: string = "/";
 export const SEARCH_ROUTE: string = "/search";
 export const BASKET_ROUTE: string = "/basket";
+export const CHECKOUT_ROUTE: string = "/checkout";
 
 
 

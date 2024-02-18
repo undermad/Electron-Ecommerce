@@ -17,7 +17,7 @@ import {
     REGISTER_ROUTE,
     ACTIVATE,
     FORGOT_PASSWORD,
-    CHANGE_FORGOTTEN_PASSWORD
+    CHANGE_FORGOTTEN_PASSWORD, CHECKOUT_ROUTE
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
@@ -26,13 +26,14 @@ import {Unauthorized} from "./ui/global/Unauthorized.tsx";
 import {PersistLogin} from "./ui/PersistLogin.tsx";
 import {MessageScreen} from "./ui/global/MessageScreen.tsx";
 import {MyAccount} from "./ui/account/MyAccount.tsx";
-import {Logout} from "./ui/account/Logout.tsx";
-import {ActivateAccount} from "./ui/account/ActivateAccount.tsx";
-import {ForgotPassword} from "./ui/account/ForgotPassword.tsx";
-import {ChangeForgottenPassword} from "./ui/account/ChangeForgottenPassword.tsx";
-import {Login} from "./ui/account/Login.tsx";
-import {Register} from "./ui/account/Register.tsx";
+import {Logout} from "./ui/auth/Logout.tsx";
+import {ActivateAccount} from "./ui/auth/ActivateAccount.tsx";
+import {ForgotPassword} from "./ui/auth/ForgotPassword.tsx";
+import {ChangeForgottenPassword} from "./ui/auth/ChangeForgottenPassword.tsx";
+import {Login} from "./ui/auth/Login.tsx";
+import {Register} from "./ui/auth/Register.tsx";
 import {ProductView} from "./ui/product-view/ProductView.tsx";
+import {Checkout} from "./ui/basket/Checkout.tsx";
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
                     <Route path={SEARCH_ROUTE + "/:category"} element={<Search/>}/>
                     <Route path={SEARCH_ROUTE + "/:category" + "/:productId"} element={<ProductView/>}/>
                     <Route path={BASKET_ROUTE} element={<Basket/>}/>
+                    <Route path={CHECKOUT_ROUTE} element={<Checkout/>}/>
 
 
                     <Route path={LOGIN_ROUTE} element={<Login/>}/>

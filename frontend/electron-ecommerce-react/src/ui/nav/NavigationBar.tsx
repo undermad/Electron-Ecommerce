@@ -1,6 +1,6 @@
 import {SearchBar} from "./SearchBar.tsx";
 import {BasketLink} from "./BasketLink.tsx";
-import {Account} from "./Account.tsx";
+import {AccountLink} from "./AccountLink.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {Categories} from "./Categories.tsx";
@@ -23,7 +23,7 @@ export const NavigationBar = () => {
                         <Categories/>
                     </div>
                     <SearchBar/>
-                    <Account/>
+                    <AccountLink/>
                     <BasketLink/>
                 </>
                 :
@@ -32,7 +32,7 @@ export const NavigationBar = () => {
                     <ElectronLogoSvg dark={false} />
                     <SearchBar/>
                     <BasketLink/>
-                    <Account/>
+                    <AccountLink/>
                     <Categories/>
 
                 </>
