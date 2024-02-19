@@ -1,5 +1,6 @@
 package com.electron.rest.entity.user;
 
+import com.electron.rest.entity.account.Address;
 import com.electron.rest.entity.basket.BasketItem;
 import com.electron.rest.entity.product.Review;
 import jakarta.persistence.*;

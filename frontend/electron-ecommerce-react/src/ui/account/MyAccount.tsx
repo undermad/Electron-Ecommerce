@@ -2,11 +2,16 @@ import {Container} from "../reusable/Container.tsx";
 import {Header3} from "../reusable/Header3.tsx";
 import {CiUser} from "react-icons/ci";
 import {Bold} from "../reusable/Bold.tsx";
-import {Span} from "../reusable/Span.tsx";
 import LogoutEverywhereButton from "../auth/LogoutEverywhereButton.tsx";
 import {HoverScale} from "../reusable/HoverScale.tsx";
-import React from "react";
 import {MdOutlineKeyboardArrowRight} from "react-icons/md";
+import {Outlet} from "react-router-dom";
+import {AccountLink} from "./AccountLink.tsx";
+import {
+    ADDRESSES_NESTED_ROUTE,
+    CHANGE_PASSWORD_NESTED_ROUTE,
+    PAYMENT_INFORMATION_NESTED_ROUTE
+} from "../../constants/Routes.ts";
 
 export const MyAccount = () => {
 
@@ -25,29 +30,23 @@ export const MyAccount = () => {
                             </div>
                             <Bold weight={600} textSize={14}>Dominik Tworek</Bold>
                         </div>
-                        <div className="flex flex-col gap-[17px] pt-[17px]">
+                        <nav className="flex flex-col gap-[17px] pt-[17px]">
+                            <AccountLink displayText="Payment Information" route={PAYMENT_INFORMATION_NESTED_ROUTE}/>
+                            <AccountLink displayText="Addresses" route={ADDRESSES_NESTED_ROUTE}/>
+                            <AccountLink displayText="Change Password" route={CHANGE_PASSWORD_NESTED_ROUTE}/>
                             <HoverScale>
                                 <div className="cursor-pointer flex justify-between items-center">
-                                    <Span>Payment Information</Span>
+                                    <LogoutEverywhereButton/>
                                     <MdOutlineKeyboardArrowRight/>
                                 </div>
                             </HoverScale>
-                            <HoverScale>
-                                <Span>Addresses</Span>
-                            </HoverScale>
-                            <HoverScale>
-                                <Span>Change Password</Span>
-                            </HoverScale>
-                            <HoverScale>
-                                <LogoutEverywhereButton/>
-                            </HoverScale>
 
-                        </div>
+                        </nav>
                     </main>
 
                 </div>
                 <div className="w-4/6">
-                    asd
+                    <Outlet/>
                 </div>
             </div>
         </Container>

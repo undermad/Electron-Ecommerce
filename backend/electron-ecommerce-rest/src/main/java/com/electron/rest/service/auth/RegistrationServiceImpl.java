@@ -14,7 +14,7 @@ import com.electron.rest.dto.auth.RegisterDto;
 import com.electron.rest.dto.auth.RegisterResponse;
 import com.electron.rest.entity.user.ActivationToken;
 import com.electron.rest.entity.user.User;
-import com.electron.rest.entity.factory.UserFactory;
+import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.entity.projections.AccountStatusProjection;
 import com.electron.rest.entity.projections.ActivationTokenProjection;
 import com.electron.rest.repository.auth.AccountStatusRepository;
@@ -48,7 +48,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final EmailSettingsFactory<ActivationToken> emailSettingsFactory;
 
     @Qualifier("regularUserFactory")
-    private final UserFactory regularUserFactory;
+    private final UserFactory<RegisterDto> regularUserFactory;
 
     public RegistrationServiceImpl(UserRepository userRepository,
                                    ActivationTokenRepository activationTokenRepository,

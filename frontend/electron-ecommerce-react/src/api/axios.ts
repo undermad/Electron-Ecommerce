@@ -24,6 +24,12 @@ export const PRODUCT_CATEGORY_API_PATH = "/product";
 export const BASKET_API_PATH = "/basket";
 export const ADD = "/add";
 export const REMOVE = "/remove";
+export const GET = "/get";
+export const GET_ALL = "/get_all";
+export const UPDATE = "/update";
+export const DELETE = "/delete";
+
+export const ADDRESS_API_PATH = "/address";
 
 export const axiosAuth = axios.create({
     baseURL: BASE_API_URL + AUTH_API_PATH,

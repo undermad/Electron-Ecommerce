@@ -27,7 +27,7 @@ const LogoutEverywhereButton = () => {
 
     return (
         <div className="cursor-pointer" onClick={handleLogoutEverywhere}>
-            <Span>Logout all devices</Span>
+            <Span>Logout from all devices</Span>
         </div>
     )
 }

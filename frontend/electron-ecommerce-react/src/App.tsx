@@ -17,7 +17,11 @@ import {
     REGISTER_ROUTE,
     ACTIVATE,
     FORGOT_PASSWORD,
-    CHANGE_FORGOTTEN_PASSWORD, CHECKOUT_ROUTE
+    CHANGE_FORGOTTEN_PASSWORD,
+    CHECKOUT_ROUTE,
+    PAYMENT_INFORMATION_NESTED_ROUTE,
+    ADDRESSES_NESTED_ROUTE,
+    CHANGE_PASSWORD_NESTED_ROUTE, ADD_ADDRESS_NESTED_ROUTE, UPDATE_ADDRESS_NESTED_ROUTE, DELETE_ADDRESS_NESTED_ROUTE
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
@@ -34,6 +38,13 @@ import {Login} from "./ui/auth/Login.tsx";
 import {Register} from "./ui/auth/Register.tsx";
 import {ProductView} from "./ui/product-view/ProductView.tsx";
 import {Checkout} from "./ui/basket/Checkout.tsx";
+import {PaymentInformation} from "./ui/account/PaymentInformation.tsx";
+import {AccountAddresses} from "./ui/account/AccountAddresses.tsx";
+import {ChangePassword} from "./ui/account/ChangePassword.tsx";
+import {AddAddressForm} from "./ui/account/AddAddressForm.tsx";
+import {UpdateAddressForm} from "./ui/account/UpdateAddressForm.tsx";
+import React from "react";
+import {DeleteAddress} from "./ui/account/DeleteAddress.tsx";
 
 function App() {
 
@@ -59,7 +70,19 @@ function App() {
 
                     {/*user protected routes*/}
                     <Route element={<RequireAuth allowedRoles={[ROLE_USER]}/>}>
-                        <Route path={ACCOUNT_ROUTE} element={<MyAccount/>}/>
+                        <Route path={ACCOUNT_ROUTE} element={<MyAccount/>}>
+                            <Route path={PAYMENT_INFORMATION_NESTED_ROUTE} element={<PaymentInformation/>}/>
+                            <Route path={ADDRESSES_NESTED_ROUTE} element={<AccountAddresses/>}/>
+                            <Route path={CHANGE_PASSWORD_NESTED_ROUTE} element={<ChangePassword/>}/>
+                            <Route path={ADD_ADDRESS_NESTED_ROUTE} element={<AddAddressForm/>}/>
+                            <Route path={UPDATE_ADDRESS_NESTED_ROUTE + "/:addressId"} element={<UpdateAddressForm />}/>
+                            <Route path={DELETE_ADDRESS_NESTED_ROUTE + "/:addressId"} element={<DeleteAddress/>}/>
+                        </Route>
+
+
+
+
+
                         <Route path={LOGOUT_ROUTE} element={<Logout/>}/>
                     </Route>
 

@@ -24,6 +24,9 @@ public class ErrorMessages {
     // RESOURCES
     public static final String CATEGORY_NOT_FOUND = "Category not found";
     public static final String PAGE_NOT_FOUND = "Page not found";
+    public static final String ADDRESS_NOT_FOUND = "Address not found";
+
+    public static final String POSTCODE_ERROR = "Postcode must be 6 characters.";
 
 
 }

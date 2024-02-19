@@ -11,6 +11,7 @@ import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.BasketItemProjection;
 import com.electron.rest.entity.projections.ProductItemProjection;
 import com.electron.rest.entity.user.User;
+import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.exception.OutOfStockException;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
@@ -19,6 +20,7 @@ import com.electron.rest.repository.basket.BasketItemRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
 import com.electron.rest.security.token.jwt.JwtProvider;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -34,24 +36,22 @@ import static com.electron.rest.constants.ErrorMessages.*;
 public class BasketItemService {
 
     private final BasketItemRepository basketItemRepository;
-    private final JwtProvider jwtProvider;
-    private final UserRepository userRepository;
     private final ProductItemRepository productItemRepository;
     private final ProductMapper productMapper;
 
-    public BasketItemService(BasketItemRepository basketItemRepository, JwtProvider jwtProvider, UserRepository userRepository, ProductItemRepository productItemRepository, ProductMapper productMapper) {
+    @Qualifier("userIdFactory")
+    private final UserFactory<String> userFactory;
+
+    public BasketItemService(BasketItemRepository basketItemRepository, ProductItemRepository productItemRepository, ProductMapper productMapper, UserFactory<String> userFactory) {
         this.basketItemRepository = basketItemRepository;
-        this.jwtProvider = jwtProvider;
-        this.userRepository = userRepository;
         this.productItemRepository = productItemRepository;
         this.productMapper = productMapper;
+        this.userFactory = userFactory;
     }
 
     public BasketResponse getUserBasket(String jwt) {
-        String email = jwtProvider.getSubject(jwt);
-        Long userId = userRepository.findUserIdFromEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND)).getId();
-        List<BasketItemProjection> basketItemProjections = basketItemRepository.findBasketItemsByUserId(userId);
+        User user = userFactory.createUser(jwt);
+        List<BasketItemProjection> basketItemProjections = basketItemRepository.findBasketItemsByUserId(user.getId());
         List<BasketPosition> products = new ArrayList<>();
         if (basketItemProjections.isEmpty()) return new BasketResponse(products);
         for (BasketItemProjection basketItemProjection : basketItemProjections) {
@@ -74,11 +74,9 @@ public class BasketItemService {
         ProductItem productItem = new ProductItem();
         productItem.setId(productItemId);
 
-        Long userId = getUserIdFromJwt(jwt);
-        User user = new User();
-        user.setId(userId);
+        User user = userFactory.createUser(jwt);
 
-        Optional<BasketItemProjection> basketItemProjection = basketItemRepository.findBasketItem(productItemId, userId);
+        Optional<BasketItemProjection> basketItemProjection = basketItemRepository.findBasketItem(productItemId, user.getId());
         if (basketItemProjection.isEmpty()) {
             BasketItem basketItem = BasketItem.builder()
                     .user(user)
@@ -94,20 +92,14 @@ public class BasketItemService {
     }
 
     public void decreaseItemQuantity(String jwt, RemoveItemRequest removeItemRequest) {
-        Long userId = getUserIdFromJwt(jwt);
-        BasketItemProjection basketItemProjection = basketItemRepository.findBasketItem(removeItemRequest.productId(), userId)
+        User user = userFactory.createUser(jwt);
+        BasketItemProjection basketItemProjection = basketItemRepository.findBasketItem(removeItemRequest.productId(), user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
         int quantity = basketItemProjection.getQuantity();
         Long basketItemId = basketItemProjection.getId();
         if (quantity > 1)
             basketItemRepository.decreaseQuantityByOne(basketItemId);
         else basketItemRepository.removeItemById(basketItemId);
-    }
-
-    private Long getUserIdFromJwt(String jwt) {
-        String email = jwtProvider.getSubject(jwt);
-        return userRepository.findUserIdFromEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND)).getId();
     }
 
 }

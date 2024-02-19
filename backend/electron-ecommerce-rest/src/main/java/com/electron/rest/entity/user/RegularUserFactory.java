@@ -1,7 +1,8 @@
-package com.electron.rest.entity.factory;
+package com.electron.rest.entity.user;
 
 import com.electron.rest.constants.AccountStatuses;
 import com.electron.rest.constants.Roles;
+import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.exception.ApiException;
 import com.electron.rest.dto.auth.RegisterDto;
 import com.electron.rest.entity.user.AccountStatus;
@@ -20,7 +21,7 @@ import java.util.Set;
 import static com.electron.rest.constants.ErrorMessages.STATUS_NOT_FOUND;
 
 @Component("regularUserFactory")
-public class RegularUserFactory implements UserFactory {
+public class RegularUserFactory implements UserFactory<RegisterDto> {
 
     private final PasswordEncoder passwordEncoder;
     private final AccountStatusRepository accountStatusRepository;
