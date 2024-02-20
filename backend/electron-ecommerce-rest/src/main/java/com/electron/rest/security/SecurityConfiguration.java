@@ -77,6 +77,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(API_V1_CATEGORY + "/**").permitAll()
                                 .requestMatchers(API_V1_PRODUCT + "/**").permitAll()
                                 .requestMatchers(API_V1_BASKET + "/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(API_V1_ADDRESS + "/**").hasAnyRole("USER", "ADMIN")
                                 .anyRequest()
                                 .authenticated())
 

@@ -1,5 +1,6 @@
 package com.electron.rest.controller;
 
+import com.electron.rest.dto.account.ChangePasswordDto;
 import com.electron.rest.dto.auth.*;
 import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.exception.TokenException;
@@ -79,6 +80,13 @@ public class AuthenticationController {
                                                                            @RequestBody @Valid
                                                                            ChangeForgottenPasswordDto changeForgottenPasswordDto) throws TokenException {
         authService.changeForgottenPassword(passwordRecoveryToken, changeForgottenPasswordDto);
+        return ResponseEntity.ok(new MessageResponse(PASSWORD_CHANGED));
+    }
+
+    @PutMapping(CHANGE_PASSWORD)
+    public ResponseEntity<MessageResponse> changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto,
+                                                          @RequestHeader("Authorization") String jwt) {
+        authService.changePassword(changePasswordDto, jwt);
         return ResponseEntity.ok(new MessageResponse(PASSWORD_CHANGED));
     }
 

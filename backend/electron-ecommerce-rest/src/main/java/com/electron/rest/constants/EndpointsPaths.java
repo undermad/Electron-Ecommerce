@@ -35,6 +35,6 @@ public class EndpointsPaths {
     public static final String DELETE = "/delete";
 
     public static final String API_V1_ADDRESS = "/api/v1/address";
-    public static final String ADD_ADDRESS = "/add_address";
+    public static final String CHANGE_PASSWORD = "/change_password";
 
 }

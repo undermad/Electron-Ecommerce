@@ -33,10 +33,12 @@ export const AddressEl = ({address}: AddressElProps) => {
                 <Span>{address.postcode}</Span>
             </div>
             <div className="flex flex-col justify-between">
-                <div onClick={handleEditButton}>
+                <div className="cursor-pointer"
+                    onClick={handleEditButton}>
                     <CiEdit size={24}/>
                 </div>
-                <div onClick={handleDeleteButton}>
+                <div className="cursor-pointer"
+                    onClick={handleDeleteButton}>
                     <AiOutlineDelete size={24}/>
                 </div>
             </div>

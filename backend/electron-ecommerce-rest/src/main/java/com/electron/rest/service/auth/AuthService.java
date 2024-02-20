@@ -1,5 +1,6 @@
 package com.electron.rest.service.auth;
 
+import com.electron.rest.dto.account.ChangePasswordDto;
 import com.electron.rest.dto.auth.ChangeForgottenPasswordDto;
 import com.electron.rest.dto.auth.LoginDto;
 import com.electron.rest.dto.auth.LoginResponse;
@@ -17,4 +18,5 @@ public interface AuthService {
     void logoutEverywhere(String jwt);
     void recoverPassword(PasswordRecoveryDto passwordRecoveryDto) throws MessagingException;
     void changeForgottenPassword(String passwordRecoveryToken, ChangeForgottenPasswordDto changeForgottenPasswordDto) throws TokenException;
+    void changePassword(ChangePasswordDto changePasswordDto, String jwt);
 }

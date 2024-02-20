@@ -36,5 +36,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = "UPDATE users u SET u.password = :newEncodedPassword WHERE u.id = :userId", nativeQuery = true)
     void updatePassword(@Param("newEncodedPassword") String newEncodedPassword, @Param("userId") Long userId);
 
+    @Query(value = "SELECT u.password FROM users u WHERE u.id = :userId", nativeQuery = true)
+    Optional<String> findPasswordByUserId(@Param("userId") Long userId);
 
 }

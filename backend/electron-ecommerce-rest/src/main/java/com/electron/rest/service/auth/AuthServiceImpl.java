@@ -1,6 +1,7 @@
 package com.electron.rest.service.auth;
 
 import com.electron.rest.constants.ErrorMessages;
+import com.electron.rest.dto.account.ChangePasswordDto;
 import com.electron.rest.dto.auth.ChangeForgottenPasswordDto;
 import com.electron.rest.dto.auth.LoginDto;
 import com.electron.rest.dto.auth.LoginResponse;
@@ -8,11 +9,10 @@ import com.electron.rest.dto.auth.PasswordRecoveryDto;
 import com.electron.rest.email.EmailService;
 import com.electron.rest.email.EmailSettings;
 import com.electron.rest.email.EmailSettingsFactory;
+import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.exception.InvalidInputException;
 import com.electron.rest.exception.RefreshTokenException;
 import com.electron.rest.exception.TokenException;
-import com.electron.rest.exception.UnauthorizedException;
-import com.electron.rest.security.AuthUtils;
 import com.electron.rest.entity.user.PasswordRecoveryToken;
 import com.electron.rest.entity.user.RefreshToken;
 import com.electron.rest.entity.user.User;
@@ -30,6 +30,7 @@ import com.electron.rest.security.token.password_recovery_token.PasswordRecovery
 import com.electron.rest.security.token.refresh_token.RefreshTokenProvider;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,6 +64,9 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordRecoveryTokenRepository passwordRecoveryTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Qualifier("userIdFactory")
+    private final UserFactory<String> userIdFactory;
+
     private final EmailService emailService;
 
     @Qualifier("passwordRecoveryEmailSettings")
@@ -77,7 +81,8 @@ public class AuthServiceImpl implements AuthService {
                            RefreshTokenProvider refreshTokenProvider,
                            PasswordRecoveryTokenProvider passwordRecoveryTokenProvider,
                            PasswordRecoveryTokenRepository passwordRecoveryTokenRepository,
-                           PasswordEncoder passwordEncoder, EmailService emailService,
+                           PasswordEncoder passwordEncoder, UserFactory<String> userIdFactory,
+                           EmailService emailService,
                            EmailSettingsFactory<PasswordRecoveryToken> emailSettingsFactory) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
@@ -88,6 +93,7 @@ public class AuthServiceImpl implements AuthService {
         this.passwordRecoveryTokenProvider = passwordRecoveryTokenProvider;
         this.passwordRecoveryTokenRepository = passwordRecoveryTokenRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userIdFactory = userIdFactory;
         this.emailService = emailService;
         this.emailSettingsFactory = emailSettingsFactory;
     }
@@ -195,12 +201,24 @@ public class AuthServiceImpl implements AuthService {
 
         Optional<PasswordRecoveryTokenProjection> passwordRecoveryTokenProjectionAsOptional = passwordRecoveryTokenRepository
                 .findByPasswordRecoveryToken(passwordRecoveryToken);
-        if(passwordRecoveryTokenProjectionAsOptional.isEmpty()) throw new TokenException(INVALID_TOKEN);
+        if (passwordRecoveryTokenProjectionAsOptional.isEmpty()) throw new TokenException(INVALID_TOKEN);
         Long userId = passwordRecoveryTokenProjectionAsOptional.get().getUserId();
 
         String newEncodedPassword = passwordEncoder.encode(changeForgottenPasswordDto.newPassword());
         userRepository.updatePassword(newEncodedPassword, userId);
         passwordRecoveryTokenRepository.deleteByUserId(userId);
+    }
+
+    @Override
+    public void changePassword(ChangePasswordDto changePasswordDto, String jwt) {
+        User user = userIdFactory.createUser(jwt);
+        String oldPassword = userRepository.findPasswordByUserId(user.getId())
+                .orElseThrow(() -> new InvalidInputException(BAD_CREDENTIALS));
+        if (!passwordEncoder.matches(changePasswordDto.oldPassword(), oldPassword) ||
+                !changePasswordDto.newPassword().equals(changePasswordDto.reNewPassword()))
+            throw new InvalidInputException(BAD_CREDENTIALS);
+        String newEncodedPassword = passwordEncoder.encode(changePasswordDto.newPassword());
+        userRepository.updatePassword(newEncodedPassword, user.getId());
     }
 
 
