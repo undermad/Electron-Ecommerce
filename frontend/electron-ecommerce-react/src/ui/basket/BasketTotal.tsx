@@ -22,7 +22,7 @@ export const BasketTotal = () => {
     }, [basketContext.basket]);
 
     return (
-        <div className="p-[24px] border border-electron-product-listing-bg rounded-lg">
+        <div className=" p-[24px] border border-electron-product-listing-bg rounded-lg">
             <div className="mb-[17px] border-b border-electron-product-listing-bg">
                 <Header2>TOTAL</Header2>
             </div>

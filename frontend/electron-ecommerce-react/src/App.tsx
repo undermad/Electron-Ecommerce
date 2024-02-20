@@ -43,7 +43,6 @@ import {AccountAddresses} from "./ui/account/AccountAddresses.tsx";
 import {ChangePassword} from "./ui/account/ChangePassword.tsx";
 import {AddAddressForm} from "./ui/account/AddAddressForm.tsx";
 import {UpdateAddressForm} from "./ui/account/UpdateAddressForm.tsx";
-import React from "react";
 import {DeleteAddress} from "./ui/account/DeleteAddress.tsx";
 
 function App() {
@@ -71,8 +70,8 @@ function App() {
                     {/*user protected routes*/}
                     <Route element={<RequireAuth allowedRoles={[ROLE_USER]}/>}>
                         <Route path={ACCOUNT_ROUTE} element={<MyAccount/>}>
-                            <Route path={PAYMENT_INFORMATION_NESTED_ROUTE} element={<PaymentInformation/>}/>
                             <Route path={ADDRESSES_NESTED_ROUTE} element={<AccountAddresses/>}/>
+                            <Route path={PAYMENT_INFORMATION_NESTED_ROUTE} element={<PaymentInformation/>}/>
                             <Route path={CHANGE_PASSWORD_NESTED_ROUTE} element={<ChangePassword/>}/>
                             <Route path={ADD_ADDRESS_NESTED_ROUTE} element={<AddAddressForm/>}/>
                             <Route path={UPDATE_ADDRESS_NESTED_ROUTE + "/:addressId"} element={<UpdateAddressForm />}/>

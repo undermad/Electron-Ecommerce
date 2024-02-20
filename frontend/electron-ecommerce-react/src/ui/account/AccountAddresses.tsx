@@ -26,7 +26,7 @@ export const AccountAddresses = () => {
     return (
         <div className="flex flex-col gap-[24px]">
             <Header3>Addresses</Header3>
-            <div className="grid grid-cols-2 gap-[20px]">
+            <div className="grid md:grid-cols-2 gap-[20px]">
                 {addresses.map((item, key) => (
                     <div key={key}>
                         <AddressEl address={item}/>

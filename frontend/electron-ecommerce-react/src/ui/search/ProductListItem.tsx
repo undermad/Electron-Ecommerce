@@ -6,6 +6,7 @@ import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {AddToBasketButton} from "../reusable/AddToBasketButton.tsx";
 import {RatingStars} from "../reusable/RatingStars.tsx";
 import {useEffect, useState} from "react";
+import {SEARCH_ROUTE} from "../../constants/Routes.ts";
 
 type ProductListItemProps = {
     product: Product,
@@ -19,8 +20,13 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
     const [date, setDate] = useState<string>('');
 
 
+
     const handleProductClick = () => {
         navigate(location.pathname + '/' + product.productId)
+    }
+
+    const handleClick = (productId: number, category: string) => {
+        navigate(`${SEARCH_ROUTE}/${category}/${productId}`);
     }
 
     useEffect(() => {
@@ -41,7 +47,7 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
                     <div className={"w-1/3 cursor-pointer"} onClick={handleProductClick}>
                         <img src={product.imgUrl} alt={product.description}/>
                     </div>
-                    <div className="w-full flex flex-col gap-[12px]">
+                    <div onClick={() => handleClick(product.productId, product.category)} className="w-full flex flex-col gap-[12px]">
                         <div className={"w-full flex flex-col justify-center cursor-pointer"}
                              onClick={handleProductClick}>
                             <p className={`text-electron-header-font text-[16px] font-[600] leading-7`}>
@@ -54,9 +60,9 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
                             </h3>
                             <ParagraphSmall>Free delivery {date}</ParagraphSmall>
                         </div>
-                        <div className="w-1/6">
-                            <AddToBasketButton product={product}/>
-                        </div>
+                    </div>
+                    <div className="w-1/6">
+                        <AddToBasketButton product={product}/>
                     </div>
 
                 </div>

@@ -7,6 +7,8 @@ export const BasketPositionsList = () => {
 
     const basketContext = useContext(BasketContext);
 
+
+
     return (
         <div className="w-full flex flex-col gap-[20px]">
             {basketContext.basket.items.length === 0 ?
@@ -14,7 +16,7 @@ export const BasketPositionsList = () => {
                 :
                 <>
                     {basketContext.basket.items.map((item, index) => (
-                        <ProductListItem key={index} product={item.product}/>
+                            <ProductListItem key={index} product={item.product}/>
                     ))}
                 </>
             }
