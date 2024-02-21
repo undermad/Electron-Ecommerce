@@ -32,6 +32,12 @@ export const DELETE = "/delete";
 
 export const ADDRESS_API_PATH = "/address";
 
+export const ORDER_API_PATH = "/order";
+export const BEGIN_CHECKOUT_API_PATH = "/begin_checkout";
+export const GET_CHECKOUT_SUMMARY = "/get_checkout_summary";
+
+
+
 export const axiosAuth = axios.create({
     baseURL: BASE_API_URL + AUTH_API_PATH,
     headers: {'Content-Type': 'application/json'},

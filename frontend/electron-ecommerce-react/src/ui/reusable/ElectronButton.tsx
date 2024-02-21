@@ -1,4 +1,5 @@
 import React, {ComponentProps} from "react";
+import {CgSpinner} from "react-icons/cg";
 
 type ElectronButtonProps = ComponentProps<"button"> & {
     children: React.ReactNode,
@@ -19,7 +20,15 @@ export const ElectronButton = ({loading, children, textSize, width, rounded, ...
                     + `${loading ? "bg-electron-primary-disabled-dark-blue " : "bg-electron-primary-dark-blue "}`
                     + `${textSize ? 'text-[' + textSize + 'px] ' : ''} `}
                 disabled={loading}>
-                {children}
+
+                <div className="w-full items-center justify-center flex">
+                    <div className={`${loading ? "animate-spin " : 'hidden '} h-[24px] w-[24px]`}>
+                        <CgSpinner size={24}/>
+                    </div>
+                </div>
+                <div className={`${loading ? "hidden" : ''}`}>
+                    {children}
+                </div>
             </button>
         </div>
     )

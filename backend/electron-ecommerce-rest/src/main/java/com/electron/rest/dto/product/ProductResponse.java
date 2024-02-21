@@ -25,6 +25,7 @@ public class ProductResponse {
     private BigDecimal currentRate;
     private Long categoryId;
     private String category;
+    private Integer totalQuantity;
 
     private String productInformation;
     private Set<String> images;

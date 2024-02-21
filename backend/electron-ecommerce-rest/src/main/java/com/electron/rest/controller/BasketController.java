@@ -1,11 +1,10 @@
 package com.electron.rest.controller;
 
 import com.electron.rest.dto.auth.MessageResponse;
-import com.electron.rest.dto.basket.AddItemRequest;
-import com.electron.rest.dto.basket.BasketResponse;
-import com.electron.rest.dto.basket.RemoveItemRequest;
-import com.electron.rest.service.basket.BasketItemService;
-import jakarta.mail.Message;
+import com.electron.rest.dto.account.AddItemRequest;
+import com.electron.rest.dto.account.BasketResponse;
+import com.electron.rest.dto.account.RemoveItemRequest;
+import com.electron.rest.service.account.BasketItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

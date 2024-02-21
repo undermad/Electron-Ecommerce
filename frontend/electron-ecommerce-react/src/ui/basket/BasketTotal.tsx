@@ -1,7 +1,7 @@
 import {Header2} from "../reusable/Header2.tsx";
-import {Span} from "../reusable/Span.tsx";
 import {useContext, useEffect, useState} from "react";
 import {BasketContext} from "../../context/BasketContext.tsx";
+import {TotalSummary} from "./TotalSummary.tsx";
 
 export const BasketTotal = () => {
 
@@ -26,25 +26,7 @@ export const BasketTotal = () => {
             <div className="mb-[17px] border-b border-electron-product-listing-bg">
                 <Header2>TOTAL</Header2>
             </div>
-            <div
-                className={"flex flex-col gap-[17px] mt-[17px] border-b border-electron-product-listing-bg"}>
-                <div className="flex justify-between">
-                    <Span>Total items</Span>
-                    <Span>{totalItems}</Span>
-                </div>
-                <div className="flex justify-between">
-                    <Span>Delivery cost</Span>
-                    <Span>Free delivery</Span>
-                </div>
-                <div className="flex justify-between pb-[17px]">
-                    <Span>Discount</Span>
-                    <Span>£0</Span>
-                </div>
-            </div>
-            <div className="flex justify-between mt-[17px]">
-                <Span>Total</Span>
-                <Span>£{subtotal}</Span>
-            </div>
+            <TotalSummary totalItems={totalItems} totalPrice={subtotal}/>
 
 
         </div>

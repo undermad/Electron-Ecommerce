@@ -1,5 +1,6 @@
-package com.electron.rest.entity.basket;
+package com.electron.rest.entity.account;
 
+import com.electron.rest.entity.orders.CheckoutItem;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.user.User;
 import jakarta.persistence.*;
@@ -35,7 +36,9 @@ public class BasketItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
+    @OneToOne(mappedBy = "basketItem", fetch = FetchType.LAZY)
+    private CheckoutItem checkoutItem;
 
 }

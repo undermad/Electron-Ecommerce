@@ -3,12 +3,10 @@ package com.electron.rest.repository.product;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.FeatureProjection;
 import com.electron.rest.entity.projections.ProductItemProjection;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,5 +77,25 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
                         WHERE pi.id = :productId
             """, nativeQuery = true)
     Optional<ProductItemProjection> findProductListItem(@Param("productId") Long productId);
+
+    @Modifying
+    @Query(value = """
+                UPDATE product_item pi
+                SET pi.stock_quantity = pi.stock_quantity - :quantity
+                WHERE pi.stock_quantity >= :quantity
+                AND pi.id = :productId
+            """, nativeQuery = true)
+    void reduceQuantity(@Param("quantity") Integer quantity, @Param("productId") Long productId);
+
+    @Modifying
+    @Query(value = """
+                UPDATE product_item pi
+                SET pi.stock_quantity = pi.stock_quantity + :quantity
+                WHERE pi.id = :productItemId
+            """, nativeQuery = true)
+    void increaseQuantity(@Param("quantity") Integer quantity, @Param("productItemId") Long productItemId);
+
+    @Query(value = "SELECT pi.id as id, pi.stock_quantity as stockQuantity, pi.price as price FROM product_item pi WHERE pi.id = :productId", nativeQuery = true)
+    Optional<ProductItemProjection> findQuantityAndPrice(@Param("productId") Long productId);
 
 }

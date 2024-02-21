@@ -1,12 +1,11 @@
-package com.electron.rest.service.basket;
+package com.electron.rest.service.account;
 
-import com.electron.rest.constants.ErrorMessages;
-import com.electron.rest.dto.basket.AddItemRequest;
-import com.electron.rest.dto.basket.BasketPosition;
-import com.electron.rest.dto.basket.BasketResponse;
-import com.electron.rest.dto.basket.RemoveItemRequest;
+import com.electron.rest.dto.account.AddItemRequest;
+import com.electron.rest.dto.account.BasketPosition;
+import com.electron.rest.dto.account.BasketResponse;
+import com.electron.rest.dto.account.RemoveItemRequest;
 import com.electron.rest.dto.product.ProductResponse;
-import com.electron.rest.entity.basket.BasketItem;
+import com.electron.rest.entity.account.BasketItem;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.BasketItemProjection;
 import com.electron.rest.entity.projections.ProductItemProjection;
@@ -15,13 +14,10 @@ import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.exception.OutOfStockException;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
-import com.electron.rest.repository.auth.UserRepository;
-import com.electron.rest.repository.basket.BasketItemRepository;
+import com.electron.rest.repository.account.BasketItemRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
-import com.electron.rest.security.token.jwt.JwtProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

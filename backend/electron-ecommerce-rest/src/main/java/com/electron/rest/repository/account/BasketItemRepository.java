@@ -1,6 +1,6 @@
-package com.electron.rest.repository.basket;
+package com.electron.rest.repository.account;
 
-import com.electron.rest.entity.basket.BasketItem;
+import com.electron.rest.entity.account.BasketItem;
 import com.electron.rest.entity.projections.BasketItemProjection;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,7 +26,8 @@ public interface BasketItemRepository extends CrudRepository<BasketItem, Long> {
     void updateQuantity(@Param("quantity") Integer quantity, @Param("basketItemId") Long basketItemId);
 
     @Query(value = """
-            SELECT bi.product_item_id as productItemId,
+            SELECT bi.id as id,
+                   bi.product_item_id as productItemId,
                    bi.quantity as quantity
             FROM basket_items bi
             WHERE bi.user_id = :userId

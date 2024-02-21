@@ -1,4 +1,4 @@
-package com.electron.rest.dto.basket;
+package com.electron.rest.dto.account;
 
 import java.util.List;
 

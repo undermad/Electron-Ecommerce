@@ -1,7 +1,8 @@
 package com.electron.rest.entity.user;
 
 import com.electron.rest.entity.account.Address;
-import com.electron.rest.entity.basket.BasketItem;
+import com.electron.rest.entity.account.BasketItem;
+import com.electron.rest.entity.orders.CheckoutItem;
 import com.electron.rest.entity.product.Review;
 import jakarta.persistence.*;
 import lombok.*;
@@ -68,11 +69,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<BasketItem> basketItem;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Address> address;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<CheckoutItem> checkoutItems;
 
 
 }
