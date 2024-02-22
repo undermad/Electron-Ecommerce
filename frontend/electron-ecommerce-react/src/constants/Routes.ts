@@ -24,6 +24,9 @@ export const LOGOUT_ROUTE: string = "/logout";
 export const FORGOT_PASSWORD: string = "/forgotpassword";
 export const CHANGE_FORGOTTEN_PASSWORD: string = "/changeforgottenpassword";
 
+export const CHECKOUT_ADDRESS_PICKER: string = "address";
+export const CHECKOUT_ORDER_INFO: string = "order_info";
+
 
 export const ADMIN_ROUTE: string = "/admin";
 

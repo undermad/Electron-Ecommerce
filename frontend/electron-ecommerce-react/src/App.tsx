@@ -21,7 +21,11 @@ import {
     CHECKOUT_ROUTE,
     PAYMENT_INFORMATION_NESTED_ROUTE,
     ADDRESSES_NESTED_ROUTE,
-    CHANGE_PASSWORD_NESTED_ROUTE, ADD_ADDRESS_NESTED_ROUTE, UPDATE_ADDRESS_NESTED_ROUTE, DELETE_ADDRESS_NESTED_ROUTE
+    CHANGE_PASSWORD_NESTED_ROUTE,
+    ADD_ADDRESS_NESTED_ROUTE,
+    UPDATE_ADDRESS_NESTED_ROUTE,
+    DELETE_ADDRESS_NESTED_ROUTE,
+    CHECKOUT_ADDRESS_PICKER, CHECKOUT_ORDER_INFO
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
@@ -44,6 +48,9 @@ import {ChangePassword} from "./ui/account/ChangePassword.tsx";
 import {AddAddressForm} from "./ui/account/AddAddressForm.tsx";
 import {UpdateAddressForm} from "./ui/account/UpdateAddressForm.tsx";
 import {DeleteAddress} from "./ui/account/DeleteAddress.tsx";
+import React from "react";
+import {AddressPicker} from "./ui/basket/AddressPicker.tsx";
+import {OrderInformation} from "./ui/basket/OrderInformation.tsx";
 
 function App() {
 
@@ -57,7 +64,11 @@ function App() {
                     <Route path={SEARCH_ROUTE + "/:category"} element={<Search/>}/>
                     <Route path={SEARCH_ROUTE + "/:category" + "/:productId"} element={<ProductView/>}/>
                     <Route path={BASKET_ROUTE} element={<Basket/>}/>
-                    <Route path={CHECKOUT_ROUTE} element={<Checkout/>}/>
+                    <Route path={CHECKOUT_ROUTE} element={<Checkout/>}>
+                        <Route path={CHECKOUT_ORDER_INFO} element={<OrderInformation/>}/>
+                        <Route path={CHECKOUT_ADDRESS_PICKER} element={<AddressPicker/>}/>
+
+                    </Route>
 
 
                     <Route path={LOGIN_ROUTE} element={<Login/>}/>

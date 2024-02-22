@@ -70,11 +70,6 @@ public class OrderService {
 
     public void beginCheckout(String jwt) {
         User user = userIdFactory.createUser(jwt);
-//        List<CheckoutItemProjection> existingCheckoutItemsProj = checkoutItemRepository.findCheckoutItemsByUserId(user.getId());
-//        existingCheckoutItemsProj.forEach(item -> {
-//            productItemRepository.increaseQuantity(item.getQuantity(), item.getProductItemId());
-//        });
-//        checkoutItemRepository.deleteItemsByUserId(user.getId());
 
         List<BasketItemProjection> basketItemsProj = basketItemRepository.findBasketItemsByUserId(user.getId());
         basketItemsProj.forEach(item -> {

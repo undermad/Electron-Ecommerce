@@ -69,26 +69,42 @@
 Application keep growing, some new ideas come up,
 Todo list begin once again
 
+
+2. ADD DOCKER                                            ADD DEV TOOLS AND VOLUME FOR QUICK RESTARTS AND THERE YOU ARE
+4. FIND SOLUTION FOR PRICE FILTERS (data is not fetched again after we move slider)                 COMPLETED (onFinalChange)
+5. ADD PAGINATION FOR PRODUCT LISTING PAGE                                                          COMPLETED
+6. ADD SPECIFIC PRODUCT PAGE                                                                        COMPLETED
+8. BASKET                                                                                           COMPLETED
+
+
 1. ADD TESTS!!! PLEASE DO IT!
 7. ADD MORE PRODUCTS TO DATABASE
         - CONSIDER USAGE OF CHAT GPT
 
-2. ADD DOCKER                                            ADD DEV TOOLS AND VOLUME FOR QUICK RESTARTS AND THERE YOU ARE
 3. ADD SEARCH ENGINE AND TEXT FILTERS
-4. FIND SOLUTION FOR PRICE FILTERS (data is not fetched again after we move slider)                 COMPLETED (onFinalChange)
-5. ADD PAGINATION FOR PRODUCT LISTING PAGE                                                          COMPLETED
-6. ADD SPECIFIC PRODUCT PAGE                                                                        COMPLETED
-8. BASKET                                                                                        IN PROGRESS
+1. ADD BACKEND LOGIC FOR ORDER PLACEMENT
+9. ADD RATE LIMITING
+10. ADD SUBSCRIPTION LOGIC
+11. CREATE STATISTICS FOR PRODUCT VIEWS
 
 
 DEBUG:
     - persist filters                                                                   COMPLETED
     - make sure basket is fetched after we refresh the website on search component      COMPLETED
 
+    - find a way to fix the possibility to come back to the existing checkout
+
 
 CHILL OUT FRONTEND TASKS:
 1. BUILD FOOTER                                COMPLETED
 2. Build great carousel for home page          COMPLETED WITH SWIPER LIBRARY
+
+3. Reduce Order summary on mobile version in checkout component
+4. Start adding animation
+5. Improve mobile card style
+6. Create Homepage
+7. Add sorting for product listing
+8. Improve styling on product listing mobile
 
 
 

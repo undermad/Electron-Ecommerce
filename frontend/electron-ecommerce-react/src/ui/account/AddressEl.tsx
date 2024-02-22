@@ -7,9 +7,10 @@ import {ACCOUNT_ROUTE, DELETE_ADDRESS_NESTED_ROUTE, UPDATE_ADDRESS_NESTED_ROUTE}
 
 type AddressElProps = {
     address: Address,
+    onClick?: () => void,
 }
 
-export const AddressEl = ({address}: AddressElProps) => {
+export const AddressEl = ({address, onClick}: AddressElProps) => {
 
     const navigate = useNavigate();
 
@@ -23,9 +24,10 @@ export const AddressEl = ({address}: AddressElProps) => {
 
 
     return (
-        <div className="flex justify-between p-[17px] border border-electron-product-listing-bg rounded-lg">
+        <div className="flex p-[17px] justify-between border border-electron-product-listing-bg rounded-lg">
             <div
-                className="flex flex-col gap-[6px] ">
+                onClick={onClick}
+                className={`flex flex-col gap-[6px] w-[90%] ${onClick ? 'cursor-pointer' : ''}`}>
                 <Span>{address.streetOne}</Span>
                 <Span>{address.streetTwo}</Span>
                 <Span>{address.state}</Span>
@@ -34,11 +36,11 @@ export const AddressEl = ({address}: AddressElProps) => {
             </div>
             <div className="flex flex-col justify-between">
                 <div className="cursor-pointer"
-                    onClick={handleEditButton}>
+                     onClick={handleEditButton}>
                     <CiEdit size={24}/>
                 </div>
                 <div className="cursor-pointer"
-                    onClick={handleDeleteButton}>
+                     onClick={handleDeleteButton}>
                     <AiOutlineDelete size={24}/>
                 </div>
             </div>
