@@ -27,23 +27,25 @@ export const AddressEl = ({address, onClick}: AddressElProps) => {
         <div className="flex p-[17px] justify-between border border-electron-product-listing-bg rounded-lg">
             <div
                 onClick={onClick}
-                className={`flex flex-col gap-[6px] w-[90%] ${onClick ? 'cursor-pointer' : ''}`}>
+                className={`flex flex-col gap-[6px]  ${onClick ? 'cursor-pointer w-full' : 'w-[90%] '}`}>
                 <Span>{address.streetOne}</Span>
                 <Span>{address.streetTwo}</Span>
                 <Span>{address.state}</Span>
                 <Span>{address.city}</Span>
                 <Span>{address.postcode}</Span>
             </div>
-            <div className="flex flex-col justify-between">
-                <div className="cursor-pointer"
-                     onClick={handleEditButton}>
-                    <CiEdit size={24}/>
+            {!onClick &&
+                <div className="flex flex-col justify-between">
+                    <div className="cursor-pointer"
+                         onClick={handleEditButton}>
+                        <CiEdit size={24}/>
+                    </div>
+                    <div className="cursor-pointer"
+                         onClick={handleDeleteButton}>
+                        <AiOutlineDelete size={24}/>
+                    </div>
                 </div>
-                <div className="cursor-pointer"
-                     onClick={handleDeleteButton}>
-                    <AiOutlineDelete size={24}/>
-                </div>
-            </div>
+            }
         </div>
     )
 }

@@ -24,11 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.electron.rest.constants.ErrorMessages.CHECKOUT_NOT_FOUND;
 import static com.electron.rest.constants.ErrorMessages.PRODUCT_NOT_FOUND;
 
 @Service
 @Transactional
-public class OrderService {
+public class CheckoutService {
 
     @Qualifier("userIdFactory")
     private final UserFactory<String> userIdFactory;
@@ -37,7 +38,7 @@ public class OrderService {
     private final CheckoutItemRepository checkoutItemRepository;
     private final ProductMapper productMapper;
 
-    public OrderService(UserFactory<String> userIdFactory, BasketItemRepository basketItemRepository, ProductItemRepository productItemRepository, CheckoutItemRepository checkoutItemRepository, ProductMapper productMapper) {
+    public CheckoutService(UserFactory<String> userIdFactory, BasketItemRepository basketItemRepository, ProductItemRepository productItemRepository, CheckoutItemRepository checkoutItemRepository, ProductMapper productMapper) {
         this.userIdFactory = userIdFactory;
         this.basketItemRepository = basketItemRepository;
         this.productItemRepository = productItemRepository;
@@ -48,6 +49,7 @@ public class OrderService {
     public CheckoutItemResponse getCheckoutSummary(String jwt) {
         User user = userIdFactory.createUser(jwt);
         List<CheckoutItemProjection> checkoutItems = checkoutItemRepository.findCheckoutItemsByUserId(user.getId());
+        if(checkoutItems.isEmpty()) throw new ResourceNotFoundException(CHECKOUT_NOT_FOUND);
         List<ProductResponse> listOfProducts = new ArrayList<>();
         AtomicReference<Double> totalPrice = new AtomicReference<>(0D);
         AtomicReference<Integer> totalItems = new AtomicReference<>(0);
@@ -67,8 +69,16 @@ public class OrderService {
                 totalItems.get());
     }
 
+    public void deleteCheckout(String jwt) {
+        User user = userIdFactory.createUser(jwt);
+        List<CheckoutItemProjection> items = checkoutItemRepository.findCheckoutItemsByUserId(user.getId());
+        items.forEach(item -> {
+            productItemRepository.increaseQuantity(item.getQuantity(), item.getProductItemId());
+        });
+        checkoutItemRepository.deleteAllUserItems(user.getId());
+    }
 
-    public void beginCheckout(String jwt) {
+    public void startCheckout(String jwt) {
         User user = userIdFactory.createUser(jwt);
 
         List<BasketItemProjection> basketItemsProj = basketItemRepository.findBasketItemsByUserId(user.getId());

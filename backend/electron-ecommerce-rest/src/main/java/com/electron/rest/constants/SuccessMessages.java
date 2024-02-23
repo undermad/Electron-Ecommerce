@@ -12,4 +12,5 @@ public class SuccessMessages {
     public static final String ADDRESS_UPDATED = "Address has been updated.";
     public static final String ADDRESS_DELETED = "Address had been deleted.";
     public static final String CHECKOUT_STARTED = "Checkout started successfully.";
+    public static final String CHECKOUT_DELETED = "Checkout has been deleted.";
 }

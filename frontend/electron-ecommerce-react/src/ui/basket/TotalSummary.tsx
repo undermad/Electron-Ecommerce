@@ -26,7 +26,7 @@ export const TotalSummary = ({totalItems, totalPrice}: TotalSummaryProps) => {
             </div>
             <div className="flex justify-between mt-[17px]">
                 <Span>Total</Span>
-                <Span>£{totalPrice}</Span>
+                <Span>£{(totalPrice).toFixed(2)}</Span>
             </div>
         </>
     )

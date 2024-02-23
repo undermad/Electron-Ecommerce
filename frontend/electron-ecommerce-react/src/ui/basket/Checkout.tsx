@@ -2,7 +2,7 @@ import {Container} from "../reusable/Container.tsx";
 import {CheckoutResponse, checkoutResponseDefault} from "../../api/dto/order/CheckoutResponse.ts";
 import {useEffect, useState} from "react";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
-import {GET_CHECKOUT_SUMMARY, ORDER_API_PATH} from "../../api/axios.ts";
+import {GET_CHECKOUT_SUMMARY, CHECKOUT_API_PATH} from "../../api/axios.ts";
 import {Header2} from "../reusable/Header2.tsx";
 import {TotalSummary} from "./TotalSummary.tsx";
 import {Header3} from "../reusable/Header3.tsx";
@@ -20,7 +20,7 @@ export const Checkout = () => {
 
 
     useEffect(() => {
-        axiosPrivate.get(ORDER_API_PATH + GET_CHECKOUT_SUMMARY)
+        axiosPrivate.get(CHECKOUT_API_PATH + GET_CHECKOUT_SUMMARY)
             .then(response => {
                 setCheckout(response.data);
                 navigate(CHECKOUT_ORDER_INFO)
@@ -60,7 +60,7 @@ export const Checkout = () => {
                                                     className="font-[600] text-[14px] line-clamp-1">{value.name}</span>
                                                 <ParagraphSmall>Quantity: {value.totalQuantity}</ParagraphSmall>
                                                 <span
-                                                    className="font-[600] text-[14px]">£ {value.price * value.totalQuantity}</span>
+                                                    className="font-[600] text-[14px]">£ {(value.price * value.totalQuantity).toFixed(2)}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@ export const Checkout = () => {
                                         <span className="font-[600] text-[14px] line-clamp-1">{value.name}</span>
                                         <ParagraphSmall>Quantity: {value.totalQuantity}</ParagraphSmall>
                                         <span
-                                            className="font-[600] text-[14px]">£ {value.price * value.totalQuantity}</span>
+                                            className="font-[600] text-[14px]">£ {(value.price * value.totalQuantity).toFixed(2)}</span>
                                     </div>
                                 </div>
                             </div>

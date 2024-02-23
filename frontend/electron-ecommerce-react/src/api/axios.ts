@@ -32,7 +32,7 @@ export const DELETE = "/delete";
 
 export const ADDRESS_API_PATH = "/address";
 
-export const ORDER_API_PATH = "/order";
+export const CHECKOUT_API_PATH = "/checkout";
 export const BEGIN_CHECKOUT_API_PATH = "/begin_checkout";
 export const GET_CHECKOUT_SUMMARY = "/get_checkout_summary";
 

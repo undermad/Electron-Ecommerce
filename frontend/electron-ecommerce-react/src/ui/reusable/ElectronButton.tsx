@@ -6,7 +6,7 @@ type ElectronButtonProps = ComponentProps<"button"> & {
     loading?: boolean,
     textSize?: number,
     width?: number,
-    rounded?: string
+    rounded?: string,
 }
 
 export const ElectronButton = ({loading, children, textSize, width, rounded, ...props}: ElectronButtonProps) => {

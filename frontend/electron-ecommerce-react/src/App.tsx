@@ -48,7 +48,6 @@ import {ChangePassword} from "./ui/account/ChangePassword.tsx";
 import {AddAddressForm} from "./ui/account/AddAddressForm.tsx";
 import {UpdateAddressForm} from "./ui/account/UpdateAddressForm.tsx";
 import {DeleteAddress} from "./ui/account/DeleteAddress.tsx";
-import React from "react";
 import {AddressPicker} from "./ui/basket/AddressPicker.tsx";
 import {OrderInformation} from "./ui/basket/OrderInformation.tsx";
 

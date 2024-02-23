@@ -27,6 +27,7 @@ export default {
             'black':'#000',
             'electron-product-listing-bg':'#e6e6e6',
             'electron-bg-grey': '#F9FAFB',
+            'electron-pay':'#FFC539',
         },
         extend: {},
     },

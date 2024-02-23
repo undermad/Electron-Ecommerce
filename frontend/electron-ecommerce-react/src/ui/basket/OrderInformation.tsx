@@ -1,4 +1,4 @@
-import {CheckoutForm} from "./CheckoutAddressForm.tsx";
+import {CheckoutForm} from "./CheckoutForm.tsx";
 
 export const OrderInformation = () => {
 

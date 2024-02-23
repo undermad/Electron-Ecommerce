@@ -28,7 +28,7 @@ public interface CheckoutItemRepository extends CrudRepository<CheckoutItem, Lon
                 DELETE FROM checkout_items ci
                 WHERE ci.id = :checkoutItemId
             """, nativeQuery = true)
-    void deleteItemById(@Param("checkoutItemId") Long checkoutItemId);
+    void deleteItem(@Param("checkoutItemId") Long checkoutItemId);
 
 
     @Query(value = """
@@ -39,5 +39,12 @@ public interface CheckoutItemRepository extends CrudRepository<CheckoutItem, Lon
                     JOIN basket_items bi ON ci.basket_item_id = bi.id
                     WHERE ci.created_on <= :cutoff
             """, nativeQuery = true)
-    List<CheckoutItemProjection> findItemsOlderThan(@Param("cutoff") Instant cutoff);
+    List<CheckoutItemProjection> getItemsToKill(@Param("cutoff") Instant cutoff);
+
+    @Modifying
+    @Query(value = """
+            DELETE FROM checkout_items ci
+            WHERE ci.user_id = :userId
+            """, nativeQuery = true)
+    void deleteAllUserItems(@Param("userId") Long userId);
 }

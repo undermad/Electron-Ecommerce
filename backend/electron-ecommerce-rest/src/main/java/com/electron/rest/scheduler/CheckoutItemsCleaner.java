@@ -30,10 +30,10 @@ public class CheckoutItemsCleaner implements Scheduler {
     @Override
     public void performTask() {
         Instant deadline = Instant.now().minus(15, ChronoUnit.MINUTES);
-        List<CheckoutItemProjection> itemsToKill = checkoutItemRepository.findItemsOlderThan(deadline);
+        List<CheckoutItemProjection> itemsToKill = checkoutItemRepository.getItemsToKill(deadline);
         itemsToKill.forEach(item -> {
             productItemRepository.increaseQuantity(item.getQuantity(), item.getProductItemId());
-            checkoutItemRepository.deleteItemById(item.getId());
+            checkoutItemRepository.deleteItem(item.getId());
         });
     }
 }
