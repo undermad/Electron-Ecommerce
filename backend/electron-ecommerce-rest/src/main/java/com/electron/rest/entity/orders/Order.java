@@ -22,6 +22,9 @@ public class Order {
     @UpdateTimestamp
     private Instant updatedOn;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "total_items")
     private Integer totalItems;
 

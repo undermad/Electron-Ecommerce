@@ -1,17 +1,20 @@
-import {ElectronButton} from "../reusable/ElectronButton.tsx";
-import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {CgSpinner} from "react-icons/cg";
-import React, {useState} from "react";
+import {useContext, useState} from "react";
 import {CiCreditCard1} from "react-icons/ci";
+import {CheckoutContext} from "../../context/CheckoutContext.tsx";
 
-export const PlaceOrderButton = () => {
+export const PayNowButton = () => {
     const [loading, setLoading] = useState<boolean>(false);
-
-    const messageScreen = useMessageScreen();
+    const checkoutContext = useContext(CheckoutContext);
 
     const handleClick = () => {
-        messageScreen("Order placed.");
-    }
+        setLoading(true)
+        checkoutContext.formSubmit();
+        setLoading(false);
+    };
+
+
+
 
 
     return (

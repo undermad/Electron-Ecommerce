@@ -28,6 +28,9 @@ public class PaymentInformation {
     @Column(name = "card_number", nullable = false)
     private String cardNumber;
 
+    @Column(name = "ccv", nullable = false)
+    private Integer ccv;
+
     @Column(name = "expiry_date", nullable = false)
     private String expiryDate;
 
