@@ -2,7 +2,7 @@ import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
 import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {Label} from "../reusable/Label.tsx";
 import {TextInput} from "../reusable/TextInput.tsx";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Address, AddressValidationError, defaultAddress} from "../../api/dto/auth/Address.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {useNavigate} from "react-router-dom";
@@ -12,6 +12,10 @@ import {CHECKOUT_ADDRESS_PICKER, CHECKOUT_ROUTE} from "../../constants/Routes.ts
 import {Header3} from "../reusable/Header3.tsx";
 import {CiCreditCard1} from "react-icons/ci";
 import {v4 as uuid4} from 'uuid';
+import {OrderRequest} from "../../api/dto/order/OrderRequest.ts";
+import {defaultPayment} from "../../api/dto/order/PaymentInformation.ts";
+import {creditCard} from "../../api/dto/order/PaymentType.ts";
+import {ORDER_API_PATH, PLACE_ORDER} from "../../api/axios.ts";
 
 
 const validationErrorInit: AddressValidationError = {
@@ -24,15 +28,15 @@ export const CheckoutForm = () => {
     const checkoutContext = useContext(CheckoutContext);
     const [loading, setLoading] = useState<boolean>(false);
     const [fullName, setFullName] = useState<string>('');
-    const [newAddress, setNewAddress] = useState<Address>(defaultAddress);
+    const [deliveryAddress, setDeliveryAddress] = useState<Address>(checkoutContext.address);
     const [validationError, setValidationError] = useState<AddressValidationError>(validationErrorInit);
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
-    const idempotencyKey = uuid4();
+    const [idempotencyKey, setIdempotencyKey] = useState<string>('')
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
-        setNewAddress((prevState) => ({
+        setDeliveryAddress((prevState) => ({
             ...prevState,
             [name]: value,
         }));
@@ -46,22 +50,47 @@ export const CheckoutForm = () => {
         navigate(`${CHECKOUT_ROUTE}/${CHECKOUT_ADDRESS_PICKER}`);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
         setLoading(true);
-        console.log('clicked')
-        console.log(idempotencyKey)
+
+        const orderRequest: OrderRequest = {
+            idempotencyKey: {
+                value: idempotencyKey,
+            },
+            paymentInformation: defaultPayment,
+            deliveryAddress: {
+                recipient: fullName,
+                address: deliveryAddress
+            },
+            paymentType: creditCard,
+
+        }
+        console.log(orderRequest)
+
+        axiosPrivate.post(ORDER_API_PATH + PLACE_ORDER, orderRequest)
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => setLoading(false));
+
+
     }
 
 
     useEffect(() => {
         console.log('call')
-        setNewAddress(checkoutContext.address);
+        setIdempotencyKey(uuid4())
         checkoutContext.setFormSubmit(() => handleSubmit)
     }, []);
 
 
     return (
         <form
+            onSubmit={handleSubmit}
             className={"mt-[15px] flex flex-col"}>
 
             <div className="flex flex-col gap-[42px]">
@@ -142,7 +171,7 @@ export const CheckoutForm = () => {
                                    id={"streetOne"}
                                    type={"text"}
                                    name={"streetOne"}
-                                   value={newAddress.streetOne}
+                                   value={deliveryAddress.streetOne}
                                    required={true}
                                    autoComplete={"address-line1"}/>
                     </LabelInputHolder>
@@ -152,7 +181,7 @@ export const CheckoutForm = () => {
                                    id={"streetTwo"}
                                    type={"text"}
                                    name={"streetTwo"}
-                                   value={newAddress.streetTwo}
+                                   value={deliveryAddress.streetTwo}
                                    required={true}
                                    autoComplete={"address-line2"}/>
                     </LabelInputHolder>
@@ -162,7 +191,7 @@ export const CheckoutForm = () => {
                                    id={"state"}
                                    type={"text"}
                                    name={"state"}
-                                   value={newAddress.state}
+                                   value={deliveryAddress.state}
                                    required={true}/>
                     </LabelInputHolder>
                     <LabelInputHolder>
@@ -171,7 +200,7 @@ export const CheckoutForm = () => {
                                    id={"city"}
                                    type={"text"}
                                    name={"city"}
-                                   value={newAddress.city}
+                                   value={deliveryAddress.city}
                                    required={true}
                                    autoComplete={"address-level2"}/>
                     </LabelInputHolder>
@@ -181,11 +210,14 @@ export const CheckoutForm = () => {
                                    id={"postcode"}
                                    type={"text"}
                                    name={"postcode"}
-                                   value={newAddress.postcode}
+                                   value={deliveryAddress.postcode}
                                    required={true}
                                    autoComplete="postal-code"/>
                     </LabelInputHolder>
                 </MultiInputHolder>
+                <button type="submit">
+                    SUBMIT
+                </button>
 
 
             </div>

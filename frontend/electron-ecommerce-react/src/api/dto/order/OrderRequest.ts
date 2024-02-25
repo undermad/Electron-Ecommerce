@@ -1,7 +1,7 @@
 import {Address} from "../auth/Address.ts";
-import {BasketPosition} from "../basket/Basket.ts";
 import {IdempotencyKey} from "./IdempotencyKey.ts";
 import {PaymentInformation} from "./PaymentInformation.ts";
+import {PaymentType} from "./PaymentType.ts";
 
 export type OrderRequest = {
     paymentInformation: PaymentInformation,
@@ -10,6 +10,6 @@ export type OrderRequest = {
         address: Address
     },
     idempotencyKey: IdempotencyKey,
-    basket: BasketPosition[],
+    paymentType: PaymentType,
 }
 

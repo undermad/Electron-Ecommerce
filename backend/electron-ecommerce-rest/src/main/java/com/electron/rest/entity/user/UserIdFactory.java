@@ -6,8 +6,9 @@ import com.electron.rest.security.token.jwt.JwtProvider;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-@Component("userIdFactory")
+@Component(UserIdFactory.BEAN_ID)
 public class UserIdFactory implements UserFactory<String> {
+    public static final String BEAN_ID = "userIdFactory";
 
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;

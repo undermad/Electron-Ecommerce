@@ -1,5 +1,6 @@
 package com.electron.rest.entity.product;
 
+import com.electron.rest.entity.orders.OrderItem;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,12 @@ public class ProductItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @CreationTimestamp
+    private Instant createdOn;
+
+    @UpdateTimestamp
+    private Instant updatedOn;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -56,10 +63,8 @@ public class ProductItem {
     @JoinColumn(name = "product_details_id", unique = true, referencedColumnName = "id")
     private ProductDetails productDetails;
 
-    @CreationTimestamp
-    private Instant createdOn;
+    @OneToMany(mappedBy = "productItem", fetch = FetchType.LAZY)
+    private List<OrderItem> orderItems;
 
-    @UpdateTimestamp
-    private Instant updatedOn;
 
 }

@@ -1,11 +1,17 @@
 package com.electron.rest.entity.orders;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "delivery_addresses")
 public class DeliveryAddress {
 
@@ -37,7 +43,7 @@ public class DeliveryAddress {
     @Column(name = "postcode", nullable = false)
     private String postcode;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "deliveryAddress")
     private Order order;
 
 

@@ -1,11 +1,17 @@
 package com.electron.rest.entity.orders;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.scheduling.annotation.Async;
 
 import java.time.Instant;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Builder
 @Entity(name = "payments_information")
 public class PaymentInformation {
 
@@ -29,12 +35,12 @@ public class PaymentInformation {
     private String cardNumber;
 
     @Column(name = "ccv", nullable = false)
-    private Integer ccv;
+    private String ccv;
 
     @Column(name = "expiry_date", nullable = false)
     private String expiryDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "paymentInformation")
     private Order order;
 
 

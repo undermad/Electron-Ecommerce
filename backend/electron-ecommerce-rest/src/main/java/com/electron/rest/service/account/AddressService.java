@@ -9,7 +9,7 @@ import com.electron.rest.entity.user.User;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.AddressMapper;
 import com.electron.rest.repository.account.AddressRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +40,7 @@ public class AddressService {
         User user = userFactory.createUser(jwt);
         AddressProjection addressProjection = addressRepository.getAddress(addressId, user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(ADDRESS_NOT_FOUND));
-        return addressMapper.mapAddressToAddressDto(addressProjection);
+        return addressMapper.mapAddressProjToAddressDto(addressProjection);
 
     }
 
@@ -49,7 +49,7 @@ public class AddressService {
         List<AddressProjection> addressesAsProjections = addressRepository.getAllByUserId(user.getId());
         if (addressesAsProjections.isEmpty()) return new ArrayList<>();
         return addressesAsProjections.stream()
-                .map(addressMapper::mapAddressToAddressDto)
+                .map(addressMapper::mapAddressProjToAddressDto)
                 .collect(Collectors.toList());
     }
 

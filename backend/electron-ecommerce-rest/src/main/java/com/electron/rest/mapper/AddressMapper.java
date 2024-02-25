@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddressMapper {
 
-    public AddressDto mapAddressToAddressDto(AddressProjection address) {
+    public AddressDto mapAddressProjToAddressDto(AddressProjection address) {
         return AddressDto.builder()
                 .id(address.getId())
                 .streetOne(address.getStreetOne())
@@ -17,6 +17,8 @@ public class AddressMapper {
                 .postcode(address.getPostcode())
                 .build();
     }
+
+
 
 
 }

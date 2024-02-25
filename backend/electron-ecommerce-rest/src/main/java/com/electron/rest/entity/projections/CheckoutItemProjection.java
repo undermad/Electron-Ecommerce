@@ -11,4 +11,5 @@ public interface CheckoutItemProjection {
     Long getProductItemId();
     BigDecimal getTotalPrice();
     Integer getQuantity();
+    BigDecimal getUnitPrice();
 }

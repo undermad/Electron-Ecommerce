@@ -44,6 +44,6 @@ public interface BasketItemRepository extends CrudRepository<BasketItem, Long> {
 
     @Modifying
     @Query(value = "DELETE FROM basket_items bi WHERE bi.id = :basketItemId")
-    void removeItemById(@Param("basketItemId") Long basketItemId);
+    void remove(@Param("basketItemId") Long basketItemId);
 
 }

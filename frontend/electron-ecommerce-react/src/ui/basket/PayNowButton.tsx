@@ -20,7 +20,7 @@ export const PayNowButton = () => {
     return (
         <div onClick={handleClick}>
             <div className={"flex flex-col"}>
-                <button
+                <button type="submit"
                     className={"text-black shadow-md p-[14px] h-[48px] rounded-full font-[600] "
                         + `${loading ? "bg-electron-pay " : "bg-electron-pay "}`}
                     disabled={loading}>

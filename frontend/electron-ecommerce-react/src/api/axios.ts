@@ -36,6 +36,9 @@ export const CHECKOUT_API_PATH = "/checkout";
 export const BEGIN_CHECKOUT_API_PATH = "/begin_checkout";
 export const GET_CHECKOUT_SUMMARY = "/get_checkout_summary";
 
+export const ORDER_API_PATH = "/order";
+export const PLACE_ORDER = "/place_order";
+
 
 
 export const axiosAuth = axios.create({

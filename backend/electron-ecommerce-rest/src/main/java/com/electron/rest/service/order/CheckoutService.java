@@ -15,7 +15,7 @@ import com.electron.rest.mapper.ProductMapper;
 import com.electron.rest.repository.CheckoutItemRepository;
 import com.electron.rest.repository.account.BasketItemRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

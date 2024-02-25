@@ -16,7 +16,7 @@ import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
 import com.electron.rest.repository.account.BasketItemRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -95,7 +95,7 @@ public class BasketItemService {
         Long basketItemId = basketItemProjection.getId();
         if (quantity > 1)
             basketItemRepository.decreaseQuantityByOne(basketItemId);
-        else basketItemRepository.removeItemById(basketItemId);
+        else basketItemRepository.remove(basketItemId);
     }
 
 }

@@ -42,4 +42,5 @@ public class EndpointsPaths {
     public static final String CHANGE_PASSWORD = "/change_password";
 
     public static final String API_V1_ORDER = "/api/v1/order";
+    public static final String PLACE_ORDER = "/place_order";
 }

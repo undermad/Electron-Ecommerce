@@ -28,5 +28,7 @@ public class ErrorMessages {
     public static final String POSTCODE_ERROR = "Postcode must be 6 characters.";
     public static final String CHECKOUT_NOT_FOUND = "Checkout not found.";
 
+    public static final String SESSION_EXPIRED = "Session expired, please start again.";
+
 
 }

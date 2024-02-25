@@ -23,7 +23,7 @@ import com.electron.rest.repository.auth.UserRepository;
 import com.electron.rest.entity.projections.UserProjection;
 import com.electron.rest.security.token.activation_token.ActivationTokenProvider;
 import jakarta.mail.MessagingException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
