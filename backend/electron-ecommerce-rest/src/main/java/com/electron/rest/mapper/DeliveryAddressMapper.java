@@ -10,11 +10,11 @@ public class DeliveryAddressMapper {
     public DeliveryAddress mapDtoToDeliveryAddress(DeliveryAddressDto address) {
         return DeliveryAddress.builder()
                 .fullName(address.recipient())
-                .streetOne(address.address().getStreetOne())
-                .streetTwo(address.address().getStreetTwo())
-                .city(address.address().getCity())
-                .state(address.address().getState())
-                .postcode(address.address().getPostcode())
+                .streetOne(address.address().streetOne())
+                .streetTwo(address.address().streetTwo())
+                .city(address.address().city())
+                .state(address.address().state())
+                .postcode(address.address().postcode())
                 .build();
     }
 

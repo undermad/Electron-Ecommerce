@@ -1,24 +1,33 @@
 package com.electron.rest.service.order;
 
+import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.constants.OrderStatus;
 import com.electron.rest.dto.order.OrderRequest;
+import com.electron.rest.dto.order.OrderResponse;
 import com.electron.rest.entity.orders.DeliveryAddress;
 import com.electron.rest.entity.orders.Order;
 import com.electron.rest.entity.orders.OrderItem;
 import com.electron.rest.entity.orders.PaymentInformation;
 import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.CheckoutItemProjection;
+import com.electron.rest.entity.projections.DeliveryAddressProjection;
+import com.electron.rest.entity.projections.OrderItemProjection;
+import com.electron.rest.entity.projections.OrderProjection;
 import com.electron.rest.entity.user.User;
 import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.entity.user.UserIdFactory;
 import com.electron.rest.exception.PaymentDeclinedException;
+import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.exception.SessionExpiredException;
 import com.electron.rest.mapper.DeliveryAddressMapper;
+import com.electron.rest.mapper.OrderMapper;
 import com.electron.rest.mapper.PaymentInformationMapper;
 import com.electron.rest.payment.PaymentResult;
 import com.electron.rest.payment.PaymentStrategy;
 import com.electron.rest.repository.CheckoutItemRepository;
 import com.electron.rest.repository.account.BasketItemRepository;
+import com.electron.rest.repository.order.DeliveryAddressRepository;
+import com.electron.rest.repository.order.OrderItemRepository;
 import com.electron.rest.repository.order.OrderRepository;
 import com.electron.rest.service.redis.IdempotencyKeyService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,6 +38,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.electron.rest.constants.ErrorMessages.SESSION_EXPIRED;
@@ -42,12 +52,15 @@ public class OrderService {
     private final IdempotencyKeyService idempotencyKeyService;
     private final PaymentInformationMapper paymentInformationMapper;
     private final DeliveryAddressMapper deliveryAddressMapper;
-    private final Map<String, PaymentStrategy> paymentStrategies;
     private final CheckoutItemRepository checkoutItemRepository;
     private final BasketItemRepository basketItemRepository;
     private final OrderRepository orderRepository;
+    private final DeliveryAddressRepository deliveryAddressRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final Map<String, PaymentStrategy> paymentStrategies;
+    private final OrderMapper orderMapper;
 
-    public OrderService(UserFactory<String> userIdFactory, IdempotencyKeyService idempotencyKeyService, PaymentInformationMapper paymentInformationMapper, DeliveryAddressMapper deliveryAddressMapper, Map<String, PaymentStrategy> paymentStrategies, CheckoutItemRepository checkoutItemRepository, BasketItemRepository basketItemRepository, OrderRepository orderRepository) {
+    public OrderService(UserFactory<String> userIdFactory, IdempotencyKeyService idempotencyKeyService, PaymentInformationMapper paymentInformationMapper, DeliveryAddressMapper deliveryAddressMapper, Map<String, PaymentStrategy> paymentStrategies, CheckoutItemRepository checkoutItemRepository, BasketItemRepository basketItemRepository, OrderRepository orderRepository, DeliveryAddressRepository deliveryAddressRepository, OrderItemRepository orderItemRepository, OrderMapper orderMapper) {
         this.userIdFactory = userIdFactory;
         this.idempotencyKeyService = idempotencyKeyService;
         this.paymentInformationMapper = paymentInformationMapper;
@@ -56,12 +69,38 @@ public class OrderService {
         this.checkoutItemRepository = checkoutItemRepository;
         this.basketItemRepository = basketItemRepository;
         this.orderRepository = orderRepository;
+        this.deliveryAddressRepository = deliveryAddressRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.orderMapper = orderMapper;
+    }
+
+
+    public List<OrderResponse> getOrders(String jwt) {
+        User user = userIdFactory.createUser(jwt);
+        List<OrderResponse> orders = new ArrayList<>();
+
+        List<OrderProjection> ordersProjections = orderRepository.getAll(user.getId());
+        ordersProjections.forEach(orderProjection -> {
+            DeliveryAddressProjection deliveryAddressProjection = deliveryAddressRepository
+                    .getDeliveryAddress(orderProjection.getDeliveryAddressId())
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.DELIVERY_ADDRESS_NOT_FOUND));
+
+            List<OrderItemProjection> orderItemsProjections = orderItemRepository.getAll(orderProjection.getId());
+
+            OrderResponse orderResponse = orderMapper.mapToOrderResponse(
+                    orderProjection,
+                    deliveryAddressProjection,
+                    orderItemsProjections);
+            orders.add(orderResponse);
+        });
+
+        return orders;
     }
 
 
     @Transactional
     public PaymentResult placeOrder(OrderRequest orderRequest, String jwt) throws Exception {
-        if (!idempotencyKeyService.checkAndStore(orderRequest.idempotencyKey())) return PaymentResult.PENDING;
+        if (!idempotencyKeyService.checkAndStore(orderRequest.idempotencyKey())) return PaymentResult.PROCESSING;
 
 
         User user = userIdFactory.createUser(jwt);

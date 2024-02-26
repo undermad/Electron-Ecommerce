@@ -3,7 +3,7 @@ import {Header3} from "../reusable/Header3.tsx";
 import {Container} from "../reusable/Container.tsx";
 import {BasketTotal} from "./BasketTotal.tsx";
 import {BeginCheckout} from "./BeginCheckout.tsx";
-import {useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {DELETE, CHECKOUT_API_PATH} from "../../api/axios.ts";
 
@@ -13,13 +13,14 @@ export const Basket = () => {
     const axiosPrivate = useAxiosPrivate();
 
 
-
     useEffect(() => {
         const abortController = new AbortController();
         const {signal} = abortController;
 
         setLoading(true);
-        axiosPrivate.delete(CHECKOUT_API_PATH + DELETE, { signal })
+        axiosPrivate.delete(CHECKOUT_API_PATH + DELETE, {signal})
+            .then(() => {
+            })
             .catch(error => {
                 console.log(error)
             })
@@ -53,7 +54,9 @@ export const Basket = () => {
             <div className="fixed left-0 bg-electron-primary-white bottom-0 w-full lg:hidden">
                 <BasketTotal/>
                 <div className="mt-[17px]">
-                    <BeginCheckout loadingParent={loading}/>
+
+                        <BeginCheckout loadingParent={loading}/>
+
                 </div>
             </div>
         </Container>

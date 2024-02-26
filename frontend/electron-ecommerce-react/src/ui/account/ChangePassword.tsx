@@ -14,6 +14,7 @@ import {
 } from "../../api/dto/auth/NewPasswordRequest.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {AUTH_API_PATH, CHANGE_PASSWORD_API_PATH} from "../../api/axios.ts";
+import {Header3} from "../reusable/Header3.tsx";
 
 
 export const ChangePassword = () => {
@@ -62,42 +63,45 @@ export const ChangePassword = () => {
     }
 
     return (
-        <form
-            className={"mt-[35px] flex flex-col"}
-            onSubmit={handleSubmit}>
-            <MultiInputHolder>
-                <FormErrorMessage errorMessage={responseError.message}/>
-                <LabelInputHolder>
-                    <Label errorMessage={responseError.reNewPassword} htmlFor={"oldPassword"}>Old Password</Label>
-                    <TextInput id={"oldPassword"}
-                               name={"oldPassword"}
-                               type={"password"}
-                               callback={handleInputChange}
-                               autoComplete={"new-password"}
-                    />
-                </LabelInputHolder>
-                <LabelInputHolder>
-                    <Label errorMessage={responseError.newPassword} htmlFor={"newPassword"}>New Password</Label>
-                    <TextInput id={"newPassword"}
-                               name={"newPassword"}
-                               type={"password"}
-                               callback={handleInputChange}
-                               autoComplete={"new-password"}
-                    />
-                </LabelInputHolder>
-                <LabelInputHolder>
-                    <Label errorMessage={responseError.reNewPassword} htmlFor={"reNewPassword"}>New Password</Label>
-                    <TextInput id={"reNewPassword"}
-                               name={"reNewPassword"}
-                               type={"password"}
-                               callback={handleInputChange}
-                               autoComplete={"new-password"}
-                    />
-                </LabelInputHolder>
-            </MultiInputHolder>
+        <div className="flex flex-col gap-[24px]">
+            <Header3>Change your password</Header3>
+            <form
+                className={"flex flex-col"}
+                onSubmit={handleSubmit}>
+                <MultiInputHolder>
+                    <FormErrorMessage errorMessage={responseError.message}/>
+                    <LabelInputHolder>
+                        <Label errorMessage={responseError.reNewPassword} htmlFor={"oldPassword"}>Old Password</Label>
+                        <TextInput id={"oldPassword"}
+                                   name={"oldPassword"}
+                                   type={"password"}
+                                   callback={handleInputChange}
+                                   autoComplete={"new-password"}
+                        />
+                    </LabelInputHolder>
+                    <LabelInputHolder>
+                        <Label errorMessage={responseError.newPassword} htmlFor={"newPassword"}>New Password</Label>
+                        <TextInput id={"newPassword"}
+                                   name={"newPassword"}
+                                   type={"password"}
+                                   callback={handleInputChange}
+                                   autoComplete={"new-password"}
+                        />
+                    </LabelInputHolder>
+                    <LabelInputHolder>
+                        <Label errorMessage={responseError.reNewPassword} htmlFor={"reNewPassword"}>New Password</Label>
+                        <TextInput id={"reNewPassword"}
+                                   name={"reNewPassword"}
+                                   type={"password"}
+                                   callback={handleInputChange}
+                                   autoComplete={"new-password"}
+                        />
+                    </LabelInputHolder>
+                </MultiInputHolder>
 
-            <ElectronButton loading={loading}>Submit</ElectronButton>
-        </form>
+                <ElectronButton loading={loading}>Submit</ElectronButton>
+            </form>
+        </div>
 
     )
 }

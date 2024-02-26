@@ -19,7 +19,7 @@ export const BeginCheckout = ({loadingParent}: BeginCheckoutProps) => {
 
     const continueToCheckout = () => {
         setLoading(true)
-        if(basketContext.basket.items.length === 0) return;
+        if (basketContext.basket.items.length === 0) return;
         axiosPrivate.post(CHECKOUT_API_PATH + BEGIN_CHECKOUT_API_PATH)
             .then(() => {
                 navigate(CHECKOUT_ROUTE);
@@ -34,7 +34,10 @@ export const BeginCheckout = ({loadingParent}: BeginCheckoutProps) => {
 
     return (
         <div onClick={continueToCheckout}>
-            <ElectronButton loading={loading}>Start Checkout</ElectronButton>
+            {basketContext.basket.items.length !== 0 ?
+                <ElectronButton loading={loading}>Go to checkout</ElectronButton>
+                : ''
+            }
         </div>
     )
 

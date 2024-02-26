@@ -30,5 +30,10 @@ public class ErrorMessages {
 
     public static final String SESSION_EXPIRED = "Session expired, please start again.";
 
+    public static final String WRONG_CREDIT_CARD_LENGTH = "Expected 16 digits";
+    public static final String LENGTH_MUST_BE_3 = "Length must be 3";
+    public static final String WRONG_CREDIT_CARD_EXPIRY_DATE = "Wrong expiry date length.";
+    public static final String DELIVERY_ADDRESS_NOT_FOUND = "Delivery address not found.";
+
 
 }

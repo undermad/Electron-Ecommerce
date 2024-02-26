@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum PaymentResult {
     SUCCESSFUL("Successful"),
     FAILED("Failed"),
-    PENDING("Pending");
+    PROCESSING("Processing");
 
     private final String status;
 

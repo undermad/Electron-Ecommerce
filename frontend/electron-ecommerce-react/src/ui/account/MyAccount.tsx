@@ -9,7 +9,7 @@ import {Outlet, useNavigate} from "react-router-dom";
 import {AccountLink} from "./AccountLink.tsx";
 import {
     ADDRESSES_NESTED_ROUTE,
-    CHANGE_PASSWORD_NESTED_ROUTE,
+    CHANGE_PASSWORD_NESTED_ROUTE, ORDER_NESTED_ROUTE,
     PAYMENT_INFORMATION_NESTED_ROUTE
 } from "../../constants/Routes.ts";
 import {useEffect} from "react";
@@ -18,7 +18,7 @@ export const MyAccount = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        navigate(ADDRESSES_NESTED_ROUTE);
+        navigate(ORDER_NESTED_ROUTE);
     }, []);
 
     return (
@@ -37,6 +37,7 @@ export const MyAccount = () => {
                             <Bold weight={600} textSize={14}>Dominik Tworek</Bold>
                         </div>
                         <nav className="flex flex-col gap-[17px] pt-[17px]">
+                            <AccountLink route={ORDER_NESTED_ROUTE} displayText={"Orders"}/>
                             <AccountLink displayText="Addresses" route={ADDRESSES_NESTED_ROUTE}/>
                             <AccountLink displayText="Payment Information" route={PAYMENT_INFORMATION_NESTED_ROUTE}/>
                             <AccountLink displayText="Change Password" route={CHANGE_PASSWORD_NESTED_ROUTE}/>

@@ -8,25 +8,26 @@ type CheckoutContextProps = {
 type CheckoutContextType = {
     address: Address,
     setAddress: React.Dispatch<React.SetStateAction<Address>>,
-    setFormSubmit: React.Dispatch<React.SetStateAction<()=> void>>;
-    formSubmit: () => void;
+    loading: boolean,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export const CheckoutContext = createContext<CheckoutContextType>({
-        address: defaultAddress,
-        setAddress: () => {
-        },
-        setFormSubmit: () => {
-        },
-        formSubmit: () => {
-        },
+    address: defaultAddress,
+    setAddress: () => {
+    },
+    loading: false,
+    setLoading: () => {
 
-    })
-;
+    }
+});
 
 export const CheckoutContextProvider = ({children}: CheckoutContextProps) => {
     const [address, setAddress] = useState<Address>(defaultAddress);
-    const [formSubmit, setFormSubmit] = useState<() => void>(() => () => {});
+    const [loading, setLoading] = useState<boolean>(false);
 
-    return <CheckoutContext.Provider value={{address, setAddress, formSubmit, setFormSubmit}}>{children}</CheckoutContext.Provider>
+    return <CheckoutContext.Provider
+        value={{address, setAddress, loading, setLoading}}>
+        {children}
+    </CheckoutContext.Provider>
 }

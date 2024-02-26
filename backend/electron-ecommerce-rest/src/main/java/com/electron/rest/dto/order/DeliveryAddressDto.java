@@ -1,12 +1,18 @@
 package com.electron.rest.dto.order;
 
-import com.electron.rest.dto.account.BasketPosition;
-import com.electron.rest.entity.account.Address;
-import com.electron.rest.service.redis.IdempotencyKey;
+import com.electron.rest.dto.account.AddressDto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
+import static com.electron.rest.constants.ErrorMessages.BLANK_FIELD;
 
 public record DeliveryAddressDto(
+
+        @NotBlank(message = BLANK_FIELD)
         String recipient,
-        Address address) {
+
+        @NotNull
+        AddressDto address
+
+) {
 }

@@ -28,6 +28,8 @@ export default {
             'electron-product-listing-bg':'#e6e6e6',
             'electron-bg-grey': '#F9FAFB',
             'electron-pay':'#FFC539',
+            'electron-green':'#027A48',
+            'electron-very-light-green':'#ECFDF3'
         },
         extend: {},
     },

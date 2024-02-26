@@ -4,6 +4,7 @@ import {AiOutlineDelete} from "react-icons/ai";
 import {Address} from "../../api/dto/auth/Address.ts";
 import {useNavigate} from "react-router-dom";
 import {ACCOUNT_ROUTE, DELETE_ADDRESS_NESTED_ROUTE, UPDATE_ADDRESS_NESTED_ROUTE} from "../../constants/Routes.ts";
+import {HoverScale} from "../reusable/HoverScale.tsx";
 
 type AddressElProps = {
     address: Address,
@@ -36,14 +37,19 @@ export const AddressEl = ({address, onClick}: AddressElProps) => {
             </div>
             {!onClick &&
                 <div className="flex flex-col justify-between">
-                    <div className="cursor-pointer"
-                         onClick={handleEditButton}>
-                        <CiEdit size={24}/>
-                    </div>
-                    <div className="cursor-pointer"
-                         onClick={handleDeleteButton}>
-                        <AiOutlineDelete size={24}/>
-                    </div>
+                    <HoverScale>
+
+                        <div className="cursor-pointer"
+                             onClick={handleEditButton}>
+                            <CiEdit size={24}/>
+                        </div>
+                    </HoverScale>
+                    <HoverScale>
+                        <div className="cursor-pointer"
+                             onClick={handleDeleteButton}>
+                            <AiOutlineDelete size={24}/>
+                        </div>
+                    </HoverScale>
                 </div>
             }
         </div>

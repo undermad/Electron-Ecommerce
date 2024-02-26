@@ -3,7 +3,7 @@ import {LabelInputHolder} from "../reusable/LabelInputHolder.tsx";
 import {Label} from "../reusable/Label.tsx";
 import {TextInput} from "../reusable/TextInput.tsx";
 import React, {useContext, useEffect, useState} from "react";
-import {Address, AddressValidationError, defaultAddress} from "../../api/dto/auth/Address.ts";
+import {Address} from "../../api/dto/auth/Address.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {useNavigate} from "react-router-dom";
 import {CheckoutContext} from "../../context/CheckoutContext.tsx";
@@ -12,27 +12,28 @@ import {CHECKOUT_ADDRESS_PICKER, CHECKOUT_ROUTE} from "../../constants/Routes.ts
 import {Header3} from "../reusable/Header3.tsx";
 import {CiCreditCard1} from "react-icons/ci";
 import {v4 as uuid4} from 'uuid';
-import {OrderRequest} from "../../api/dto/order/OrderRequest.ts";
+import {
+    defaultOrderRequestValidationError,
+    OrderRequest,
+    OrderRequestValidationError
+} from "../../api/dto/order/OrderRequest.ts";
 import {defaultPayment} from "../../api/dto/order/PaymentInformation.ts";
 import {creditCard} from "../../api/dto/order/PaymentType.ts";
 import {ORDER_API_PATH, PLACE_ORDER} from "../../api/axios.ts";
-
-
-const validationErrorInit: AddressValidationError = {
-    ...defaultAddress,
-    message: '',
-}
+import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
+import {BasketContext} from "../../context/BasketContext.tsx";
 
 export const CheckoutForm = () => {
 
     const checkoutContext = useContext(CheckoutContext);
-    const [loading, setLoading] = useState<boolean>(false);
+    const basketContext = useContext(BasketContext);
     const [fullName, setFullName] = useState<string>('');
     const [deliveryAddress, setDeliveryAddress] = useState<Address>(checkoutContext.address);
-    const [validationError, setValidationError] = useState<AddressValidationError>(validationErrorInit);
+    const [validationError, setValidationError] = useState<OrderRequestValidationError>(defaultOrderRequestValidationError);
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
     const [idempotencyKey, setIdempotencyKey] = useState<string>('')
+    const messageScreen = useMessageScreen();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -52,7 +53,7 @@ export const CheckoutForm = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        setLoading(true);
+        checkoutContext.setLoading(true);
 
         const orderRequest: OrderRequest = {
             idempotencyKey: {
@@ -70,26 +71,27 @@ export const CheckoutForm = () => {
 
         axiosPrivate.post(ORDER_API_PATH + PLACE_ORDER, orderRequest)
             .then(result => {
-                console.log(result);
+                messageScreen("Your order has been placed with status: " + result.data.message);
+                basketContext.setBasket({items: []})
             })
             .catch(error => {
-                console.log(error);
+                console.log(error)
+                messageScreen("Something went wrong, check your validation.")
             })
-            .finally(() => setLoading(false));
+            .finally(() => checkoutContext.setLoading(false));
 
 
     }
 
-
     useEffect(() => {
         console.log('call')
         setIdempotencyKey(uuid4())
-        checkoutContext.setFormSubmit(() => handleSubmit)
+        setValidationError(defaultOrderRequestValidationError);
     }, []);
-
 
     return (
         <form
+            id="payForm"
             onSubmit={handleSubmit}
             className={"mt-[15px] flex flex-col"}>
 
@@ -151,12 +153,13 @@ export const CheckoutForm = () => {
 
                     <Header3>Delivery Address</Header3>
                     <div className="w-1/2" onClick={handleChangeAddressButton}>
-                        <ElectronButton loading={loading}>Your addresses</ElectronButton>
+                        <ElectronButton loading={checkoutContext.loading}>Your addresses</ElectronButton>
                     </div>
                 </div>
                 <MultiInputHolder>
                     <LabelInputHolder>
-                        <Label errorMessage={validationError.streetOne} htmlFor={"fullName"}>Full Name</Label>
+                        <Label errorMessage={validationError.deliveryAddress?.recipient} htmlFor={"fullName"}>Full
+                            Name</Label>
                         <TextInput callback={handleFullNameChange}
                                    id={"fullName"}
                                    type={"text"}
@@ -166,7 +169,7 @@ export const CheckoutForm = () => {
                                    autoComplete={"full-name"}/>
                     </LabelInputHolder>
                     <LabelInputHolder>
-                        <Label errorMessage={validationError.streetOne} htmlFor={"streetOne"}>Address 1</Label>
+                        <Label errorMessage={''} htmlFor={"streetOne"}>Address 1</Label>
                         <TextInput callback={handleInputChange}
                                    id={"streetOne"}
                                    type={"text"}
@@ -176,7 +179,7 @@ export const CheckoutForm = () => {
                                    autoComplete={"address-line1"}/>
                     </LabelInputHolder>
                     <LabelInputHolder>
-                        <Label errorMessage={validationError.streetTwo} htmlFor={"streetTwo"}>Address 2</Label>
+                        <Label errorMessage={''} htmlFor={"streetTwo"}>Address 2</Label>
                         <TextInput callback={handleInputChange}
                                    id={"streetTwo"}
                                    type={"text"}
@@ -186,7 +189,7 @@ export const CheckoutForm = () => {
                                    autoComplete={"address-line2"}/>
                     </LabelInputHolder>
                     <LabelInputHolder>
-                        <Label errorMessage={validationError.state} htmlFor={"state"}>State</Label>
+                        <Label errorMessage={''} htmlFor={"state"}>State</Label>
                         <TextInput callback={handleInputChange}
                                    id={"state"}
                                    type={"text"}
@@ -195,7 +198,7 @@ export const CheckoutForm = () => {
                                    required={true}/>
                     </LabelInputHolder>
                     <LabelInputHolder>
-                        <Label errorMessage={validationError.city} htmlFor={"city"}>City</Label>
+                        <Label errorMessage={''} htmlFor={"city"}>City</Label>
                         <TextInput callback={handleInputChange}
                                    id={"city"}
                                    type={"text"}
@@ -205,7 +208,7 @@ export const CheckoutForm = () => {
                                    autoComplete={"address-level2"}/>
                     </LabelInputHolder>
                     <LabelInputHolder>
-                        <Label errorMessage={validationError.postcode} htmlFor={"postcode"}>Postcode</Label>
+                        <Label errorMessage={''} htmlFor={"postcode"}>Postcode</Label>
                         <TextInput callback={handleInputChange}
                                    id={"postcode"}
                                    type={"text"}
@@ -215,11 +218,6 @@ export const CheckoutForm = () => {
                                    autoComplete="postal-code"/>
                     </LabelInputHolder>
                 </MultiInputHolder>
-                <button type="submit">
-                    SUBMIT
-                </button>
-
-
             </div>
 
         </form>

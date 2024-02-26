@@ -82,7 +82,7 @@ Todo list begin once again
         - CONSIDER USAGE OF CHAT GPT
 
 3. ADD SEARCH ENGINE AND TEXT FILTERS
-1. ADD BACKEND LOGIC FOR ORDER PLACEMENT
+1. ADD BACKEND LOGIC FOR ORDER PLACEMENT                            COMPLETED
 9. ADD RATE LIMITING
 10. ADD SUBSCRIPTION LOGIC
 11. CREATE STATISTICS FOR PRODUCT VIEWS
@@ -92,7 +92,7 @@ DEBUG:
     - persist filters                                                                   COMPLETED
     - make sure basket is fetched after we refresh the website on search component      COMPLETED
 
-    - find a way to fix the possibility to come back to the existing checkout
+    - find a way to fix the possibility to come back to the existing checkout           COMPLETED
 
 
 CHILL OUT FRONTEND TASKS:

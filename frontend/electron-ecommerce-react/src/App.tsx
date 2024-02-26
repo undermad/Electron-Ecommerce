@@ -25,7 +25,7 @@ import {
     ADD_ADDRESS_NESTED_ROUTE,
     UPDATE_ADDRESS_NESTED_ROUTE,
     DELETE_ADDRESS_NESTED_ROUTE,
-    CHECKOUT_ADDRESS_PICKER, CHECKOUT_ORDER_INFO
+    CHECKOUT_ADDRESS_PICKER, CHECKOUT_ORDER_INFO, ORDER_NESTED_ROUTE
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
@@ -50,6 +50,7 @@ import {UpdateAddressForm} from "./ui/account/UpdateAddressForm.tsx";
 import {DeleteAddress} from "./ui/account/DeleteAddress.tsx";
 import {AddressPicker} from "./ui/basket/AddressPicker.tsx";
 import {OrderInformation} from "./ui/basket/OrderInformation.tsx";
+import {AccountOrders} from "./ui/account/AccountOrders.tsx";
 
 function App() {
 
@@ -80,6 +81,7 @@ function App() {
                     {/*user protected routes*/}
                     <Route element={<RequireAuth allowedRoles={[ROLE_USER]}/>}>
                         <Route path={ACCOUNT_ROUTE} element={<MyAccount/>}>
+                            <Route path={ORDER_NESTED_ROUTE} element={<AccountOrders/>}/>
                             <Route path={ADDRESSES_NESTED_ROUTE} element={<AccountAddresses/>}/>
                             <Route path={PAYMENT_INFORMATION_NESTED_ROUTE} element={<PaymentInformation/>}/>
                             <Route path={CHANGE_PASSWORD_NESTED_ROUTE} element={<ChangePassword/>}/>

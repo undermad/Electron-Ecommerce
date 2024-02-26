@@ -14,6 +14,7 @@ export const REGISTER_ROUTE: string = "/register";
 export const ACCOUNT_ROUTE: string = "/account";
 export const PAYMENT_INFORMATION_NESTED_ROUTE: string = "payment_info";
 export const ADDRESSES_NESTED_ROUTE: string = "addresses";
+export const ORDER_NESTED_ROUTE: string = "orders"
 export const CHANGE_PASSWORD_NESTED_ROUTE: string = "change_pass";
 export const ADD_ADDRESS_NESTED_ROUTE: string = "add_address";
 export const UPDATE_ADDRESS_NESTED_ROUTE: string = "update_address";
