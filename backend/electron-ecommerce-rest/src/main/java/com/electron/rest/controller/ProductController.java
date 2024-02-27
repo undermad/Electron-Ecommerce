@@ -26,9 +26,11 @@ public class ProductController {
     public ResponseEntity<PageableResponse<ProductResponse>> getProductsByFilters(
             @RequestBody ProductByFiltersRequest productByFiltersRequest,
             @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "relevance") String sortBy,
+            @RequestParam(defaultValue = "ASC") String sortDirection,
             @PathVariable(name = "category") String category) {
 
-        return ResponseEntity.ok(productService.getProductsByFilters(productByFiltersRequest, pageNo, category));
+        return ResponseEntity.ok(productService.getProductsByFilters(productByFiltersRequest, pageNo, category, sortBy, sortDirection));
     }
 
     @GetMapping("/{productId}")

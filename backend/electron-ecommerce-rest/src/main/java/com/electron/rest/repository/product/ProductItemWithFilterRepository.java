@@ -45,14 +45,22 @@ public class ProductItemWithFilterRepository {
     public List<Object[]> findProductByFilters(Map<String, List<String>> filters,
                                                Long categoryId,
                                                PriceRange priceRange,
-                                               Integer pageNo) {
+                                               Integer pageNo,
+                                               String sortBy,
+                                               String sortDirection) {
 
         StringBuilder sb = new StringBuilder();
         addQueryBody(filters, categoryId, priceRange, sb, selectProduct);
+        addSorting(sb, sortBy, sortDirection);
         addPageNo(pageNo, sb);
         addSemicolon(sb);
 
         return entityManager.createNativeQuery(sb.toString()).getResultList();
+    }
+
+    private void addSorting(StringBuilder sb, String sortBy, String sortDirection) {
+        if(sortBy.equals("relevance")) return;
+        sb.append("ORDER BY pi.").append(sortBy).append(" ").append(sortDirection).append(" ");
     }
 
     public List<Object> findTotalElementsFromFilter(Map<String, List<String>> filters,

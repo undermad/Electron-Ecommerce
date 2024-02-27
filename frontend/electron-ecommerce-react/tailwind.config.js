@@ -29,7 +29,8 @@ export default {
             'electron-bg-grey': '#F9FAFB',
             'electron-pay':'#FFC539',
             'electron-green':'#027A48',
-            'electron-very-light-green':'#ECFDF3'
+            'electron-very-light-green':'#ECFDF3',
+            'electron-very-light-blue':'#f5f8ff'
         },
         extend: {},
     },

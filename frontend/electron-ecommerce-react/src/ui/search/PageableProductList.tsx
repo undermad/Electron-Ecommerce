@@ -5,6 +5,7 @@ import {Product} from "../../api/dto/product/Product.ts";
 import {PageController} from "./PageController.tsx";
 import {PageableResponse} from "../../api/dto/PageableResponse.ts";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
+import {SortByButton} from "./SortByButton.tsx";
 
 
 export const PageableProductList = () => {
@@ -30,6 +31,7 @@ export const PageableProductList = () => {
         <div className="w-full">
             <div className="flex flex-col gap-[20px]">
                 <Header3>Search Result</Header3>
+                <SortByButton/>
                 <div className="flex flex-col gap-[24px] ">
                     {pageableProductList?.content.map((product, index) => (
                             <ProductListItem product={product} key={index}/>

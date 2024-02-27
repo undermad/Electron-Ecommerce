@@ -90,7 +90,7 @@ public class ProductService {
     }
 
 
-    public PageableResponse<ProductResponse> getProductsByFilters(ProductByFiltersRequest productByFiltersRequest, Integer pageNo, String category) {
+    public PageableResponse<ProductResponse> getProductsByFilters(ProductByFiltersRequest productByFiltersRequest, Integer pageNo, String category, String sortBy, String sortDirection) {
         Optional<CategoryProjection> categoryProjectionAsOptional = categoryRepository.findCategoryIdByName(category);
         if (categoryProjectionAsOptional.isEmpty()) throw new ResourceNotFoundException(CATEGORY_NOT_FOUND);
         Long categoryId = categoryProjectionAsOptional.get().getId();
@@ -103,7 +103,9 @@ public class ProductService {
                 productByFiltersRequest.getFilters(),
                 categoryId,
                 productByFiltersRequest.getPriceRange(),
-                pageNo);
+                pageNo,
+                sortBy,
+                sortDirection);
 
         return PageableResponse.<ProductResponse>builder()
                 .content(rawResult

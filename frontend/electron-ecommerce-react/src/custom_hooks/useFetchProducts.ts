@@ -25,7 +25,7 @@ export const useFetchProducts = () => {
             const response = await axiosBase.post(
                 PRODUCT_API_PATH
                 + `/${productContext?.categoryResponse.name}`
-                + `?pageNo=${pageNo}`,
+                + `?pageNo=${pageNo}&sortBy=${productContext?.sortBy}&sortDirection=${productContext?.sortDirection}`,
                 requestData);
 
             productContext?.setPageableProductList({...response.data});
