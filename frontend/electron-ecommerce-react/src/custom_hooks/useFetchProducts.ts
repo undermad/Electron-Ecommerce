@@ -28,6 +28,7 @@ export const useFetchProducts = () => {
                 + `?pageNo=${pageNo}&sortBy=${productContext?.sortBy}&sortDirection=${productContext?.sortDirection}`,
                 requestData);
 
+            console.log(response.data)
             productContext?.setPageableProductList({...response.data});
             console.log(response.data);
         } catch (error) {

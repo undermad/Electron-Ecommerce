@@ -3,6 +3,8 @@ package com.electron.rest.utility;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class MainMethod {
 
@@ -13,6 +15,8 @@ public class MainMethod {
         keyGenerator.init(128);
         SecretKey key = keyGenerator.generateKey();
         System.out.println(key);
+
+
 
     }
 }

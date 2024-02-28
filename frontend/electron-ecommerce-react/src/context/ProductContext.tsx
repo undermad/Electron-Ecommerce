@@ -39,7 +39,7 @@ export const ProductContextProvider = ({children}: ProductContextProps) => {
         maxPrice: 1,
     })
     const [priceValues, setPriceValues] = useState<number[]>([0, 1]);
-    const [sortBy, setSortBy] = useState<string>('relevant');
+    const [sortBy, setSortBy] = useState<string>('relevance');
     const [sortDirection, setSortDirection] = useState<string>('ASC');
 
     return <ProductContext.Provider value={{

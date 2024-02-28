@@ -14,12 +14,10 @@ import com.electron.rest.entity.projections.ReviewProjection;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
 import com.electron.rest.mapper.ReviewMapper;
-import com.electron.rest.repository.product.CategoryRepository;
-import com.electron.rest.repository.product.ProductItemRepository;
-import com.electron.rest.repository.product.ProductItemWithFilterRepository;
-import com.electron.rest.repository.product.ReviewRepository;
+import com.electron.rest.repository.product.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,20 +35,23 @@ public class ProductService {
     private final ProductItemWithFilterRepository productItemWithFilterRepository;
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
+    private final ProductDetailsRepository productDetailsRepository;
 
     @Value("${app-page-size}")
     private Integer pageSize;
 
-    public ProductService(CategoryRepository categoryRepository, ProductItemRepository productItemRepository, ProductMapper productMapper, ProductItemWithFilterRepository productItemWithFilterRepository, ReviewRepository reviewRepository, ReviewMapper reviewMapper) {
+    public ProductService(CategoryRepository categoryRepository, ProductItemRepository productItemRepository, ProductMapper productMapper, ProductItemWithFilterRepository productItemWithFilterRepository, ReviewRepository reviewRepository, ReviewMapper reviewMapper, ProductDetailsRepository productDetailsRepository) {
         this.categoryRepository = categoryRepository;
         this.productItemRepository = productItemRepository;
         this.productMapper = productMapper;
         this.productItemWithFilterRepository = productItemWithFilterRepository;
         this.reviewRepository = reviewRepository;
         this.reviewMapper = reviewMapper;
+        this.productDetailsRepository = productDetailsRepository;
     }
 
 
+    @Transactional
     public ProductResponse getProductById(Long productId) {
         ProductItemProjection productAsProjection = productItemRepository.findProductById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
@@ -85,6 +86,8 @@ public class ProductService {
                     .map(feature -> new FeatureDto(feature.getName(), feature.getValue()))
                     .collect(Collectors.toList()));
 
+        productDetailsRepository.increaseVisitsByOne(productAsProjection.getProductDetailsId());
+
 
         return productResponse;
     }
@@ -110,7 +113,7 @@ public class ProductService {
         return PageableResponse.<ProductResponse>builder()
                 .content(rawResult
                         .stream()
-                        .map(productMapper::mapRawObjectToProductResponse)
+                        .map(rawProduct -> productMapper.mapRawObjectToProductResponse(rawProduct, category))
                         .toList())
                 .pageNo(pageNo + 1)
                 .pageSize(pageSize)

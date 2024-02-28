@@ -45,7 +45,7 @@ export const SortByButton = () => {
             <div
                 ref={buttonRef}
                 onClick={toggleDropdown}
-                className="px-4 py-3 w-[280px] text-white flex justify-between cursor-pointer border border-electron-input-grey rounded-lg hover:bg-electron-very-light-blue">
+                className="px-4 py-3 w-full sm:w-[280px] text-white flex justify-between cursor-pointer border border-electron-input-grey rounded-lg hover:bg-electron-very-light-blue">
                 <div>
                     Sort By: {sortBy}
                 </div>
@@ -65,7 +65,7 @@ export const SortByButton = () => {
                     animate={{
                         opacity: isExpanded ? 1 : 0,
                     }}
-                    className={`absolute ${isExpanded ? '' : 'hidden '}  p-1 left-0 flex flex-col gap-1 bottom-0 translate-y-[100%] w-[280px] shadow-lg border border-electron-input-grey rounded-lg bg-electron-primary-white z-50 `}>
+                    className={`absolute ${isExpanded ? '' : 'hidden '}  p-1 left-0 flex flex-col gap-1 bottom-0 translate-y-[100%] w-full sm:w-[280px] shadow-lg border border-electron-input-grey rounded-lg bg-electron-primary-white z-50 `}>
                     <SortByButtonChild queryParam="relevance" direction={ASC_DIRECTION} callback={callback} name={"Relevance"}/>
                     <SortByButtonChild queryParam="price" direction={ASC_DIRECTION} callback={callback} name={"Price - low to high"}/>
                     <SortByButtonChild queryParam="price" direction={DESC_DIRECTION} callback={callback} name={"Price - high to low"}/>

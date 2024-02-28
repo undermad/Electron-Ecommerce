@@ -59,7 +59,7 @@ public class ProductItemWithFilterRepository {
     }
 
     private void addSorting(StringBuilder sb, String sortBy, String sortDirection) {
-        if(sortBy.equals("relevance")) return;
+        if (sortBy.equals("relevance")) return;
         sb.append("ORDER BY pi.").append(sortBy).append(" ").append(sortDirection).append(" ");
     }
 

@@ -5,7 +5,6 @@ import {axiosCategory} from "../../api/axios.ts";
 import {PageableProductList} from "./PageableProductList.tsx";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
-import {FilterSection} from "./FilterSection.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {Filter} from "./Filter.tsx";
@@ -46,17 +45,16 @@ export const Search = () => {
                 ?
                 <div className={"flex gap-[42px] w-full"}>
                     <div className={"w-1/4 flex flex-col gap-5"}>
-                            <div className="flex flex-col pl-4">
-                                <Header3>Filters</Header3>
-                                <ParagraphSmall tailwind="text-[14px]">Apply filters to table data</ParagraphSmall>
-                            </div>
-                            <Filter/>
+                        <div className="flex flex-col pl-4">
+                            <Header3>Filters</Header3>
+                            <ParagraphSmall tailwind="text-[14px]">Apply filters to table data</ParagraphSmall>
+                        </div>
+                        <Filter/>
                     </div>
                     <PageableProductList/>
                 </div>
                 :
                 <div>
-                    <FilterSection/>
                     <PageableProductList/>
                 </div>
             }

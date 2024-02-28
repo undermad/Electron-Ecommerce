@@ -19,5 +19,5 @@ public interface ProductItemProjection {
     String getSku();
     String getImgUrl();
     String getImg();
-    Category getCategory();
+    String getCategoryName();
 }

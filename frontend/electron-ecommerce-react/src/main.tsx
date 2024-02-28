@@ -11,7 +11,6 @@ import {StrictMode} from 'react';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
-        <StrictMode>
             <AuthContextProvider>
                 <BasketContextProvider>
                     <MessageScreenContextProvider>
@@ -25,6 +24,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     </MessageScreenContextProvider>
                 </BasketContextProvider>
             </AuthContextProvider>
-        </StrictMode>
     </BrowserRouter>
 )

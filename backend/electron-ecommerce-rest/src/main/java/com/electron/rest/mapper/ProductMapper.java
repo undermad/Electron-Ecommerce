@@ -26,7 +26,7 @@ public class ProductMapper {
                 .build();
     }
 
-    public ProductResponse mapRawObjectToProductResponse(Object[] rawObject) {
+    public ProductResponse mapRawObjectToProductResponse(Object[] rawObject, String category) {
         return ProductResponse.builder()
                 .productId((Long) rawObject[0])
                 .name(rawObject[1].toString())
@@ -36,6 +36,7 @@ public class ProductMapper {
                 .stockQuantity((Integer) rawObject[5])
                 .categoryId((Long) rawObject[6])
                 .currentRate((BigDecimal) rawObject[7])
+                .category(category)
                 .build();
     }
 
@@ -49,6 +50,7 @@ public class ProductMapper {
                 .stockQuantity(productItemProjection.getStockQuantity())
                 .categoryId(productItemProjection.getCategoryId())
                 .currentRate(productItemProjection.getCurrentRate())
+                .category(productItemProjection.getCategoryName())
                 .build();
     }
 

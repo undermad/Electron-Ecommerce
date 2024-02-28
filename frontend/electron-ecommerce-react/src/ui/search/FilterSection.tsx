@@ -52,8 +52,8 @@ export const FilterSection = () => {
     }, [productContext?.categoryResponse.name]);
 
     return (
-        <main className="w-full">
-            {isExpanded ?
+        <main>
+            {isExpanded &&
                 <article
                     className={"fixed flex flex-col left-0 top-0 z-40 w-full sm:w-[350px] h-screen bg-electron-primary-white sm:rounded-r-md"}>
                     <div className={"h-full flex flex-col overflow-y-auto"}
@@ -75,10 +75,12 @@ export const FilterSection = () => {
                         </div>
                     </div>
                 </article>
-                :
-                <div className={"border rounded cursor-pointer"} onClick={expandFilters}>
-                    Filters
-                </div>}
+            }
+            <div
+                className={"px-4 py-3 w-full sm:w-[280px] text-white flex justify-between cursor-pointer border border-electron-input-grey rounded-lg hover:bg-electron-very-light-blue"}
+                onClick={expandFilters}>
+                Filters
+            </div>
         </main>
     )
 }

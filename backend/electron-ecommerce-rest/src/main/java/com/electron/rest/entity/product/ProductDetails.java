@@ -23,6 +23,9 @@ public class ProductDetails {
     @Column(name = "product_information", nullable = false)
     private String productInformation;
 
+    @Column(name = "visits",  columnDefinition = "INT DEFAULT 0")
+    private Integer visits;
+
     @ElementCollection
     @CollectionTable(
             name = "products_images",

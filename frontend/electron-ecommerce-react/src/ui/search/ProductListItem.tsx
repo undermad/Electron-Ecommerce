@@ -20,9 +20,8 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
     const [date, setDate] = useState<string>('');
 
 
-
-    const handleProductClick = () => {
-        navigate(location.pathname + '/' + product.productId)
+    const handleProductClick = (category: string) => {
+        navigate(`${SEARCH_ROUTE}/${category}/${product.productId}`)
     }
 
     const handleClick = (productId: number, category: string) => {
@@ -44,12 +43,12 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
         <>
             {screenWidth >= Breakpoints.MEDIUM ?
                 <div className="flex gap-[12px]">
-                    <div className={"w-1/3 cursor-pointer"} onClick={handleProductClick}>
+                    <div className={"w-1/3 cursor-pointer"} onClick={() => handleProductClick(product.category)}>
                         <img src={product.imgUrl} alt={product.description}/>
                     </div>
-                    <div onClick={() => handleClick(product.productId, product.category)} className="w-full flex flex-col gap-[12px]">
-                        <div className={"w-full flex flex-col justify-center cursor-pointer"}
-                             onClick={handleProductClick}>
+                    <div onClick={() => handleClick(product.productId, product.category)}
+                         className="w-full flex flex-col gap-[12px]">
+                        <div className={"w-full flex flex-col justify-center cursor-pointer"}>
                             <p className={`text-electron-header-font text-[16px] font-[600] leading-7`}>
                                 {product.name}
                             </p>
@@ -70,7 +69,7 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
                 <div
                     className={"flex justify-center w-full  mb-5 border border-electron-product-listing-bg rounded-3xl p-3"}>
                     <div className={"w-full flex flex-col j gap-1 items-center"}>
-                        <div onClick={handleProductClick} className="cursor-pointer flex flex-col w-full">
+                        <div onClick={() => handleProductClick(product.category)} className="cursor-pointer flex flex-col w-full">
                             <div className={"w-full flex justify-center"}>
                                 <img src={product.imgUrl} alt={product.description}/>
                             </div>

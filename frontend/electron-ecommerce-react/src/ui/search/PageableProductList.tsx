@@ -6,6 +6,9 @@ import {PageController} from "./PageController.tsx";
 import {PageableResponse} from "../../api/dto/PageableResponse.ts";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
 import {SortByButton} from "./SortByButton.tsx";
+import {FilterSection} from "./FilterSection.tsx";
+import {useViewport} from "../../custom_hooks/useViewport.ts";
+import {Breakpoints} from "../../constants/Breakpoints.ts";
 
 
 export const PageableProductList = () => {
@@ -17,6 +20,7 @@ export const PageableProductList = () => {
         pageSize: 25,
         content: []
     });
+    const viewport = useViewport();
 
 
     useEffect(() => {
@@ -31,10 +35,16 @@ export const PageableProductList = () => {
         <div className="w-full">
             <div className="flex flex-col gap-[20px]">
                 <Header3>Search Result</Header3>
-                <SortByButton/>
+                <div className="flex flex-col sm:flex-row justify-between w-full gap-[17px]">
+                    {viewport <= Breakpoints.MEDIUM ?
+                        <FilterSection/>
+                        : <></>
+                    }
+                    <SortByButton/>
+                </div>
                 <div className="flex flex-col gap-[24px] ">
                     {pageableProductList?.content.map((product, index) => (
-                            <ProductListItem product={product} key={index}/>
+                        <ProductListItem product={product} key={index}/>
                     ))}
                 </div>
                 <PageController pageNo={pageableProductList?.pageNo}

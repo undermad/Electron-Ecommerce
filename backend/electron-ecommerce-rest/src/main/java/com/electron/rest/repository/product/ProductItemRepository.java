@@ -72,8 +72,10 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
                         pi.img_url as imgUrl,
                         pi.stock_quantity as stockQuantity,
                         pi.category_id as categoryId,
-                        pi.current_rate as currentRate
+                        pi.current_rate as currentRate,
+                        c.name as categoryName
                         FROM product_item pi
+                        JOIN categories c ON pi.category_id = c.id
                         WHERE pi.id = :productId
             """, nativeQuery = true)
     Optional<ProductItemProjection> findProductListItem(@Param("productId") Long productId);
