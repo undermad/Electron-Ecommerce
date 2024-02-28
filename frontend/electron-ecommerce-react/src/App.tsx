@@ -25,7 +25,7 @@ import {
     ADD_ADDRESS_NESTED_ROUTE,
     UPDATE_ADDRESS_NESTED_ROUTE,
     DELETE_ADDRESS_NESTED_ROUTE,
-    CHECKOUT_ADDRESS_PICKER, CHECKOUT_ORDER_INFO, ORDER_NESTED_ROUTE
+    CHECKOUT_ADDRESS_PICKER, CHECKOUT_ORDER_INFO, ORDER_NESTED_ROUTE, SEARCH_BY_QUERY_ROUTE
 } from "./constants/Routes.ts";
 import {RequireAuth} from "./ui/RequireAuth.tsx";
 import {ROLE_ADMIN, ROLE_USER} from "./constants/UserRoles.ts";
@@ -51,6 +51,8 @@ import {DeleteAddress} from "./ui/account/DeleteAddress.tsx";
 import {AddressPicker} from "./ui/basket/AddressPicker.tsx";
 import {OrderInformation} from "./ui/basket/OrderInformation.tsx";
 import {AccountOrders} from "./ui/account/AccountOrders.tsx";
+import React from "react";
+import {SearchByQuery} from "./ui/search/SearchByQuery.tsx";
 
 function App() {
 
@@ -61,6 +63,7 @@ function App() {
 
                     {/*public routes*/}
                     <Route path={HOME_ROUTE} element={<Home/>}/>
+                    <Route path={SEARCH_BY_QUERY_ROUTE} element={<SearchByQuery/>}/>
                     <Route path={SEARCH_ROUTE + "/:category"} element={<Search/>}/>
                     <Route path={SEARCH_ROUTE + "/:category" + "/:productId"} element={<ProductView/>}/>
                     <Route path={BASKET_ROUTE} element={<Basket/>}/>

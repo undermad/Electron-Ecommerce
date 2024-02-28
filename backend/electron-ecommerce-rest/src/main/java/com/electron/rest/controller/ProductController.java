@@ -7,11 +7,10 @@ import com.electron.rest.service.product.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-import static com.electron.rest.constants.EndpointsPaths.API_V1_PRODUCT;
+import static com.electron.rest.constants.EndpointsPaths.*;
 
 @RestController
-@RequestMapping(API_V1_PRODUCT )
+@RequestMapping(API_V1_PRODUCT)
 public class ProductController {
 
 
@@ -36,6 +35,13 @@ public class ProductController {
     @GetMapping("/{productId}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable(name = "productId") Long productId) {
         return ResponseEntity.ok(productService.getProductById(productId));
+    }
+
+    @GetMapping(GET_BY_QUERY)
+    public ResponseEntity<PageableResponse<ProductResponse>> getProductBySearchEngine(
+            @RequestParam(defaultValue = "") String query,
+            @RequestParam(defaultValue = "0") Integer pageNo) {
+        return ResponseEntity.ok(productService.getProductsBySearchEngine(query, pageNo));
     }
 
 }

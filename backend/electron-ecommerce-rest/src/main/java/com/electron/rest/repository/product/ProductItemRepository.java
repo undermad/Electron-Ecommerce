@@ -100,4 +100,31 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
     @Query(value = "SELECT pi.id as id, pi.stock_quantity as stockQuantity, pi.price as price FROM product_item pi WHERE pi.id = :productId", nativeQuery = true)
     Optional<ProductItemProjection> findQuantityAndPrice(@Param("productId") Long productId);
 
+
+    @Query(value = """
+                SELECT pi.id as id,
+                pi.name as name,
+                pi.description as description,
+                pi.price as price,
+                pi.img_url as imgUrl,
+                pi.stock_quantity as stockQuantity,
+                pi.category_id as categoryId,
+                pi.current_rate as currentRate,
+                c.name as categoryName
+                FROM product_item pi
+                JOIN categories c ON pi.category_id = c.id
+                WHERE pi.name LIKE CONCAT('%', :query, '%')
+                LIMIT 10 OFFSET :offset
+            """, nativeQuery = true)
+    List<ProductItemProjection> findProductByName(@Param("query") String query, @Param("offset") Integer offset);
+
+    @Query(value = """
+                SELECT COUNT(*) as totalRows
+                FROM product_item pi
+                WHERE pi.name LIKE CONCAT('%', :query,'%')
+            """, nativeQuery = true)
+    int findProductTotalRow(@Param("query") String query);
+
+
+
 }

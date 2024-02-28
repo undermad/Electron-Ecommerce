@@ -19,6 +19,7 @@ export const ACTIVATE_API_PATH = "/activate";
 
 export const CATEGORY_API_PATH = "/category";
 export const PRODUCT_API_PATH = "/product"
+export const GET_BY_QUERY = "/get_by_query";
 
 export const PRODUCT_CATEGORY_API_PATH = "/product";
 

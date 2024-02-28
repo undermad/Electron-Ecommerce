@@ -23,6 +23,7 @@ public class EndpointsPaths {
 
     // API_V1_PRODUCT
     public static final String API_V1_PRODUCT = "/api/v1/product";
+    public static final String GET_BY_QUERY = "get_by_query";
 
     public static final String API_V1_CHECKOUT = "/api/v1/checkout";
     public static final String BEGIN_CHECKOUT = "/begin_checkout";
