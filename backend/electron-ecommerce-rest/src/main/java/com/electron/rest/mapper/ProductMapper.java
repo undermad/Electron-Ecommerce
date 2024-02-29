@@ -40,6 +40,20 @@ public class ProductMapper {
                 .build();
     }
 
+    public ProductResponse mapRawObjectToProductResponseQuery(Object[] rawObject) {
+        return ProductResponse.builder()
+                .productId((Long) rawObject[0])
+                .name(rawObject[1].toString())
+                .description(rawObject[2].toString())
+                .price((BigDecimal) rawObject[3])
+                .imgUrl(rawObject[4].toString())
+                .stockQuantity((Integer) rawObject[5])
+                .categoryId((Long) rawObject[6])
+                .currentRate((BigDecimal) rawObject[7])
+                .category(rawObject[8].toString())
+                .build();
+    }
+
     public ProductResponse mapProductItemProjectionToProductResponse(ProductItemProjection productItemProjection) {
         return ProductResponse.builder()
                 .productId((productItemProjection.getId()))

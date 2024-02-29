@@ -3,15 +3,17 @@ import {SortByButtonChild} from "./SortByButtonChild.tsx";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
 import {ArrowDown} from "../../assets/icons/ArrowDown.tsx";
 import {motion} from "framer-motion";
-import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
 import {useProductList} from "../../custom_hooks/useProductList.ts";
 import {ASC_DIRECTION, DESC_DIRECTION} from "../../constants/Query.ts";
 
-export const SortByButton = () => {
+type SortByButtonProps = {
+    fetch?: () => void,
+}
+
+export const SortByButton = ({fetch}: SortByButtonProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const buttonRef = useRef<HTMLDivElement | null>(null);
     const [sortBy, setSortBy] = useState<string>("Relevance");
-    const fetchProducts = useFetchProducts();
     const productContext = useProductList();
 
     const toggleDropdown = () => setIsExpanded(!isExpanded);
@@ -29,7 +31,8 @@ export const SortByButton = () => {
     }
 
     useEffect(() => {
-        fetchProducts();
+        if (fetch)
+            fetch();
     }, [sortBy]);
 
     useEffect(() => {
@@ -66,11 +69,16 @@ export const SortByButton = () => {
                         opacity: isExpanded ? 1 : 0,
                     }}
                     className={`absolute ${isExpanded ? '' : 'hidden '}  p-1 left-0 flex flex-col gap-1 bottom-0 translate-y-[100%] w-full sm:w-[280px] shadow-lg border border-electron-input-grey rounded-lg bg-electron-primary-white z-50 `}>
-                    <SortByButtonChild queryParam="relevance" direction={ASC_DIRECTION} callback={callback} name={"Relevance"}/>
-                    <SortByButtonChild queryParam="price" direction={ASC_DIRECTION} callback={callback} name={"Price - low to high"}/>
-                    <SortByButtonChild queryParam="price" direction={DESC_DIRECTION} callback={callback} name={"Price - high to low"}/>
-                    <SortByButtonChild queryParam="name" direction={ASC_DIRECTION} callback={callback} name={"Name - asc"}/>
-                    <SortByButtonChild queryParam="name" direction={DESC_DIRECTION} callback={callback} name={"Name - desc"}/>
+                    <SortByButtonChild queryParam="relevance" direction={ASC_DIRECTION} callback={callback}
+                                       name={"Relevance"}/>
+                    <SortByButtonChild queryParam="price" direction={ASC_DIRECTION} callback={callback}
+                                       name={"Price - low to high"}/>
+                    <SortByButtonChild queryParam="price" direction={DESC_DIRECTION} callback={callback}
+                                       name={"Price - high to low"}/>
+                    <SortByButtonChild queryParam="name" direction={ASC_DIRECTION} callback={callback}
+                                       name={"Name - asc"}/>
+                    <SortByButtonChild queryParam="name" direction={DESC_DIRECTION} callback={callback}
+                                       name={"Name - desc"}/>
                 </motion.div>
             )}
         </div>

@@ -42,6 +42,26 @@ public class ProductItemWithFilterRepository {
         this.entityManager = entityManager;
     }
 
+    public List<Object[]> findProductsByQuery(String query, Integer pageNo, String sortBy, String sortDirection) {
+
+        StringBuilder sb = new StringBuilder();
+
+        addSelect(sb);
+        addDistinct(sb);
+        addSelectAttributes(selectProduct, sb);
+        sb.append(", c.name as categoryName ");
+        addFrom(sb);
+        addFromAttributes(from, sb);
+        sb.append("JOIN categories c ON pi.category_id = c.id ");
+        addWhere(sb);
+        sb.append("pi.name LIKE '%").append(query).append("%' ");
+        addSorting(sb, sortBy, sortDirection);
+        addPageNo(pageNo, sb);
+        sb.append(";");
+
+        return entityManager.createNativeQuery(sb.toString()).getResultList();
+    }
+
     public List<Object[]> findProductByFilters(Map<String, List<String>> filters,
                                                Long categoryId,
                                                PriceRange priceRange,

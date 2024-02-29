@@ -9,6 +9,7 @@ import {SortByButton} from "./SortByButton.tsx";
 import {FilterSection} from "./FilterSection.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
+import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
 
 
 export const PageableProductList = () => {
@@ -21,6 +22,8 @@ export const PageableProductList = () => {
         content: []
     });
     const viewport = useViewport();
+    const fetchProducts = useFetchProducts();
+
 
 
     useEffect(() => {
@@ -40,7 +43,7 @@ export const PageableProductList = () => {
                         <FilterSection/>
                         : <></>
                     }
-                    <SortByButton/>
+                    <SortByButton fetch={fetchProducts}/>
                 </div>
                 <div className="flex flex-col gap-[24px] ">
                     {pageableProductList?.content.map((product, index) => (

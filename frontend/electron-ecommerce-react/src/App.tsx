@@ -51,7 +51,6 @@ import {DeleteAddress} from "./ui/account/DeleteAddress.tsx";
 import {AddressPicker} from "./ui/basket/AddressPicker.tsx";
 import {OrderInformation} from "./ui/basket/OrderInformation.tsx";
 import {AccountOrders} from "./ui/account/AccountOrders.tsx";
-import React from "react";
 import {SearchByQuery} from "./ui/search/SearchByQuery.tsx";
 
 function App() {

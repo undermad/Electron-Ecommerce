@@ -20,6 +20,8 @@ type ProductContextType = {
     setSortBy: React.Dispatch<React.SetStateAction<string>>,
     sortDirection: string,
     setSortDirection: React.Dispatch<React.SetStateAction<string>>,
+    query: string,
+    setQuery: React.Dispatch<React.SetStateAction<string>>,
 }
 
 export const ProductContext = createContext<ProductContextType | null>(null);
@@ -41,6 +43,7 @@ export const ProductContextProvider = ({children}: ProductContextProps) => {
     const [priceValues, setPriceValues] = useState<number[]>([0, 1]);
     const [sortBy, setSortBy] = useState<string>('relevance');
     const [sortDirection, setSortDirection] = useState<string>('ASC');
+    const [query, setQuery] = useState<string>('');
 
     return <ProductContext.Provider value={{
         pageableProductList, setPageableProductList,
@@ -48,6 +51,7 @@ export const ProductContextProvider = ({children}: ProductContextProps) => {
         categoryResponse, setCategoryResponse,
         priceValues, setPriceValues,
         sortBy, setSortBy,
-        sortDirection, setSortDirection
+        sortDirection, setSortDirection,
+        query, setQuery
     }}>{children}</ProductContext.Provider>
 }

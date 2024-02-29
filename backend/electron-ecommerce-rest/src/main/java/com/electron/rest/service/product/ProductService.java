@@ -50,23 +50,22 @@ public class ProductService {
         this.productDetailsRepository = productDetailsRepository;
     }
 
-    public PageableResponse<ProductResponse> getProductsBySearchEngine(String query, Integer pageNo) {
+    public PageableResponse<ProductResponse> getProductsBySearchEngine(String query, Integer pageNo, String sortBy, String sortDirection) {
 
-        List<ProductItemProjection> productsAsProjections = productItemRepository.findProductByName(query, pageNo * 10);
+        List<Object[]> products = productItemWithFilterRepository.findProductsByQuery(query, pageNo * 10, sortBy, sortDirection);
         int totalElements = productItemRepository.findProductTotalRow(query);
 
         return PageableResponse.<ProductResponse>builder()
+                .content(products
+                        .stream()
+                        .map(productMapper::mapRawObjectToProductResponseQuery)
+                        .toList())
                 .pageNo(pageNo + 1)
-                .totalElements(totalElements)
-                .totalPages((totalElements / pageSize) + 1)
                 .pageSize(pageSize)
-                .content(productsAsProjections.stream()
-                        .map(productMapper::mapProductItemProjectionToProductResponse)
-                        .collect(Collectors.toList()))
+                .totalElements(totalElements)
                 .resourceName("Products by query")
+                .totalPages((totalElements / pageSize) + 1)
                 .build();
-
-//
     }
 
 

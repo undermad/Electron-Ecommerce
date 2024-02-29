@@ -40,8 +40,10 @@ public class ProductController {
     @GetMapping(GET_BY_QUERY)
     public ResponseEntity<PageableResponse<ProductResponse>> getProductBySearchEngine(
             @RequestParam(defaultValue = "") String query,
-            @RequestParam(defaultValue = "0") Integer pageNo) {
-        return ResponseEntity.ok(productService.getProductsBySearchEngine(query, pageNo));
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "relevance") String sortBy,
+            @RequestParam(defaultValue = "ASC") String sortDirection) {
+        return ResponseEntity.ok(productService.getProductsBySearchEngine(query, pageNo, sortBy, sortDirection));
     }
 
 }

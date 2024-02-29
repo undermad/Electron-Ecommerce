@@ -1,14 +1,10 @@
 import {SearchSvg} from "../../assets/icons/SearchSvg.tsx";
-import React, {useContext, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {SmallSvgIcon} from "../../assets/icons/SmallSvgIcon.tsx";
-import {axiosBase, GET_BY_QUERY, PRODUCT_API_PATH} from "../../api/axios.ts";
-import {ProductContext} from "../../context/ProductContext.tsx";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
-import {useNavigate} from "react-router-dom";
-import {SEARCH_BY_QUERY_ROUTE} from "../../constants/Routes.ts";
+import {useFetchProductsByQuery} from "../../custom_hooks/useFetchProductsByQuery.ts";
+import {useProductList} from "../../custom_hooks/useProductList.ts";
 
 export const SearchBar = () => {
 
@@ -17,8 +13,8 @@ export const SearchBar = () => {
     const width = useViewport();
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const [query, setQuery] = useState<string>('');
-    const productContext = useContext(ProductContext);
-    const navigate = useNavigate();
+    const fetchByQuery = useFetchProductsByQuery();
+    const productContext = useProductList();
 
 
     const handleFocus = () => {
@@ -43,17 +39,12 @@ export const SearchBar = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        axiosBase.get(`${PRODUCT_API_PATH}${GET_BY_QUERY}?query=${query}`)
-            .then(response => {
-                productContext?.setPageableProductList({...response.data});
-                navigate(SEARCH_BY_QUERY_ROUTE);
-            })
-            .catch(error => {
-                console.log(error)
-            })
-
-
+        productContext?.setQuery(query);
     }
+
+    useEffect(() => {
+        fetchByQuery(0);
+    }, [productContext?.query]);
 
 
     return (
