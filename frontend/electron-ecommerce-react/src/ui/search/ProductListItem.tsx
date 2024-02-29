@@ -42,8 +42,8 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
     return (
         <>
             {screenWidth >= Breakpoints.MEDIUM ?
-                <div className="flex gap-[12px]">
-                    <div className={"w-1/3 cursor-pointer"} onClick={() => handleProductClick(product.category)}>
+                <div className="flex gap-[12px] items-center">
+                    <div className={"w-[300px]  cursor-pointer"} onClick={() => handleProductClick(product.category)}>
                         <img src={product.imgUrl} alt={product.description}/>
                     </div>
                     <div onClick={() => handleClick(product.productId, product.category)}
@@ -53,7 +53,10 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
                                 {product.name}
                             </p>
                             <ParagraphSmall>{product.description}</ParagraphSmall>
-                            <RatingStars currentRate={product.currentRate}/>
+                            <div className="flex items-center">
+                                <RatingStars currentRate={product.currentRate}/>
+                                <ParagraphSmall>({product.totalReviews})</ParagraphSmall>
+                            </div>
                             <h3 className={`text-electron-header-font text-[14px] font-[600] leading-7`}>
                                 £{product.price}
                             </h3>
@@ -69,7 +72,8 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
                 <div
                     className={"flex justify-center w-full  mb-5 border border-electron-product-listing-bg rounded-3xl p-3"}>
                     <div className={"w-full flex flex-col j gap-1 items-center"}>
-                        <div onClick={() => handleProductClick(product.category)} className="cursor-pointer flex flex-col w-full">
+                        <div onClick={() => handleProductClick(product.category)}
+                             className="cursor-pointer flex flex-col w-full">
                             <div className={"w-full flex justify-center"}>
                                 <img src={product.imgUrl} alt={product.description}/>
                             </div>

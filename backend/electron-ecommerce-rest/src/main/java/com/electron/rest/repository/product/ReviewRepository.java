@@ -20,4 +20,11 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
             WHERE product_item_id = :productId
             """,nativeQuery = true)
     List<ReviewProjection> findAllByProductId(@Param("productId") Long productId);
+
+    @Query(value = """
+            SELECT COUNT(*) 
+            FROM reviews r 
+            WHERE r.product_item_id = :productId
+            """, nativeQuery = true)
+    int count(@Param("productId") Long productId);
 }

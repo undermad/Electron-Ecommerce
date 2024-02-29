@@ -58,8 +58,12 @@ public class ProductService {
         return PageableResponse.<ProductResponse>builder()
                 .content(products
                         .stream()
-                        .map(productMapper::mapRawObjectToProductResponseQuery)
-                        .toList())
+                        .map(product -> {
+                            ProductResponse productResponse = productMapper.mapRawObjectToProductResponseQuery(product);
+                            productResponse.setTotalReviews(reviewRepository.count(productResponse.getProductId()));
+                            return productResponse;
+                        })
+                        .collect(Collectors.toList()))
                 .pageNo(pageNo + 1)
                 .pageSize(pageSize)
                 .totalElements(totalElements)
@@ -131,7 +135,11 @@ public class ProductService {
         return PageableResponse.<ProductResponse>builder()
                 .content(rawResult
                         .stream()
-                        .map(rawProduct -> productMapper.mapRawObjectToProductResponse(rawProduct, category))
+                        .map(rawProduct -> {
+                            ProductResponse productResponse = productMapper.mapRawObjectToProductResponse(rawProduct, category);
+                            productResponse.setTotalQuantity(reviewRepository.count(productResponse.getProductId()));
+                            return productResponse;
+                        })
                         .toList())
                 .pageNo(pageNo + 1)
                 .pageSize(pageSize)

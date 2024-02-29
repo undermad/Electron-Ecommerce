@@ -105,11 +105,9 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
     }, [product]);
 
 
-
-
     return (
         <div
-            className={`${currentQuantity === 0 ? 'text-electron-primary-white bg-electron-primary-dark-blue cursor-pointer' : 'text-electron-header-font'} justify-center items-center border border-electron-header-font shadow-md h-[48px] rounded-full flex gap-[12px]`}
+            className={`${currentQuantity === 0 ? 'text-electron-primary-white bg-electron-primary-dark-blue cursor-pointer' : 'text-electron-header-font'}  justify-center items-center border border-electron-header-font shadow-md h-[48px] rounded-full flex gap-[12px] lg:w-[130px]`}
             onClick={addToBasket}>
 
             {currentQuantity > 0 ?
@@ -130,7 +128,12 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
                 </>
                 :
                 <div>
-                    Add
+                    {product.stockQuantity > 0
+                        ?
+                        <button disabled={product.stockQuantity === 0}>Add</button>
+                        :
+                        <button>Out of stock</button>
+                    }
                 </div>
             }
         </div>

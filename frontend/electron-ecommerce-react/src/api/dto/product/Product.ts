@@ -16,6 +16,7 @@ export type Product = {
     images: string[],
     features: Feature[],
     reviews: Review[],
+    totalReviews: number
     totalQuantity: number,
 }
 
@@ -34,6 +35,7 @@ export const defaultProduct: Product = {
     images: [],
     features: [],
     reviews: [],
+    totalReviews: 0,
     totalQuantity: 0,
 }
 

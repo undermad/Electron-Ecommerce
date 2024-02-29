@@ -31,5 +31,6 @@ public class ProductResponse {
     private Set<String> images;
     private List<FeatureDto> features;
     private List<ReviewDto> reviews;
+    private Integer totalReviews;
 
 }
