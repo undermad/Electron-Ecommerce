@@ -40,6 +40,7 @@ export const SearchBar = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         productContext?.setQuery(query);
+
     }
 
     useEffect(() => {
@@ -48,7 +49,6 @@ export const SearchBar = () => {
 
 
     return (
-
         <>
             {width >= Breakpoints.SMALL ?
                 <div

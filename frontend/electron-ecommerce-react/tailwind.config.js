@@ -30,7 +30,9 @@ export default {
             'electron-pay':'#FFC539',
             'electron-green':'#027A48',
             'electron-very-light-green':'#ECFDF3',
-            'electron-very-light-blue':'#f5f8ff'
+            'electron-very-light-blue':'#f5f8ff',
+            'electron-light-blue':'#026AA2',
+            'electron-bright-blue':'#dfe5ff'
         },
         extend: {},
     },
