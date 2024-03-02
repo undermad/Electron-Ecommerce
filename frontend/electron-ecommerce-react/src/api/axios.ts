@@ -40,6 +40,8 @@ export const GET_CHECKOUT_SUMMARY = "/get_checkout_summary";
 export const ORDER_API_PATH = "/order";
 export const PLACE_ORDER = "/place_order";
 
+export const SUBSCRIBE_NEWSLETTER_API_PATH = "/newsletter";
+
 
 
 export const axiosAuth = axios.create({

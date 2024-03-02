@@ -1,4 +1,4 @@
-package com.electron.rest.dto;
+package com.electron.rest.dto.product;
 
 import com.electron.rest.dto.product.PriceRange;
 import lombok.*;

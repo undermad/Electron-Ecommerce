@@ -1,7 +1,7 @@
 package com.electron.rest.controller;
 
 import com.electron.rest.dto.PageableResponse;
-import com.electron.rest.dto.ProductByFiltersRequest;
+import com.electron.rest.dto.product.ProductByFiltersRequest;
 import com.electron.rest.dto.product.ProductResponse;
 import com.electron.rest.service.product.ProductService;
 import org.springframework.http.ResponseEntity;

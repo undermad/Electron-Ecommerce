@@ -7,12 +7,15 @@ type ElectronButtonProps = ComponentProps<"button"> & {
     textSize?: number,
     width?: number,
     rounded?: string,
+    form?: string,
 }
 
-export const ElectronButton = ({loading, children, textSize, width, rounded, ...props}: ElectronButtonProps) => {
+export const ElectronButton = ({loading, children, textSize, width, rounded, form, ...props}: ElectronButtonProps) => {
     return (
         <div className={"flex flex-col"}>
             <button
+                form={`${form ? form : ''}`}
+                type={`${form ? 'submit' : 'button'}`}
                 {...props}
                 className={"text-electron-primary-white shadow-md p-[14px] h-[48px]  "
                     + `${width ? 'w-[' + width + 'px] ' : ' '}`

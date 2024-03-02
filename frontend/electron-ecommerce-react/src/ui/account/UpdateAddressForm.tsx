@@ -60,6 +60,7 @@ export const UpdateAddressForm = () => {
 
     return (
         <form
+            id="updateAddress"
             className={"mt-[35px] flex flex-col"}
             onSubmit={handleSubmit}>
 
@@ -114,7 +115,7 @@ export const UpdateAddressForm = () => {
                                autoComplete="postal-code"/>
                 </LabelInputHolder>
             </MultiInputHolder>
-            <ElectronButton loading={loading}>Update Address</ElectronButton>
+            <ElectronButton form="updateAddress" loading={loading}>Update Address</ElectronButton>
 
 
         </form>

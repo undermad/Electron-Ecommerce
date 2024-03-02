@@ -12,7 +12,7 @@ import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.exception.OutOfStockException;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.ProductMapper;
-import com.electron.rest.repository.CheckoutItemRepository;
+import com.electron.rest.repository.product.CheckoutItemRepository;
 import com.electron.rest.repository.account.BasketItemRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
 import org.springframework.transaction.annotation.Transactional;

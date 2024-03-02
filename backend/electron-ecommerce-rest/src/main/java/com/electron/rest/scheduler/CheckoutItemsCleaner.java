@@ -1,7 +1,7 @@
 package com.electron.rest.scheduler;
 
 import com.electron.rest.entity.projections.CheckoutItemProjection;
-import com.electron.rest.repository.CheckoutItemRepository;
+import com.electron.rest.repository.product.CheckoutItemRepository;
 import com.electron.rest.repository.product.ProductItemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Async;

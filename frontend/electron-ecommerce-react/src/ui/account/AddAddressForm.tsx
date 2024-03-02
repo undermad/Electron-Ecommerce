@@ -50,6 +50,7 @@ export const AddAddressForm = () => {
         <div className="flex flex-col gap-[24px]">
             <Header3>Add Address</Header3>
             <form
+                id="addAddress"
                 className={"flex flex-col"}
                 onSubmit={handleSubmit}>
 
@@ -104,7 +105,7 @@ export const AddAddressForm = () => {
                                    autoComplete="postal-code"/>
                     </LabelInputHolder>
                 </MultiInputHolder>
-                <ElectronButton loading={loading}>Add Address</ElectronButton>
+                <ElectronButton form="addAddress" loading={loading}>Add Address</ElectronButton>
 
 
             </form>

@@ -66,6 +66,7 @@ export const ChangePassword = () => {
         <div className="flex flex-col gap-[24px]">
             <Header3>Change your password</Header3>
             <form
+                id="changePassword"
                 className={"flex flex-col"}
                 onSubmit={handleSubmit}>
                 <MultiInputHolder>
@@ -99,7 +100,7 @@ export const ChangePassword = () => {
                     </LabelInputHolder>
                 </MultiInputHolder>
 
-                <ElectronButton loading={loading}>Submit</ElectronButton>
+                <ElectronButton form="changePassword" loading={loading}>Submit</ElectronButton>
             </form>
         </div>
 

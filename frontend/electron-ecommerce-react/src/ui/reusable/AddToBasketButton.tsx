@@ -112,15 +112,17 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
             {currentQuantity > 0 ?
                 <>
-                    <button className={"cursor-pointer h-full flex items-center pl-[14px]"}
+                    <button className={"cursor-pointer h-full flex items-center pl-[14px]  rounded-l-full"}
                             disabled={loading}
                             onClick={handleDecreaseButton}>
                         <FaMinus size={20}/>
                     </button>
-                    <Bold textSize={18} weight={500}>
-                        {currentQuantity}
-                    </Bold>
-                    <button className={"cursor-pointer h-full flex items-center pr-[14px]"}
+                    <div className="w-1/3 flex items-center justify-center">
+                        <Bold textSize={18} weight={500}>
+                            {currentQuantity}
+                        </Bold>
+                    </div>
+                    <button className={"cursor-pointer h-full flex items-center pr-[14px]  rounded-r-full"}
                             disabled={loading}
                             onClick={handleIncreaseButton}>
                         <FaPlus size={20}/>

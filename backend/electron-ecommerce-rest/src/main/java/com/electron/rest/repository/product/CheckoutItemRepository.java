@@ -1,4 +1,4 @@
-package com.electron.rest.repository;
+package com.electron.rest.repository.product;
 
 import com.electron.rest.entity.orders.CheckoutItem;
 import com.electron.rest.entity.projections.CheckoutItemProjection;

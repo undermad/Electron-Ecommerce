@@ -1,5 +1,5 @@
 type LabelProps = {
-    children: React.ReactNode,
+    children?: React.ReactNode,
     htmlFor: string,
     errorMessage?: string,
 }

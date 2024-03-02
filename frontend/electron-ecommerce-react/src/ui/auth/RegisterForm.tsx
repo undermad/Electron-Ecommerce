@@ -73,7 +73,9 @@ export const RegisterForm = () => {
     return (
 
 
-        <form className={"mt-[35px] flex flex-col"}
+        <form
+            id="registerForm"
+            className={"mt-[35px] flex flex-col"}
               onSubmit={handleSubmit}>
 
             <FormErrorMessage errorMessage={validationError.message}/>
@@ -147,7 +149,7 @@ export const RegisterForm = () => {
                 </LabelCheckboxHolder>
             </MultiInputHolder>
 
-            <ElectronButton loading={loading}>Register</ElectronButton>
+            <ElectronButton form="registerForm" loading={loading}>Register</ElectronButton>
         </form>
     )
 }

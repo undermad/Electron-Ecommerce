@@ -44,4 +44,6 @@ public class EndpointsPaths {
 
     public static final String API_V1_ORDER = "/api/v1/order";
     public static final String PLACE_ORDER = "/place_order";
+
+    public static final String API_V1_NEWSLETTER = "/api/v1/newsletter";
 }

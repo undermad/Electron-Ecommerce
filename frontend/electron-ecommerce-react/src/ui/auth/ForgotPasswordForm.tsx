@@ -46,6 +46,7 @@ export const ForgotPasswordForm = () => {
 
     return (
         <form
+            id="forgottenPassword"
             className={"mt-[35px] flex flex-col"}
             onSubmit={handleSubmit}>
 
@@ -63,7 +64,7 @@ export const ForgotPasswordForm = () => {
                 </LabelInputHolder>
             </MultiInputHolder>
 
-            <ElectronButton loading={loading}>Submit</ElectronButton>
+            <ElectronButton form="forgottenPassword" loading={loading}>Submit</ElectronButton>
         </form>
     )
 }

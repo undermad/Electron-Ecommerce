@@ -71,11 +71,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests
                         ((authorization) -> authorization
                                 .requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/auth/logout_everywhere)").hasRole("USER")
                                 .requestMatchers("/api/v1/registration/**").permitAll()
-                                .requestMatchers("/api/v1/test/**").hasRole("USER") //spring will add prefix ROLE_ADMIN
                                 .requestMatchers(API_V1_CATEGORY + "/**").permitAll()
                                 .requestMatchers(API_V1_PRODUCT + "/**").permitAll()
+                                .requestMatchers(API_V1_NEWSLETTER + "/**").permitAll()
+                                .requestMatchers("/api/v1/test/**").hasRole("USER") //spring will add prefix ROLE_ADMIN
+                                .requestMatchers("/api/v1/auth/logout_everywhere)").hasRole("USER")
                                 .requestMatchers(API_V1_BASKET + "/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(API_V1_ADDRESS + "/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(API_V1_ORDER + "/**").permitAll()

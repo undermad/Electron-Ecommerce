@@ -24,7 +24,7 @@ import com.electron.rest.mapper.OrderMapper;
 import com.electron.rest.mapper.PaymentInformationMapper;
 import com.electron.rest.payment.PaymentResult;
 import com.electron.rest.payment.PaymentStrategy;
-import com.electron.rest.repository.CheckoutItemRepository;
+import com.electron.rest.repository.product.CheckoutItemRepository;
 import com.electron.rest.repository.account.BasketItemRepository;
 import com.electron.rest.repository.order.DeliveryAddressRepository;
 import com.electron.rest.repository.order.OrderItemRepository;
@@ -38,7 +38,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.electron.rest.constants.ErrorMessages.SESSION_EXPIRED;

@@ -1,12 +1,9 @@
 package com.electron.rest.service.product;
 
-import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.dto.PageableResponse;
-import com.electron.rest.dto.ProductByFiltersRequest;
+import com.electron.rest.dto.product.ProductByFiltersRequest;
 import com.electron.rest.dto.product.FeatureDto;
 import com.electron.rest.dto.product.ProductResponse;
-import com.electron.rest.dto.product.ReviewDto;
-import com.electron.rest.entity.product.ProductItem;
 import com.electron.rest.entity.projections.CategoryProjection;
 import com.electron.rest.entity.projections.FeatureProjection;
 import com.electron.rest.entity.projections.ProductItemProjection;

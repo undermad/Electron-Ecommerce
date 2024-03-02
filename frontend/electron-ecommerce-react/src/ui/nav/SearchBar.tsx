@@ -34,18 +34,19 @@ export const SearchBar = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
-
+        productContext?.setQuery(query);
     }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         productContext?.setQuery(query);
+        fetchByQuery(0);
 
     }
 
     useEffect(() => {
-        fetchByQuery(0);
-    }, [productContext?.query]);
+        productContext?.setQuery(query);
+    }, [query]);
 
 
     return (
@@ -57,7 +58,9 @@ export const SearchBar = () => {
                     <SmallSvgIcon>
                         <SearchSvg/>
                     </SmallSvgIcon>
-                    <form onSubmit={handleSubmit}>
+                    <form
+                        id="searchForm"
+                        onSubmit={handleSubmit}>
                         <input name="abc" type="text" style={{display: 'none'}}/>
                         <input
                             ref={inputBigRef}
@@ -70,7 +73,7 @@ export const SearchBar = () => {
                             className={`w-full bg-electron-input-bg placeholder:text-electron-primary-grey focus:outline-0`}
                             onFocus={(event) => event.target.setAttribute('autocomplete', 'off')}
                         />
-                        <button className="hidden" type="submit"/>
+                        <button form="searchForm" className="hidden" type="submit"/>
                     </form>
                 </div>
                 :

@@ -32,7 +32,7 @@ export default {
             'electron-very-light-green':'#ECFDF3',
             'electron-very-light-blue':'#f5f8ff',
             'electron-light-blue':'#026AA2',
-            'electron-bright-blue':'#dfe5ff'
+            'electron-bright-blue':'#ebf3ff'
         },
         extend: {},
     },

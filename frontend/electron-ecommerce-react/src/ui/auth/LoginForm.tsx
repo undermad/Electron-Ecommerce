@@ -77,6 +77,7 @@ export const LoginForm = () => {
 
 
         <form
+            id="loginForm"
             className={"mt-[35px] flex flex-col"}
             onSubmit={handleSubmit}>
 
@@ -118,7 +119,7 @@ export const LoginForm = () => {
                     </div>
                 </LabelInputHolder>
             </MultiInputHolder>
-            <ElectronButton loading={loading}>Log In</ElectronButton>
+            <ElectronButton form="loginForm" loading={loading}>Log In</ElectronButton>
 
             <ParagraphSmall tailwind="flex justify-center mt-3">
                 Don't have an account?&nbsp;
