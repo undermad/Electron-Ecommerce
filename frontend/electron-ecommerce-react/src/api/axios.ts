@@ -12,6 +12,11 @@ export const FORGOT_PASSWORD_API_PATH = "/forgot_password";
 export const CHANGE_FORGOTTEN_PASSWORD_API_PATH = "/change_forgotten_password"
 export const CHANGE_PASSWORD_API_PATH = "/change_password";
 
+export const ACCOUNT_API_PATH = "/account";
+export const GET_FULL_NAME = "/get_full_name";
+export const CHANGE_AVATAR = "/change_avatar";
+export const GET_AVATAR = "/get_avatar";
+
 
 export const REGISTRATION_API_PATH = "/registration"
 export const REGISTER_API_PATH = "/register";
@@ -20,6 +25,7 @@ export const ACTIVATE_API_PATH = "/activate";
 export const CATEGORY_API_PATH = "/category";
 export const PRODUCT_API_PATH = "/product"
 export const GET_BY_QUERY = "/get_by_query";
+export const HOT_PRODUCTS_API_PATH = "/hot";
 
 export const PRODUCT_CATEGORY_API_PATH = "/product";
 

@@ -1,22 +1,21 @@
-import {useViewport} from "../../custom_hooks/useViewport.ts";
-import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {Hero} from "./Hero.tsx";
 import {Container} from "../reusable/Container.tsx";
+import {HotProducts} from "./HotProducts.tsx";
+import {CategoriesBanner} from "./CategoriesBanner.tsx";
 
 export const Home = () => {
-
-    const width = useViewport();
-
 
 
     return (
         <Container>
+            <main className="flex flex-col gap-[42px]">
 
-
-            {width >= Breakpoints.SMALL ?
                 <Hero/>
-                : ""}
+                <CategoriesBanner/>
 
+                <HotProducts/>
+
+            </main>
         </Container>
     )
 }

@@ -55,7 +55,7 @@ export const ChangeForgottenPasswordForm = () => {
                 messageScreen(response.data.message);
             })
             .catch((error) => {
-                console.log(error);
+                messageScreen(error.response.data.message)
                 setResponseError({...error.response.data})
                 setLoading(false);
             })
@@ -66,6 +66,7 @@ export const ChangeForgottenPasswordForm = () => {
 
     return (
         <form
+            id="changeForgottenPassword"
             className={"mt-[35px] flex flex-col"}
             onSubmit={handleSubmit}>
             <MultiInputHolder>
@@ -95,7 +96,7 @@ export const ChangeForgottenPasswordForm = () => {
                 </LabelInputHolder>
             </MultiInputHolder>
 
-            <ElectronButton loading={loading}>Submit</ElectronButton>
+            <ElectronButton form="changeForgottenPassword" loading={loading}>Submit</ElectronButton>
         </form>
 
     )

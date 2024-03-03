@@ -19,7 +19,6 @@ import {
     FORGOT_PASSWORD,
     CHANGE_FORGOTTEN_PASSWORD,
     CHECKOUT_ROUTE,
-    PAYMENT_INFORMATION_NESTED_ROUTE,
     ADDRESSES_NESTED_ROUTE,
     CHANGE_PASSWORD_NESTED_ROUTE,
     ADD_ADDRESS_NESTED_ROUTE,
@@ -85,7 +84,6 @@ function App() {
                         <Route path={ACCOUNT_ROUTE} element={<MyAccount/>}>
                             <Route path={ORDER_NESTED_ROUTE} element={<AccountOrders/>}/>
                             <Route path={ADDRESSES_NESTED_ROUTE} element={<AccountAddresses/>}/>
-                            <Route path={PAYMENT_INFORMATION_NESTED_ROUTE} element={<PaymentInformation/>}/>
                             <Route path={CHANGE_PASSWORD_NESTED_ROUTE} element={<ChangePassword/>}/>
                             <Route path={ADD_ADDRESS_NESTED_ROUTE} element={<AddAddressForm/>}/>
                             <Route path={UPDATE_ADDRESS_NESTED_ROUTE + "/:addressId"} element={<UpdateAddressForm />}/>

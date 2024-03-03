@@ -34,7 +34,7 @@ export const SearchBar = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
-        productContext?.setQuery(query);
+        productContext?.setQuery(e.target.value);
     }
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -65,11 +65,11 @@ export const SearchBar = () => {
                         <input
                             ref={inputBigRef}
                             onChange={handleInputChange}
-                            type={'text'}
-                            name={'search'}
-                            value={query}
-                            placeholder={'Search for products'}
-                            autoComplete={'new-password'}
+                            type="text"
+                            name="search"
+                            value={query} // Controlled component: value tied to state
+                            placeholder="Search for products"
+                            autoComplete="new-password"
                             className={`w-full bg-electron-input-bg placeholder:text-electron-primary-grey focus:outline-0`}
                             onFocus={(event) => event.target.setAttribute('autocomplete', 'off')}
                         />
@@ -85,19 +85,20 @@ export const SearchBar = () => {
                             <SearchSvg/>
                         </SmallSvgIcon>
                     </div>
-                    <form onSubmit={handleSubmit}>
+                    <form
+                        id="searchForm"
+                        onSubmit={handleSubmit}>
                         <input
                             ref={inputSmallRef}
                             value={query}
                             onBlur={wrapSmallInput}
                             onChange={handleInputChange}
-                            type={'text'}
-                            name={'search'}
-                            placeholder={'Search for products'}
-                            autoComplete={'new-password'}
-                            className={`${isExpanded ? '' : 'hidden'} w-full bg-electron-input-bg placeholder:text-electron-primary-grey focus:outline- absolute top-1/2 left-0 -translate-y-1/2 rounded-xl py-1 px-3 focus:ring-1 border border-electron-input-border`}/>
-
-                        <button className="hidden" type="submit"/>
+                            type="text"
+                            name="search"
+                            placeholder="Search for products"
+                            autoComplete="new-password"
+                            className={`${isExpanded ? '' : 'hidden'} w-full bg-electron-input-bg placeholder:text-electron-primary-grey focus:outline- absolute top-1/2 left-0 -translate-y-1/2 rounded-xl py-1 px-3 focus:ring-1 border border-electron-input-border z-40`}/>
+                        <button form="searchForm" className="hidden" type="submit"/>
                     </form>
                 </div>
 

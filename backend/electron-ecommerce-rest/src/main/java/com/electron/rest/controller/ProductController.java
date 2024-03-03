@@ -7,6 +7,8 @@ import com.electron.rest.service.product.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.electron.rest.constants.EndpointsPaths.*;
 
 @RestController
@@ -44,6 +46,12 @@ public class ProductController {
             @RequestParam(defaultValue = "relevance") String sortBy,
             @RequestParam(defaultValue = "ASC") String sortDirection) {
         return ResponseEntity.ok(productService.getProductsBySearchEngine(query, pageNo, sortBy, sortDirection));
+    }
+
+    @GetMapping(GET_HOT_PRODUCTS)
+    public ResponseEntity<List<ProductResponse>> getHotProducts() {
+        return ResponseEntity.ok(productService.getHotProducts());
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.electron.rest.entity.user;
 
 import com.electron.rest.entity.account.Address;
+import com.electron.rest.entity.account.Avatar;
 import com.electron.rest.entity.account.BasketItem;
 import com.electron.rest.entity.orders.CheckoutItem;
 import com.electron.rest.entity.orders.Order;
@@ -81,6 +82,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Avatar avatar;
 
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CategoryRepository extends CrudRepository<Category, Long> {
@@ -17,5 +18,8 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
 
     @Query(value = "SELECT c.name as name FROM categories c WHERE c.id = :categoryId", nativeQuery = true)
     Optional<CategoryProjection> findCategoryNameById(@Param("categoryId") Long categoryId);
+
+    @Query(value = "SELECT c.id as id, c.name as name FROM categories c", nativeQuery = true)
+    List<CategoryProjection> getAllCategories();
 
 }

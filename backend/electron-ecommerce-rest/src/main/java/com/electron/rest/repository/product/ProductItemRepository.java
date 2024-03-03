@@ -126,5 +126,23 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
     int findProductTotalRow(@Param("query") String query);
 
 
+    @Query(value = """
+                SELECT pi.id as id,
+                 pi.name as name,
+                 pi.description as description,
+                 pi.price as price,
+                 pi.img_url as imgUrl,
+                 pi.stock_quantity as stockQuantity,
+                 pi.category_id as categoryId,
+                 pi.current_rate as currentRate,
+                 c.name as categoryName
+                 FROM product_item pi
+                 JOIN categories c ON pi.category_id = c.id
+                 JOIN products_details pd ON pi.product_details_id = pd.id
+                 WHERE pi.stock_quantity > 0
+                 ORDER BY pd.visits
+                 LIMIT 4;
+            """, nativeQuery = true)
+    List<ProductItemProjection> getHotProducts();
 
 }

@@ -12,6 +12,7 @@ import com.electron.rest.email.EmailSettingsFactory;
 import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.exception.InvalidInputException;
 import com.electron.rest.exception.RefreshTokenException;
+import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.exception.TokenException;
 import com.electron.rest.entity.user.PasswordRecoveryToken;
 import com.electron.rest.entity.user.RefreshToken;

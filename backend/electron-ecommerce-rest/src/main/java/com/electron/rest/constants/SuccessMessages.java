@@ -14,5 +14,6 @@ public class SuccessMessages {
     public static final String CHECKOUT_STARTED = "Checkout started successfully.";
     public static final String CHECKOUT_DELETED = "Checkout has been deleted.";
     public static final String SUBSCRIBED = "Thanks for subscription to newsletter.";
-    public static final String UNSUBSCRIBED = "You have ben unsubscribed from the newsletter.";
+    public static final String UNSUBSCRIBED = "You have been unsubscribed from the newsletter.";
+    public static final String AVATAR_CHANGED = "Avatar has been changed.";
 }

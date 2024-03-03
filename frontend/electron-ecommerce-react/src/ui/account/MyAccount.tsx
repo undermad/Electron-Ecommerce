@@ -1,6 +1,5 @@
 import {Container} from "../reusable/Container.tsx";
 import {Header3} from "../reusable/Header3.tsx";
-import {CiUser} from "react-icons/ci";
 import {Bold} from "../reusable/Bold.tsx";
 import LogoutEverywhereButton from "../auth/LogoutEverywhereButton.tsx";
 import {HoverScale} from "../reusable/HoverScale.tsx";
@@ -10,14 +9,25 @@ import {AccountLink} from "./AccountLink.tsx";
 import {
     ADDRESSES_NESTED_ROUTE,
     CHANGE_PASSWORD_NESTED_ROUTE, ORDER_NESTED_ROUTE,
-    PAYMENT_INFORMATION_NESTED_ROUTE
 } from "../../constants/Routes.ts";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
+import {ACCOUNT_API_PATH, GET_FULL_NAME} from "../../api/axios.ts";
+import {Avatar} from "./Avatar.tsx";
 
 export const MyAccount = () => {
     const navigate = useNavigate();
+    const [fullName, setFullName] = useState<string>('');
+    const axiosPrivate = useAxiosPrivate();
+
+
+
 
     useEffect(() => {
+        axiosPrivate.get(ACCOUNT_API_PATH + GET_FULL_NAME)
+            .then(result => {
+                setFullName(result.data);
+            })
         navigate(ORDER_NESTED_ROUTE);
     }, []);
 
@@ -30,16 +40,12 @@ export const MyAccount = () => {
 
                     <main className="p-[24px] border border-electron-product-listing-bg rounded-lg">
                         <div className="flex items-center gap-[12px] mb-[17px]">
-                            <div
-                                className={"w-[95px] h-[95px] flex justify-center items-center rounded-full border border-electron-product-listing-bg"}>
-                                <CiUser color="#2f2f2f" size={50}/>
-                            </div>
-                            <Bold weight={600} textSize={14}>Dominik Tworek</Bold>
+                            <Avatar/>
+                            <Bold weight={600} textSize={14}>{fullName}</Bold>
                         </div>
                         <nav className="flex flex-col gap-[17px] pt-[17px]">
                             <AccountLink route={ORDER_NESTED_ROUTE} displayText={"Orders"}/>
                             <AccountLink displayText="Addresses" route={ADDRESSES_NESTED_ROUTE}/>
-                            <AccountLink displayText="Payment Information" route={PAYMENT_INFORMATION_NESTED_ROUTE}/>
                             <AccountLink displayText="Change Password" route={CHANGE_PASSWORD_NESTED_ROUTE}/>
                             <HoverScale>
                                 <div className="cursor-pointer flex justify-between items-center">

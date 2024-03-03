@@ -10,6 +10,7 @@ import {FilterSection} from "./FilterSection.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
+import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
 
 
 export const PageableProductList = () => {
@@ -45,7 +46,8 @@ export const PageableProductList = () => {
                     }
                     <SortByButton fetch={fetchProducts}/>
                 </div>
-                <div className="flex flex-col gap-[24px] ">
+                <ParagraphSmall>{pageableProductList.totalElements} items</ParagraphSmall>
+                <div className="grid grid-cols-1 gap-[24px] sm:grid-cols-2 lg:flex lg:flex-col ">
                     {pageableProductList?.content.map((product, index) => (
                         <ProductListItem product={product} key={index}/>
                     ))}

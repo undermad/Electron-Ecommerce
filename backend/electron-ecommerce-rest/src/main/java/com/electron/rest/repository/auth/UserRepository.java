@@ -39,4 +39,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = "SELECT u.password FROM users u WHERE u.id = :userId", nativeQuery = true)
     Optional<String> findPasswordByUserId(@Param("userId") Long userId);
 
+    @Query(value = "SELECT u.first_name as firstName, u.last_name as lastName FROM users u WHERE u.id = :userId", nativeQuery = true)
+    Optional<UserProjection> getUserFullName(@Param("userId") Long userId);
+
 }

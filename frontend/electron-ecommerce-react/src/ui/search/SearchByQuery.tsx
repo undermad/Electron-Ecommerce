@@ -37,7 +37,6 @@ export const SearchByQuery = () => {
             setPageableProductList(productContext?.pageableProductList);
             const categoriesList = new Set<string>;
             productContext.pageableProductList.content.forEach(value => {
-
                 categoriesList.add(capitalizeFirstLetter(value.category));
             })
             setCategories(categoriesList);
@@ -71,11 +70,12 @@ export const SearchByQuery = () => {
 
 
                 <main className="flex flex-col gap-[20px]">
+                    <Header3>Search Result</Header3>
                     <div className="flex flex-col sm:flex-row justify-between gap-[17px]">
                         <CategoriesFromQuery categories={categories}/>
                         <SortByButton fetch={fetchByQuery}/>
                     </div>
-                    <div className="flex flex-col gap-[24px] ">
+                    <div className="grid grid-cols-1 gap-[24px] sm:grid-cols-2 lg:flex lg:flex-col ">
                     {pageableProductList?.content.map((product, index) => (
                             <ProductListItem product={product} key={index}/>
                         ))}

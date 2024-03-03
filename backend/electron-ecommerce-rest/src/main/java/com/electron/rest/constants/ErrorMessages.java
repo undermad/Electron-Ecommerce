@@ -27,6 +27,8 @@ public class ErrorMessages {
     public static final String ADDRESS_NOT_FOUND = "Address not found";
     public static final String POSTCODE_ERROR = "Postcode must be 6 characters.";
     public static final String CHECKOUT_NOT_FOUND = "Checkout not found.";
+    public static final String MAX_FILE_SIZE_1MB = "Maximum file size is 1mb.";
+    public static final String WRONG_FORMAT = "Invalid file type. Only JPG, PNG, and GIF are allowed.";
 
     public static final String SESSION_EXPIRED = "Session expired, please start again.";
 
@@ -34,6 +36,7 @@ public class ErrorMessages {
     public static final String LENGTH_MUST_BE_3 = "Length must be 3";
     public static final String WRONG_CREDIT_CARD_EXPIRY_DATE = "Wrong expiry date length.";
     public static final String DELIVERY_ADDRESS_NOT_FOUND = "Delivery address not found.";
+    public static final String AVATAR_NOT_FOUND = "Avatar not found.";
 
 
 }

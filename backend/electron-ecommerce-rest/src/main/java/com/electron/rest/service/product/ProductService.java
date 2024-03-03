@@ -47,6 +47,18 @@ public class ProductService {
         this.productDetailsRepository = productDetailsRepository;
     }
 
+    public List<ProductResponse> getHotProducts() {
+        List<ProductItemProjection> itemsProjections = productItemRepository.getHotProducts();
+        return itemsProjections.stream()
+                .map(productItemProjection -> {
+                    ProductResponse productResponse = productMapper.mapProductItemProjectionToProductResponse(productItemProjection);
+                    productResponse.setTotalReviews(reviewRepository.count(productResponse.getProductId()));
+                    return productResponse;
+                })
+                .collect(Collectors.toList());
+    }
+
+
     public PageableResponse<ProductResponse> getProductsBySearchEngine(String query, Integer pageNo, String sortBy, String sortDirection) {
 
         List<Object[]> products = productItemWithFilterRepository.findProductsByQuery(query, pageNo * 10, sortBy, sortDirection);
@@ -134,7 +146,7 @@ public class ProductService {
                         .stream()
                         .map(rawProduct -> {
                             ProductResponse productResponse = productMapper.mapRawObjectToProductResponse(rawProduct, category);
-                            productResponse.setTotalQuantity(reviewRepository.count(productResponse.getProductId()));
+                            productResponse.setTotalReviews(reviewRepository.count(productResponse.getProductId()));
                             return productResponse;
                         })
                         .toList())

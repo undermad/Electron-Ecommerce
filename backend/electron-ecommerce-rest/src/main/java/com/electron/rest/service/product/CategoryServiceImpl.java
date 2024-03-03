@@ -2,6 +2,7 @@ package com.electron.rest.service.product;
 
 import com.electron.rest.dto.product.CategoryResponse;
 import com.electron.rest.entity.product.Category;
+import com.electron.rest.entity.projections.CategoryProjection;
 import com.electron.rest.entity.projections.ProductItemProjection;
 import com.electron.rest.exception.ResourceNotFoundException;
 import com.electron.rest.mapper.CategoryMapper;
@@ -10,7 +11,9 @@ import com.electron.rest.repository.product.ProductItemRepository;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.electron.rest.constants.ErrorMessages.CATEGORY_NOT_FOUND;
 
@@ -39,5 +42,13 @@ public class CategoryServiceImpl implements CategoryService {
                         Math.ceil(productItemProjection.getPrice().doubleValue() / 10) * 10
                 ));
         return categoryResponse;
+    }
+
+    @Override
+    public List<CategoryResponse> getAllCategories() {
+        List<CategoryProjection> categoryProjections = categoryRepository.getAllCategories();
+        return categoryProjections.stream()
+                .map(categoryMapper::mapProjctionToCategoryResponse)
+                .collect(Collectors.toList());
     }
 }

@@ -6,4 +6,6 @@ public interface UserProjection {
     String getPassword();
     String getAccountStatus();
     Long getPasswordRecoveryTokenId();
+    String getFirstName();
+    String getLastName();
 }

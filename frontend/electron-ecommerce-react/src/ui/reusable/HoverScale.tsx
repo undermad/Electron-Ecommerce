@@ -1,3 +1,5 @@
+import {motion} from "framer-motion";
+
 type HoverScaleProps = {
     children: React.ReactNode;
 }
@@ -5,8 +7,9 @@ type HoverScaleProps = {
 export const HoverScale = ({children}: HoverScaleProps) => {
 
     return (
-        <div className={"hover:scale-105"}>
+        <motion.div
+            whileHover={{scale: 1.05}}>
             {children}
-        </div>
+        </motion.div>
     )
 }

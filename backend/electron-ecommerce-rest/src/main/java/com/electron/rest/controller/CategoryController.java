@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static com.electron.rest.constants.EndpointsPaths.API_V1_CATEGORY;
+import static com.electron.rest.constants.EndpointsPaths.GET;
 
 @RestController
 @RequestMapping(API_V1_CATEGORY)
@@ -20,6 +23,10 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @GetMapping(GET)
+    public ResponseEntity<List<CategoryResponse>> getAllCategories() {
+        return ResponseEntity.ok(categoryService.getAllCategories());
+    }
 
     @GetMapping("/{category}")
     public ResponseEntity<CategoryResponse> getCategory(@PathVariable String category) {

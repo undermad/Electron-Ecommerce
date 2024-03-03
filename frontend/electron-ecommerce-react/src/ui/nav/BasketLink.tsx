@@ -31,7 +31,7 @@ export const BasketLink = () => {
 
         <HoverScale>
             <Link to={BASKET_ROUTE}>
-                <div className={"flex gap-[8px] items-center"}>
+                <div className={"flex gap-[8px] items-center z-0"}>
                     <div className="relative">
                         <SmallSvgIcon>
                             <BasketSvg/>

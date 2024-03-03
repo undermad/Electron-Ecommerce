@@ -19,4 +19,5 @@ public interface AuthService {
     void recoverPassword(PasswordRecoveryDto passwordRecoveryDto) throws MessagingException;
     void changeForgottenPassword(String passwordRecoveryToken, ChangeForgottenPasswordDto changeForgottenPasswordDto) throws TokenException;
     void changePassword(ChangePasswordDto changePasswordDto, String jwt);
+
 }

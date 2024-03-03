@@ -10,14 +10,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
@@ -161,7 +158,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(PaymentDeclinedException.class)
-    public ResponseEntity<ErrorDto> payment(PaymentDeclinedException exception, WebRequest webRequest) {
+    public ResponseEntity<ErrorDto> paymentException(PaymentDeclinedException exception, WebRequest webRequest) {
+
+        ErrorDto errorDto = new ErrorDto(
+                exception.getMessage(),
+                new Date(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileToBigException.class)
+    public ResponseEntity<ErrorDto> fileToBigException(FileToBigException exception, WebRequest webRequest) {
+
+        ErrorDto errorDto = new ErrorDto(
+                exception.getMessage(),
+                new Date(),
+                webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(WrongFileTypeException.class)
+    public ResponseEntity<ErrorDto> wrongFileFormatException(WrongFileTypeException exception, WebRequest webRequest) {
 
         ErrorDto errorDto = new ErrorDto(
                 exception.getMessage(),
