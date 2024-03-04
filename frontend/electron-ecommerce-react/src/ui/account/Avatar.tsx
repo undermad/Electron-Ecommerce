@@ -42,6 +42,8 @@ export const Avatar = () => {
                 const imageUrl = reader.result?.toString() || "";
                 imageElement.src = imageUrl;
                 imageElement.addEventListener("load", (e) => {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
                     const {naturalWidth, naturalHeight} = e.currentTarget;
                     if (naturalWidth < MIN_DIMENTION || naturalHeight < MIN_DIMENTION) {
                         alert("Image must be at least 150x150");
@@ -61,6 +63,8 @@ export const Avatar = () => {
         fileInputRef.current?.click();
     };
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const onImageLoad = (e) => {
         const {width, height,} = e.currentTarget;
         const cropWidthInPercent = (MIN_DIMENTION / width) * 100;
@@ -84,6 +88,8 @@ export const Avatar = () => {
         setCanvasPreview(
             cropImgRef.current,
             canvas,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             convertToPixelCrop(crop, cropImgRef.current?.width, cropImgRef.current?.height)
         )
         canvas.toBlob(blob => {

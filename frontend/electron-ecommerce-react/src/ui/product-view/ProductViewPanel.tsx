@@ -1,6 +1,5 @@
 import {Bold} from "../reusable/Bold.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
-import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import {CiDeliveryTruck} from "react-icons/ci";
 import {MdStoreMallDirectory} from "react-icons/md";
 import {Product} from "../../api/dto/product/Product.ts";
