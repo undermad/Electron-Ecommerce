@@ -107,7 +107,7 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
     return (
         <div
-            className={`${currentQuantity === 0 ? 'text-electron-primary-white bg-electron-primary-dark-blue cursor-pointer' : 'text-electron-header-font'}  justify-center items-center border border-electron-header-font shadow-md h-[48px] rounded-full flex gap-[12px] lg:w-[130px]`}
+            className={`${currentQuantity === 0 ? 'text-electron-primary-white bg-electron-primary-dark-blue cursor-pointer' : 'text-electron-header-font'}  justify-center items-center border border-electron-header-font shadow-md h-[48px] rounded-full flex gap-[12px] w-full lg:w-[130px]`}
             onClick={addToBasket}>
 
             {currentQuantity > 0 ?
@@ -129,7 +129,7 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
                     </button>
                 </>
                 :
-                <div>
+                <div className="px-[35px]">
                     {product.stockQuantity > 0
                         ?
                         <button disabled={product.stockQuantity === 0}>Add</button>

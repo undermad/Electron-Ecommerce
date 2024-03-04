@@ -2,8 +2,7 @@ package com.electron.rest.entity.product;
 
 import com.electron.rest.entity.orders.OrderItem;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +11,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Entity
 @Setter
@@ -59,12 +61,17 @@ public class ProductItem {
     @Column(name = "current_rate", precision = 2, scale = 1)
     private BigDecimal overallRate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_details_id", unique = true, referencedColumnName = "id")
     private ProductDetails productDetails;
 
     @OneToMany(mappedBy = "productItem", fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
+
+    public void addVariationOption(VariationOption variationOption) {
+        this.variationOptions.add(variationOption);
+        variationOption.addProduct(this);
+    }
 
 
 }

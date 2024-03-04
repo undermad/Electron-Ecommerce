@@ -19,8 +19,8 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
 
                 <div className={"flex items-center gap-1"}>
                     <RatingStars currentRate={product.currentRate}/>
-                    {product.reviews &&
-                        <ParagraphSmall>({product.reviews.length})</ParagraphSmall>}
+                    {product.totalReviews &&
+                        <ParagraphSmall>({product.totalReviews})</ParagraphSmall>}
                 </div>
             </div>
 
@@ -44,13 +44,11 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
             </figure>
 
             <div className="flex flex-col gap-[12px]">
-                <div className="flex gap-5">
-                    <div className="w-[102px]">
+                <div className="flex flex-col gap-5 w-full">
+                    <div className="">
                         <AddToBasketButton product={product}/>
                     </div>
-                    <div className="w-[150px]">
-                        <ElectronButton>Buy Now</ElectronButton>
-                    </div>
+
                 </div>
                 <ParagraphSmall>{product.stockQuantity} Products left</ParagraphSmall>
             </div>
