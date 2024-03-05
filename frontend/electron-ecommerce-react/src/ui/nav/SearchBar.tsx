@@ -88,6 +88,7 @@ export const SearchBar = () => {
                     <form
                         id="searchForm"
                         onSubmit={handleSubmit}>
+                        <input name="abc" type="text" style={{display: 'none'}}/>
                         <input
                             ref={inputSmallRef}
                             value={query}

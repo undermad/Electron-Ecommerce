@@ -140,7 +140,7 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
                  JOIN categories c ON pi.category_id = c.id
                  JOIN products_details pd ON pi.product_details_id = pd.id
                  WHERE pi.stock_quantity > 0
-                 ORDER BY pd.visits
+                 ORDER BY pd.visits DESC
                  LIMIT 4;
             """, nativeQuery = true)
     List<ProductItemProjection> getHotProducts();
