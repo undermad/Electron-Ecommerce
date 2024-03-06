@@ -40,12 +40,12 @@ export const CategoriesBanner = () => {
     }, [categories]);
 
     return (
-            <div className="p-[10px] flex gap-[19px] justify-center border border-electron-grey rounded-lg w-full">
+            <div className="p-[10px] grid grid-cols-2 sm:flex gap-[19px] text-center justify-center border border-electron-grey rounded-lg w-full">
 
                 {cat.map((item, index) => (
                     <div
                         onClick={() => handleClick(item)}
-                        className="bg-electron-very-light-blue hover:bg-electron-bright-blue font-[500] text-[14px] sm:text-[16px] p-[10px] md:p-[16px] border border-electron-grey rounded-lg cursor-pointer"
+                        className=" bg-electron-very-light-blue hover:bg-electron-bright-blue font-[500] text-[14px] sm:text-[16px] p-[10px] md:p-[16px] border border-electron-grey rounded-lg cursor-pointer"
                         key={index}>
                         {item}
                     </div>

@@ -19,7 +19,8 @@ public interface ProductItemRepository extends CrudRepository<ProductItem, Long>
             WHERE (category_id, price)
                       IN (SELECT category_id, MAX(price)
                           FROM product_item
-                          WHERE category_id = :categoryId);""", nativeQuery = true)
+                          WHERE category_id = :categoryId)
+                          LIMIT 1;""", nativeQuery = true)
     Optional<ProductItemProjection> findMostExpensiveProductByCategoryId(@Param("categoryId") Long categoryId);
 
 
