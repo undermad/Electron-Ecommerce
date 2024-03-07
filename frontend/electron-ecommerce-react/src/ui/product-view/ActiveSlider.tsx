@@ -37,7 +37,8 @@ export const ActiveSlider = ({images, productDescription, callback}: ActiveSlide
                             <div className="py-3">
                                 <div onClick={() => callback(index)}
                                      className={"cursor-pointer border border-electron-product-listing-bg rounded-md p-3"}>
-                                    <img src={value} alt={productDescription}/>
+
+                                        <img src={value} alt={productDescription}/>
                                 </div>
                             </div>
                         </SwiperSlide>

@@ -1,86 +1,94 @@
-# INSERT INTO electron_ecommerce.products_details (products_details.id,
-#                                                  electron_ecommerce.products_details.product_information,
-#                                                  electron_ecommerce.products_details.sku,
-#                                                  electron_ecommerce.products_details.visits)
-# VALUES (9,
-#         'he new king of 1440p gaming is here. The RTX 4070 Ti SUPER is built on the Ada Lovelace architecture and it packs more power than the 3070 Ti',
-#         'GGFRX4070TS168', 492),
-#        (10, 'There are dedicated cores just for Ray Tracing, making sure your graphics are super realistic.',
-#         'GGFRX47TS1611', 310),
-#        (11,
-#         'Got to get some work done? You''ll breeze through demanding 3D renders faster than ever before, with NVIDIA Studio for fine-tuning.',
-#         'GARX47TS1611', 250),
-#        (12,
-#         'There''s enough power to stream pretty much anything in high resolution and framerates. And the AI helps by enhancing your voice and video to professional levels.',
-#         'GGFRX47TS1612', '310');
-#
-# INSERT INTO electron_ecommerce.products_images (electron_ecommerce.products_images.product_details_id,
-#                                                 electron_ecommerce.products_images.image_url)
-# VALUES (9, 'https://media.currys.biz/i/currysprod/10260360?$l-large$&fmt=auto'),
-#        (9, 'https://media.currys.biz/i/currysprod/10260360_001?$l-large$&fmt=auto'),
-#        (10, 'https://media.currys.biz/i/currysprod/10260357?$l-large$&fmt=auto'),
-#        (10, 'https://media.currys.biz/i/currysprod/10260357_001?$l-large$&fmt=auto'),
-#        (10, 'https://media.currys.biz/i/currysprod/10260357_002?$l-large$&fmt=auto'),
-#        (10, 'https://media.currys.biz/i/currysprod/10260357_003?$l-large$&fmt=auto'),
-#        (10, 'https://media.currys.biz/i/currysprod/10260357_004?$l-large$&fmt=auto'),
-#        (11, 'https://media.currys.biz/i/currysprod/10260356?$l-large$&fmt=auto'),
-#        (11, 'https://media.currys.biz/i/currysprod/10260356_001?$l-large$&fmt=auto'),
-#        (11, 'https://media.currys.biz/i/currysprod/10260356_002?$l-large$&fmt=auto'),
-#        (11, 'https://media.currys.biz/i/currysprod/10260356_003?$l-large$&fmt=auto'),
-#        (11, 'https://media.currys.biz/i/currysprod/10260356_004?$l-large$&fmt=auto'),
-#        (12, 'https://media.currys.biz/i/currysprod/10260359?$l-large$&fmt=auto'),
-#        (12, 'https://media.currys.biz/i/currysprod/10260359_001?$l-large$&fmt=auto');
-#
-#
-#
-# INSERT INTO electron_ecommerce.product_item (electron_ecommerce.product_item.id,
-#                                              electron_ecommerce.product_item.current_rate,
-#                                              electron_ecommerce.product_item.price,
-#                                              electron_ecommerce.product_item.category_id,
-#                                              electron_ecommerce.product_item.product_details_id,
-#                                              electron_ecommerce.product_item.description,
-#                                              electron_ecommerce.product_item.img_url,
-#                                              electron_ecommerce.product_item.name,
-#                                              electron_ecommerce.product_item.stock_quantity)
-# VALUES (9, 4.8, 799.00, 2, 9,
-#         'The new king of 1440p gaming is here. The RTX 4070 Ti SUPER is built on the Ada Lovelace architecture and it packs more power than the 3070 Ti',
-#         'https://media.currys.biz/i/currysprod/10260360?$g-small$&fmt=auto',
-#         'GIGABYTE GeForce RTX 4070 Ti SUPER 16 GB WINDFORCE OC Graphics Card',
-#         100),
-#     (10, 5, 849.00, 2, 10,
-#      'Got to get some work done? You''ll breeze through demanding 3D renders faster than ever before',
-#      'https://media.currys.biz/i/currysprod/10260357?$g-small$&fmt=auto', 'GIGABYTE GeForce RTX 4070 Ti SUPER 16 GB AERO OC Graphics Card',
-#      100),
-#     (11, 4.5, 879.00, 2,
-#      11,'The DLSS 3 means next generation AI enhancing the performance to new heights.',
-#      'https://media.currys.biz/i/currysprod/10260356?$g-small$&fmt=auto', 'GIGABYTE AORUS GeForce RTX 4070 Ti SUPER 16 GB MASTER Graphics Card',
-#      100),
-#     (12, 4.3,879.00, 2,
-#      '12', 'The WINDFORCE cooling system has an air passthrough screen, three fans and a whole lot of heatsinks to keep temperature in check',
-#      'https://media.currys.biz/i/currysprod/10260359?$g-small$&fmt=auto', 'GIGABYTE GeForce RTX 4070 Ti SUPER 16 GB EAGLE OC Graphics Card',
-#      100);
-#
-#
-# INSERT INTO electron_ecommerce.product_configuration (electron_ecommerce.product_configuration.product_item_id,
-#                                                       electron_ecommerce.product_configuration.variation_option_id)
-# VALUES (9, 10),
-#        (9, 14),
-#        (9, 17),
-#        (9, 20),
-#
-#        (10, 10),
-#        (10, 14),
-#        (10, 17),
-#        (10, 20),
-#
-#        (11, 10),
-#        (11, 14),
-#        (11, 17),
-#        (11, 20),
-#
-#        (12, 10),
-#        (12, 14),
-#        (12, 17),
-#        (12, 20);
-#
-#
+INSERT INTO electron_ecommerce.products_details (products_details.id,
+                                                 electron_ecommerce.products_details.product_information,
+                                                 electron_ecommerce.products_details.sku,
+                                                 electron_ecommerce.products_details.visits)
+VALUES (18, 'The LIGHTSPEED wireless is so responsive you won''t even notice you''re not plugged in with a wire',
+        'k111111', 153),
+       (19, 'The LIGHTSPEED wireless is so responsive you won''t even notice you''re not plugged in with a wire',
+        'K2222222', 452),
+       (20, 'The LIGHTSPEED wireless is so responsive you won''t even notice you''re not plugged in with a wire',
+        'k987987978', 143),
+       (21,
+        'Razer Purple switches feel lighter than traditional mechanical switches but still deliver that satisfying clicky keystroke sound',
+        'K123ca1', 142),
+       (22, 'Its multi-function digital dial and 4 media keys put control at your fingertips', 'KR12343221', 111);
+
+
+INSERT INTO electron_ecommerce.products_images (electron_ecommerce.products_images.product_details_id,
+                                                electron_ecommerce.products_images.image_url)
+VALUES (18, 'https://media.currys.biz/i/currysprod/10242033?$l-large$&fmt=auto'),
+       (18, 'https://media.currys.biz/i/currysprod/10242033_001?$l-large$&fmt=auto'),
+       (18, 'https://media.currys.biz/i/currysprod/10242033_005?$l-large$&fmt=auto'),
+       (18, 'https://media.currys.biz/i/currysprod/10242033_007?$l-large$&fmt=auto'),
+       (19, 'https://media.currys.biz/i/currysprod/M10254616_black?$l-large$&fmt=auto'),
+       (19, 'https://media.currys.biz/i/currysprod/M10254616_black_001?$l-large$&fmt=auto'),
+       (19, 'https://media.currys.biz/i/currysprod/M10254616_black_002?$l-large$&fmt=auto'),
+       (19, 'https://media.currys.biz/i/currysprod/M10254616_black_004?$l-large$&fmt=auto'),
+       (20, 'https://media.currys.biz/i/currysprod/M10254616_white?$l-large$&fmt=auto'),
+       (20, 'https://media.currys.biz/i/currysprod/M10254616_white_001?$l-large$&fmt=auto'),
+       (20, 'https://media.currys.biz/i/currysprod/M10254616_white_003?$l-large$&fmt=auto'),
+       (20, 'https://media.currys.biz/i/currysprod/M10254616_white_004?$l-large$&fmt=auto'),
+       (21, 'https://media.currys.biz/i/currysprod/10232246_001?$l-large$&fmt=auto'),
+       (21, 'https://media.currys.biz/i/currysprod/10232246_002?$l-large$&fmt=auto'),
+       (21, 'https://media.currys.biz/i/currysprod/10232246_003?$l-large$&fmt=auto'),
+       (21, 'https://media.currys.biz/i/currysprod/10232246_004?$l-large$&fmt=auto'),
+       (22, 'https://media.currys.biz/i/currysprod/10252844_001?$l-large$&fmt=auto'),
+       (22, 'https://media.currys.biz/i/currysprod/10252844_004?$l-large$&fmt=auto'),
+       (22, 'https://media.currys.biz/i/currysprod/10252844_005?$l-large$&fmt=auto'),
+       (22, 'https://media.currys.biz/i/currysprod/10252844_006?$l-large$&fmt=auto');
+
+
+
+INSERT INTO electron_ecommerce.product_item (electron_ecommerce.product_item.id,
+                                             electron_ecommerce.product_item.current_rate,
+                                             electron_ecommerce.product_item.price,
+                                             electron_ecommerce.product_item.category_id,
+                                             electron_ecommerce.product_item.product_details_id,
+                                             electron_ecommerce.product_item.description,
+                                             electron_ecommerce.product_item.img_url,
+                                             electron_ecommerce.product_item.name,
+                                             electron_ecommerce.product_item.stock_quantity)
+VALUES (18, 4.2, 179.00, 4, 18,
+        'The LIGHTSPEED wireless is so responsive you won''t even notice you''re not plugged in with a wire',
+        'https://media.currys.biz/i/currysprod/10242033?$g-small$&fmt=auto',
+        'LOGITECH G715 Wireless Mechanical Gaming Keyboard - White', 1000),
+       (19, 5, 199.00, 4, 19,
+        'The G PRO X was designed in collaboration with Esports pros, to help you show off your gaming skills. ',
+        'https://media.currys.biz/i/currysprod/M10254616_black?$g-small$&fmt=auto',
+        'LOGITECH G Pro X TKL LIGHTSPEED Wireless Gaming Keyboard - Black', 1000),
+       (20, 4.9, 199.00, 4, 20,
+        'The LIGHTSPEED wireless is so responsive you won''t even notice you''re not plugged in with a wire',
+        'https://media.currys.biz/i/currysprod/M10254616_white?$g-small$&fmt=auto',
+        'LOGITECH G Pro X TKL LIGHTSPEED Wireless Gaming Keyboard - White', 1000),
+       (21, 4.7, 159.00, 4,
+        21,
+        'Razer Purple switches feel lighter than traditional mechanical switches but still deliver that satisfying clicky keystroke sound',
+        'https://media.currys.biz/i/currysprod/10232246?$g-small$&fmt=auto',
+        'RAZER Huntsman V2 Mechanical Gaming Keyboard - Purple Switches', 1000),
+       (22, 4.7, 149.00, 4, 22,
+        'Its multi-function digital dial and 4 media keys put control at your fingertips',
+        'https://media.currys.biz/i/currysprod/10252844?$g-small$&fmt=auto',
+        'RAZER Huntsman V2 RGB Mechanical Gaming Keyboard - Clicky Purple Switches', 1000);
+
+INSERT INTO electron_ecommerce.product_configuration (electron_ecommerce.product_configuration.product_item_id,
+                                                      electron_ecommerce.product_configuration.variation_option_id)
+VALUES (18, 38),
+       (18, 41),
+       (18, 46),
+
+       (19, 38),
+       (19, 41),
+       (19, 46),
+
+       (20, 38),
+       (20, 41),
+       (20, 46),
+
+       (21, 40),
+       (21, 42),
+       (21, 43),
+
+       (22, 40),
+       (22, 42),
+       (22, 43);
+
