@@ -26,6 +26,7 @@ export const CATEGORY_API_PATH = "/category";
 export const PRODUCT_API_PATH = "/product"
 export const GET_BY_QUERY = "/get_by_query";
 export const HOT_PRODUCTS_API_PATH = "/hot";
+export const HOT_CATEGORY_PRODUCTS_API_PATH = "hot_category";
 
 export const PRODUCT_CATEGORY_API_PATH = "/product";
 

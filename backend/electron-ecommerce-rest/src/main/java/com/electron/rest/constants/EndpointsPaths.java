@@ -26,6 +26,7 @@ public class EndpointsPaths {
     public static final String API_V1_PRODUCT = "/api/v1/product";
     public static final String GET_BY_QUERY = "get_by_query";
     public static final String GET_HOT_PRODUCTS = "/hot";
+    public static final String GET_HOT_CATEGORY_PRODUCTS = "/hot_category";
 
     public static final String API_V1_CHECKOUT = "/api/v1/checkout";
     public static final String BEGIN_CHECKOUT = "/begin_checkout";

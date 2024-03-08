@@ -53,4 +53,10 @@ public class ProductController {
         return ResponseEntity.ok(productService.getHotProducts());
     }
 
+
+    @GetMapping(GET_HOT_CATEGORY_PRODUCTS)
+    public ResponseEntity<List<ProductResponse>> getHotProductsByCategory(@RequestParam String category) {
+        return ResponseEntity.ok((productService.getHotProducts(category)));
+    }
+
 }

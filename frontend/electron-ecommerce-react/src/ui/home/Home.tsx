@@ -2,6 +2,9 @@ import {Hero} from "./Hero.tsx";
 import {Container} from "../reusable/Container.tsx";
 import {HotProducts} from "./HotProducts.tsx";
 import {CategoriesBanner} from "./CategoriesBanner.tsx";
+import {HotMemory} from "./HotMemory.tsx";
+import {CategoryHero} from "./CategoryHero.tsx";
+import {HotGraphicCard} from "./HotGraphicCard.tsx";
 
 export const Home = () => {
 
@@ -14,6 +17,12 @@ export const Home = () => {
                 <CategoriesBanner/>
 
                 <HotProducts/>
+
+                <HotMemory/>
+                <HotGraphicCard/>
+
+
+
 
             </main>
         </Container>

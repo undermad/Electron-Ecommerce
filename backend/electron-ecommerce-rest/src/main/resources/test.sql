@@ -11,7 +11,9 @@ VALUES (18, 'The LIGHTSPEED wireless is so responsive you won''t even notice you
        (21,
         'Razer Purple switches feel lighter than traditional mechanical switches but still deliver that satisfying clicky keystroke sound',
         'K123ca1', 142),
-       (22, 'Its multi-function digital dial and 4 media keys put control at your fingertips', 'KR12343221', 111);
+       (22, 'Its multi-function digital dial and 4 media keys put control at your fingertips', 'KR12343221', 111),
+       (23, 'Every single key is programmable, so tricky spells are merely a shortcut away', 'Ck70CR21', 124),
+       (24, 'Cherry MX Red mechanical keyswitches deliver an immersive gaming experience', 'CK63R24', 132);
 
 
 INSERT INTO electron_ecommerce.products_images (electron_ecommerce.products_images.product_details_id,
@@ -35,7 +37,16 @@ VALUES (18, 'https://media.currys.biz/i/currysprod/10242033?$l-large$&fmt=auto')
        (22, 'https://media.currys.biz/i/currysprod/10252844_001?$l-large$&fmt=auto'),
        (22, 'https://media.currys.biz/i/currysprod/10252844_004?$l-large$&fmt=auto'),
        (22, 'https://media.currys.biz/i/currysprod/10252844_005?$l-large$&fmt=auto'),
-       (22, 'https://media.currys.biz/i/currysprod/10252844_006?$l-large$&fmt=auto');
+       (22, 'https://media.currys.biz/i/currysprod/10252844_006?$l-large$&fmt=auto'),
+       (23, 'https://media.currys.biz/i/currysprod/10257421_001?$l-large$&fmt=auto'),
+       (23, 'https://media.currys.biz/i/currysprod/10257421_002?$l-large$&fmt=auto'),
+       (23, 'https://media.currys.biz/i/currysprod/10257421_003?$l-large$&fmt=auto'),
+       (23, 'https://media.currys.biz/i/currysprod/10257421_004?$l-large$&fmt=auto'),
+       (23, 'https://media.currys.biz/i/currysprod/10257421_007?$l-large$&fmt=auto'),
+       (24, 'https://media.currys.biz/i/currysprod/10168203_001?$l-large$&fmt=auto'),
+       (24, 'https://media.currys.biz/i/currysprod/10168203_002?$l-large$&fmt=auto'),
+       (24, 'https://media.currys.biz/i/currysprod/10168203_003?$l-large$&fmt=auto'),
+       (24, 'https://media.currys.biz/i/currysprod/10168203_004?$l-large$&fmt=auto');
 
 
 
@@ -68,7 +79,14 @@ VALUES (18, 4.2, 179.00, 4, 18,
        (22, 4.7, 149.00, 4, 22,
         'Its multi-function digital dial and 4 media keys put control at your fingertips',
         'https://media.currys.biz/i/currysprod/10252844?$g-small$&fmt=auto',
-        'RAZER Huntsman V2 RGB Mechanical Gaming Keyboard - Clicky Purple Switches', 1000);
+        'RAZER Huntsman V2 RGB Mechanical Gaming Keyboard - Clicky Purple Switches', 1000),
+       (23, 4.9, 74.99, 4, 23,
+        'Every single key is programmable, so tricky spells are merely a shortcut away',
+        'https://media.currys.biz/i/currysprod/10257421?$g-small$&fmt=auto',
+        'CORSAIR K70 CORE RGB Mechanical Gaming Keyboard - Black', 1000),
+       (24, 4.6, 84.99, 4, 24, 'Cherry MX Red mechanical keyswitches deliver an immersive gaming experience',
+        'https://media.currys.biz/i/currysprod/10168203?$g-small$&fmt=auto',
+        'CORSAIR K63 Compact Mechanical Gaming Keyboard', 1000);
 
 INSERT INTO electron_ecommerce.product_configuration (electron_ecommerce.product_configuration.product_item_id,
                                                       electron_ecommerce.product_configuration.variation_option_id)
@@ -90,5 +108,11 @@ VALUES (18, 38),
 
        (22, 40),
        (22, 42),
-       (22, 43);
+       (22, 43),
+
+       (23, 39),
+       (23, 44),
+
+       (24, 39),
+       (24, 44);
 

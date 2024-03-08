@@ -47,6 +47,17 @@ public class ProductService {
         this.productDetailsRepository = productDetailsRepository;
     }
 
+    public List<ProductResponse> getHotProducts(String category) {
+        List<ProductItemProjection> itemsProjections = productItemRepository.getHotMemory(category);
+        return itemsProjections.stream()
+                .map(productItemProjection -> {
+                    ProductResponse productResponse = productMapper.mapProductItemProjectionToProductResponse(productItemProjection);
+                    productResponse.setTotalReviews(reviewRepository.count(productResponse.getProductId()));
+                    return productResponse;
+                })
+                .collect(Collectors.toList());
+    }
+
     public List<ProductResponse> getHotProducts() {
         List<ProductItemProjection> itemsProjections = productItemRepository.getHotProducts();
         return itemsProjections.stream()
@@ -157,6 +168,8 @@ public class ProductService {
                 .totalPages((totalElements / pageSize) + 1)
                 .build();
     }
+
+
 
 
 }
