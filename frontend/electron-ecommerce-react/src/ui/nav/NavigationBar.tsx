@@ -13,7 +13,7 @@ export const NavigationBar = () => {
 
     return (
         <nav
-            className={"relative text-[14px] leading-6 font-light flex items-center w-full max-w-[1440px] gap-[24px] text-electron-primary-white bg-electron-primary-dark-blue px-responsive-electron py-4 sm:py-2 md:py-3 lg:py-4 z-40"}>
+            className={"w-full max-w-[1440px] relative text-[14px] leading-6 font-light flex justify-center items-center gap-[24px] text-electron-primary-white bg-electron-primary-dark-blue px-responsive-electron py-4 sm:py-2 md:py-3 lg:py-4 z-40"}>
 
             {width >= Breakpoints.LARGE ?
                 // DESKTOP

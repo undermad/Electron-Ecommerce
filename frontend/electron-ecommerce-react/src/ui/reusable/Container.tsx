@@ -7,7 +7,7 @@ type ContainerProps = {
 export const Container = ({children}: ContainerProps) => {
 
     return (
-        <section className={"max-w-[1440px] w-full px-[30px] sm:px-[40px] lg:px-[100px]"}>
+        <section className={"max-w-[1440px] w-full px-[30px] sm:px-[40px] lg:px-[100px] mt-[24px]"}>
             {children}
         </section>
     )

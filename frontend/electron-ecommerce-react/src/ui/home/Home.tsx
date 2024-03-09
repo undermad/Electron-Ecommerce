@@ -9,21 +9,21 @@ export const Home = () => {
 
 
     return (
-        <Container>
-            <main className="flex flex-col gap-[42px]">
+        <>
+            <Hero/>
+            <Container>
+                <main className="flex flex-col gap-[42px]">
 
-                <Hero/>
-                <CategoriesBanner/>
+                    <CategoriesBanner/>
 
-                <HotProducts/>
+                    <HotProducts/>
 
-                <HotMemory/>
-                <HotGraphicCard/>
-
+                    <HotMemory/>
+                    <HotGraphicCard/>
 
 
-
-            </main>
-        </Container>
+                </main>
+            </Container>
+        </>
     )
 }
