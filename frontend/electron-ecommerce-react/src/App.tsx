@@ -41,7 +41,6 @@ import {Login} from "./ui/auth/Login.tsx";
 import {Register} from "./ui/auth/Register.tsx";
 import {ProductView} from "./ui/product-view/ProductView.tsx";
 import {Checkout} from "./ui/basket/Checkout.tsx";
-import {PaymentInformation} from "./ui/account/PaymentInformation.tsx";
 import {AccountAddresses} from "./ui/account/AccountAddresses.tsx";
 import {ChangePassword} from "./ui/account/ChangePassword.tsx";
 import {AddAddressForm} from "./ui/account/AddAddressForm.tsx";

@@ -8,6 +8,14 @@
         @apply px-[30px] sm:px-[40px] lg:px-[100px];
     }
 
+    .swiper-pagination-bullet {
+        @apply bg-electron-error w-1 h-1 mx-1 rounded-full; /* Example styles */
+    }
+
+    .swiper-pagination-bullet-active {
+        @apply bg-electron-astral-blue; /* Example active bullet style */
+    }
+
 }
 
 .next-element-swiper {
@@ -35,3 +43,4 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #202855;
 }
+
