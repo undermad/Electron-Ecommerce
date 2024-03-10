@@ -142,7 +142,7 @@ export const Avatar = () => {
 
             {imageSource &&
                 <div
-                    className="flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-electron-light-grey rounded-xl">
+                    className="flex flex-col bg-black items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-electron-light-grey rounded-xl z-50">
                     <ReactCrop
                         onChange={(percentageCrop) => setCrop(percentageCrop)}
                         crop={crop}

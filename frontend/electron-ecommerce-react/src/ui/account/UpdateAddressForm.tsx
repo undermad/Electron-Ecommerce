@@ -9,6 +9,7 @@ import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {ADDRESS_API_PATH, GET, UPDATE} from "../../api/axios.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import {ACCOUNT_ROUTE, ADDRESSES_NESTED_ROUTE} from "../../constants/Routes.ts";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 const validationErrorInit: AddressValidationError = {
     ...defaultAddress,
@@ -23,6 +24,8 @@ export const UpdateAddressForm = () => {
     const navigate = useNavigate();
     const param = useParams();
     const addressId = param.addressId;
+
+    useScrollToTop();
 
     const axiosPrivate = useAxiosPrivate();
 

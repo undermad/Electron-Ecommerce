@@ -1,5 +1,8 @@
 package com.electron.rest.utility;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +19,8 @@ public class MainMethod {
         SecretKey key = keyGenerator.generateKey();
         System.out.println(key);
 
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        System.out.println(passwordEncoder.encode("user123"));
 
 
     }

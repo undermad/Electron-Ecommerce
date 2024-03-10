@@ -1,8 +1,10 @@
 import {useNavigate} from "react-router-dom";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const Unauthorized = () => {
 
     const navigation = useNavigate();
+    useScrollToTop();
 
     const goBack = () => navigation(-1);
 

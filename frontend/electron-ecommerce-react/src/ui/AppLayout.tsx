@@ -12,13 +12,14 @@ export const AppLayout = () => {
 
     return (
         <>
+            {themeContext?.fadeAwayBackground ?
+                <div className="fixed bg-black bg-opacity-75 w-screen h-screen z-20"/>
+                : ''}
             <div className="flex justify-center w-full bg-electron-primary-dark-blue">
                 <NavigationBar/>
             </div>
             <div className={"font-inter flex items-center flex-col w-full gap-[24px]"}>
-                {themeContext?.fadeAwayBackground ?
-                    <div className="fixed bg-black bg-opacity-75 w-full h-full"/>
-                    : ''}
+
 
                 <Outlet/>
                 <NewsletterBanner/>

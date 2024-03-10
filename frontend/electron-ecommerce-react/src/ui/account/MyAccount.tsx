@@ -14,6 +14,7 @@ import {useEffect, useState} from "react";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {ACCOUNT_API_PATH, GET_FULL_NAME} from "../../api/axios.ts";
 import {Avatar} from "./Avatar.tsx";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const MyAccount = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ export const MyAccount = () => {
     const axiosPrivate = useAxiosPrivate();
 
 
-
+    useScrollToTop();
 
     useEffect(() => {
         axiosPrivate.get(ACCOUNT_API_PATH + GET_FULL_NAME)

@@ -88,11 +88,6 @@ function App() {
                             <Route path={UPDATE_ADDRESS_NESTED_ROUTE + "/:addressId"} element={<UpdateAddressForm />}/>
                             <Route path={DELETE_ADDRESS_NESTED_ROUTE + "/:addressId"} element={<DeleteAddress/>}/>
                         </Route>
-
-
-
-
-
                         <Route path={LOGOUT_ROUTE} element={<Logout/>}/>
                     </Route>
 

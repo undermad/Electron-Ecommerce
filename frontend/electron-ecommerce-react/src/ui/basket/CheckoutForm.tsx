@@ -149,10 +149,10 @@ export const CheckoutForm = () => {
 
                 </MultiInputHolder>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row gap-5 items-start justify-between">
 
                     <Header3>Delivery Address</Header3>
-                    <div className="w-1/2" onClick={handleChangeAddressButton}>
+                    <div className="w-full sm:w-1/2" onClick={handleChangeAddressButton}>
                         <ElectronButton loading={checkoutContext.loading}>Your addresses</ElectronButton>
                     </div>
                 </div>

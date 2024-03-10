@@ -10,6 +10,7 @@ import {ProductViewReviews} from "./ProductViewReviews.tsx";
 import {ProductViewTittle} from "./ProductViewTittle.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const ProductView = () => {
 
@@ -18,6 +19,8 @@ export const ProductView = () => {
     const [product, setProduct] = useState<Product>(defaultProduct);
     const [loading, setLoading] = useState<boolean>(false);
     const viewport = useViewport();
+
+    useScrollToTop();
 
 
     useEffect(() => {

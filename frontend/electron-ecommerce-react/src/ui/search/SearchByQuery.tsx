@@ -13,6 +13,7 @@ import {CategoriesFilterList} from "./CategoriesFilterList.tsx";
 import {Header3} from "../reusable/Header3.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
 import {PageController} from "./PageController.tsx";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 
 export const SearchByQuery = () => {
@@ -44,6 +45,8 @@ export const SearchByQuery = () => {
             setCategories(categoriesList);
         }
     }, [productContext?.pageableProductList]);
+
+    useScrollToTop();
 
     return (
         <Container>

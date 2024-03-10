@@ -6,12 +6,15 @@ import {AddressEl} from "../account/AddressEl.tsx";
 import {CheckoutContext} from "../../context/CheckoutContext.tsx";
 import {useNavigate} from "react-router-dom";
 import {CHECKOUT_ORDER_INFO, CHECKOUT_ROUTE} from "../../constants/Routes.ts";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const AddressPicker = () => {
     const axiosPrivate = useAxiosPrivate();
     const [addresses, setAddresses] = useState<Address[]>([]);
     const checkoutContext = useContext(CheckoutContext);
     const navigate = useNavigate();
+
+    useScrollToTop();
 
     useEffect(() => {
         axiosPrivate.get(ADDRESS_API_PATH + GET_ALL)

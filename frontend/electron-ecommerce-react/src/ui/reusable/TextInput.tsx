@@ -13,7 +13,7 @@ export const TextInput = ({callback, inputRef, ...props}: InputProps) => {
 
     return (
         <input
-            className={"focus:ring-1 border rounded-[8px] border-electron-input-grey px-[14px] py-[10px] shadow-md focus:outline-0 placeholder:text-electron-placeholder-grey"}
+            className={"focus:ring-1  border rounded-[8px] border-electron-input-grey px-[14px] py-[10px] shadow-md focus:outline-0 placeholder:text-electron-placeholder-grey"}
             onChange={handleChange}
             ref={inputRef}
             {...props}

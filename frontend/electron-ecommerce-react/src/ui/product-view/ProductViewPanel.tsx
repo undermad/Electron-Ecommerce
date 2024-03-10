@@ -30,7 +30,7 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
             <figure>
                 <div className="flex flex-col gap-[16px]">
                     <ParagraphSmall>Features</ParagraphSmall>
-                    <div className={"flex gap-1"}>
+                    <div className={"grid grid-cols-2 sm:grid-cols-3 md:flex gap-1"}>
 
                         {product.features.map((feature, index) => (
                             <p key={index}
@@ -44,7 +44,7 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
 
             <div className="flex flex-col gap-[12px]">
                 <div className="flex flex-col gap-5 w-full">
-                    <div className="">
+                    <div className="w-1/2">
                         <AddToBasketButton product={product}/>
                     </div>
 

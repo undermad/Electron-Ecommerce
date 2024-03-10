@@ -6,11 +6,14 @@ import {Bold} from "../reusable/Bold.tsx";
 import {OrderResponse} from "../../api/dto/order/OrderResponse.ts";
 import {OrderItemEl} from "./OrderItemEl.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const AccountOrders = () => {
 
     const [orders, setOrders] = useState<OrderResponse[]>([]);
     const axiosPrivate = useAxiosPrivate();
+
+    useScrollToTop();
 
     useEffect(() => {
         axiosPrivate.get(ORDER_API_PATH + GET_ALL)

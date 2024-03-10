@@ -91,13 +91,6 @@ export const Hero = () => {
         },
     ];
 
-    const images = ['https://electron-img-01.s3.eu-west-2.amazonaws.com/extpc2.jpg',
-        'https://electron-img-01.s3.eu-west-2.amazonaws.com/extpc1.jpg',
-        'https://electron-img-01.s3.eu-west-2.amazonaws.com/extkeyboard.jpg']
-
-    const mobileImages = ['https://electron-img-01.s3.eu-west-2.amazonaws.com/keyboardMob.webp',
-        'https://electron-img-01.s3.eu-west-2.amazonaws.com/memorymobile.webp',
-        'https://electron-img-01.s3.eu-west-2.amazonaws.com/keymobile.webp']
 
     const [img, setImg] = useState<HeroSlide[]>([]);
 

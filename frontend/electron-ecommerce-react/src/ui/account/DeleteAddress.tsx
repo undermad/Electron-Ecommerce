@@ -5,6 +5,7 @@ import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {ADDRESS_API_PATH, DELETE} from "../../api/axios.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {OPERATION_FAILED} from "../../constants/Messages.ts";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const DeleteAddress = () => {
 
@@ -13,6 +14,8 @@ export const DeleteAddress = () => {
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
     const messageScreen = useMessageScreen();
+
+    useScrollToTop();
 
     useEffect(() => {
         axiosPrivate.delete(ADDRESS_API_PATH + DELETE + "/" + addressId)

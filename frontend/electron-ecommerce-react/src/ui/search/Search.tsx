@@ -10,6 +10,7 @@ import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {Filter} from "./Filter.tsx";
 import {Header3} from "../reusable/Header3.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 
 export const Search = () => {
@@ -18,6 +19,8 @@ export const Search = () => {
     const productContext = useProductList();
     const messageScreen = useMessageScreen();
     const screenWidth = useViewport();
+
+    useScrollToTop();
 
     useEffect(() => {
         if (productContext?.categoryResponse.name !== category) {

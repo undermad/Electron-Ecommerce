@@ -4,9 +4,12 @@ import {ElectronLogoHero} from "./ElectronLogoHero.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {Header2ParagraphSmall} from "../reusable/Header2ParagraphSmall.tsx";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const ChangeForgottenPassword = () => {
     const viewport = useViewport();
+
+    useScrollToTop();
 
 
     return (

@@ -6,11 +6,14 @@ import {BeginCheckout} from "./BeginCheckout.tsx";
 import { useEffect, useState} from "react";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {DELETE, CHECKOUT_API_PATH} from "../../api/axios.ts";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const Basket = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const axiosPrivate = useAxiosPrivate();
+
+    useScrollToTop();
 
 
     useEffect(() => {
@@ -51,7 +54,7 @@ export const Basket = () => {
                     </div>
                 </div>
             </div>
-            <div className="fixed left-0 bg-electron-primary-white bottom-0 w-full lg:hidden">
+            <div className="fixed left-0 bg-electron-primary-white bottom-0 w-full lg:hidden z-50">
                 <BasketTotal/>
                 <div className="mt-[17px]">
 

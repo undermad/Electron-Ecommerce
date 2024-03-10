@@ -47,7 +47,7 @@ export const MobileCard = ({product, date}: ProductListItemProps) => {
                 <ParagraphSmall>Free delivery {date}</ParagraphSmall>
             </div>
             <div className="flex items-start w-full">
-                <div className="w-full">
+                <div className="w-1/2">
                     <AddToBasketButton product={product}/>
                 </div>
             </div>

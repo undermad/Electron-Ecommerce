@@ -4,9 +4,13 @@ import {HotProducts} from "./HotProducts.tsx";
 import {CategoriesBanner} from "./CategoriesBanner.tsx";
 import {HotMemory} from "./HotMemory.tsx";
 import {HotGraphicCard} from "./HotGraphicCard.tsx";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
+import {useEffect} from "react";
 
 
 export const Home = () => {
+
+    useScrollToTop();
 
     return (
         <>

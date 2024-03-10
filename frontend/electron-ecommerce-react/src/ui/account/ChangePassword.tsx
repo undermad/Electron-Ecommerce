@@ -15,6 +15,7 @@ import {
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {AUTH_API_PATH, CHANGE_PASSWORD_API_PATH} from "../../api/axios.ts";
 import {Header3} from "../reusable/Header3.tsx";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 
 export const ChangePassword = () => {
@@ -24,6 +25,8 @@ export const ChangePassword = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [newPasswordData, setNewPasswordData] = useState<NewPasswordRequest>(newPasswordRequestDefault);
     const [responseError, setResponseError] = useState<NewPasswordRequestError>(newPasswordRequestErrorDefault);
+
+    useScrollToTop();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;

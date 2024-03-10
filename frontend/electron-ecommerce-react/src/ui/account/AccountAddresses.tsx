@@ -7,10 +7,13 @@ import {ADDRESS_API_PATH, GET_ALL} from "../../api/axios.ts";
 import {Address} from "../../api/dto/auth/Address.ts";
 import {Header3} from "../reusable/Header3.tsx";
 import {AddressEl} from "./AddressEl.tsx";
+import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const AccountAddresses = () => {
     const axiosPrivate = useAxiosPrivate();
     const [addresses, setAddresses] = useState<Address[]>([]);
+
+    useScrollToTop();
 
     useEffect(() => {
         axiosPrivate.get(ADDRESS_API_PATH + GET_ALL)
