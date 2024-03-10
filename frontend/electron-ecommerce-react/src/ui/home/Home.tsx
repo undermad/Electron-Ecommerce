@@ -5,21 +5,23 @@ import {CategoriesBanner} from "./CategoriesBanner.tsx";
 import {HotMemory} from "./HotMemory.tsx";
 import {HotGraphicCard} from "./HotGraphicCard.tsx";
 
-export const Home = () => {
 
+export const Home = () => {
 
     return (
         <>
             <Hero/>
             <Container>
-                <main className="flex flex-col gap-[42px]">
+                <main
+                    className="flex flex-col gap-[42px]">
 
-                    <CategoriesBanner/>
+                        <CategoriesBanner/>
 
-                    <HotProducts/>
+                        <HotProducts/>
 
-                    <HotMemory/>
-                    <HotGraphicCard/>
+                        <HotMemory/>
+
+                        <HotGraphicCard/>
 
 
                 </main>

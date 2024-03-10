@@ -12,7 +12,7 @@ export const AppLayout = () => {
 
     return (
         <>
-            <div className="flex justify-center">
+            <div className="flex justify-center w-full bg-electron-primary-dark-blue">
                 <NavigationBar/>
             </div>
             <div className={"font-inter flex items-center flex-col w-full gap-[24px]"}>

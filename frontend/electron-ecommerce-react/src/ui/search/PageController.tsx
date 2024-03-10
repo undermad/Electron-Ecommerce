@@ -1,15 +1,15 @@
 import {useEffect, useState} from "react";
 import {PageNumber} from "./PageNumber.tsx";
-import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
 
 type PageControllerProps = {
     totalPages: number,
-    pageNo: number
+    pageNo: number,
+    fetchProducts: (pageNo?: number) =>  Promise<void>;
 }
 
-export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
+export const PageController = ({totalPages, pageNo, fetchProducts}: PageControllerProps) => {
 
-    const fetchProducts = useFetchProducts();
+    // const fetchProducts = useFetchProducts();
     const [pages, setPages] = useState<number[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -37,15 +37,24 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
         setLoading(true);
         fetchProducts(pageNo - 2).then(() => {
             setLoading(false);
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth', // for a smooth scrolling
+            });
         })
     }
 
 
     const handleNextPageRequestClick = () => {
         if(pageNo === totalPages) return;
+
         setLoading(true);
         fetchProducts(pageNo).then(() => {
             setLoading(false);
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth', // for a smooth scrolling
+            });
         })
     }
 
@@ -71,6 +80,7 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
                                     <p className={`p-[12px] font-[500] text-[14px] leading-5 text-electron-other-page}`}>...</p>
                                     <PageNumber loading={loading}
                                                 currentPage={page === pageNo}
+                                                fetchProducts={fetchProducts}
                                                 pageNo={page}/>
                                 </div>
                             )
@@ -79,6 +89,7 @@ export const PageController = ({totalPages, pageNo}: PageControllerProps) => {
                                 <PageNumber loading={loading}
                                             currentPage={page === pageNo}
                                             pageNo={page}
+                                            fetchProducts={fetchProducts}
                                             key={index}/>
                             )
                         }

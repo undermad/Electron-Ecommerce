@@ -38,41 +38,41 @@ export const ProductListItem = ({product}: ProductListItemProps) => {
             day: 'numeric'
         });
         setDate(deliveryDate)
+
     }, []);
 
-    return (
-        <>
-            {screenWidth > Breakpoints.MEDIUM ?
-                <div className="flex gap-[12px] items-center">
-                    <div className={"w-[300px]  cursor-pointer"}
-                         onClick={() => handleProductClick(product.category)}>
-                            <img src={product.imgUrl} alt={product.description}/>
-                    </div>
-                    <div onClick={() => handleClick(product.productId, product.category)}
-                         className="w-full flex flex-col gap-[12px]">
-                        <div className={"w-full flex flex-col justify-center cursor-pointer"}>
-                            <p className={`text-electron-header-font text-[16px] font-[600] leading-7`}>
-                                {product.name}
-                            </p>
-                            <ParagraphSmall>{product.description}</ParagraphSmall>
-                            <div className="flex items-center">
-                                <RatingStars currentRate={product.currentRate}/>
-                                <ParagraphSmall>({product.totalReviews})</ParagraphSmall>
-                            </div>
-                            <h3 className={`text-electron-header-font text-[14px] font-[600] leading-7`}>
-                                £{product.price}
-                            </h3>
-                            <ParagraphSmall>Free delivery {date}</ParagraphSmall>
-                        </div>
-                    </div>
-                    <div className="w-1/6">
-                        <AddToBasketButton product={product}/>
-                    </div>
-                </div>
-                :
-                <MobileCard product={product} date={date}/>
 
-            }
-        </>
+
+    if (screenWidth <= Breakpoints.LARGE) return (
+        <MobileCard product={product} date={date}/>
+    )
+
+    return (
+        <div className="flex gap-[12px] items-center">
+            <div className={"w-[300px]  cursor-pointer"}
+                 onClick={() => handleProductClick(product.category)}>
+                <img src={product.imgUrl} alt={product.description}/>
+            </div>
+            <div onClick={() => handleClick(product.productId, product.category)}
+                 className="w-full flex flex-col gap-[12px]">
+                <div className={"w-full flex flex-col justify-center cursor-pointer"}>
+                    <p className={`text-electron-header-font text-[16px] font-[600] leading-7`}>
+                        {product.name}
+                    </p>
+                    <ParagraphSmall>{product.description}</ParagraphSmall>
+                    <div className="flex items-center">
+                        <RatingStars currentRate={product.currentRate}/>
+                        <ParagraphSmall>({product.totalReviews})</ParagraphSmall>
+                    </div>
+                    <h3 className={`text-electron-header-font text-[14px] font-[600] leading-7`}>
+                        £{product.price}
+                    </h3>
+                    <ParagraphSmall>Free delivery {date}</ParagraphSmall>
+                </div>
+            </div>
+            <div className="w-1/6">
+                <AddToBasketButton product={product}/>
+            </div>
+        </div>
     )
 }

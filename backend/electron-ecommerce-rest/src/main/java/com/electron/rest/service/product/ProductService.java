@@ -72,7 +72,7 @@ public class ProductService {
 
     public PageableResponse<ProductResponse> getProductsBySearchEngine(String query, Integer pageNo, String sortBy, String sortDirection) {
 
-        List<Object[]> products = productItemWithFilterRepository.findProductsByQuery(query, pageNo * 10, sortBy, sortDirection);
+        List<Object[]> products = productItemWithFilterRepository.findProductsByQuery(query, pageNo, sortBy, sortDirection);
         int totalElements = productItemRepository.findProductTotalRow(query);
 
         return PageableResponse.<ProductResponse>builder()

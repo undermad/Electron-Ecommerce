@@ -12,6 +12,7 @@ import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {CategoriesFilterList} from "./CategoriesFilterList.tsx";
 import {Header3} from "../reusable/Header3.tsx";
 import {ParagraphSmall} from "../reusable/ParagraphSmall.tsx";
+import {PageController} from "./PageController.tsx";
 
 
 export const SearchByQuery = () => {
@@ -26,6 +27,7 @@ export const SearchByQuery = () => {
     const fetchByQuery = useFetchProductsByQuery();
     const [categories, setCategories] = useState<Set<string>>(new Set<string>);
     const viewport = useViewport();
+    const fetchProducts = useFetchProductsByQuery();
 
     function capitalizeFirstLetter(str: string): string {
         if (!str) return str;
@@ -64,6 +66,9 @@ export const SearchByQuery = () => {
                                 <ProductListItem product={product} key={index}/>
                             ))}
                         </div>
+                        <PageController pageNo={pageableProductList?.pageNo}
+                                        totalPages={pageableProductList?.totalPages}
+                        fetchProducts={fetchProducts}/>
                     </figure>
                 </main>
                 :
@@ -80,6 +85,9 @@ export const SearchByQuery = () => {
                             <ProductListItem product={product} key={index}/>
                         ))}
                     </div>
+                    <PageController pageNo={pageableProductList?.pageNo}
+                                    totalPages={pageableProductList?.totalPages}
+                                    fetchProducts={fetchProducts}/>
                 </main>
             }
 

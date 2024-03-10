@@ -9,6 +9,7 @@ export default {
             'electron-primary-dark-blue': '#0E1120',
             'electron-primary-disabled-dark-blue': '#2f2f2f',
             'electron-primary-white': '#FFFFFF',
+            'electron-dirty-white': '#ebebeb',
             'electron-primary-grey': '#afafaf',
             'electron-light-grey': '#F6F6F6',
             'electron-grey': '#E9E9E9',

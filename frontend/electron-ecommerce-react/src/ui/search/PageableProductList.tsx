@@ -40,7 +40,7 @@ export const PageableProductList = () => {
             <div className="flex flex-col gap-[20px]">
                 <Header3>Search Result</Header3>
                 <div className="flex flex-col sm:flex-row justify-between w-full gap-[17px]">
-                    {viewport <= Breakpoints.MEDIUM ?
+                    {viewport <= Breakpoints.LARGE ?
                         <FilterSection/>
                         : <></>
                     }
@@ -53,7 +53,8 @@ export const PageableProductList = () => {
                     ))}
                 </div>
                 <PageController pageNo={pageableProductList?.pageNo}
-                                totalPages={pageableProductList?.totalPages}/>
+                                totalPages={pageableProductList?.totalPages}
+                fetchProducts={fetchProducts}/>
             </div>
         </div>
     )

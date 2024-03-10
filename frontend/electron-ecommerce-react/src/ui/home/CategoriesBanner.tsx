@@ -3,6 +3,7 @@ import {axiosBase, CATEGORY_API_PATH, GET} from "../../api/axios.ts";
 import {CategoryResponse} from "../../api/dto/product/CategoryResponse.ts";
 import {useNavigate} from "react-router-dom";
 import {SEARCH_ROUTE} from "../../constants/Routes.ts";
+import {RevealAnimation} from "../reusable/RevealAnimation.tsx";
 
 export const CategoriesBanner = () => {
 
@@ -40,6 +41,8 @@ export const CategoriesBanner = () => {
     }, [categories]);
 
     return (
+        <RevealAnimation>
+
             <div className="p-[10px] grid grid-cols-2 sm:flex gap-[19px] text-center justify-center border border-electron-grey rounded-lg w-full">
 
                 {cat.map((item, index) => (
@@ -51,6 +54,7 @@ export const CategoriesBanner = () => {
                     </div>
                 ))}
             </div>
+        </RevealAnimation>
 
     )
 }

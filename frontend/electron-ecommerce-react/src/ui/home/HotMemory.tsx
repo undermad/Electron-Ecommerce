@@ -4,6 +4,7 @@ import {axiosBase, HOT_CATEGORY_PRODUCTS_API_PATH, PRODUCT_API_PATH} from "../..
 import {MobileCard} from "../search/MobileCard.tsx";
 import {Header3} from "../reusable/Header3.tsx";
 import {CategoryHero} from "./CategoryHero.tsx";
+import {RevealAnimation} from "../reusable/RevealAnimation.tsx";
 
 export const HotMemory = () => {
 
@@ -22,15 +23,14 @@ export const HotMemory = () => {
 
     return (
         <div className="flex gap-5 flex-col">
-            <CategoryHero imgSrc="https://electron-img-01.s3.eu-west-2.amazonaws.com/ram_gpt.webp"
-                        imgLeft={false}
-                          header="Fastest memory on the market"
-                          headerDescription="Don't wait any longer and check out our best offer."
-                          category="memory">
-                Upgrade your tech with our advanced memory solutions. Our SSDs and memory cards deliver
-                speed, reliability, and seamless data access.
-            </CategoryHero>
-
+                <CategoryHero imgSrc="https://electron-img-01.s3.eu-west-2.amazonaws.com/ram_gpt.webp"
+                              imgLeft={false}
+                              header="Fastest memory on the market"
+                              headerDescription="Don't wait any longer and check out our best offer."
+                              category="memory">
+                    Upgrade your tech with our advanced memory solutions. Our random access memory deliver
+                    speed, reliability, and seamless data access.
+                </CategoryHero>
 
 
             <div className="mt-[24px]">
@@ -38,7 +38,9 @@ export const HotMemory = () => {
             </div>
             <div className=" w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {products.map((item, index) => (
-                    <MobileCard product={item} key={index}/>
+                    <RevealAnimation key={index}>
+                        <MobileCard product={item}/>
+                    </RevealAnimation>
                 ))}
             </div>
 

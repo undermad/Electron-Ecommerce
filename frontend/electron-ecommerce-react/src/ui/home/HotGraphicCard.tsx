@@ -4,6 +4,7 @@ import {axiosBase, HOT_CATEGORY_PRODUCTS_API_PATH, PRODUCT_API_PATH} from "../..
 import {CategoryHero} from "./CategoryHero.tsx";
 import {Header3} from "../reusable/Header3.tsx";
 import {MobileCard} from "../search/MobileCard.tsx";
+import {RevealAnimation} from "../reusable/RevealAnimation.tsx";
 
 export const HotGraphicCard = () => {
 
@@ -27,10 +28,9 @@ export const HotGraphicCard = () => {
                           header="Most efficient graphic cards"
                           headerDescription="Move your gaming to the highest quality with 4k resulution."
                           category="graphic card">
-                Upgrade your tech with our advanced memory solutions. Our SSDs and memory cards deliver
-                speed, reliability, and seamless data access.
+                Experience stunning visuals and peak performance with our premium graphics cards. Discover your ultimate
+                upgrade in our collection!
             </CategoryHero>
-
 
 
             <div className="mt-[24px]">
@@ -38,7 +38,9 @@ export const HotGraphicCard = () => {
             </div>
             <div className=" w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {products.map((item, index) => (
-                    <MobileCard product={item} key={index}/>
+                    <RevealAnimation key={index}>
+                        <MobileCard product={item}/>
+                    </RevealAnimation>
                 ))}
             </div>
 

@@ -1,18 +1,17 @@
-import {useFetchProducts} from "../../custom_hooks/useFetchProducts.ts";
 
 type PageNumberProps = {
     pageNo: number,
     currentPage: boolean,
     loading: boolean,
+    fetchProducts: (pageNo?: number) => Promise<void>;
 }
 
-export const PageNumber = ({pageNo, currentPage, loading}: PageNumberProps) => {
+export const PageNumber = ({pageNo, currentPage, loading, fetchProducts}: PageNumberProps) => {
 
-    const fetchProducts = useFetchProducts();
 
     const handleClick = () => {
         console.log(pageNo)
-        fetchProducts(pageNo);
+        fetchProducts(pageNo - 1);
     }
 
     return (
