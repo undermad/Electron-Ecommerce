@@ -26,7 +26,10 @@ VALUES (1, 1, 'Brand'),
 
        (15, 4, 'Brand'),
        (16, 4, 'Connectivity'),
-       (17, 4, 'Mechanical switch type');
+       (17, 4, 'Mechanical switch type'),
+
+       (18, 3, 'Type');
+
 
 INSERT INTO electron_ecommerce.variation_option (electron_ecommerce.variation_option.id,
                                                  electron_ecommerce.variation_option.variation_id,
@@ -62,10 +65,10 @@ VALUES (1, 1, 'Crucial'),
        (25, 10, 'ACER'),
        (26, 11, '32"'),
        (27, 11, '27"'),
-       (28, 11, '24"'),
-       (29, 11, '22"'),
-       (30, 12, '120hz'),
-       (31, 12, '100hz'),
+       (28, 11, '34"'),
+       (29, 11, '15.6"'),
+       (30, 12, '165hz'),
+       (31, 12, '75hz'),
        (32, 12, '144hz'),
        (33, 12, '60hz'),
        (34, 13, 'Fast(4ms and less)'),
@@ -81,7 +84,12 @@ VALUES (1, 1, 'Crucial'),
        (43, 17, 'Clicky'),
        (44, 17, 'Linear'),
        (45, 17, 'Membrane'),
-       (46, 17, 'Tactile');
+       (46, 17, 'Tactile'),
+
+       (47, 18, '4k'),
+       (48, 18, '1080p'),
+       (49, 18, 'Ultra wide'),
+       (50, 10, 'Asus');
 
 
 
@@ -526,6 +534,137 @@ VALUES (18, 38),
 
        (26, 39),
        (26, 45);
+
+
+INSERT INTO electron_ecommerce.products_details (products_details.id,
+                                                 electron_ecommerce.products_details.product_information,
+                                                 electron_ecommerce.products_details.sku,
+                                                 electron_ecommerce.products_details.visits)
+VALUES (27,
+        'The wide P3 colour gamut gives amazing colours - your films and series will look like in cinema. All you need to do is prepare the popcorn.',
+        'M87786AS', 90),
+       (28,
+        'The 4K resolution on top of being HDR compatible means that you''ll be able to see nearly every shade under the sun. ',
+        'MAS1245S', 112),
+       (29,
+        'This Full HD IPS display gives you a lot of detail with amazing colours and wide viewing angles - great for both spreadsheets and Netflix shows.',
+        'MS109QWC', 200),
+       (30,
+        'With 32" and Full HD resolution, this monitor is large and sharp enough for spreadsheets, movies and games',
+        'M32ASAA', 100),
+       (31,
+        'Perfect for both work and gaming, this Acer monitor is a proper all-rounder. The 34” display means you''ve got a huge screen estate which''ll comfortably fit multiple windows.',
+        'MUW132313', 1000),
+       (32,
+        'Stay productive and entertained on the road. This ASUS portable monitor''s got a 144 Hz refresh rate and AMD FreeSync Premium',
+        'M345655', 312);
+
+
+
+INSERT INTO electron_ecommerce.products_images (electron_ecommerce.products_images.product_details_id,
+                                                electron_ecommerce.products_images.image_url)
+VALUES (27, 'https://media.currys.biz/i/currysprod/10242129_002?$l-large$&fmt=auto'),
+       (27, 'https://media.currys.biz/i/currysprod/10242129_001?$l-large$&fmt=auto'),
+       (27, 'https://media.currys.biz/i/currysprod/10242129_004?$l-large$&fmt=auto'),
+       (27, 'https://media.currys.biz/i/currysprod/10242129_005?$l-large$&fmt=auto'),
+       (28, 'https://media.currys.biz/i/currysprod/10242127_002?$l-large$&fmt=auto'),
+       (28, 'https://media.currys.biz/i/currysprod/10242127_001?$l-large$&fmt=auto'),
+       (28, 'https://media.currys.biz/i/currysprod/10242127_003?$l-large$&fmt=auto'),
+       (28, 'https://media.currys.biz/i/currysprod/10242127_004?$l-large$&fmt=auto'),
+       (28, 'https://media.currys.biz/i/currysprod/10242127_005?$l-large$&fmt=auto'),
+       (29, 'https://media.currys.biz/i/currysprod/10224985_002?$l-large$&fmt=auto'),
+       (29, 'https://media.currys.biz/i/currysprod/10224985_001?$l-large$&fmt=auto'),
+       (29, 'https://media.currys.biz/i/currysprod/10224985_004?$l-large$&fmt=auto'),
+       (29, 'https://media.currys.biz/i/currysprod/10224985_009?$l-large$&fmt=auto'),
+       (30, 'https://media.currys.biz/i/currysprod/10248098_001?$l-large$&fmt=auto'),
+       (31, 'https://media.currys.biz/i/currysprod/10251643_001?$l-large$&fmt=auto'),
+       (31, 'https://media.currys.biz/i/currysprod/10251643_003?$l-large$&fmt=auto'),
+       (31, 'https://media.currys.biz/i/currysprod/10251643_004?$l-large$&fmt=auto'),
+       (31, 'https://media.currys.biz/i/currysprod/10251643_005?$l-large$&fmt=auto'),
+       (32, 'https://media.currys.biz/i/currysprod/10253695_005?$l-large$&fmt=auto'),
+       (32, 'https://media.currys.biz/i/currysprod/10253695_006?$l-large$&fmt=auto'),
+       (32, 'https://media.currys.biz/i/currysprod/10253695_001?$l-large$&fmt=auto');
+
+INSERT INTO electron_ecommerce.product_item (electron_ecommerce.product_item.id,
+                                             electron_ecommerce.product_item.current_rate,
+                                             electron_ecommerce.product_item.price,
+                                             electron_ecommerce.product_item.category_id,
+                                             electron_ecommerce.product_item.product_details_id,
+                                             electron_ecommerce.product_item.description,
+                                             electron_ecommerce.product_item.img_url,
+                                             electron_ecommerce.product_item.name,
+                                             electron_ecommerce.product_item.stock_quantity)
+VALUES (27, 4.2, 329.00, 3, 27,
+        'The wide P3 colour gamut gives amazing colours - your films and series will look like in cinema. All you need to do is prepare the popcorn.',
+        'https://media.currys.biz/i/currysprod/10242129?$g-small$&fmt=auto',
+        'BENQ EW2880U 4K Ultra HD 27" IPS Monitor - Black & Brown', 1000),
+       (28, 4.5, 349.00, 3, 28,
+        'he 4K resolution on top of being HDR compatible means that you''ll be able to see nearly every shade under the sun.',
+        'https://media.currys.biz/i/currysprod/10242127?$g-small$&fmt=auto',
+        'BENQ DesignVue PD2705U 4K Ultra HD 27" IPS Monitor - Grey', 1000),
+       (29, 4.9, 129.00, 3, 29,
+        'This Full HD IPS display gives you a lot of detail with amazing colours and wide viewing angles - great for both spreadsheets and Netflix shows.',
+        'https://media.currys.biz/i/currysprod/10224985?$g-small$&fmt=auto',
+        'LG UltraGear 27MP60G-P.AEK Full HD 27" IPS LCD Monitor - Black', 1000),
+       (30, 4.7, 199.00, 3, 30,
+        'With 32" and Full HD resolution, this monitor is large and sharp enough for spreadsheets, movies and games',
+        'https://media.currys.biz/i/currysprod/10248098?$g-small$&fmt=auto',
+        'SAMSUNG LS32C390EAUXXU Full HD 32" Curved VA LCD Monitor - Black', 1000),
+       (31, 4.8, 399.00, 3, 31,
+        'Perfect for both work and gaming, this Acer monitor is a proper all-rounder. The 34” display means you''ve got a huge screen estate which''ll comfortably fit multiple windows.',
+        'https://media.currys.biz/i/currysprod/10251643?$g-small$&fmt=auto',
+        'ACER CZ342CUR Wide Quad HD 34" Curved VA LCD Monitor - Black', 1000),
+       (32, 4.4, 299.00, 3, 32,
+        'Stay productive and entertained on the road. This ASUS portable monitor''s got a 144 Hz refresh rate and AMD FreeSync Premium',
+        'https://media.currys.biz/i/currysprod/10253695?$g-small$&fmt=auto',
+        'ASUS ZenScreen MB16AHG Full HD 15.6" IPS LED Portable Monitor - Black', 1000);
+
+
+
+INSERT INTO electron_ecommerce.product_configuration (electron_ecommerce.product_configuration.product_item_id,
+                                                      electron_ecommerce.product_configuration.variation_option_id)
+VALUES (27, 22),
+       (27, 47),
+       (27, 27),
+       (27, 35),
+       (27, 36),
+       (27, 33),
+
+       (28, 22),
+       (28, 47),
+       (28, 27),
+       (28, 35),
+       (28, 36),
+       (28, 33),
+
+       (29, 48),
+       (29, 23),
+       (29, 34),
+       (29, 31),
+       (29, 36),
+       (29, 27),
+
+       (30, 48),
+       (30, 26),
+       (30, 37),
+       (30, 31),
+       (30, 24),
+
+       (31, 49),
+       (31, 25),
+       (31, 30),
+       (31, 34),
+       (31, 37),
+       (31, 28),
+
+       (32, 50),
+       (32, 48),
+       (32, 29),
+       (32, 32),
+       (32, 34),
+       (32, 36);
+
+
 
 
 
