@@ -5,6 +5,7 @@ import {MdStoreMallDirectory} from "react-icons/md";
 import {Product} from "../../api/dto/product/Product.ts";
 import {AddToBasketButton} from "../reusable/AddToBasketButton.tsx";
 import {RatingStars} from "../reusable/RatingStars.tsx";
+import {useEffect} from "react";
 
 type ProductViewPanelProps = {
     product: Product
@@ -12,20 +13,33 @@ type ProductViewPanelProps = {
 
 export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
 
+    useEffect(() => {
+        console.log(product)
+    })
+
     return (
         <article className={"flex flex-col gap-[24px]"}>
             <div className={"flex flex-col gap-[23px]"}>
 
                 <div className={"flex items-center gap-1"}>
                     <RatingStars currentRate={product.currentRate}/>
-                    {product.totalReviews &&
-                        <ParagraphSmall>({product.totalReviews})</ParagraphSmall>}
+                        <ParagraphSmall>({product.reviews.length})</ParagraphSmall>
                 </div>
             </div>
 
-            <span className="border-b border-electron-product-listing-bg pb-[24px]">
+            <span className="">
                 <Bold weight={600} textSize={28}>£{product.price}</Bold>
             </span>
+
+            <div className="flex flex-col gap-[12px] border-b border-electron-product-listing-bg pb-[24px]">
+                <div className="flex flex-col gap-5 w-full">
+                    <div className="w-1/2">
+                        <AddToBasketButton product={product}/>
+                    </div>
+
+                </div>
+                <ParagraphSmall>{product.stockQuantity} Products left</ParagraphSmall>
+            </div>
 
             <figure>
                 <div className="flex flex-col gap-[16px]">
@@ -42,15 +56,7 @@ export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
                 </div>
             </figure>
 
-            <div className="flex flex-col gap-[12px]">
-                <div className="flex flex-col gap-5 w-full">
-                    <div className="w-1/2">
-                        <AddToBasketButton product={product}/>
-                    </div>
 
-                </div>
-                <ParagraphSmall>{product.stockQuantity} Products left</ParagraphSmall>
-            </div>
             <div
                 className="flex flex-col p-[10px]  rounded-lg border border-electron-product-listing-bg">
                 <div className="border-b border-electron-product-listing-bg">

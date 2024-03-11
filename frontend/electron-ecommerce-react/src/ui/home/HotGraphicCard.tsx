@@ -26,7 +26,7 @@ export const HotGraphicCard = () => {
             <CategoryHero imgSrc="https://electron-img-01.s3.eu-west-2.amazonaws.com/gpu_gpt.webp"
                           imgLeft={true}
                           header="Most efficient graphic cards"
-                          headerDescription="Move your gaming to the highest quality with 4k resulution."
+                          headerDescription="Move your gaming to the highest quality with 4k resolution."
                           category="graphic card">
                 Experience stunning visuals and peak performance with our premium graphics cards. Discover your ultimate
                 upgrade in our collection!

@@ -10,10 +10,7 @@ import com.electron.rest.email.EmailService;
 import com.electron.rest.email.EmailSettings;
 import com.electron.rest.email.EmailSettingsFactory;
 import com.electron.rest.entity.user.UserFactory;
-import com.electron.rest.exception.InvalidInputException;
-import com.electron.rest.exception.RefreshTokenException;
-import com.electron.rest.exception.ResourceNotFoundException;
-import com.electron.rest.exception.TokenException;
+import com.electron.rest.exception.*;
 import com.electron.rest.entity.user.PasswordRecoveryToken;
 import com.electron.rest.entity.user.RefreshToken;
 import com.electron.rest.entity.user.User;
@@ -213,6 +210,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void changePassword(ChangePasswordDto changePasswordDto, String jwt) {
         User user = userIdFactory.createUser(jwt);
+        if(user.getId() == 0 || user.getId() == 1) throw new ApiException("You can not change password for test users. Create your own account to perform that operation.");
         String oldPassword = userRepository.findPasswordByUserId(user.getId())
                 .orElseThrow(() -> new InvalidInputException(BAD_CREDENTIALS));
         if (!passwordEncoder.matches(changePasswordDto.oldPassword(), oldPassword) ||

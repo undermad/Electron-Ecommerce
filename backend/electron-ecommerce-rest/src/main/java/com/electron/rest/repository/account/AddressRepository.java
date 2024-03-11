@@ -63,4 +63,7 @@ public interface AddressRepository extends CrudRepository<Address, Long> {
     @Modifying
     @Query(value = "DELETE FROM addresses a WHERE a.id = :addressId AND a.user_id = :userId", nativeQuery = true)
     void deleteAddress(@Param("addressId") Long addressId, @Param("userId") Long userId);
+
+    @Query(value = "SELECT COUNT(*) FROM addresses a WHERE a.user_id = :userId", nativeQuery = true)
+    int countAddresses(@Param("userId") Long userId);
 }

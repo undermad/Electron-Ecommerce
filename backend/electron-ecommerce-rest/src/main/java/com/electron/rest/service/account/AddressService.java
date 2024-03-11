@@ -6,7 +6,9 @@ import com.electron.rest.entity.account.AddressFactory;
 import com.electron.rest.entity.projections.AddressProjection;
 import com.electron.rest.entity.user.UserFactory;
 import com.electron.rest.entity.user.User;
+import com.electron.rest.entity.user.UserIdFactory;
 import com.electron.rest.exception.ResourceNotFoundException;
+import com.electron.rest.exception.TooManyAddresses;
 import com.electron.rest.mapper.AddressMapper;
 import com.electron.rest.repository.account.AddressRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.electron.rest.constants.ErrorMessages.ADDRESS_NOT_FOUND;
+import static com.electron.rest.constants.ErrorMessages.TOO_MANY_ADDRESSES;
 
 @Service
 public class AddressService {
@@ -25,7 +28,7 @@ public class AddressService {
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 
-    @Qualifier("userIdFactory")
+    @Qualifier(UserIdFactory.BEAN_ID)
     private final UserFactory<String> userFactory;
     private final AddressFactory addressFactory;
 
@@ -55,6 +58,8 @@ public class AddressService {
 
     public void addAddress(AddressDto addressDto, String jwt) {
         User user = userFactory.createUser(jwt);
+        int totalAddresses = addressRepository.countAddresses(user.getId());
+        if(totalAddresses >= 10) throw new TooManyAddresses(TOO_MANY_ADDRESSES);
         Address address = addressFactory.createAddress(addressDto);
         address.setUser(user);
         addressRepository.save(address);

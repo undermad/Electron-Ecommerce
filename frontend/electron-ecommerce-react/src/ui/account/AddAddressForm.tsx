@@ -11,6 +11,7 @@ import {useNavigate} from "react-router-dom";
 import {ACCOUNT_ROUTE, ADDRESSES_NESTED_ROUTE} from "../../constants/Routes.ts";
 import {Header3} from "../reusable/Header3.tsx";
 import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
+import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
 
 const validationErrorInit: AddressValidationError = {
     ...defaultAddress,
@@ -52,12 +53,16 @@ export const AddAddressForm = () => {
     return (
         <div className="flex flex-col gap-[24px]">
             <Header3>Add Address</Header3>
+            <p>
+
+            </p>
             <form
                 id="addAddress"
                 className={"flex flex-col"}
                 onSubmit={handleSubmit}>
 
                 <MultiInputHolder>
+                    <FormErrorMessage errorMessage={validationError.message}/>
                     <LabelInputHolder>
                         <Label errorMessage={validationError.streetOne} htmlFor={"streetOne"}>Address 1</Label>
                         <TextInput callback={handleInputChange}

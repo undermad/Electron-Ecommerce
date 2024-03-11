@@ -37,6 +37,7 @@ public class ErrorMessages {
     public static final String WRONG_CREDIT_CARD_EXPIRY_DATE = "Wrong expiry date length.";
     public static final String DELIVERY_ADDRESS_NOT_FOUND = "Delivery address not found.";
     public static final String AVATAR_NOT_FOUND = "Avatar not found.";
+    public static final String TOO_MANY_ADDRESSES = "Too many addresses. Maximum 10 per account.";
 
 
 }

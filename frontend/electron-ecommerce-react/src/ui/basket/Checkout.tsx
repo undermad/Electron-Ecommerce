@@ -13,7 +13,6 @@ import {CheckoutContextProvider} from "../../context/CheckoutContext.tsx";
 import {BASKET_ROUTE, CHECKOUT_ORDER_INFO} from "../../constants/Routes.ts";
 import {motion} from "framer-motion";
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
-import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
 
 export const Checkout = () => {
 
@@ -22,7 +21,6 @@ export const Checkout = () => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState<boolean>(false);
 
-    useScrollToTop();
 
 
     useEffect(() => {

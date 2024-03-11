@@ -6,6 +6,7 @@ import 'react-image-crop/dist/ReactCrop.css'
 import ReactCrop, {centerCrop, convertToPixelCrop, type Crop, makeAspectCrop} from 'react-image-crop'
 import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import setCanvasPreview from "../account/setCanvasPreview.ts";
+import {CiUser} from "react-icons/ci";
 
 //https://www.youtube.com/watch?v=odscV57kToU
 //avatar how to
@@ -142,7 +143,7 @@ export const Avatar = () => {
 
             {imageSource &&
                 <div
-                    className="flex flex-col bg-black items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-electron-light-grey rounded-xl z-50">
+                    className="flex flex-col items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-electron-light-grey rounded-xl z-50">
                     <ReactCrop
                         onChange={(percentageCrop) => setCrop(percentageCrop)}
                         crop={crop}
@@ -165,7 +166,7 @@ export const Avatar = () => {
                             </ElectronButton>
                         </div>
                         <div onClick={handleCropCancel}
-                            className="w-1/2">
+                             className="w-1/2">
                             <ElectronButton>
                                 Cancel
                             </ElectronButton>
@@ -177,11 +178,13 @@ export const Avatar = () => {
             <div
                 onClick={handleAvatarClick}
                 className={"w-[95px] h-[95px] overflow-hidden flex justify-center items-center rounded-full border border-electron-product-listing-bg cursor-pointer"}>
-                {/*<CiUser color="#2f2f2f" size={50}/>*/}
 
 
-                <div className="w-full h-full flex items-center scale-[1]">
-                    <img src={imageUrl} alt="Avatar" className="overflow-hidden"/>
+                <div className="w-full h-full flex items-center scale-[1] justify-center">
+                    {imageUrl ?
+                        <img src={imageUrl} alt="Avatar" className="overflow-hidden"/> :
+                        <CiUser color="#2f2f2f" size={50}/>
+                    }
                 </div>
                 <input
                     type="file"
