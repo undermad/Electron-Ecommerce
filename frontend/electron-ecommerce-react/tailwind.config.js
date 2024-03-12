@@ -36,6 +36,7 @@ export default {
             'electron-light-blue':'#026AA2',
             'electron-bright-blue':'#ebf3ff',
             'electron-astral-blue':'#184279',
+            'electron-notification-error':'#E14D45',
         },
         extend: {},
     },

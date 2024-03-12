@@ -32,7 +32,6 @@ export const Checkout = () => {
             .catch(error => {
                 if (error.response.status === 404)
                     navigate(BASKET_ROUTE);
-                console.log(error);
             })
     }, []);
 

@@ -31,7 +31,6 @@ export const NewsletterBanner = () => {
         const data: NewsletterSubscriptionRequest = {
             email: email,
         }
-        console.log(data)
 
         axiosBase.post(SUBSCRIBE_NEWSLETTER_API_PATH, data)
             .then(response => {
@@ -40,7 +39,6 @@ export const NewsletterBanner = () => {
                 setEmail('')
             })
             .catch(error => {
-                console.log(error)
                 setValidationError(error.response?.data);
             })
     }

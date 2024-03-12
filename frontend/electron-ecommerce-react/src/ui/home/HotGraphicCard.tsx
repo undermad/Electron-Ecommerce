@@ -13,11 +13,7 @@ export const HotGraphicCard = () => {
     useEffect(() => {
         axiosBase.get(`${PRODUCT_API_PATH}/${HOT_CATEGORY_PRODUCTS_API_PATH}?category=graphic card`)
             .then(result => {
-                console.log(result);
                 setProducts(result.data);
-            })
-            .catch(error => {
-                console.log(error);
             })
     }, []);
 

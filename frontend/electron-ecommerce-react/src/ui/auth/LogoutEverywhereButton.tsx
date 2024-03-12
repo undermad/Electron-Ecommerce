@@ -4,23 +4,24 @@ import {LOGOUT_EVERYWHERE_SUCCESSFUL} from "../../constants/Messages.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {AUTH_API_PATH, LOGOUT_EVERYWHERE} from "../../api/axios.ts";
 import {Span} from "../reusable/Span.tsx";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 const LogoutEverywhereButton = () => {
 
     const auth = useAuth();
     const axiosPrivate = useAxiosPrivate();
     const messageScreen = useMessageScreen();
+    const errorNotification = useErrorNotification();
 
     const handleLogoutEverywhere = () => {
 
         axiosPrivate.post(AUTH_API_PATH + LOGOUT_EVERYWHERE)
-            .then((response) => {
-                console.log(response.data);
+            .then(() => {
                 auth?.setAuth({});
                 messageScreen(LOGOUT_EVERYWHERE_SUCCESSFUL)
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
+                errorNotification('Ups...')
             })
 
     }

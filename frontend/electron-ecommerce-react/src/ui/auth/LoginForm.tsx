@@ -47,12 +47,10 @@ export const LoginForm = () => {
             params: {remember: remember}
         })
             .then((response: AxiosResponse<LoginResponse>) => {
-                console.log(response.data);
                 auth?.setAuth({...response.data});
                 navigate(from, {replace: true});
             })
             .catch(error => {
-                console.log(error?.response?.data);
                 setLoading(false);
                 setLoginRequestError({...error?.response?.data});
             })

@@ -18,11 +18,7 @@ export const AccountOrders = () => {
     useEffect(() => {
         axiosPrivate.get(ORDER_API_PATH + GET_ALL)
             .then(response => {
-                console.log(response.data)
-                setOrders(response.data)
-            })
-            .catch(error => {
-                console.log(error);
+                setOrders(response.data);
             })
     }, []);
 

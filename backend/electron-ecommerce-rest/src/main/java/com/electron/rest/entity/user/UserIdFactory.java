@@ -25,6 +25,7 @@ public class UserIdFactory implements UserFactory<String> {
                 .orElseThrow(() -> new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND))
                 .getId();
         User user = new User();
+        user.setEmail(email);
         user.setId(userId);
         return user;
     }

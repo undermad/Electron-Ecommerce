@@ -8,6 +8,7 @@ import {ADD, BASKET_API_PATH, REMOVE} from "../../api/axios.ts";
 import {AddToBasketRequest} from "../../api/dto/basket/AddToBasketRequest.ts";
 import useAxiosPrivate from "../../custom_hooks/useAxiosPrivate.ts";
 import {RemoveFromBasketRequest} from "../../api/dto/basket/RemoveFromBasketRequest.ts";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 type AddToBasketButtonProps = {
     product: Product,
@@ -20,6 +21,7 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
     const basketContext = useContext(BasketContext);
     const [currentQuantity, setCurrentQuantity] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
+    const errorNotification = useErrorNotification();
 
     const handleDecreaseButton = () => {
         if (currentQuantity === 0) return;
@@ -37,7 +39,7 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
                 setCurrentQuantity(currentQuantity - 1);
             })
             .catch((error) => {
-                console.log(error)
+                errorNotification(error.message)
             })
     }
 
@@ -50,7 +52,6 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
                     }
                     return item;
                 })
-                console.log(newBasketItems)
                 basketContext.setBasket({...basketContext.basket, items: newBasketItems})
                 setCurrentQuantity(currentQuantity + 1);
             })
@@ -98,6 +99,7 @@ export const AddToBasketButton = ({product}: AddToBasketButtonProps) => {
 
 
     useEffect(() => {
+        setCurrentQuantity(0);
         const basketPosition = getPositionFromTheBasket(product.productId);
         if (basketPosition) {
             setCurrentQuantity(basketPosition.quantity);

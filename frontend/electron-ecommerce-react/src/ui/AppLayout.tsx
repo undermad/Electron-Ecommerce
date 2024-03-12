@@ -4,6 +4,7 @@ import {Footer} from "./footer/Footer.tsx";
 import {useContext} from "react";
 import {ThemeContext} from "../context/ThemeContext.tsx";
 import {NewsletterBanner} from "./footer/NewsletterBanner.tsx";
+import {ErrorNotification} from "./ErrorNotification.tsx";
 
 export const AppLayout = () => {
 
@@ -25,6 +26,7 @@ export const AppLayout = () => {
                 <NewsletterBanner/>
                 <Footer/>
             </div>
+            <ErrorNotification/>
         </>
     )
 }

@@ -4,9 +4,7 @@ import {CheckboxLabel} from "../reusable/CheckboxLabel.tsx";
 import {LabelCheckboxHolder} from "../reusable/LabelCheckboxHolder.tsx";
 import React, {useRef, useState} from "react";
 import {RegisterRequest, RegisterRequestValidationError} from "../../api/dto/auth/RegisterRequest.ts";
-import {AxiosResponse} from "axios";
 import {axiosRegistration, REGISTER_API_PATH} from "../../api/axios.ts";
-import {RegisterResponse} from "../../api/dto/auth/RegisterResponse.ts";
 import {useMessageScreen} from "../../custom_hooks/useMessageScreen.ts";
 import {REGISTRATION_SUCCESSFUL} from "../../constants/Messages.ts";
 import {MultiInputHolder} from "../reusable/MultiInputHolder.tsx";
@@ -54,15 +52,12 @@ export const RegisterForm = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(registerFormData);
         setValidationError({...validationErrorInit})
         axiosRegistration.post(REGISTER_API_PATH, registerFormData)
-            .then((response: AxiosResponse<RegisterResponse>) => {
-                console.log(response.data.message);
+            .then(() => {
                 messageScreen(REGISTRATION_SUCCESSFUL);
             })
             .catch((error) => {
-                console.log(error)
                 setValidationError({...error.response.data});
                 setLoading(false);
             })

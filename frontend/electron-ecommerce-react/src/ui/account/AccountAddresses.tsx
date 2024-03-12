@@ -8,10 +8,12 @@ import {Address} from "../../api/dto/auth/Address.ts";
 import {Header3} from "../reusable/Header3.tsx";
 import {AddressEl} from "./AddressEl.tsx";
 import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 export const AccountAddresses = () => {
     const axiosPrivate = useAxiosPrivate();
     const [addresses, setAddresses] = useState<Address[]>([]);
+    const errorNotification = useErrorNotification();
 
     useScrollToTop();
 
@@ -19,10 +21,9 @@ export const AccountAddresses = () => {
         axiosPrivate.get(ADDRESS_API_PATH + GET_ALL)
             .then(response => {
                 setAddresses(response.data)
-                console.log(response.data)
             })
-            .catch(error => {
-                console.log(error);
+            .catch(() => {
+                errorNotification('Ups...')
             })
     }, []);
 

@@ -11,8 +11,10 @@ export const Home = () => {
 
     useScrollToTop();
 
+
     return (
         <>
+
             <Hero/>
             <Container>
                 <main

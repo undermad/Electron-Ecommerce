@@ -51,7 +51,6 @@ export const ChangePassword = () => {
                     messageScreen(response.data.message);
                 })
                 .catch((error) => {
-                    console.log(error);
                     setResponseError({...error.response.data})
                     setLoading(false);
                 })

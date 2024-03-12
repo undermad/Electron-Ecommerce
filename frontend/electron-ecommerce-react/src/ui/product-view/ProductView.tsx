@@ -11,6 +11,7 @@ import {ProductViewTittle} from "./ProductViewTittle.tsx";
 import {useViewport} from "../../custom_hooks/useViewport.ts";
 import {Breakpoints} from "../../constants/Breakpoints.ts";
 import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 export const ProductView = () => {
 
@@ -19,6 +20,7 @@ export const ProductView = () => {
     const [product, setProduct] = useState<Product>(defaultProduct);
     const [loading, setLoading] = useState<boolean>(false);
     const viewport = useViewport();
+    const errorNotification = useErrorNotification();
 
     useScrollToTop();
 
@@ -28,10 +30,9 @@ export const ProductView = () => {
         axiosBase.get(PRODUCT_API_PATH + `/${productId}`)
             .then(response => {
                 setProduct(response.data);
-                console.log(response.data)
             })
-            .catch(error => {
-                console.log(error);
+            .catch((error) => {
+                errorNotification(error?.response?.data)
             })
             .finally(() => setLoading(false))
     }, []);

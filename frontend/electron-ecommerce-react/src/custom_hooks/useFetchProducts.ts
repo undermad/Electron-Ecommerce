@@ -1,10 +1,12 @@
 import {ProductWithFilterRequest} from "../api/dto/product/ProductWithFilterRequest.ts";
 import {axiosBase, PRODUCT_API_PATH} from "../api/axios.ts";
 import {useProductList} from "./useProductList.ts";
+import {useErrorNotification} from "./useErrorNotification.ts";
 
 export const useFetchProducts = () => {
 
     const productContext = useProductList();
+    const errorNotification = useErrorNotification();
 
 
     return async (pageNo: number = 0) => {
@@ -28,11 +30,9 @@ export const useFetchProducts = () => {
                 + `?pageNo=${pageNo}&sortBy=${productContext?.sortBy}&sortDirection=${productContext?.sortDirection}`,
                 requestData);
 
-            console.log(response.data)
-
             productContext?.setPageableProductList({...response.data});
         } catch (error) {
-            console.log(error);
+            errorNotification('Ups...');
         }
 
     }

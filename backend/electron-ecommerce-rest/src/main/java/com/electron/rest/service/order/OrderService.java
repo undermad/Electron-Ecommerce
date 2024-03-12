@@ -4,6 +4,9 @@ import com.electron.rest.constants.ErrorMessages;
 import com.electron.rest.constants.OrderStatus;
 import com.electron.rest.dto.order.OrderRequest;
 import com.electron.rest.dto.order.OrderResponse;
+import com.electron.rest.email.EmailService;
+import com.electron.rest.email.EmailSettings;
+import com.electron.rest.email.OrderConfirmationEmailSettings;
 import com.electron.rest.entity.orders.DeliveryAddress;
 import com.electron.rest.entity.orders.Order;
 import com.electron.rest.entity.orders.OrderItem;
@@ -24,6 +27,7 @@ import com.electron.rest.mapper.OrderMapper;
 import com.electron.rest.mapper.PaymentInformationMapper;
 import com.electron.rest.payment.PaymentResult;
 import com.electron.rest.payment.PaymentStrategy;
+import com.electron.rest.repository.auth.UserRepository;
 import com.electron.rest.repository.product.CheckoutItemRepository;
 import com.electron.rest.repository.account.BasketItemRepository;
 import com.electron.rest.repository.order.DeliveryAddressRepository;
@@ -41,6 +45,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.electron.rest.constants.ErrorMessages.SESSION_EXPIRED;
+import static com.electron.rest.constants.ErrorMessages.USER_NOT_FOUND;
 
 @Service
 public class OrderService {
@@ -58,8 +63,10 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final Map<String, PaymentStrategy> paymentStrategies;
     private final OrderMapper orderMapper;
+    private final EmailService emailService;
 
-    public OrderService(UserFactory<String> userIdFactory, IdempotencyKeyService idempotencyKeyService, PaymentInformationMapper paymentInformationMapper, DeliveryAddressMapper deliveryAddressMapper, Map<String, PaymentStrategy> paymentStrategies, CheckoutItemRepository checkoutItemRepository, BasketItemRepository basketItemRepository, OrderRepository orderRepository, DeliveryAddressRepository deliveryAddressRepository, OrderItemRepository orderItemRepository, OrderMapper orderMapper) {
+
+    public OrderService(UserFactory<String> userIdFactory, IdempotencyKeyService idempotencyKeyService, PaymentInformationMapper paymentInformationMapper, DeliveryAddressMapper deliveryAddressMapper, Map<String, PaymentStrategy> paymentStrategies, CheckoutItemRepository checkoutItemRepository, BasketItemRepository basketItemRepository, OrderRepository orderRepository, DeliveryAddressRepository deliveryAddressRepository, OrderItemRepository orderItemRepository, OrderMapper orderMapper, EmailService emailService) {
         this.userIdFactory = userIdFactory;
         this.idempotencyKeyService = idempotencyKeyService;
         this.paymentInformationMapper = paymentInformationMapper;
@@ -71,6 +78,7 @@ public class OrderService {
         this.deliveryAddressRepository = deliveryAddressRepository;
         this.orderItemRepository = orderItemRepository;
         this.orderMapper = orderMapper;
+        this.emailService = emailService;
     }
 
 
@@ -137,11 +145,15 @@ public class OrderService {
         order.setTotalPrice(BigDecimal.valueOf(paymentAmount.get()));
         order.setTotalItems(totalItems.get());
 
-        orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
 
         PaymentStrategy paymentStrategy = paymentStrategies.get(orderRequest.paymentType().value());
         PaymentResult paymentResult = paymentStrategy.pay(paymentAmount.get());
         if (paymentResult.equals(PaymentResult.FAILED)) throw new PaymentDeclinedException(paymentResult);
+
+        OrderConfirmationEmailSettings emailSettingsProvider = new OrderConfirmationEmailSettings();
+        EmailSettings emailSettings = emailSettingsProvider.createSettings(savedOrder);
+        emailService.sendThymeleafEmail(emailSettings);
         return paymentResult;
     }
 

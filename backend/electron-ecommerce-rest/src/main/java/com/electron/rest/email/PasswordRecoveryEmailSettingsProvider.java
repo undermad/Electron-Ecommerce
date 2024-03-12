@@ -19,7 +19,7 @@ public class PasswordRecoveryEmailSettingsProvider implements EmailSettingsFacto
     public EmailSettings createSettings(PasswordRecoveryToken passwordRecoveryToken) {
         return EmailSettings.builder()
                 .receiver(passwordRecoveryToken.getUser().getEmail())
-                .subject("Electron - Password Recovery.")
+                .subject("Electron - Password Recovery")
                 .template("password-recovery-link")
                 .variables(Map.of(
                         "duration", convertExpirationTimeToMinutes(this.expirationTime),

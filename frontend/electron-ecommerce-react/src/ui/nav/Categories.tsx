@@ -4,12 +4,14 @@ import {useEffect, useState} from "react";
 import {axiosBase, CATEGORY_API_PATH, GET} from "../../api/axios.ts";
 import {CategoryResponse} from "../../api/dto/product/CategoryResponse.ts";
 import {SEARCH_ROUTE} from "../../constants/Routes.ts";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 export const Categories = () => {
 
     const [items, setItems] = useState<Map<string, string>>(new Map());
 
     const [categories, setCategories] = useState<CategoryResponse[]>([]);
+    const errorNotification = useErrorNotification();
 
     function capitalizeFirstLetter(str: string): string {
         if (!str) return str;
@@ -31,8 +33,8 @@ export const Categories = () => {
             .then(response => {
                 setCategories(response.data)
             })
-            .catch(error => {
-                console.log(error);
+            .catch(() => {
+                errorNotification('Ups...');
             })
     }, []);
 

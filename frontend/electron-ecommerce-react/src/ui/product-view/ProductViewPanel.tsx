@@ -5,17 +5,12 @@ import {MdStoreMallDirectory} from "react-icons/md";
 import {Product} from "../../api/dto/product/Product.ts";
 import {AddToBasketButton} from "../reusable/AddToBasketButton.tsx";
 import {RatingStars} from "../reusable/RatingStars.tsx";
-import {useEffect} from "react";
 
 type ProductViewPanelProps = {
     product: Product
 }
 
 export const ProductViewPanel = ({product}: ProductViewPanelProps) => {
-
-    useEffect(() => {
-        console.log(product)
-    })
 
     return (
         <article className={"flex flex-col gap-[24px]"}>

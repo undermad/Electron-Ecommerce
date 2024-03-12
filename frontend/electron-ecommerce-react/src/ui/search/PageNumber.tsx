@@ -10,7 +10,6 @@ export const PageNumber = ({pageNo, currentPage, loading, fetchProducts}: PageNu
 
 
     const handleClick = () => {
-        console.log(pageNo)
         fetchProducts(pageNo - 1);
     }
 

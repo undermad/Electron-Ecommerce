@@ -13,8 +13,8 @@ export const Basket = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const axiosPrivate = useAxiosPrivate();
 
-    useScrollToTop();
 
+    useScrollToTop();
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -23,9 +23,6 @@ export const Basket = () => {
         setLoading(true);
         axiosPrivate.delete(CHECKOUT_API_PATH + DELETE, {signal})
             .then(() => {
-            })
-            .catch(error => {
-                console.log(error)
             })
             .finally(() => {
                 setLoading(false);
@@ -39,7 +36,6 @@ export const Basket = () => {
 
     return (
         <Container>
-
             <div className="flex flex-col gap-[24px] relative">
                 <Header3>Your basket</Header3>
                 <div className="flex gap-[42px]">
@@ -57,9 +53,7 @@ export const Basket = () => {
             <div className="fixed left-0 bg-electron-primary-white bottom-0 w-full lg:hidden z-50">
                 <BasketTotal/>
                 <div className="mt-[17px]">
-
                         <BeginCheckout loadingParent={loading}/>
-
                 </div>
             </div>
         </Container>

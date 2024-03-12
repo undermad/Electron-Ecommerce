@@ -23,7 +23,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List<UserProjection> findUserIdAndEmailByRefreshToken(@Param("token") String token);
 
     @Query(value = "SELECT u.email AS email FROM users u WHERE email = :email", nativeQuery = true)
-    List<UserProjection> findUserEmail(@Param("email") String email);
+    List<UserProjection> findUserEmailByEmail(@Param("email") String email);
 
     @Query(value = "SELECT status_type AS accountStatus FROM account_statuses accs RIGHT JOIN users u ON accs.id = u.account_status_id WHERE email = :email", nativeQuery = true)
     List<UserProjection> findUserAccountStatusByEmail(@Param("email") String email);

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order confirmation</title>
+</head>
+<body>
+<section>
+    <main>
+        <h1>Your order has been placed</h1>
+        <p>Order id: <span th:text="${orderId}"/> </p>
+        <p>Total price paid: <span th:text="${totalPrice}"/></p>
+
+    </main>
+</section>
+
+</body>
+</html>

@@ -10,6 +10,7 @@ import {ADDRESS_API_PATH, GET, UPDATE} from "../../api/axios.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import {ACCOUNT_ROUTE, ADDRESSES_NESTED_ROUTE} from "../../constants/Routes.ts";
 import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 const validationErrorInit: AddressValidationError = {
     ...defaultAddress,
@@ -24,6 +25,7 @@ export const UpdateAddressForm = () => {
     const navigate = useNavigate();
     const param = useParams();
     const addressId = param.addressId;
+    const errorNotification = useErrorNotification();
 
     useScrollToTop();
 
@@ -44,7 +46,6 @@ export const UpdateAddressForm = () => {
         axiosPrivate.patch(ADDRESS_API_PATH + UPDATE, address)
             .then(() => navigate(ACCOUNT_ROUTE + "/" + ADDRESSES_NESTED_ROUTE))
             .catch(error => {
-                console.log(error)
                 setValidationError({...error.response.data})
                 setLoading(false);
             })
@@ -53,11 +54,10 @@ export const UpdateAddressForm = () => {
     useEffect(() => {
         axiosPrivate.get(ADDRESS_API_PATH + GET + "/" + addressId)
             .then((response) => {
-                console.log(response.data)
                 setNewAddress(response.data)
             })
-            .catch(error => {
-                console.log(error);
+            .catch(() => {
+                errorNotification('Ups...')
             });
     }, []);
 

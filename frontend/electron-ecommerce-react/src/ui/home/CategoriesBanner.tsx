@@ -26,9 +26,6 @@ export const CategoriesBanner = () => {
             .then(response => {
                 setCategories(response.data)
             })
-            .catch(error => {
-                console.log(error);
-            })
     }, []);
 
     useEffect(() => {

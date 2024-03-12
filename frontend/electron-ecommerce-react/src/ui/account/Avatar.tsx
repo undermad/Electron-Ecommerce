@@ -7,6 +7,7 @@ import ReactCrop, {centerCrop, convertToPixelCrop, type Crop, makeAspectCrop} fr
 import {ElectronButton} from "../reusable/ElectronButton.tsx";
 import setCanvasPreview from "../account/setCanvasPreview.ts";
 import {CiUser} from "react-icons/ci";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 //https://www.youtube.com/watch?v=odscV57kToU
 //avatar how to
@@ -23,6 +24,7 @@ export const Avatar = () => {
     const MIN_DIMENTION = 150;
     const ASPECT_RATIO = 1;
     const cropImgRef = useRef<HTMLImageElement | null>(null);
+    const errorNotification = useErrorNotification();
 
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +54,6 @@ export const Avatar = () => {
                     }
                 })
 
-                console.log(imageUrl);
                 setImageSource(imageUrl);
             });
             reader.readAsDataURL(file);
@@ -119,10 +120,9 @@ export const Avatar = () => {
             })
                 .then(response => {
                     setCurrentImage(response.data)
-                    console.log('success')
                 })
-                .catch(error => {
-                    console.log(error);
+                .catch(() => {
+                    errorNotification('Ups...')
                 })
     }, [selectedFile]);
 
@@ -130,11 +130,8 @@ export const Avatar = () => {
         axiosPrivate.get(ACCOUNT_API_PATH + GET_AVATAR)
             .then(response => {
                 setImageUrl("data:image/png;base64," + response.data.data);
+            })
 
-            })
-            .catch(error => {
-                console.log(error);
-            })
     }, [currentImage]);
 
 

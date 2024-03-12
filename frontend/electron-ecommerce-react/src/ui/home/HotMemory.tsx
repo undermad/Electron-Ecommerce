@@ -5,19 +5,20 @@ import {MobileCard} from "../search/MobileCard.tsx";
 import {Header3} from "../reusable/Header3.tsx";
 import {CategoryHero} from "./CategoryHero.tsx";
 import {RevealAnimation} from "../reusable/RevealAnimation.tsx";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 export const HotMemory = () => {
 
     const [products, setProducts] = useState<Product[]>([]);
+    const errorNotification = useErrorNotification();
 
     useEffect(() => {
         axiosBase.get(`${PRODUCT_API_PATH}/${HOT_CATEGORY_PRODUCTS_API_PATH}?category=memory`)
             .then(result => {
-                console.log(result);
                 setProducts(result.data);
             })
-            .catch(error => {
-                console.log(error);
+            .catch(() => {
+                errorNotification('Ups..');
             })
     }, []);
 

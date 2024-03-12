@@ -4,21 +4,22 @@ import {useEffect, useState} from "react";
 import {axiosBase, HOT_PRODUCTS_API_PATH, PRODUCT_API_PATH} from "../../api/axios.ts";
 import {Product} from "../../api/dto/product/Product.ts";
 import {RevealAnimation} from "../reusable/RevealAnimation.tsx";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 export const HotProducts = () => {
 
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const errorNotification = useErrorNotification();
 
     useEffect(() => {
         setLoading(true)
         axiosBase.get(PRODUCT_API_PATH + HOT_PRODUCTS_API_PATH)
             .then(result => {
-                console.log(result);
                 setProducts(result.data);
             })
-            .catch(error => {
-                console.log(error);
+            .catch(() => {
+                errorNotification('Ups...')
             })
             .finally(() => {
                 setLoading(false);

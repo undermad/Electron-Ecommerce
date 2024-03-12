@@ -8,23 +8,31 @@ import {ProductContextProvider} from "./context/ProductContext.tsx";
 import {ThemeContextProvider} from "./context/ThemeContext.tsx";
 import {BasketContextProvider} from "./context/BasketContext.tsx";
 import {StrictMode} from 'react';
+import {disableReactDevTools} from '@fvilers/disable-react-devtools';
+import {ErrorNotificationContextProvider} from "./context/ErrorNotificationContext.tsx";
+
+
+disableReactDevTools();
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
         <StrictMode>
-            <AuthContextProvider>
-                <BasketContextProvider>
-                    <MessageScreenContextProvider>
-                        <ThemeContextProvider>
-                            <ProductContextProvider>
-                                <Routes>
-                                    <Route path={"/*"} element={<App/>}></Route>
-                                </Routes>
-                            </ProductContextProvider>
-                        </ThemeContextProvider>
-                    </MessageScreenContextProvider>
-                </BasketContextProvider>
-            </AuthContextProvider>
+            <ErrorNotificationContextProvider>
+                <AuthContextProvider>
+                    <BasketContextProvider>
+                        <MessageScreenContextProvider>
+                            <ThemeContextProvider>
+                                <ProductContextProvider>
+                                    <Routes>
+                                        <Route path={"/*"} element={<App/>}></Route>
+                                    </Routes>
+                                </ProductContextProvider>
+                            </ThemeContextProvider>
+                        </MessageScreenContextProvider>
+                    </BasketContextProvider>
+                </AuthContextProvider>
+            </ErrorNotificationContextProvider>
         </StrictMode>
     </BrowserRouter>
 )

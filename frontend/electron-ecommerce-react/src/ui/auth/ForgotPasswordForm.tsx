@@ -31,7 +31,6 @@ export const ForgotPasswordForm = () => {
                 messageScreen(response.data.message);
             })
             .catch((error) => {
-                console.log(error)
                 setValidationError({...error?.response?.data})
                 setLoading(false);
             })

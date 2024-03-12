@@ -7,12 +7,14 @@ import {CheckoutContext} from "../../context/CheckoutContext.tsx";
 import {useNavigate} from "react-router-dom";
 import {CHECKOUT_ORDER_INFO, CHECKOUT_ROUTE} from "../../constants/Routes.ts";
 import {useScrollToTop} from "../../custom_hooks/useScrollToTop.ts";
+import {useErrorNotification} from "../../custom_hooks/useErrorNotification.ts";
 
 export const AddressPicker = () => {
     const axiosPrivate = useAxiosPrivate();
     const [addresses, setAddresses] = useState<Address[]>([]);
     const checkoutContext = useContext(CheckoutContext);
     const navigate = useNavigate();
+    const errorNotification = useErrorNotification();
 
     useScrollToTop();
 
@@ -20,10 +22,9 @@ export const AddressPicker = () => {
         axiosPrivate.get(ADDRESS_API_PATH + GET_ALL)
             .then(response => {
                 setAddresses(response.data)
-                console.log(response.data)
             })
             .catch(error => {
-                console.log(error);
+                errorNotification(error?.response?.data);
             })
     }, []);
 

@@ -67,15 +67,13 @@ export const CheckoutForm = () => {
             paymentType: creditCard,
 
         }
-        console.log(orderRequest)
 
         axiosPrivate.post(ORDER_API_PATH + PLACE_ORDER, orderRequest)
             .then(result => {
-                messageScreen("Your order has been placed with status: " + result.data.message);
+                messageScreen(`Your order has been placed with status: ${result.data.message}. We sent you an confirmation email.`);
                 basketContext.setBasket({items: []})
             })
-            .catch(error => {
-                console.log(error)
+            .catch(() => {
                 messageScreen("Something went wrong, check your validation.")
             })
             .finally(() => checkoutContext.setLoading(false));
@@ -84,7 +82,6 @@ export const CheckoutForm = () => {
     }
 
     useEffect(() => {
-        console.log('call')
         setIdempotencyKey(uuid4())
         setValidationError(defaultOrderRequestValidationError);
     }, []);
