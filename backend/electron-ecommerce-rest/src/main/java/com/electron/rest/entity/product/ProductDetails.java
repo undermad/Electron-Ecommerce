@@ -30,12 +30,15 @@ public class ProductDetails {
     @Column(name = "visits",  columnDefinition = "INT DEFAULT 0")
     private Integer visits;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "products_images",
-            joinColumns = @JoinColumn(name = "product_details_id"))
-    @Column(name = "image_url")
-    private Set<String> images;
+//    @ElementCollection
+//    @CollectionTable(
+//            name = "products_images",
+//            joinColumns = @JoinColumn(name = "product_details_id"))
+//    @Column(name = "image_url")
+//    private Set<String> images;
+
+    @OneToMany(mappedBy = "productDetails", fetch = FetchType.LAZY)
+    private Set<ProductImage> images;
 
     @OneToOne(mappedBy = "productDetails", fetch = FetchType.LAZY)
     private ProductItem productItem;

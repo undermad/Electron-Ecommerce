@@ -88,6 +88,8 @@ export const Avatar = () => {
         const canvas = document.createElement('canvas');
 
         setCanvasPreview(
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             cropImgRef.current,
             canvas,
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

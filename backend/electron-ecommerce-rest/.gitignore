@@ -34,6 +34,6 @@ build/
 
 
 #sensitive data
-src/main/resources/application.properties
+src/main/resources/application-securite.properties
 
 

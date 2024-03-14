@@ -1,13 +1,17 @@
-FROM node:18-alpine
-LABEL authors="Dominik Tworek"
+FROM node:14 as build
 
-WORKDIR /app/electron-ecommerce-react
+WORKDIR /app
 
-COPY package.json .
+COPY package*.json ./
 
 RUN npm install
 
 COPY . .
 
-EXPOSE 5173
-ENTRYPOINT ["npm", "run", "dev", "--", "--host"]
+RUN npm run build
+
+RUN npm install -g serve
+
+EXPOSE 5000
+
+CMD ["serve", "-s", "dist", "-l", "5000"]

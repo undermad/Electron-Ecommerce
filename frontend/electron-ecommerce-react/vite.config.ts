@@ -6,9 +6,7 @@ export default defineConfig({
     plugins: [react()],
 
     server: {
-        fs: {
-            strict: false,
-        }
+        host: true,
+        strictPort: true,
     }
-
 })
