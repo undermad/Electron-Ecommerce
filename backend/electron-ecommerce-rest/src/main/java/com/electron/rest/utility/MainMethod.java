@@ -20,7 +20,7 @@ public class MainMethod {
         System.out.println(key);
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.out.println(passwordEncoder.encode("7541$hqD4lFxLF=\"3<TX+]W=$'Yd;4>L5p0si`@AabTiz4/&%6"));
+        System.out.println(passwordEncoder.encode(""));
 
 
     }

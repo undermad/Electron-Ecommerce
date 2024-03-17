@@ -9,9 +9,6 @@ import java.util.Map;
 @Component("activationEmailSettings")
 public class ActivationEmailSettingsProvider implements EmailSettingsFactory<ActivationToken> {
 
-    @Value("${hostname}")
-    private String hostname;
-
     @Override
     public EmailSettings createSettings(ActivationToken activationToken) {
 
