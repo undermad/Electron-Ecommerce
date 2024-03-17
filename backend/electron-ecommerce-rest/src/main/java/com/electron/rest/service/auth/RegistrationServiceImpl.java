@@ -87,9 +87,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public MessageResponse activate(String activationToken) throws TokenException {
-        Optional<ActivationTokenProjection> tokenAsOptional = activationTokenRepository.findActivationTokenIdByToken(activationToken);
-        if (tokenAsOptional.isEmpty()) throw new TokenException(INVALID_TOKEN);
-        Long tokenId = tokenAsOptional.get().getId();
+        Long tokenId = activationTokenRepository.findActivationTokenIdByToken(activationToken)
+                .orElseThrow(() -> new TokenException(INVALID_TOKEN)).getId();
 
         Optional<AccountStatusProjection> statusAsOptional =
                 accountStatusRepository.findAccountStatusIdByStatusType(AccountStatuses.ACTIVE);
