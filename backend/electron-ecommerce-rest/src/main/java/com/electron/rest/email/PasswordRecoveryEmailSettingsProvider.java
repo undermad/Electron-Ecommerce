@@ -12,8 +12,6 @@ public class PasswordRecoveryEmailSettingsProvider implements EmailSettingsFacto
     @Value("${app-recovery-token-expiration-millisecond}")
     private String expirationTime;
 
-    @Value("${hostname}")
-    private String hostname;
 
     @Override
     public EmailSettings createSettings(PasswordRecoveryToken passwordRecoveryToken) {
@@ -23,7 +21,7 @@ public class PasswordRecoveryEmailSettingsProvider implements EmailSettingsFacto
                 .template("password-recovery-link")
                 .variables(Map.of(
                         "duration", convertExpirationTimeToMinutes(this.expirationTime),
-                        "passwordRecoveryLink", "http://" + hostname + "/changeforgottenpassword/" + passwordRecoveryToken.getToken()
+                        "passwordRecoveryLink", "https://www.myelectron.co.uk/changeforgottenpassword/" + passwordRecoveryToken.getToken()
                 ))
                 .build();
     }

@@ -18,6 +18,7 @@ import {SpanWeightSix} from "../reusable/SpanWeightSix.tsx";
 import {FormErrorMessage} from "../reusable/FormErrorMessage.tsx";
 import useFocusOnMount from "../../custom_hooks/useFocusOnMount.ts";
 import {LoginRequest, LoginRequestError} from "../../api/dto/auth/LoginRequest.ts";
+import {Bold} from "../reusable/Bold.tsx";
 
 export const LoginForm = () => {
     const auth = useAuth();
@@ -81,6 +82,18 @@ export const LoginForm = () => {
 
             <FormErrorMessage errorMessage={loginRequestError.message}/>
             <MultiInputHolder>
+                <div className="flex flex-col gap-2">
+
+                    <Bold weight={600} textSize={18}>Test user credentials</Bold>
+                    <div className="flex gap-1">
+                        <Bold weight={600} textSize={18}>Email Address: </Bold>
+                        <p className="text-[18px]"> user@test.com</p>
+                    </div>
+                    <div className="flex gap-1 items-center">
+                        <Bold weight={600} textSize={18}>Password: </Bold>
+                        <p className="text-[18px]"> AmazingTestUser123</p>
+                    </div>
+                </div>
                 <LabelInputHolder>
                     <Label errorMessage={loginRequestError.email} htmlFor={"email"}>Email Address</Label>
                     <TextInput callback={handleEmailChange}

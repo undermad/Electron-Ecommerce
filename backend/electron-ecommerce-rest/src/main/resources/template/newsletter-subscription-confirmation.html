@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Activation Link</title>
-
+    <meta charset="UTF-8">
+    <title>Electron - Newsletter subscription confirmation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +11,7 @@
             padding: 20px;
             margin: 0;
         }
-        section {
+        .container {
             background-color: #ffffff;
             padding: 20px;
             margin: 0 auto;
@@ -20,17 +19,11 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
+        h1 {
+            color: #0066cc;
+        }
         p {
             line-height: 1.6;
-        }
-        a {
-            display: inline-block;
-            background-color: #0066cc;
-            color: #ffffff;
-            padding: 10px 20px;
-            margin-top: 10px;
-            border-radius: 5px;
-            text-decoration: none;
         }
         .footer {
             text-align: center;
@@ -40,24 +33,24 @@
         }
     </style>
 </head>
-<body>
-<section>
-    <p>
-        Hi,
-        <br/>
-        Your link is valid for <span th:text="${duration}"/> minutes.
-        <br/>
-        Click below to reset your password:
-        <br/>
-        <a href="#" th:href="${passwordRecoveryLink}" target="_blank">Reset Password</a>
-        <br/>
-    </p>
-</section>
 
+<body>
+<div class="container">
+    <h1>Welcome to Electron Newsletter - Subscription Confirmed!</h1>
+    <p>Welcome to the Electron community! We're thrilled to have you with us. Your subscription has been successfully confirmed.</p>
+
+
+    <p>We value your privacy and promise to keep your email address safe.</p>
+
+    <p>Best regards,<br>
+        Dominik Tworek<br>
+        Software Developer<br>
+        dtworek94@gmail.com</p>
+
+
+</div>
 <div class="footer">
     © 2024 Electron - All rights reserved.
 </div>
-
-
 </body>
 </html>

@@ -3,16 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Order confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 600px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        main {
+            text-align: center;
+        }
+        h1 {
+            color: #0066cc;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        span {
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
 <section>
     <main>
         <h1>Your order has been placed</h1>
-        <p>Order id: <span th:text="${orderId}"/> </p>
-        <p>Total price paid: <span th:text="${totalPrice}"/></p>
-
+        <p>Order id: <span th:text="${orderId}"></span> </p>
+        <p>Total price paid: <span th:text="${totalPrice}"></span></p>
     </main>
 </section>
+<div class="footer">
+    © 2024 Electron - All rights reserved.
+</div>
+
 
 </body>
 </html>

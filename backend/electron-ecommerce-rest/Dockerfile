@@ -12,6 +12,20 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 
 
+#FROM amazoncorretto:21
+#WORKDIR /app
+#COPY . .
+#RUN ./mvnw clean install
+#
+#COPY /target/*.jar app.jar
+#EXPOSE 8080
+#
+#ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
+
+
+
 
 
 

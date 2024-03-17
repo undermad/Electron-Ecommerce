@@ -3,19 +3,54 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Activation Link</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+        section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 600px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        p {
+            line-height: 1.6;
+        }
+        a {
+            display: inline-block;
+            background-color: #0066cc;
+            color: #ffffff;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
 <section>
     <p>
-        Greetings <span th:text="${firstName}"></span>
+        Greetings <span th:text="${firstName}"></span>,
         <br/>
-        Welcome in Electron ecommerce website!
+        Welcome to Electron ecommerce website!
         <br/>
-        It is a big pleasure that you choose us.
+        It is a big pleasure that you chose us.
         <br/>
-        Click link below to activate your account:
+        Click the link below to activate your account:
         <br/>
-        <span th:text="${activationLink}"></span>
+        <a href="#" th:href="${activationLink}">Activate Account</a>
     </p>
 </section>
 

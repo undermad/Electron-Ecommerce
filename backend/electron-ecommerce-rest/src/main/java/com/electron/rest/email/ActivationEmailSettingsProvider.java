@@ -20,7 +20,7 @@ public class ActivationEmailSettingsProvider implements EmailSettingsFactory<Act
                 .subject("Electron - Your account activation link.")
                 .template("activation-link")
                 .variables(Map.of(
-                        "activationLink", "http://" + hostname + "/activate/" + activationToken.getToken(),
+                        "activationLink", "https://www.myelectron.co.uk/activate/" + activationToken.getToken(),
                         "firstName", activationToken.getUser().getFirstName()))
                 .build();
     }

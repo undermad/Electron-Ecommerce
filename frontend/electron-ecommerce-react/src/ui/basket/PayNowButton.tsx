@@ -11,7 +11,7 @@ export const PayNowButton = () => {
 
     return (
         <div >
-            <div className={"flex flex-col"}>
+            <div className={"flex flex-col mb-3"}>
                 <button form="payForm" type="submit"
                     className={"text-black shadow-md p-[14px] h-[48px] rounded-full font-[600] "
                         + `${checkoutContext.loading ? "bg-electron-pay " : "bg-electron-pay "}`}

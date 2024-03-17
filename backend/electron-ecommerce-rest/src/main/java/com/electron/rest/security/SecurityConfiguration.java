@@ -31,8 +31,7 @@ public class SecurityConfiguration {
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Value("${hostname}")
-    private String hostname;
+
 
     public SecurityConfiguration(JwtAuthenticationEntryPoint authenticationEntryPoint, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.authenticationEntryPoint = authenticationEntryPoint;
@@ -53,7 +52,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://" + hostname));
+        config.setAllowedOrigins(List.of("https://myelectron.co.uk", "https://www.myelectron.co.uk"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("authorization", "content-type", "x-auth-token"));
         config.setAllowCredentials(true);

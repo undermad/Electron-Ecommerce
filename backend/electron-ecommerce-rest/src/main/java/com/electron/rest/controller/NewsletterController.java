@@ -3,6 +3,7 @@ package com.electron.rest.controller;
 import com.electron.rest.dto.SubscriptionEmailRequest;
 import com.electron.rest.dto.auth.MessageResponse;
 import com.electron.rest.email.NewsletterService;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class NewsletterController {
 
 
     @PostMapping
-    public ResponseEntity<MessageResponse> subscribe(@Valid @RequestBody SubscriptionEmailRequest email) {
+    public ResponseEntity<MessageResponse> subscribe(@Valid @RequestBody SubscriptionEmailRequest email) throws MessagingException {
         newsletterService.subscribe(email);
         return ResponseEntity.ok(new MessageResponse(SUBSCRIBED));
     }
