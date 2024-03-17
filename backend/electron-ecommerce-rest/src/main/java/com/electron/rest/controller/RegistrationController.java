@@ -28,7 +28,7 @@ public class RegistrationController {
         return new ResponseEntity<>(registrationService.register(registerDto), HttpStatus.CREATED);
     }
 
-    @PatchMapping(ACTIVATE + "/{activationToken}")
+    @PostMapping(ACTIVATE + "/{activationToken}")
     public ResponseEntity<MessageResponse> activateAccount(@PathVariable String activationToken) throws TokenException {
         return ResponseEntity.ok(registrationService.activate(activationToken));
     }

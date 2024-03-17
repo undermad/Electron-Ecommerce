@@ -21,7 +21,7 @@ export const ActivateAccount = () => {
 
     useEffect(() => {
         if (a) {
-            axiosRegistration.patch(ACTIVATE_API_PATH + "/" + activationToken)
+            axiosRegistration.post(ACTIVATE_API_PATH + "/" + activationToken)
                 .then((result) => {
                     messageScreen(result.data.message)
                 })
