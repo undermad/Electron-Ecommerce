@@ -1,0 +1,45 @@
+services:
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - cache:/data
+  
+  electron-backend:
+    image: diet-generator:latest
+    build:
+      context: ./backend/electron-ecommerce-rest
+      dockerfile: Dockerfile
+    container_name: electron-backend
+    environment:
+      - ELECTRON_EMAIL_USERNAME=${ELECTRON_EMAIL_USERNAME}
+      - ELECTRON_EMAIL_PASSWORD=${ELECTRON_EMAIL_PASSWORD}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - AVNA_MYSQL_URL=${AVNA_MYSQL_URL}
+      - AVNA_MYSQL_USERNAME=${AVNA_MYSQL_USERNAME}
+      - AVNA_MYSQL_PASSWORD=${AVNA_MYSQL_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - PAYMENT_SECRET=${PAYMENT_SECRET}
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cache
+
+  electron-frontend:
+    build:
+      context: ./frontend/electron-ecommerce-react
+      dockerfile: Dockerfile
+    container_name: electron-frontend
+    depends_on:
+      - electron-backend
+    ports:
+      - "4173:4173"
+
+volumes:
+  cache:
+    driver: local

@@ -1,0 +1,25 @@
+name:  BUILD
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      NINJA_API_KEY: ${{ secrets.NINJA_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build jar with Maven
+        run: mvn -B package --file backend/electron-ecommerce-rest/pom.xml

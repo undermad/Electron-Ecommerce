@@ -1,17 +1,16 @@
-FROM node:14 as build
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json .
 
+RUN npm install -g typescript
 RUN npm install
 
 COPY . .
 
 RUN npm run build
 
-RUN npm install -g serve
+EXPOSE 4173
 
-EXPOSE 5000
-
-CMD ["serve", "-s", "dist", "-l", "5000"]
+CMD ["npm", "run", "dev"]
