@@ -80,8 +80,8 @@ public class SecurityConfiguration {
                                 .requestMatchers(API_V1_ORDER + "/**").hasAnyRole("USER")
                                 .requestMatchers(API_V1_BASKET + "/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(API_V1_ADDRESS + "/**").hasAnyRole("USER", "ADMIN")
-                                .anyRequest()
-                                .authenticated())
+                                .requestMatchers("/api/prometheus/**").permitAll()
+                                .anyRequest().authenticated())
 
                 //exception handling filter
                 .exceptionHandling((e) ->
