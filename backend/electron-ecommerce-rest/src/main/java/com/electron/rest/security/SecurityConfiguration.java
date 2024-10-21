@@ -119,7 +119,7 @@ public class SecurityConfiguration
 
         // filters
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilter(xssSanitiserFilter);
+        http.addFilterBefore(xssSanitiserFilter, JwtAuthenticationFilter.class);
 
         return http.build();
     }
