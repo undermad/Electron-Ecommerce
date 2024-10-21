@@ -2,7 +2,8 @@ package com.electron.rest.security;
 
 import com.electron.rest.security.token.jwt.JwtAuthenticationEntryPoint;
 import com.electron.rest.security.token.jwt.JwtAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Value;
+import com.electron.rest.security.xss.XssSanitiserFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,46 +12,64 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.electron.rest.constants.EndpointsPaths.*;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration
+{
 
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private XssSanitiserFilter xssSanitiserFilter;
 
 
-
-    public SecurityConfiguration(JwtAuthenticationEntryPoint authenticationEntryPoint, JwtAuthenticationFilter jwtAuthenticationFilter) {
+    public SecurityConfiguration(JwtAuthenticationEntryPoint authenticationEntryPoint, JwtAuthenticationFilter jwtAuthenticationFilter, XssSanitiserFilter xssSanitiserFilter)
+    {
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.xssSanitiserFilter = xssSanitiserFilter;
     }
 
     @Bean
-    public static PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder()
+    {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception
+    {
         return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    public FilterRegistrationBean<XssSanitiserFilter> xssSanitiserFilterFilterRegistrationBean()
+    {
+        FilterRegistrationBean<XssSanitiserFilter> xssFilterBean = new FilterRegistrationBean<>();
+        xssFilterBean.setFilter(new XssSanitiserFilter());
+        xssFilterBean.addUrlPatterns("/*");
+        return xssFilterBean;
     }
 
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource()
+    {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("https://myelectron.co.uk", "https://www.myelectron.co.uk", ""));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
@@ -62,11 +81,15 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+    {
 
         http
-                .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers(HeadersConfigurer -> HeadersConfigurer
+                        .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
+                        .contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self'"))) // just in case if we use swagger or any other server rendered websites.
                 .authorizeHttpRequests
                         ((authorization) -> authorization
                                 .requestMatchers("/api/v1/auth/**").permitAll()
@@ -96,6 +119,7 @@ public class SecurityConfiguration {
 
         // filters
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilter(xssSanitiserFilter);
 
         return http.build();
     }
